@@ -1,12 +1,12 @@
-package comp3350.srsys.business;
+package comp3350.grs.business;
 
 import java.util.List;
 
-import comp3350.srsys.application.Main;
-import comp3350.srsys.application.Services;
-import comp3350.srsys.objects.Course;
-import comp3350.srsys.objects.Student;
-import comp3350.srsys.persistence.DataAccessStub;
+import comp3350.grs.application.Main;
+import comp3350.grs.application.Services;
+import comp3350.grs.objects.Course;
+import comp3350.grs.objects.Student;
+import comp3350.grs.persistence.DataAccessStub;
 
 public class AccessCourses
 {

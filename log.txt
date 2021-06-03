@@ -1,1 +1,6 @@
-Meeting. Date: June 1, Time: 13:00. All present.
+meeting1: 5/27 topic:use the sample project or not;make a list of developer tasks
+    ;distribute the tasks to group members
+Meeting2: 6/1 topics:get all members into the github repo;everyone report what
+    we have done, how we implement it, and what we will do
+Shiqing Guo scraped some data from steam and stored it into a csv file(2hour);
+

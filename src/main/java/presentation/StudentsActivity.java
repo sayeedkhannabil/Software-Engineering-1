@@ -1,4 +1,4 @@
-package comp3350.srsys.presentation;
+package comp3350.grs.presentation;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,9 +20,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import comp3350.srsys.R;
-import comp3350.srsys.business.AccessStudents;
-import comp3350.srsys.objects.Student;
+import comp3350.grs.R;
+import comp3350.grs.business.AccessStudents;
+import comp3350.grs.objects.Student;
 
 public class StudentsActivity extends Activity {
 

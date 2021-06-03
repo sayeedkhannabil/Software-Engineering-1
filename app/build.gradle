@@ -5,7 +5,7 @@ android {
     buildToolsVersion "30.0.0"
 
     defaultConfig {
-        applicationId "comp3350.srsys"
+        applicationId "comp3350.grs"
         minSdkVersion 21
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 23

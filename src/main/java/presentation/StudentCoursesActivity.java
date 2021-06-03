@@ -1,14 +1,14 @@
-package comp3350.srsys.presentation;
+package comp3350.grs.presentation;
 
 import java.util.ArrayList;
 
-import comp3350.srsys.R;
-import comp3350.srsys.R.id;
-import comp3350.srsys.R.layout;
-import comp3350.srsys.R.menu;
-import comp3350.srsys.business.AccessSC;
-import comp3350.srsys.objects.SC;
-import comp3350.srsys.objects.Student;
+import comp3350.grs.R;
+import comp3350.grs.R.id;
+import comp3350.grs.R.layout;
+import comp3350.grs.R.menu;
+import comp3350.grs.business.AccessSC;
+import comp3350.grs.objects.SC;
+import comp3350.grs.objects.Student;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;

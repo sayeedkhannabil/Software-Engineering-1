@@ -1,4 +1,4 @@
-package iteration1.objects;
+package comp3350.grs.objects;
 
 public class Rating
 {

@@ -12,6 +12,10 @@ public class Rating
         {
             rating = ratingGiven; 
         }
+        else
+        {
+            System.out.println("Invalid rating. Try again.");
+        }
     }
 
     public int getRating()
@@ -21,15 +25,6 @@ public class Rating
 
     public String toString()
     {
-        String msg = ""; 
-        if(rating == 0)
-        {
-            msg = "No ratings have yet been given for this game.";
-        }
-        else
-        {
-            msg = "Game Rating: "+rating+" out of 5 points.";
-        }
-        return msg;
+        return "New Game Rating: "+rating+" out of 5 points.";
     }
 }

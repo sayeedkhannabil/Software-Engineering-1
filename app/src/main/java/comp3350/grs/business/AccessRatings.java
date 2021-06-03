@@ -70,6 +70,6 @@ public class AccessRatings
 
     public void deleteRating(Rating currentRating)
     {
-        //return dataAccess.deleteStudent(currentRating);
+        //return dataAccess.deleteRating(currentRating);
     }
 }

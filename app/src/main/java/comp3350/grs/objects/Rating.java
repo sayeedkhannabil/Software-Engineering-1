@@ -10,7 +10,7 @@ public class Rating
         rating = 0; // default -- if no ratings (or no valid ratings) given yet
         if(ratingGiven > 0 && ratingGiven <= 5)
         {
-            rating = ratingGiven; 
+            rating = ratingGiven;
         }
         else
         {
@@ -20,7 +20,7 @@ public class Rating
 
     public int getRating()
     {
-        return rating; 
+        return rating;
     }
 
     public String toString()

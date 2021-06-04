@@ -3,7 +3,7 @@ package comp3350.grs.tests.business;
 import junit.framework.TestCase;
 
 import comp3350.grs.business.Calculate;
-import comp3350.grs.objects.SC;
+
 import java.util.List;
 import java.util.ArrayList;
 

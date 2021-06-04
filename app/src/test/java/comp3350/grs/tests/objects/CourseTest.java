@@ -2,8 +2,6 @@ package comp3350.grs.tests.objects;
 
 import junit.framework.TestCase;
 
-import comp3350.grs.objects.Course;
-
 public class CourseTest extends TestCase
 {
 	public CourseTest(String arg0)

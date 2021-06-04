@@ -6,7 +6,6 @@ import comp3350.grs.R;
 import comp3350.grs.R.id;
 import comp3350.grs.R.layout;
 import comp3350.grs.business.AccessSC;
-import comp3350.grs.objects.SC;
 
 import android.app.Activity;
 import android.os.Bundle;

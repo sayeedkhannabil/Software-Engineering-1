@@ -5,12 +5,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Locale;
 
-import comp3350.grs.business.AccessStudents;
 import comp3350.grs.business.AccessCourses;
 import comp3350.grs.business.AccessSC;
 import comp3350.grs.objects.Student;
-import comp3350.grs.objects.Course;
-import comp3350.grs.objects.SC;
 
 public class CLI  // command-line interface
 {

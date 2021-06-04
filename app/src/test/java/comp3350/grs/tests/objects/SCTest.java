@@ -2,8 +2,6 @@ package comp3350.grs.tests.objects;
 
 import junit.framework.TestCase;
 
-import comp3350.grs.objects.SC;
-
 public class SCTest extends TestCase
 {
 	public SCTest(String arg0)

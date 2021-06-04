@@ -2,8 +2,6 @@ package comp3350.grs.business;
 
 import java.util.List;
 
-import comp3350.grs.objects.SC;
-
 public class Calculate
 {
 	public static String gpa(List<SC> elements)

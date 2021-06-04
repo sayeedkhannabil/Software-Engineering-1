@@ -8,4 +8,5 @@ Shiqing Guo scraped some data from steam and stored it into a csv file
     (expected:3 hour;actual:2 hour);
 Shiqing Guo write the user class. The class contains two sub calsses which are
     registered user and guest.(expected:4 hour;actual:3 hour)
+Meeting4: 1.word wrap 2. access feedback should be in access game
 

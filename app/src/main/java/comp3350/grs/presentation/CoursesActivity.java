@@ -20,7 +20,6 @@ import java.util.ArrayList;
 
 import comp3350.grs.R;
 import comp3350.grs.business.AccessCourses;
-import comp3350.grs.objects.Course;
 
 public class CoursesActivity extends Activity {
 

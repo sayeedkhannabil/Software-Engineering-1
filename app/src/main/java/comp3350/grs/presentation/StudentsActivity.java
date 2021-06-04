@@ -19,7 +19,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import comp3350.grs.R;
-import comp3350.grs.business.AccessStudents;
 import comp3350.grs.objects.Student;
 
 public class StudentsActivity extends Activity {

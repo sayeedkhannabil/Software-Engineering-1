@@ -4,18 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import comp3350.grs.application.Main;
-import comp3350.grs.objects.Student;
-import comp3350.grs.objects.Course;
-import comp3350.grs.objects.SC;
+import comp3350.grs.objects.User;
+
 
 public class DataAccessStub
 {
 	private String dbName;
 	private String dbType = "stub";
 
-	private ArrayList<Student> students;
-	private ArrayList<Course> courses;
-	private ArrayList<SC> scs;
+	private ArrayList<User> users;
 
 	public DataAccessStub(String dbName)
 	{
@@ -75,143 +72,49 @@ public class DataAccessStub
 		System.out.println("Closed " +dbType +" database " +dbName);
 	}
 
-	public String getStudentSequential(List<Student> studentResult)
+	public List<User> getAllUsers()
 	{
-        studentResult.addAll(students);
-		return null;
+		List<User> result=new ArrayList<User>();
+		result.addAll(users);
+		return result;
 	}
 
-	public ArrayList<Student> getStudentRandom(Student currentStudent)
-	{
-		ArrayList<Student> newStudents;
-		int index;
-		
-		newStudents = new ArrayList<Student>();
-		index = students.indexOf(currentStudent);
-		if (index >= 0)
-		{
-			newStudents.add(students.get(index));
+	public User getUser(User user){
+		int index= users.indexOf(user);
+		User result=null;
+		if (index>=0){
+			result=users.get(index);
 		}
-		return newStudents;
+		return result;
 	}
 
-	public String insertStudent(Student currentStudent)
+
+	public void insertUser(User newUser)
 	{
-		// don't bother checking for duplicates
-		students.add(currentStudent);
-		return null;
+		users.add(newUser);
 	}
 
-	public String updateStudent(Student currentStudent)
+	public void updateUser(User currentUser)
 	{
 		int index;
 		
-		index = students.indexOf(currentStudent);
+		index = users.indexOf(currentUser);
 		if (index >= 0)
 		{
-			students.set(index, currentStudent);
+			users.set(index, currentUser);
 		}
-		return null;
 	}
 
-	public String deleteStudent(Student currentStudent)
+	public void deleteUser(User user)
 	{
 		int index;
 		
-		index = students.indexOf(currentStudent);
+		index = users.indexOf(user);
 		if (index >= 0)
 		{
-			students.remove(index);
+			users.remove(index);
 		}
-		return null;
 	}
 
-	public String getCourseSequential(List<Course> courseResult)
-	{
-        courseResult.addAll(courses);
-		return null;
-	}
 
-	public ArrayList<Course> getCourseRandom(Course currentCourse)
-	{
-		ArrayList<Course> newCourses;
-		int index;
-		
-		newCourses = new ArrayList<Course>();
-		index = courses.indexOf(currentCourse);
-		if (index >= 0)
-		{
-			newCourses.add(courses.get(index));
-		}
-		return newCourses;
-	}
-
-	public String insertCourse(Course currentCourse)
-	{
-		// don't bother checking for duplicates
-		courses.add(currentCourse);
-		return null;
-	}
-
-	public String updateCourse(Course currentCourse)
-	{
-		int index;
-		
-		index = courses.indexOf(currentCourse);
-		if (index >= 0)
-		{
-			courses.set(index, currentCourse);
-		}
-		return null;
-	}
-
-	public String deleteCourse(Course currentCourse)
-	{
-		int index;
-		
-		index = courses.indexOf(currentCourse);
-		if (index >= 0)
-		{
-			courses.remove(index);
-		}
-		return null;
-	}
-
-	public ArrayList<SC> getSC(SC currentSC)
-	{
-		ArrayList<SC> newSCs;
-		SC sc;
-		int counter;
-		
-		// get the SC objects with the same studentID as currentSC
-		newSCs = new ArrayList<SC>();
-		for (counter=0; counter<scs.size(); counter++)
-		{
-			sc = scs.get(counter);
-			if (sc.getStudentID().equals(currentSC.getStudentID()))
-			{
-				newSCs.add(scs.get(counter));
-			}
-		}
-		return newSCs;
-	}
-
-	public ArrayList<SC> getCS(SC currentSC)
-	{
-		ArrayList<SC> newSCs;
-		SC cs;
-		int counter;
-		
-		// get the SC objects with the same courseID as currentSC
-		newSCs = new ArrayList<SC>();
-		for (counter=0; counter<scs.size(); counter++)
-		{
-			cs = scs.get(counter);
-			if (cs.getCourseID().equals(currentSC.getCourseID()))
-			{
-				newSCs.add(scs.get(counter));
-			}
-		}
-		return newSCs;
-	}
 }

@@ -13,6 +13,7 @@ public class DataAccessStub
 	private String dbType = "stub";
 
 	private ArrayList<User> users;
+	private ArrayList<Games> games; 
 
 	public DataAccessStub(String dbName)
 	{
@@ -115,6 +116,43 @@ public class DataAccessStub
 			users.remove(index);
 		}
 	}
-
-
+	
+	public List<Game> getAllGames()
+	{
+		return games; 
+	}
+	
+	public Game getGame(Game toFind)
+	{
+		Game toReturn = null;
+		int index = games.indexOf(toFind);
+		if(index >= 0)
+		{
+			toReturn = games.get(index);
+		}
+		return toReturn; 
+	}
+	
+	public void insertGame(Game toAdd)
+	{
+		games.add(toAdd);
+	}
+	
+	public void updateGame(Game toUpdate)
+	{
+		int index = games.indexOf(toUpdate); 
+		if(index >= 0)
+		{
+			games.set(index, toUpdate); 
+		}
+	}
+	
+	public void deleteGame(Game toDel)
+	{
+		int index = games.indexOf(toDel);
+		if(index >= 0)
+		{
+			games.remove(index);
+		}
+	}
 }

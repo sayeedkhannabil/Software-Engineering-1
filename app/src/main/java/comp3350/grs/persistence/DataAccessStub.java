@@ -5,6 +5,7 @@ import java.util.List;
 
 import comp3350.grs.application.Main;
 import comp3350.grs.objects.User;
+import comp3350.grs.objects.Game;
 
 
 public class DataAccessStub

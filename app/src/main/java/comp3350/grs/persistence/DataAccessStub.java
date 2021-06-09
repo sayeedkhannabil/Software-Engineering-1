@@ -5,7 +5,7 @@ import java.util.List;
 
 import comp3350.grs.objects.User;
 import comp3350.grs.objects.Game;
-
+import comp3350.grs.application.Main;
 
 public class DataAccessStub
 {
@@ -20,10 +20,10 @@ public class DataAccessStub
 		this.dbName = dbName;
 	}
 
-//	public DataAccessStub()
-//	{
-//		this(Main.dbName);
-//	}
+	public DataAccessStub()
+	{
+		this(Main.dbName);
+	}
 
 	public void open(String dbName)
 	{

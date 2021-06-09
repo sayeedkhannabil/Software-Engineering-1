@@ -64,7 +64,7 @@ public class AccessGames
         {
             gameList = null;
             currGame = null; 
-            currRating = 0;
+//            currRating = 0;
         }
         return currGame; 
     }

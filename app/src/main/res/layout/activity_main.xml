@@ -4,12 +4,12 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.grs.ui.MainActivity">
+        tools:context="comp3350.grs.presentation.MainActivity">
 
     <fragment
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="com.grs.ui.LoginBackground"
+            android:name="comp3350.grs.presentation.LoginBackground"
             tools:layout="@layout/fragment_login_background"
             android:id="@+id/fragment"
             tools:layout_editor_absoluteY="0dp"

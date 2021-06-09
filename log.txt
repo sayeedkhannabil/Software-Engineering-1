@@ -6,7 +6,7 @@ Meeting3: 6/3 topics:discuessed what we have done, and decide to combine review
     and rating class into one class
 Shiqing Guo scraped some data from steam and stored it into a csv file
     (expected:3 hour;actual:2 hour);
-Shiqing Guo write the user class. The class contains two sub calsses which are
-    registered user and guest.(expected:4 hour;actual:3 hour)
+6.1~6.3:Shiqing Guo write the user class. The class contains two sub calsses
+    which are registered user and guest.(expected:4 hour;actual:3 hour)
 Meeting4: 1.word wrap 2. access feedback should be in access game
 

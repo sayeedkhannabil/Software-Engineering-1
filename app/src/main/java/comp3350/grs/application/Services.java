@@ -11,7 +11,7 @@ public class Services
 		if (dataAccessService == null)
 		{
 			dataAccessService = new DataAccessStub(dbName);
-			dataAccessService.open(Main.dbName);
+			dataAccessService.open(comp3350.grs.application.Main.dbName);
 		}
 		return dataAccessService;
 	}

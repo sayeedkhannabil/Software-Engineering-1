@@ -7,8 +7,10 @@
 
 package comp3350.grs.business; 
 import java.util.List; 
-import java.util.ArrayList; 
+import java.util.ArrayList;
 
+import comp3350.grs.application.Main;
+import comp3350.grs.application.Services;
 import comp3350.grs.persistence.DataAccessStub;
 import comp3350.grs.objects.Game; 
 
@@ -69,16 +71,16 @@ public class AccessGames
 
     public void insertGame(Game currentGame)
     {
-        return dataAccess.insertGame(currentGame);
+        dataAccess.insertGame(currentGame);
     }
 
     public void updateGame(Game currentGame)
     {
-        return dataAccess.updateGame(currentGame);
+        dataAccess.updateGame(currentGame);
     }
 
     public void deleteGame(Game currentGame)
     {
-        return dataAccess.deleteGame(currentGame);
+        dataAccess.deleteGame(currentGame);
     }
 }

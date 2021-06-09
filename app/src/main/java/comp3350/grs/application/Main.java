@@ -1,6 +1,6 @@
 package comp3350.grs.application;
 
-import comp3350.grs.presentation.CLI;
+
 
 public class Main
 {
@@ -10,7 +10,6 @@ public class Main
 	{
 		startUp();
 
-		CLI.run();
 		
 		shutDown();
 		System.out.println("All done");

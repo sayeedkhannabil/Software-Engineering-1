@@ -7,9 +7,10 @@
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:supportsRtl="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            >
-        <activity android:name="comp3350.grs.presentation.MainActivity">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".presentation.Write_review"></activity>
+        <activity android:name=".presentation.Game_page" />
+        <activity android:name=".presentation.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,28 +1,49 @@
 package comp3350.grs.objects;
 
 public class Feedback {
-    private Rating rate;
-    private Review comment;
+    private Rating rating;
+    private Review review;
+    private boolean isReview;
 
     public Feedback() {
-        this.rate = null;
-        this.comment = null;
+        this.rating = null;
+        this.review = null;
     }
 
-    public Feedback(Rating rate, Review comment) {
-        this.rate = rate;
-        this.comment = comment;
+    //only leaving a rating
+    public Feedback(Rating newRating)
+    {
+        rating = newRating;
+        review = null;
+        isReview = false;
     }
 
-    public Rating getRate() {
-        return rate;
+    //leaving a rating and review
+    public Feedback(Rating newRating, Review newReview) {
+        this.rating = newRating;
+        this.review = newReview;
+        isReview = true;
+    }
+
+    public boolean isReview()
+    {
+        return isReview;
+    }
+
+    public Rating getRating() {
+        return rating;
     }
 
     public Review getReview() {
-        return comment;
+        return review;
     }
 
     public String toString() {
-        return "Rating: " + this.rate + "\nReview: " + this.comment;
+        String toReturn = rating.toString();
+        if(isReview)
+        {
+            toReturn = rating.toString() + "\n" + review.toString();
+        }
+        return toReturn;
     }
 }

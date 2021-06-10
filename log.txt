@@ -2,18 +2,30 @@
     list of developer tasks ;distribute the tasks to group members
 5.29:Shiqing Guo scraped some data from steam and stored it into a csv file
     (expected:3 hour;actual:2 hour);
+Monday May 31, 2021: Katharine K created Rating object class 
+	(expected: 30 min, actual: 30 min)
+Monday May 31, 2021: Katharine K created AccessRatings business object class 
+	(expected: 30 min, actual: 30 min)
 6.1:meeting :get all members into the github repo;everyone report what
     we have done, how we implement it, and what we will do
 6.3:meeting:discuessed what we have done
 6.1~6.3:Shiqing Guo write the user class. The class contains two sub calsses
     which are registered user and guest.(expected:4 hour;actual:3 hour)
+Thurs June 3, 2021: Katharine K created Game Class 
+	(expected: 30 min, actual: 1 hour)
+Fri June 4, 2021: Katharine K created AccessGame Class  
+	(expected: 20 min, actual: 1 hour)
 6.4: Shiqing Guo write the business object for user class.(expected: 3 hour;
     actual:3 hour)
 6.4~6.6:Shiqing Guo write the databse class for user class(expected:8 hour;
     actual:4 hour)
+Sun June 6, 2021: Katharine K added Game and AccessGames to repository
+		     Updated DataAccessStub to include functions for AccessGames 
+	(expected: 1 hour, actual: 1.5 hours)
 6.8: Meeting4 : decide to include a list of feedback in game class, instead of
     separate review and rating, because sometimes review and rating are binded
     together; decide to finish all the work, except readme file before sunday ;
     decide everyone should follow the programming standard;
 6.9: Shiqing Guo
-
+Wed June 9, 2021: Katharine K updated Feedback class, updated Game class to support Feedback list 
+	(expected: 2 hours, actual: 3 hours)

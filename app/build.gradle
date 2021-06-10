@@ -26,6 +26,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.13'
+    testImplementation 'org.json:json:20080701'
     //noinspection GradleCompatible
     implementation 'androidx.appcompat:appcompat:1.0.0'
 }

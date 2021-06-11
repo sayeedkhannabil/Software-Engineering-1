@@ -6,4 +6,13 @@ public class Guest extends User{
         super("Guest");
     }
 
+    @Override
+    public String toString() {
+        return "type:guest,"+ super.toString();
+    }
+
+    @Override
+    public void changeUserID(String newID) throws Exception {
+        throw new Exception("can't change userID of guest.");
+    }
 }

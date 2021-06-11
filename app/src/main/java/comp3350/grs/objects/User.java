@@ -1,6 +1,6 @@
 package comp3350.grs.objects;
 
-public class User
+public abstract class User
 {
 	private String userID;
 
@@ -10,7 +10,14 @@ public class User
 
 	public User(String userID)
 	{
-		this.userID=userID;
+		if (userID.contains(" ")){
+			this.userID=null;
+		}
+		else{
+			this.userID=userID;
+		}
+
+
 	}
 
 
@@ -19,6 +26,9 @@ public class User
 		return userID;
 	}
 
+	public void changeUserID(String newID) throws Exception {
+		this.userID=newID;
+	}
 
 	public String toString()
 	{
@@ -32,7 +42,7 @@ public class User
 		
 		result = false;
 		
-		if (object instanceof User)
+		if (this.userID!=null&& object instanceof User)
 		{
 			user = (User) object;
 			if (user.userID.equals(this.userID))

@@ -10,7 +10,7 @@ public abstract class User
 
 	public User(String userID)
 	{
-		if (userID.contains(" ")){
+		if (userID.equals("")|| userID.contains(" ")){
 			this.userID=null;
 		}
 		else{

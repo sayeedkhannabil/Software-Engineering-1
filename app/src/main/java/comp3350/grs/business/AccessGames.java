@@ -32,19 +32,13 @@ public class AccessGames
 
     public List<Game> getGames()
     {
-        gameList.clear(); 
-        gameList.addAll(dataAccess.getAllGames()); 
+        gameList=dataAccess.getAllGames();
         return gameList;
     }
 
-    public Game findGame(Game toFind)
+    public Game findGame(String name)
     {
-        Game found = null;
-        if(toFind != null && gameList != null)
-        {
-            found = dataAccess.getGame(toFind);
-        }
-        return found; 
+        return dataAccess.getGame(new Game(name));
     }
 
     public Game getSequential()

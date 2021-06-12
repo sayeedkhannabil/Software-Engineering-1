@@ -1,15 +1,25 @@
 package comp3350.grs.persistence;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.os.Environment;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import comp3350.grs.R;
 import comp3350.grs.objects.Guest;
 import comp3350.grs.objects.User;
 import comp3350.grs.objects.Game;
@@ -33,14 +43,20 @@ public class DataAccessStub
 		this(Main.dbName);
 	}
 
-	public void open(String dbName) {
+
+
+
+	public void open(String dbName,String content) {
 		games=new ArrayList<Game>();
-		String content = null;
-		try {
-			content = new Scanner(new File("src/main/java/comp3350/grs/persistence/csvjson.json")).useDelimiter("\\Z").next();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+
+		if (content==null){
+			try {
+				content = new Scanner(new File("src/main/java/comp3350/grs/persistence/csvjson.json")).useDelimiter("\\Z").next();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
+
 		JSONArray jsonArray = null;
 		try {
 			jsonArray = new JSONArray(content);

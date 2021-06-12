@@ -25,7 +25,7 @@ public class DataAccessStubTest {
         List<Game> games;
         Game game;
         db=new DataAccessStub("testDb");
-        db.open("testDb");
+        db.open("testDb",null);
         games= db.getAllGames();
         for (int i = 0; i < games.size(); i++) {
             game=games.get(i);

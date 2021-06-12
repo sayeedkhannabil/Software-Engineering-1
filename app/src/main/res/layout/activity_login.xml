@@ -7,6 +7,7 @@
         tools:context="comp3350.grs.presentation.Login">
 
     <fragment
+            android:name="comp3350.grs.presentation.LoginBackground"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:layout="@layout/fragment_login_background"
@@ -15,6 +16,7 @@
             android:id="@+id/fragment2"></fragment>
 
     <fragment
+            android:name="comp3350.grs.presentation.userid_and_pass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:layout="@layout/fragment_userid_and_pass"

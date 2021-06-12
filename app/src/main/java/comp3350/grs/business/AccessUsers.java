@@ -12,7 +12,7 @@ public class AccessUsers {
 
     private DataAccessStub dataAccess;
     private List<User> users;
-    private User currentUser;
+    private static User currentUser;
     private int currentUserIndex;
 
     public AccessUsers()
@@ -21,6 +21,14 @@ public class AccessUsers {
         users = null;
         currentUser = null;
         currentUserIndex = 0;
+    }
+
+    public static User getCurrentUser(){
+        return currentUser;
+    }
+
+    public static void setCurrentUser(User user){
+        currentUser=user;
     }
 
     public List<User> getUsers()
@@ -64,17 +72,17 @@ public class AccessUsers {
         return currentUser;
     }
 
-    public void insertStudent(User newUser)
+    public void insertUser(User newUser)
     {
         dataAccess.insertUser(newUser);
     }
 
-    public void updateStudent(User currentUser)
+    public void updateUser(User currentUser)
     {
         dataAccess.updateUser(currentUser);
     }
 
-    public void deleteStudent(User user)
+    public void deleteUser(User user)
     {
         dataAccess.deleteUser(user);
     }

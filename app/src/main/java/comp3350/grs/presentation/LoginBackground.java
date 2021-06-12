@@ -1,10 +1,13 @@
 package comp3350.grs.presentation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import comp3350.grs.R;
 
@@ -55,10 +58,42 @@ public class LoginBackground extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login_background, container, false);
+        View view= inflater.inflate(R.layout.fragment_login_background,
+                container, false);
+
+        TextView signin=(TextView) view.findViewById(R.id.textView4);
+        signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getActivity(),Login.class);
+                startActivity(intent);
+            }
+        });
+
+        Button signup=(Button) view.findViewById(R.id.button);
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getActivity(),Signup.class);
+                startActivity(intent);
+            }
+        });
+
+        Button ctnAsGst=(Button) view.findViewById(R.id.button2);
+        ctnAsGst.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getActivity(),Game_gallery.class);
+                startActivity(intent);
+            }
+        });
+        return view;
     }
 }

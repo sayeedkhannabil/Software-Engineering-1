@@ -75,7 +75,12 @@ public class RegisteredUserTest {
 
     @Test
     public void testGuest(){
-        RegisteredUser user=new RegisteredUser("Guest");
+        RegisteredUser user= null;
+        try {
+            user = new RegisteredUser("Guest");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         assertNull(user.getUserID());
     }
 

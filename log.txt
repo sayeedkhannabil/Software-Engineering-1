@@ -29,3 +29,7 @@ Sun June 6, 2021: Katharine K added Game and AccessGames to repository
 6.9: Shiqing Guo
 Wed June 9, 2021: Katharine K updated Feedback class, updated Game class to support Feedback list 
 	(expected: 2 hours, actual: 3 hours)
+6.10: Shiqing Guo finished the "open" method of databse.(expected: 2 hours,
+    actual:2 hours)
+6.11:Shiqing Guo updated the test guest class and test registered user class.
+    (expected:4 hours, actual:2 hours)

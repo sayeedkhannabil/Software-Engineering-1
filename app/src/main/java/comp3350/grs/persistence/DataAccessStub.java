@@ -1,15 +1,31 @@
 package comp3350.grs.persistence;
+// CLASS: DataAccessStub
+//
+// Author: Shiqing Guo
+//
+// REMARKS: the database which stores users and games
+//
+//-----------------------------------------
+import android.content.Context;
+import android.content.res.Resources;
+import android.os.Environment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import comp3350.grs.R;
 import comp3350.grs.objects.Guest;
 import comp3350.grs.objects.User;
 import comp3350.grs.objects.Game;
@@ -33,14 +49,34 @@ public class DataAccessStub
 		this(Main.dbName);
 	}
 
-	public void open(String dbName) {
+
+
+	//------------------------------------------------------
+	// open
+	//
+	// PURPOSE:    open the database, create a bunch of objects according to
+	// the json file scraped from steam
+	// PARAMETERS:
+	//     dbName: name of the database
+	//		content: the string read from json file. when we are dealing with
+	//		pure java(eg. test database), we can just pass null and let this
+	//		method to read from json. but when we are running on a android
+	//		simulator, the path of json is not valid anymore, we must read
+	//		the file using the android way in activity class, and pass the
+	//		string content as parameter
+	// Returns: void
+	//------------------------------------------------------
+	public void open(String dbName,String content) {
 		games=new ArrayList<Game>();
-		String content = null;
-		try {
-			content = new Scanner(new File("src/main/java/comp3350/grs/persistence/csvjson.json")).useDelimiter("\\Z").next();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+
+		if (content==null){
+			try {
+				content = new Scanner(new File("src/main/res/raw/csvjson.json")).useDelimiter("\\Z").next();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
+
 		JSONArray jsonArray = null;
 		try {
 			jsonArray = new JSONArray(content);
@@ -71,6 +107,7 @@ public class DataAccessStub
 		System.out.println("Closed " +dbType +" database " +dbName);
 	}
 
+	//get all the users in database
 	public List<User> getAllUsers()
 	{
 		List<User> result=new ArrayList<User>();
@@ -78,6 +115,7 @@ public class DataAccessStub
 		return result;
 	}
 
+	//get a specific user
 	public User getUser(User user){
 		int index= users.indexOf(user);
 		User result=null;

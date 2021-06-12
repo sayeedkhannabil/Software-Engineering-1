@@ -31,6 +31,22 @@ public class Game
         feedback = new ArrayList<Feedback>();
     }
 
+    public Game(String gameName)
+    {
+        name = gameName;
+        dev = null;
+        description = null;
+        currPrice = 0.0;
+
+        qualPts = 0;
+        numRatings = 0;
+        numReviews = 0;
+
+        //initialize overallRating and reviews to 0 and empty as the game is just being added (hence has no reviews/rating yet)
+        overallRating = 0.0;
+        feedback = new ArrayList<Feedback>();
+    }
+
     public String getName()
     {
         return name;

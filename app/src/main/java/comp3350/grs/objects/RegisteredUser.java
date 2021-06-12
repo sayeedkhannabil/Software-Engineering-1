@@ -1,13 +1,22 @@
 package comp3350.grs.objects;
-
+// CLASS: RegisteredUser
+//
+// Author: Shiqing Guo
+//
+// REMARKS: domain object of the user who will use this app, and willing to
+// signup
+//
+//-----------------------------------------
 public class RegisteredUser extends User{
     private String password;
 
     public RegisteredUser(String userID,String password) throws Exception {
         super(userID);
+        //if userid is not valid, set it to null
         if (!checkUserID(userID)){
             super.changeUserID(null);
         }
+        //password can't contain space
         if (password.contains(" ")){
             this.password=null;
         }
@@ -17,8 +26,11 @@ public class RegisteredUser extends User{
 
     }
 
-    public RegisteredUser(String userID){
+    public RegisteredUser(String userID) throws Exception {
         super(userID);
+        if (!checkUserID(userID)){
+            super.changeUserID(null);
+        }
         password=null;
     }
 
@@ -27,7 +39,16 @@ public class RegisteredUser extends User{
         password=null;
     }
 
+    //------------------------------------------------------
+    // checkUserID
+    //
+    // PURPOSE:    check if the user id is valid
+    // PARAMETERS:
+    //     userID: the userid to be checked
+    // Returns: boolean to indicate whether the userid is valid or not
+    //------------------------------------------------------
     public boolean checkUserID(String userID){
+        //registered userid shouldn't be "Guest"
         if (userID.equals("Guest")){
             return false;
         }
@@ -36,6 +57,7 @@ public class RegisteredUser extends User{
         }
     }
 
+    //check if the given password is the same as the password signed up
     public boolean validPass(String password){
         if (this.password!=null){
             return this.password.equals(password);

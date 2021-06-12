@@ -9,6 +9,7 @@
     <fragment
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:name="comp3350.grs.presentation.LoginBackground"
             tools:layout="@layout/fragment_login_background"
             android:id="@+id/fragment3"
             tools:layout_editor_absoluteY="-64dp"
@@ -31,6 +32,7 @@
             android:padding="10dp" />
 
     <fragment
+            android:name="comp3350.grs.presentation.userid_and_pass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:layout="@layout/fragment_userid_and_pass"

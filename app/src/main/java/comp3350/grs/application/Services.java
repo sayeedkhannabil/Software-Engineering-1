@@ -6,12 +6,12 @@ public class Services
 {
 	private static DataAccessStub dataAccessService = null;
 
-	public static DataAccessStub createDataAccess(String dbName)
+	public static DataAccessStub createDataAccess(String dbName,String content)
 	{
 		if (dataAccessService == null)
 		{
 			dataAccessService = new DataAccessStub(dbName);
-			dataAccessService.open(comp3350.grs.application.Main.dbName);
+			dataAccessService.open(comp3350.grs.application.Main.dbName,content);
 		}
 		return dataAccessService;
 	}

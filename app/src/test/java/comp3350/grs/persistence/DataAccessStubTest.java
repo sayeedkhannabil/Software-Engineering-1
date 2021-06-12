@@ -1,5 +1,11 @@
 package comp3350.grs.persistence;
-
+// CLASS: DataAccessStubTest...
+//
+// Author: Shiqing
+//
+// REMARKS: What is the purpose of this class?
+// Test database, not finished yet
+//-----------------------------------------
 import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,13 +25,15 @@ public class DataAccessStubTest {
         db=new DataAccessStub("testDb");
     }
 
+    //for this specific class, test based on scenario is not reasonable, so
+    // test a method instead
     @Test
     public void testOpen(){
         DataAccessStub db;
         List<Game> games;
         Game game;
         db=new DataAccessStub("testDb");
-        db.open("testDb");
+        db.open("testDb",null);
         games= db.getAllGames();
         for (int i = 0; i < games.size(); i++) {
             game=games.get(i);

@@ -1,5 +1,12 @@
 package comp3350.grs.objects;
-
+// CLASS: User
+//
+// Author: Shiqing Guo
+//
+// REMARKS: domain object of the user who will use this app
+//	this is an abstract class
+//
+//-----------------------------------------
 public abstract class User
 {
 	private String userID;
@@ -10,7 +17,8 @@ public abstract class User
 
 	public User(String userID)
 	{
-		if (userID.contains(" ")){
+		//userid should not contain space or be empty
+		if (userID.equals("")|| userID.contains(" ")){
 			this.userID=null;
 		}
 		else{
@@ -34,7 +42,16 @@ public abstract class User
 	{
 		return "userID:" + userID;
 	}
-	
+
+
+	//------------------------------------------------------
+	// equals
+	//
+	// PURPOSE:    compare this user with the user given
+	// PARAMETERS:
+	//     object: the given user to compare
+	// Returns: a boolean to indicate whether this user equals to given user
+	//------------------------------------------------------
 	public boolean equals(Object object)
 	{
 		boolean result;
@@ -45,6 +62,7 @@ public abstract class User
 		if (this.userID!=null&& object instanceof User)
 		{
 			user = (User) object;
+			//if user id are the same , they are equal
 			if (user.userID.equals(this.userID))
 			{
 				result = true;

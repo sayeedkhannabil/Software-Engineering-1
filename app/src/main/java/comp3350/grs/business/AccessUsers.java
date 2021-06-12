@@ -1,5 +1,11 @@
 package comp3350.grs.business;
-
+// CLASS: AccessUsers...
+//
+// Author: Shiqing
+//
+// REMARKS: What is the purpose of this class?
+// access users
+//-----------------------------------------
 import java.util.List;
 
 import comp3350.grs.application.Main;
@@ -12,23 +18,36 @@ public class AccessUsers {
 
     private DataAccessStub dataAccess;
     private List<User> users;
-    private User currentUser;
-    private int currentUserIndex;
+    private static User activeUser;//the user logged in to the app
+    private User currentUser;//used for return sequantial user
+    private int currentUserIndex;//index of current user
 
     public AccessUsers()
     {
         dataAccess = (DataAccessStub) Services.getDataAccess(Main.dbName);
         users = null;
-        currentUser = null;
+        activeUser = null;
+        currentUser=null;
         currentUserIndex = 0;
     }
 
+    public static User getActiveUser(){
+        return activeUser;
+    }
+
+    //set the user who logged in to be the given user
+    public static void setActiveUser(User user){
+        activeUser=user;
+    }
+
+    //get a list of all the users
     public List<User> getUsers()
     {
         users=dataAccess.getAllUsers();
         return users;
     }
 
+    //get users one by one
     public User getSequential()
     {
         if (users == null)
@@ -50,8 +69,8 @@ public class AccessUsers {
         return currentUser;
     }
 
-    public User getRandom(String userID)
-    {
+    //get a specific user according to userID
+    public User getRandom(String userID) throws Exception {
         currentUser = null;
         if (userID.trim().equals(""))
         {
@@ -64,17 +83,17 @@ public class AccessUsers {
         return currentUser;
     }
 
-    public void insertStudent(User newUser)
+    public void insertUser(User newUser)
     {
         dataAccess.insertUser(newUser);
     }
 
-    public void updateStudent(User currentUser)
+    public void updateUser(User user)
     {
-        dataAccess.updateUser(currentUser);
+        dataAccess.updateUser(user);
     }
 
-    public void deleteStudent(User user)
+    public void deleteUser(User user)
     {
         dataAccess.deleteUser(user);
     }

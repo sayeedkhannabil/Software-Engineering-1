@@ -25,11 +25,13 @@ Sun June 6, 2021: Katharine K added Game and AccessGames to repository
 6.8: Meeting4 : decide to include a list of feedback in game class, instead of
     separate review and rating, because sometimes review and rating are binded
     together; decide to finish all the work, except readme file before sunday ;
-    decide everyone should follow the programming standard;
-6.9: Shiqing Guo
+    decide everyone should follow the programming standard;decide to redesign
+    the UI to make it prettier.
 Wed June 9, 2021: Katharine K updated Feedback class, updated Game class to support Feedback list 
 	(expected: 2 hours, actual: 3 hours)
 6.10: Shiqing Guo finished the "open" method of databse.(expected: 2 hours,
     actual:2 hours)
 6.11:Shiqing Guo updated the test guest class and test registered user class.
     (expected:4 hours, actual:2 hours)
+6.12:Shiqing Guo finished UI for login, signup, game gallery, and game details
+    (expected:20 hours, actual :13 hours)

@@ -9,8 +9,6 @@ public class Main
 	public static void main(String[] args)
 	{
 		startUp(null);
-
-		
 		shutDown();
 		System.out.println("All done");
 	}

@@ -25,6 +25,14 @@ public class Feedback {
         isReview = true;
     }
 
+    public boolean validFeedback() {
+        if (this.rating.getRating() > 0 && this.rating.getRating() <= 5) {
+            return true;
+        }
+
+        return false;
+    }
+
     public boolean isReview()
     {
         return isReview;

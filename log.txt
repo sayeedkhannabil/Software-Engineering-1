@@ -74,4 +74,4 @@ Mon June 14, 2021: Hasin finished the sketch for the System Architecture
 	(expected: 1 hour, actual: 30 mins)
 
 Mon June 14, 2021: Katharine K corrected errors in the Game and GameTest classes
-    (expected: 30 min, actual: 30 min)
+    (expected: 30 min, actual: 1 hour)

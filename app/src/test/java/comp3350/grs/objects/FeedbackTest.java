@@ -1,24 +1,28 @@
 package comp3350.grs.objects;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class FeedbackTest {
+public class FeedbackTest extends TestCase{
+    private static Feedback f;
+
     @Test
-    public void emptyFeedback() {
-        Feedback f = new Feedback();
-        assertNull(f.getRating());
-        assertNull(f.getReview());
+    public static void testEmptyFeedback() {
+        f = new Feedback();
+        assert(f.getRating() == null);
+        assert(f.getReview() == null);
     }
 
     @Test
-    public void invalidity() {
+    public static void testInvalidity() {
         Rating r = new Rating(-4);
         Review rev = new Review("rev");
 
-        Feedback f = new Feedback(r, rev);
+        f = new Feedback(r, rev);
 
-        assertFalse (f.validFeedback());
+        assert (!f.validFeedback());
 
     }
 }

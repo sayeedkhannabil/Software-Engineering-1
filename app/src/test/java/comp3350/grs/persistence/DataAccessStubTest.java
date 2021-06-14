@@ -6,6 +6,8 @@ package comp3350.grs.persistence;
 // REMARKS: What is the purpose of this class?
 // Test database, not finished yet
 //-----------------------------------------
+import junit.framework.TestCase;
+
 import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +19,7 @@ import java.util.List;
 import comp3350.grs.objects.Game;
 import comp3350.grs.persistence.DataAccessStub;
 
-public class DataAccessStubTest {
+public class DataAccessStubTest extends TestCase {
     DataAccessStub db;
 
     @Before

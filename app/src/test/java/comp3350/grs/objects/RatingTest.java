@@ -1,9 +1,11 @@
 package comp3350.grs.objects;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class RatingTest {
+public class RatingTest extends TestCase {
     @Test
     public void test() {
         Rating r = new Rating(3);

@@ -1,13 +1,15 @@
 package comp3350.grs.objects;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class GuestTest {
+public class GuestTest extends TestCase {
 
     @Test
-    public void test(){
+    public void test() {
         Guest guest=new Guest();
         assert (guest.getUserID().equals("Guest"));
         assert (guest.toString().equals("type:guest,userID:Guest"));

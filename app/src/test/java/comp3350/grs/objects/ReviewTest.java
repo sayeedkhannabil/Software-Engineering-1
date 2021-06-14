@@ -1,9 +1,11 @@
 package comp3350.grs.objects;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class ReviewTest {
+public class ReviewTest extends TestCase {
     @Test
     public void emptyReview() {
         Review r = new Review();

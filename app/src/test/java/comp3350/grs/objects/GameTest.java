@@ -1,10 +1,12 @@
 package comp3350.grs.objects;
+import junit.framework.TestCase;
+
 import org.junit.BeforeClass;
 import java.util.ArrayList;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class GameTest {
+public class GameTest extends TestCase {
     private Game typicalGame = new Game("TypicalGame", "TypicalDeveloper", "TypicalDescription", 20.00);
     private Game typicalGameSimple = new Game("GameWithOnlyAName");
     private Game nullGame = new Game();

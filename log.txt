@@ -19,9 +19,13 @@ Fri June 4, 2021: Katharine K created AccessGame Class
     actual:3 hour)
 6.4~6.6:Shiqing Guo write the databse class for user class(expected:8 hour;
     actual:4 hour)
+Fri June 4, 2021: Hasin finished the UI for login
+	(expected: 4 hours, actual: 4 hours)
 Sun June 6, 2021: Katharine K added Game and AccessGames to repository
 		     Updated DataAccessStub to include functions for AccessGames 
 	(expected: 1 hour, actual: 1.5 hours)
+Tue June 8, 2021: Hasin finished the UI for BrowseGame
+	(expected: 5 hours, actual: 6 hours)
 6.8: Meeting4 : decide to include a list of feedback in game class, instead of
     separate review and rating, because sometimes review and rating are binded
     together; decide to finish all the work, except readme file before sunday ;

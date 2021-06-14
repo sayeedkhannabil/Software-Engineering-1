@@ -43,3 +43,5 @@ Sat June 12, 2021: Katharine K wrote test class for Game object
     (expected: 1 hours, actual: 2 hours)
 Sun June 13, 2021: Katharine K wrote test class for Game object, updated Review and Rating classes to contain active user data
     (expected: 2 hours, actual: 3 hours)
+Mon June 14, 2021: Hasin finished the sketch for the System Architecture
+	(expected: 1 hour, actual: 30 mins)

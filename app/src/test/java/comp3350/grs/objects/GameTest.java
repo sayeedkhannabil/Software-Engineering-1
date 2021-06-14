@@ -32,19 +32,19 @@ public class GameTest {
         typicalGame.addRating(1);
         assertEquals("The overall rating for game "+typicalGame.getName()+" should now be 1 out of 5 stars.", 1, typicalGame.getRating(), 0);
         typicalGameSimple.addRating(3);
-        assertEquals("The overall rating for game "+typicalGameSimple.getName()+" should now be 3 out of 5 stars.", 3, typicalGame.getRating(), 0);
+        assertEquals("The overall rating for game "+typicalGameSimple.getName()+" should now be 3 out of 5 stars.", 3, typicalGameSimple.getRating(), 0);
     }
 
     @Test
     public void testMultipleRatingCalculation()
     {
         typicalGame.addRating(5);
-        assertEquals("The overall rating for game "+typicalGame.getName()+" should now be 3 out of 5 stars.", 3, typicalGame.getRating(), 0);
+        assertEquals("The overall rating for game "+typicalGame.getName()+" should now be 5 out of 5 stars.", 5, typicalGame.getRating(), 0);
 
         //Test adding typical reviews to typical Game objects (the rating is also updated when adding reviews)
         //first review
         typicalGame.addReview(4, "Good game.");
-        assertEquals("The overall rating for game "+typicalGame.getName()+" should now be 3.33 out of 5 stars.", 3.33, typicalGame.getRating(), .01);
+        assertEquals("The overall rating for game "+typicalGame.getName()+" should now be 4.5 out of 5 stars.", 4.5, typicalGame.getRating(), .01);
         ArrayList<Review> typicalGameReviews = typicalGame.getReviews();
         assertTrue(typicalGameReviews.size() == 1);
         Review firstReview = typicalGameReviews.get(0);
@@ -54,7 +54,7 @@ public class GameTest {
         typicalGame.addReview(5, "Best game ever." );
         typicalGame.addReview(2, "Game is ok.");
         typicalGameReviews = typicalGame.getReviews();
-        assertEquals("Overall rating for game "+typicalGame.getName()+" should now be 3.4 out of 5 stars.", 3.4, typicalGame.getRating(), 0.01);
+        assertEquals("Overall rating for game "+typicalGame.getName()+" should now be 4 out of 5 stars.", 4, typicalGame.getRating(), 0.01);
         assertEquals(3, typicalGameReviews.size());
     }
 
@@ -62,7 +62,6 @@ public class GameTest {
     public void testNull()
     {
         //test Games created with default constructor
-        assertNull(nullGame.getName());
         assertNull(nullGame.getDev());
         assertNull(nullGame.getDescription());
 
@@ -78,9 +77,9 @@ public class GameTest {
     public void testEqualsSelf()
     {
         //games are equal if they have the same name (or both have a null field for a name), and are both Game objects
-        assertTrue(nullGame.equals(nullGame));
-        assertTrue(typicalGameSimple.equals(typicalGameSimple));
-        assertTrue(typicalGame.equals(typicalGame));
+        assertEquals(true, nullGame.equals(nullGame));
+        assertEquals(true, typicalGameSimple.equals(typicalGameSimple));
+        assertEquals(true, typicalGame.equals(typicalGame));
     }
 
     @Test
@@ -89,15 +88,16 @@ public class GameTest {
         Game sameName = new Game("TypicalGame", "testDev", "TestDesc", 0.0);
         assertTrue(typicalGame.equals(sameName)); //because they have the same name
 
-        assertFalse(nullGame.equals(typicalGameSimple));
-        assertFalse(nullGame.equals(typicalGame));
-        assertFalse(typicalGameSimple.equals(typicalGame));
+        assertEquals(false, nullGame.equals(typicalGameSimple));
+        assertEquals(false, nullGame.equals(typicalGame));
+        assertEquals(false, typicalGameSimple.equals(typicalGame));
     }
 
     @Test
     public void testInvalidInput()
     {
         Game tester = new Game ("Tester", "TestDev", "TestDesc", 0.0);
+
         //test adding ratings to a null game
         nullGame.addRating(1);
         nullGame.addRating(3);

@@ -59,7 +59,7 @@ public class Game
     //default constructor
     public Game()
     {
-        name = null;
+        name = "null";
         dev = null;
         description = null;
         currPrice = -1;
@@ -70,7 +70,7 @@ public class Game
 
         //feedback is a null list for a game with no name (default)
         overallRating = 0.0;
-        feedback = null;
+        feedback = new ArrayList<Feedback>();
     }
 
     public String getName()
@@ -97,7 +97,7 @@ public class Game
         /* create new Rating object and new Feedback object, add Feedback object to list*/
         Rating rating;
         Feedback newFeedback;
-        if(newRating >= 1 && name != null)
+        if(newRating >= 1 && !name.equals("null"))
         {
             rating = new Rating(newRating);
             newFeedback = new Feedback(rating);
@@ -111,7 +111,7 @@ public class Game
 
     public double getRating()
     {
-        if(overallRating == 0.0 && name != null)
+        if(overallRating == 0.0 && !name.equals(null))
         {
             System.out.println("The game "+name+" has not yet been rated.");
         }
@@ -135,7 +135,7 @@ public class Game
         Rating rating = new Rating(newRating);
         Review review = new Review(newReview);
         Feedback newFeedback;
-        if(rating.getRating() >= 1 && !newReview.equals("") && name != null)
+        if(rating.getRating() >= 1 && !newReview.equals("") && !name.equals("null"))
         {
             newFeedback = new Feedback(rating, review);
             feedback.add(newFeedback);

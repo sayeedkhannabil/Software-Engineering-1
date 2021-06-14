@@ -20,6 +20,6 @@ public class Review {
     }
 
     public String toString() {
-        return "UserID: "+user.getUserID()+"Review: " + comment;
+        return "UserID: "+user.getUserID()+"\nReview: " + comment+"\n";
     }
 }

@@ -18,7 +18,7 @@ public class Game
 
     private double overallRating; //average of all ratings provided by users for this game 
     private ArrayList<Feedback> feedback; //these will determine overallRating (the rating the user sees)
-    private int qualPts; //all ratings added (to get average)
+    private double qualPts; //all ratings added (to get average)
     private int numRatings;
     private int numReviews;
 
@@ -92,15 +92,13 @@ public class Game
     //     newRating(int): the rating with which to create Rating object and update overall rating, if the rating given is valid
     // Returns: void
     //------------------------------------------------------
-    public void addRating(int newRating)
+    public void addRating(double newRating)
     {
         /* create new Rating object and new Feedback object, add Feedback object to list*/
-        Rating rating;
-        Feedback newFeedback;
-        if(newRating >= 1 && !name.equals("null"))
+        Rating rating = new Rating(newRating);
+        Feedback newFeedback = new Feedback(rating);
+        if(newRating > 0 && !name.equals("null"))
         {
-            rating = new Rating(newRating);
-            newFeedback = new Feedback(rating);
             feedback.add(newFeedback);
             //update overallRating
             updateOverall(rating);
@@ -111,7 +109,7 @@ public class Game
 
     public double getRating()
     {
-        if(overallRating == 0.0 && !name.equals(null))
+        if(overallRating == 0.0 && !name.equals("null"))
         {
             System.out.println("The game "+name+" has not yet been rated.");
         }
@@ -129,7 +127,7 @@ public class Game
     // Returns: void
     //------------------------------------------------------
 
-    public void addReview(int newRating, String newReview)
+    public void addReview(double newRating, String newReview)
     {
         /* create new Rating object, new Review object and new Feedback object, add Feedback object to list*/
         Rating rating = new Rating(newRating);
@@ -160,7 +158,7 @@ public class Game
 
     private void updateOverall(Rating rating)
     {
-        int toAdd = rating.getRating();
+        double toAdd = rating.getRating();
         qualPts += toAdd;
         numRatings++;
         overallRating = 1.0 * qualPts/numRatings;

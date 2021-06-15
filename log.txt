@@ -62,12 +62,12 @@ Wed June 9, 2021: Katharine K updated Feedback class, updated Game class to supp
 6.12:Shiqing Guo finished UI for login, signup, game gallery, and game details
     (expected:20 hours, actual :13 hours)
 
-6.12:Shiqing Guo finished UI for login, signup, game gallery, and game details
-    (expected:20 hours, actual :13 hours)
-    
 Sat June 12, 2021: Gongyu Liao edited UI layout and button feature for start page, log-in page, and sign-up page.
     (expected:5 hours, actual: 6 hours)
 
+6.12:Shiqing Guo finished UI for login, signup, game gallery, and game details
+    (expected:20 hours, actual :13 hours)
+    
 Sat June 12, 2021: Katharine K wrote test class for Game object
     (expected: 1 hours, actual: 2 hours)
 

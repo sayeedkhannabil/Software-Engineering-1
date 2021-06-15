@@ -10,7 +10,7 @@ Monday May 31, 2021: Katharine K created Rating object class
 Monday May 31, 2021: Katharine K created AccessRatings business object class
 	(expected: 30 min, actual: 30 min)
 	
-Monday May 31, 2021: Gongyu Liao process the scraped data from steam in a csv file
+Mon May 31, 2021: Gongyu Liao process the scraped data from steam in a csv file
         (expected: 1 hour, actual: 1 hour)
 
 6.1:meeting :get all members into the github repo;everyone report what
@@ -65,7 +65,7 @@ Wed June 9, 2021: Katharine K updated Feedback class, updated Game class to supp
 6.12:Shiqing Guo finished UI for login, signup, game gallery, and game details
     (expected:20 hours, actual :13 hours)
     
-6.12:Gongyu Liao edited UI layout and button feature for start page, log-in page, and sign-up page.
+Sat June 12, 2021: Gongyu Liao edited UI layout and button feature for start page, log-in page, and sign-up page.
     (expected:5 hours, actual: 6 hours)
 
 Sat June 12, 2021: Katharine K wrote test class for Game object

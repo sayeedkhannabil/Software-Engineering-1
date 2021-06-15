@@ -8,9 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#7fe5f0</color>
-    <color name="green">#0ff1ce</color>
-    <color name="pink">#ff80ed</color>
     <color name="blue2">#407294</color>
+    <color name="pink">#ff80ed</color>
+    <color name="green">#5ac18e</color>
     <color name="orange">#ffd700</color>
     <color name="grey">#cbcba9</color>
 </resources>

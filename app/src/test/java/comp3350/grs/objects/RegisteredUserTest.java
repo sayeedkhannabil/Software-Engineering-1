@@ -14,8 +14,6 @@ public class RegisteredUserTest extends TestCase {
     public void testTypical() throws Exception {
         RegisteredUser user=new RegisteredUser("myUserID","myPass");
         assert(user.getUserID().equals("myUserID"));
-        assert (user.toString().equals("type:registered user,userID:myUserID," +
-                "password:myPass"));
         assert (user.equals(new RegisteredUser("myUserID")));
         assert (user.equals(new RegisteredUser("myUserID","anotherPass")));
         assertFalse(user.equals(new RegisteredUser("anotherUserID")));
@@ -26,8 +24,6 @@ public class RegisteredUserTest extends TestCase {
 
         user.changeUserID("anotherUserID");
         assert(user.getUserID().equals("anotherUserID"));
-        assert (user.toString().equals("type:registered user,userID:anotherUserID," +
-                "password:myPass"));
         assert (user.equals(new RegisteredUser("myUserID")));
         assert (user.equals(new RegisteredUser("anotherUserID","anotherPass")));
         assertFalse(user.equals(new RegisteredUser("myUserID")));
@@ -41,8 +37,6 @@ public class RegisteredUserTest extends TestCase {
         RegisteredUser user=new RegisteredUser();
         assertNull(user.getUserID());
         assertFalse(user.equals(new RegisteredUser()));
-        assert (user.toString().equals("type:registered user,userID:null," +
-                "password:null"));
         assertFalse (user.validPass(null));
         assertFalse(user.validPass("myPass"));
         assertNull (user.getPassword());
@@ -52,8 +46,6 @@ public class RegisteredUserTest extends TestCase {
     public void testOneLetter() throws Exception {
         RegisteredUser user=new RegisteredUser("u","p");
         assert (user.getUserID().equals("u"));
-        assert (user.toString().equals("type:registered user,userID:u," +
-                "password:p"));
         assert (user.equals(new RegisteredUser("u")));
         assertFalse(user.equals(new RegisteredUser("p")));
         assert (user.validPass("p"));

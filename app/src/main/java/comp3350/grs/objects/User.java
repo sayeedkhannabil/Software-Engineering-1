@@ -43,6 +43,14 @@ public abstract class User
 		return "userID:" + userID;
 	}
 
+	public boolean validUser(){
+		if (this.userID!=null){
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
 	//------------------------------------------------------
 	// equals

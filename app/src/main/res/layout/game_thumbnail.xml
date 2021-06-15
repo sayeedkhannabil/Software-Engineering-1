@@ -3,7 +3,8 @@
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_background3"
+        android:background="@drawable/rounded_rectangle"
+        android:backgroundTint="@color/grey"
         android:id="@+id/thumbnail"
         android:layout_marginVertical="20dp"
         android:layout_marginHorizontal="10dp"
@@ -14,16 +15,18 @@
             android:layout_width="280dp"
             android:layout_height="280dp"
             android:src="@drawable/logo1"
-            android:background="@drawable/rounded_logo">
+            android:background="@drawable/rounded_rectangle"
+            >
 
     </ImageView>
 
     <TextView
-            android:id="@+id/game_name"
+            android:id="@+id/game_page_price"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="my game"
             android:textSize="30sp"
             android:gravity="center"
+            android:textColor="@color/black"
         ></TextView>
 </LinearLayout>

@@ -17,7 +17,7 @@ public class RegisteredUser extends User{
             super.changeUserID(null);
         }
         //password can't contain space
-        if (password.contains(" ")){
+        if (!checkPassword(password)){
             this.password=null;
         }
         else{
@@ -53,6 +53,15 @@ public class RegisteredUser extends User{
             return false;
         }
         else{
+            return true;
+        }
+    }
+
+    public boolean checkPassword(String password){
+        if (password.contains(" ")){
+            return false;
+        }
+        else {
             return true;
         }
     }

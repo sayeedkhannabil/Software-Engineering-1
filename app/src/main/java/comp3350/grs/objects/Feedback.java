@@ -5,6 +5,7 @@ public class Feedback {
     private Review review;
     private boolean isReview;
 
+    // default feedback
     public Feedback() {
         this.rating = null;
         this.review = null;
@@ -24,6 +25,7 @@ public class Feedback {
         this.review = newReview;
         isReview = true;
     }
+
 
     public boolean validFeedback() {
         if (this.rating.getRating() > 0 && this.rating.getRating() <= 5) {

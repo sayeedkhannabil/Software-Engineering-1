@@ -41,9 +41,10 @@ public class Signup extends AppCompatActivity {
                             password.getText().toString());
                     AccessUsers accessUsers=new AccessUsers();
                     accessUsers.insertUser(user);
-                    AccessUsers.setActiveUser(user);
+                    user=accessUsers.getRandom(userid.getText().toString());
                     if(user!=null){//the registration succeed, login to game
                         // gallery
+                        AccessUsers.setActiveUser(user);
                         Intent intent=new Intent(Signup.this,Game_gallery.class);
                         startActivity(intent);
                     }

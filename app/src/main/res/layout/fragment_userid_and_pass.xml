@@ -11,7 +11,7 @@
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="400dp"
             android:layout_height="80dp"
-            android:background="@drawable/input_box"
+            android:background="@drawable/shadow_box"
             app:layout_constraintTop_toBottomOf="@+id/textView"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="32dp"
@@ -29,7 +29,7 @@
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="400dp"
             android:layout_height="80dp"
-            android:background="@drawable/input_box"
+            android:background="@drawable/shadow_box"
             app:layout_constraintTop_toBottomOf="@+id/textView"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="104dp"

@@ -36,14 +36,14 @@ public class Login extends AppCompatActivity {
                         (TextInputEditText)findViewById(R.id.input_userid);
                 TextInputEditText password=
                         (TextInputEditText)findViewById(R.id.input_password);
-                String userids=userid.getText().toString();
-                String passwords=password.getText().toString();
+                String useridStr=userid.getText().toString();
+                String passwordStr=password.getText().toString();
                 try {
                     RegisteredUser user;
                     AccessUsers accessUsers=new AccessUsers();
-                    user=(RegisteredUser) accessUsers.getRandom(userids);
+                    user=(RegisteredUser) accessUsers.getRandom(useridStr);
                     //user exists in the database, and the password is valid
-                    if(user!=null&&user.validPass(passwords)){
+                    if(user!=null&&user.validPass(passwordStr)){
                         AccessUsers.setActiveUser(user);//set the user as active
                         Intent intent=new Intent(Login.this,Game_gallery.class);
                         //open the game gallery page

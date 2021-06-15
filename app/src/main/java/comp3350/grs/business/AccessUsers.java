@@ -85,16 +85,25 @@ public class AccessUsers {
 
     public void insertUser(User newUser)
     {
-        dataAccess.insertUser(newUser);
+        if (newUser!=null&&newUser.validUser()){
+            dataAccess.insertUser(newUser);
+        }
+
     }
 
     public void updateUser(User user)
     {
-        dataAccess.updateUser(user);
+        if (user!=null&&user.validUser()){
+            dataAccess.updateUser(user);
+        }
+
     }
 
     public void deleteUser(User user)
     {
-        dataAccess.deleteUser(user);
+        if (user!=null&&user.validUser()){
+            dataAccess.deleteUser(user);
+        }
+
     }
 }

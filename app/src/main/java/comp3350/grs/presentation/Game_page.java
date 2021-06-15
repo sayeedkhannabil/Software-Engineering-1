@@ -53,7 +53,7 @@ public class Game_page extends AppCompatActivity {
         TextView game_text = (TextView) findViewById(R.id.textView5);
         TextView dev_text = (TextView) findViewById(R.id.textView6);
         TextView des_text = (TextView) findViewById(R.id.textView7);
-        TextView price_text = (TextView) findViewById(R.id.textView9);
+        TextView price_text = (TextView) findViewById(R.id.game_page_price);
         RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         review_layout =
                 (LinearLayout) findViewById(R.id.review_layout);
@@ -61,7 +61,7 @@ public class Game_page extends AppCompatActivity {
 
 
         game_text.setText(game.getName());
-        dev_text.setText(game.getDev());
+        dev_text.setText("dev: " + game.getDev());
         des_text.setText(game.getDescription());
         price_text.setText("$" + game.getPrice());
         ratingBar.setRating((float) game.getRating());
@@ -87,7 +87,7 @@ public class Game_page extends AppCompatActivity {
                     write_review_button.setText("submit review");//change the
                     // text of the button
                     textInputLayout=new TextInputLayout(Game_page.this);
-                    textInputLayout.setBackground(getDrawable(R.drawable.rounded_background4));
+                    textInputLayout.setBackground(getDrawable(R.drawable.rounded_rectangle));
                     //show a input box used to write review
                     textInputEditText=
                             new TextInputEditText(Game_page.this);

@@ -13,11 +13,11 @@ import comp3350.grs.business.AccessUsers;
 
 public class Rating
 {
-    private int rating; //from one to five
+    private double rating; //from one to five
     private User user;
 
-    public Rating (int ratingGiven) {
-        rating = 0; // default -- if no ratings (or no valid ratings) given yet
+    public Rating (double ratingGiven) {
+        rating = 0.0; // default -- if no ratings (or no valid ratings) given yet
 
         //input validation
         if(ratingGiven > 0 && ratingGiven <= 5)
@@ -27,11 +27,11 @@ public class Rating
         }
         else
         {
-            System.out.println("Rating must be an integer between 1 and 5, inclusive. Try again.");
+            System.out.println("Rating must be between 1 and 5, inclusive. Try again.");
         }
     }
 
-    public int getRating()
+    public double getRating()
     {
         return rating;
     }
@@ -43,7 +43,7 @@ public class Rating
 
     public String toString()
     {
-        String str = "UserID: "+user.getUserID()+"Rating: "+rating+" out of 5 points.";
+        String str = "UserID: "+user.getUserID()+"\nRating: "+rating+" out of 5 points.\n";
         if(rating == 0)
         {
             str = "Invalid rating.";

@@ -1,18 +1,21 @@
 5.27:meeting:decide to use the sample project , since it will be easier;make a
     list of developer tasks ;distribute the tasks to group members
-    
+
 5.29:Shiqing Guo scraped some data from steam and stored it into a csv file
     (expected:3 hour;actual:2 hour);
-    
-Monday May 31, 2021: Katharine K created Rating object class 
+
+Monday May 31, 2021: Katharine K created Rating object class
 	(expected: 30 min, actual: 30 min)
 
 Monday May 31, 2021: Katharine K created AccessRatings business object class
 	(expected: 30 min, actual: 30 min)
 	
+Mon May 31, 2021: Gongyu Liao process the scraped data from steam in a csv file
+        (expected: 1 hour, actual: 1 hour)
+
 6.1:meeting :get all members into the github repo;everyone report what
     we have done, how we implement it, and what we will do
-    
+
 6.3:meeting:discuessed what we have done
 
 6.1~6.3:Shiqing Guo write the user class. The class contains two sub calsses
@@ -20,8 +23,8 @@ Monday May 31, 2021: Katharine K created AccessRatings business object class
 
 Thurs June 3, 2021: Katharine K created Game Class
 	(expected: 30 min, actual: 1 hour)
-	
-Fri June 4, 2021: Katharine K created AccessGame Class  
+
+Fri June 4, 2021: Katharine K created AccessGame Class
 	(expected: 20 min, actual: 1 hour)
 
 6.4: Shiqing Guo write the business object for user class.(expected: 3 hour;
@@ -32,11 +35,11 @@ Fri June 4, 2021: Katharine K created AccessGame Class
 
 Fri June 4, 2021: Hasin finished the UI for login
 	(expected: 4 hours, actual: 4 hours)
-	
+
 Sun June 6, 2021: Katharine K added Game and AccessGames to repository
-	Updated DataAccessStub to include functions for AccessGames 
+	Updated DataAccessStub to include functions for AccessGames
 	(expected: 1 hour, actual: 1.5 hours)
-	
+
 Tue June 8, 2021: Hasin finished the UI for BrowseGame
 	(expected: 5 hours, actual: 6 hours)
 
@@ -45,16 +48,23 @@ Tue June 8, 2021: Hasin finished the UI for BrowseGame
     together; decide to finish all the work, except readme file before sunday ;
     decide everyone should follow the programming standard;decide to redesign
     the UI to make it prettier.
-    
-Wed June 9, 2021: Katharine K updated Feedback class, updated Game class to support Feedback list 
+
+
+Wed June 9, 2021: Katharine K updated Feedback class, updated Game class to support Feedback list
 	(expected: 2 hours, actual: 3 hours)
-	
+
 6.10: Shiqing Guo finished the "open" method of databse.(expected: 2 hours,
     actual:2 hours)
-    
+
 6.11:Shiqing Guo updated the test guest class and test registered user class.
     (expected:4 hours, actual:2 hours)
     
+6.12:Shiqing Guo finished UI for login, signup, game gallery, and game details
+    (expected:20 hours, actual :13 hours)
+
+Sat June 12, 2021: Gongyu Liao edited UI layout and button feature for start page, log-in page, and sign-up page.
+    (expected:5 hours, actual: 6 hours)
+
 6.12:Shiqing Guo finished UI for login, signup, game gallery, and game details
     (expected:20 hours, actual :13 hours)
     
@@ -66,9 +76,9 @@ Sun June 13, 2021: Katharine K wrote test class for Game object, updated Review 
 
 Sun June 13, 2021: Group Meeting -- Discuss remaining tasks and hand-in time
     45 minutes
-    
+
 Mon June 14, 2021: Hasin finished the sketch for the System Architecture
 	(expected: 1 hour, actual: 30 mins)
 
 Mon June 14, 2021: Katharine K corrected errors in the Game and GameTest classes
-    (expected: 30 min, actual: 30 min)
+    (expected: 30 min, actual: 1 hour)

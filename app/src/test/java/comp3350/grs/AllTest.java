@@ -21,7 +21,6 @@ public class AllTest {
     {
         suite = new TestSuite("All tests");
         testObjects();
-        testBusiness();
         return suite;
     }
 
@@ -36,7 +35,4 @@ public class AllTest {
 
     }
 
-    private static void testBusiness() {
-        suite.addTestSuite(DataAccessStubTest.class);
-    }
 }

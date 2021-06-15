@@ -13,8 +13,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -57,7 +55,7 @@ public class Game_gallery extends AppCompatActivity {
             }
             inflater = getLayoutInflater();
             thumbnail = inflater.inflate(R.layout.game_thumbnail, newRow, false);
-            textView=thumbnail.findViewById(R.id.game_name);
+            textView=thumbnail.findViewById(R.id.game_page_price);
             textView.setText(game.getName());
             thumbnail.setId(i);
             newRow.addView(thumbnail);

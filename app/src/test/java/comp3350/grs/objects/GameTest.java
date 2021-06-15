@@ -45,8 +45,9 @@ public class GameTest extends TestCase {
 
         //Test adding typical reviews to typical Game objects (the rating is also updated when adding reviews)
         //first review
-        typicalGame.addReview(4, "Good game.");
-        assertEquals("The overall rating for game "+typicalGame.getName()+" should now be 4.5 out of 5 stars.", 4.5, typicalGame.getRating(), .01);
+        typicalGame.addReview(4.5, "Good game.");
+        assertEquals("The overall rating for game "+typicalGame.getName()+" should now be 4.75 out of 5 stars.", 4.75, typicalGame.getRating(), 0.01);
+
         ArrayList<Review> typicalGameReviews = typicalGame.getReviews();
         assertTrue(typicalGameReviews.size() == 1);
         Review firstReview = typicalGameReviews.get(0);
@@ -54,9 +55,9 @@ public class GameTest extends TestCase {
 
         //add two more reviews
         typicalGame.addReview(5, "Best game ever." );
-        typicalGame.addReview(2, "Game is ok.");
+        typicalGame.addReview(2.5, "Game is ok.");
         typicalGameReviews = typicalGame.getReviews();
-        assertEquals("Overall rating for game "+typicalGame.getName()+" should now be 4 out of 5 stars.", 4, typicalGame.getRating(), 0.01);
+        assertEquals("Overall rating for game "+typicalGame.getName()+" should now be 4.25 out of 5 stars.", 4.25, typicalGame.getRating(), 0.01);
         assertEquals(3, typicalGameReviews.size());
     }
 

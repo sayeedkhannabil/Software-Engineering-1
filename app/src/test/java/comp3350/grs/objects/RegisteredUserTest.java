@@ -23,7 +23,6 @@ public class RegisteredUserTest extends TestCase {
 
         user.changeUserID("anotherUserID");
         assert(user.getUserID().equals("anotherUserID"));
-        assert (user.equals(new RegisteredUser("myUserID")));
         assert (user.equals(new RegisteredUser("anotherUserID","anotherPass")));
         assertFalse(user.equals(new RegisteredUser("myUserID")));
         assert (user.validPass("myPass"));

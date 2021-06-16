@@ -1,3 +1,6 @@
+Thursday May 20, 2021: Sayeed created the project, added readme and log
+	(expected: 15 minutes, actual: 15 minutes)
+
 5.27:meeting:decide to use the sample project , since it will be easier;make a
     list of developer tasks ;distribute the tasks to group members
 
@@ -24,8 +27,14 @@ Mon May 31, 2021: Gongyu Liao process the scraped data from steam in a csv file
 Thurs June 3, 2021: Katharine K created Game Class
 	(expected: 30 min, actual: 1 hour)
 
+Thurs June 3, 2021: Sayeed created review class.
+	(expected: 30 minutes, actual: 30 minutes)
+
 Fri June 4, 2021: Katharine K created AccessGame Class
 	(expected: 20 min, actual: 1 hour)
+
+Fro June 4, 2021: Sayeed created Feedback class.
+	(expected: 30 minutes, actual: 1 hour)
 
 6.4: Shiqing Guo write the business object for user class.(expected: 3 hour;
     actual:3 hour)
@@ -62,23 +71,43 @@ Wed June 9, 2021: Katharine K updated Feedback class, updated Game class to supp
 6.12:Shiqing Guo finished UI for login, signup, game gallery, and game details
     (expected:20 hours, actual :13 hours)
 
+
 Sat June 12, 2021: Gongyu Liao edited UI layout and button feature for start page, log-in page, and sign-up page.
     (expected:5 hours, actual: 6 hours)
 
 6.12:Shiqing Guo finished UI for login, signup, game gallery, and game details
     (expected:20 hours, actual :13 hours)
+
     
 Sat June 12, 2021: Katharine K wrote test class for Game object
     (expected: 1 hours, actual: 2 hours)
 
+
 Sun June 13, 2021: Katharine K wrote test class for Game object, updated Review and Rating classes to contain active user data
     (expected: 2 hours, actual: 3 hours)
+
+
+Sun June 13, 2021: Sayeed created test class for Feedback class.
+	(expected: 30 minutes, actual: 3 hours). error: no test found. solution: changing the name of the method.
+
+
+Sun June 13, 2021: Sayeed created tests for Rating class.
+	(expected: 30 minutes, actual: 50 minutes)
+
+
+Sun June 13, 2021: Sayeed created test class for Review class.
+	(expected: 30 minutes, actual: 50 minutes)
+
 
 Sun June 13, 2021: Group Meeting -- Discuss remaining tasks and hand-in time
     45 minutes
 
+
 Mon June 14, 2021: Hasin finished the sketch for the System Architecture
 	(expected: 1 hour, actual: 30 mins)
+
+Mon June 14, 2021: Sayeed created test suite for running all of the test class together.
+	(expected: 1 hour, actual: 2 hours)
 
 Mon June 14, 2021: Katharine K corrected errors in the Game and GameTest classes
     (expected: 30 min, actual: 1 hour)

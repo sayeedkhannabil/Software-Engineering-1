@@ -13,7 +13,7 @@
             tools:layout="@layout/fragment_login_background"
             android:id="@+id/fragment"
             tools:layout_editor_absoluteY="0dp"
-            tools:layout_editor_absoluteX="0dp"></fragment>
+            tools:layout_editor_absoluteX="0dp" />
 
     <SeekBar
             style="@style/Widget.AppCompat.SeekBar.Discrete"

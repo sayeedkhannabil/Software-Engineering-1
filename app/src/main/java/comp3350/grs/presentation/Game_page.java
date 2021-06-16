@@ -6,11 +6,10 @@ package comp3350.grs.presentation;
 // REMARKS: What is the purpose of this class?
 // game detail page
 //-----------------------------------------
-import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.TypedValue;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -25,10 +24,9 @@ import java.util.List;
 import comp3350.grs.R;
 import comp3350.grs.business.AccessGames;
 import comp3350.grs.objects.Game;
-import comp3350.grs.objects.Rating;
 import comp3350.grs.objects.Review;
 
-public class Game_page extends AppCompatActivity {
+public class Game_page extends Activity {
     private AccessGames accessGames;
     private Game game;//the game we will show the details
     private TextInputLayout textInputLayout;

@@ -6,9 +6,12 @@
         android:background="@drawable/rounded_rectangle"
         android:backgroundTint="@color/grey"
         android:id="@+id/thumbnail"
-        android:layout_marginVertical="20dp"
-        android:layout_marginHorizontal="10dp"
-        android:clickable="true">
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:clickable="true"
+        android:focusable="true">
 
 
     <ImageView
@@ -27,6 +30,5 @@
             android:text="my game"
             android:textSize="30sp"
             android:gravity="center"
-            android:textColor="@color/black"
-        ></TextView>
+            android:textColor="@color/black" />
 </LinearLayout>

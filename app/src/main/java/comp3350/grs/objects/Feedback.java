@@ -1,5 +1,12 @@
 package comp3350.grs.objects;
 
+// CLASS: Feedback
+//
+// Author: Abu Sayeed Khan
+//
+// REMARKS: What is the purpose of this class?
+// store review of the games
+//-----------------------------------------
 public class Feedback {
     private Rating rating;
     private Review review;

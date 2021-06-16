@@ -2,7 +2,13 @@ package comp3350.grs.objects;
 
 import comp3350.grs.business.AccessUsers;
 
-//stores review
+// CLASS: Review
+//
+// Author: Abu Sayeed Khan
+//
+// REMARKS: What is the purpose of this class?
+// store review of the games
+//-----------------------------------------
 public class Review {
     private String comment;
     private User user;

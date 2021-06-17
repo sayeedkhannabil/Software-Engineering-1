@@ -110,7 +110,9 @@ public class Game_page extends Activity {
                     String review=textInputEditText.getText().toString();
                     review_layout.removeView(textInputLayout);
                     review_layout.removeView(textInputEditText);
-                    game.addReview(5,review);
+                    game.addReview(5,review);//TODO separate review and
+                    // rating; one user should have only one rating, but many
+                    // reviews;guest should not be able to rate
                     showReviews();//update the review
                     scroll_wrapper.getLayoutParams().height=900;//restore the
                     // writing review part to normal

@@ -111,3 +111,6 @@ Mon June 14, 2021: Sayeed created test suite for running all of the test class t
 
 Mon June 14, 2021: Katharine K corrected errors in the Game and GameTest classes
     (expected: 30 min, actual: 1 hour)
+
+Wed June 16, 2021: Sayeed created documentation in README.md.
+	(expected: 3 hours, actual: 4 hours)

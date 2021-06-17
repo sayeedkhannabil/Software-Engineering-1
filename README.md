@@ -157,7 +157,7 @@ We have also implemented login and sign up option for the users that can be acce
 
 * Minimum requirement: Android 6.0 (Marshmallow). 
 
-* API level: 23
+* API level: 30
 
 #### Tested Device:
 

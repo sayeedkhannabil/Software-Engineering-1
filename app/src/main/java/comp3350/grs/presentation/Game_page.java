@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -36,6 +38,7 @@ public class Game_page extends Activity {
     private LinearLayout review_layout;
     private LinearLayout scroll_wrapper;
     private Button write_review_button;
+    private RatingBar ratingBar;
 
 
     @Override
@@ -55,7 +58,7 @@ public class Game_page extends Activity {
         TextView dev_text = (TextView) findViewById(R.id.textView6);
         TextView des_text = (TextView) findViewById(R.id.textView7);
         TextView price_text = (TextView) findViewById(R.id.game_page_price);
-        RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         review_layout =
                 (LinearLayout) findViewById(R.id.review_layout);
         write_review_button=(Button) findViewById(R.id.button5);
@@ -83,26 +86,35 @@ public class Game_page extends Activity {
 
     }
 
+    //set the behaviour when pressed review button
     private void setReviewButton(){
         write_review_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //the user just clicked "write review" button
                 if(!isWritingReview){
-                    isWritingReview=true;
-                    write_review_button.setText("submit review");//change the
-                    // text of the button
-                    textInputLayout=new TextInputLayout(Game_page.this);
-                    textInputLayout.setBackground(getDrawable(R.drawable.rounded_rectangle));
-                    //show a input box used to write review
-                    textInputEditText=
-                            new TextInputEditText(Game_page.this);
-                    textInputEditText.setTextSize(TypedValue.COMPLEX_UNIT_SP,30);
-                    textInputLayout.addView(textInputEditText);
-                    review_layout.addView(textInputLayout);
-                    //extend the review part to the whole screen
-                    scroll_wrapper.getLayoutParams().height=
-                            LinearLayout.LayoutParams.MATCH_PARENT;
+                    if(ratingBar.getRating()==0.0) {
+                        AlertDialog alertDialog = Utilities.createAlertDialog(
+                                "please rate the game before writing review",
+                                Game_page.this);
+                        alertDialog.show();
+                    }else {
+                        isWritingReview=true;
+                        write_review_button.setText("submit review");//change the
+                        // text of the button
+                        textInputLayout=new TextInputLayout(Game_page.this);
+                        textInputLayout.setBackground(getDrawable(R.drawable.rounded_rectangle));
+                        //show a input box used to write review
+                        textInputEditText=
+                                new TextInputEditText(Game_page.this);
+                        textInputEditText.setTextSize(TypedValue.COMPLEX_UNIT_SP,30);
+                        textInputLayout.addView(textInputEditText);
+                        review_layout.addView(textInputLayout);
+                        //extend the review part to the whole screen
+                        scroll_wrapper.getLayoutParams().height=
+                                LinearLayout.LayoutParams.MATCH_PARENT;
+                    }
+
                 }
                 else{
                     isWritingReview=false;
@@ -110,9 +122,8 @@ public class Game_page extends Activity {
                     String review=textInputEditText.getText().toString();
                     review_layout.removeView(textInputLayout);
                     review_layout.removeView(textInputEditText);
-                    game.addReview(5,review);//TODO separate review and
-                    // rating; one user should have only one rating, but many
-                    // reviews;guest should not be able to rate
+
+                    game.addReview(ratingBar.getRating(),review);
                     showReviews();//update the review
                     scroll_wrapper.getLayoutParams().height=900;//restore the
                     // writing review part to normal

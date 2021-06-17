@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -19,7 +19,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import comp3350.grs.R;
 import comp3350.grs.business.AccessUsers;
 import comp3350.grs.objects.RegisteredUser;
-import comp3350.grs.objects.User;
 
 
 public class Login extends FragmentActivity {
@@ -44,14 +43,17 @@ public class Login extends FragmentActivity {
                     AccessUsers accessUsers=new AccessUsers();
                     user=(RegisteredUser) accessUsers.getRandom(useridStr);
                     //user exists in the database, and the password is valid
-                    if(user!=null&&user.validPass(passwordStr)){
-                        AccessUsers.setActiveUser(user);//set the user as active
-                        Intent intent=new Intent(Login.this,Game_gallery.class);
-                        //open the game gallery page
-                        startActivity(intent);
-                    }
+                    user.checkPassMatch(passwordStr);
+                    AccessUsers.setActiveUser(user);//set the user as active
+                    Intent intent=new Intent(Login.this,Game_gallery.class);
+                    //open the game gallery page
+                    startActivity(intent);
+
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    AlertDialog alertDialog=
+                            Utilities.createAlertDialog(e.getMessage(),
+                                    Login.this);
+                    alertDialog.show();
                 }
 
             }

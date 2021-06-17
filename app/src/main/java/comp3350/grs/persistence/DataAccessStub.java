@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import comp3350.grs.R;
+import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Guest;
 import comp3350.grs.objects.User;
 import comp3350.grs.objects.Game;
@@ -98,7 +99,12 @@ public class DataAccessStub
 
 
 		users=new ArrayList<User>();
-		User guest=new Guest();
+		User guest= null;
+		try {
+			guest = new Guest();
+		} catch (IncorrectFormat incorrectFormat) {
+			incorrectFormat.printStackTrace();
+		}
 		users.add(guest);
 	}
 
@@ -126,9 +132,15 @@ public class DataAccessStub
 	}
 
 
-	public void insertUser(User newUser)
+	public boolean insertUser(User newUser)
 	{
-		users.add(newUser);
+		if (newUser.validUser()){
+			users.add(newUser);
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public void updateUser(User currentUser)

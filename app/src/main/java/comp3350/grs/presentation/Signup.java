@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
@@ -50,11 +51,16 @@ public class Signup extends FragmentActivity {
                         startActivity(intent);
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    AlertDialog alertDialog=
+                            Utilities.createAlertDialog(e.getMessage(),
+                                    Signup.this);
+                    alertDialog.show();
                 }
 
 
             }
         });
     }
+
+
 }

@@ -1,4 +1,8 @@
 package comp3350.grs.objects;
+
+import comp3350.grs.exceptions.IncorrectFormat;
+import comp3350.grs.exceptions.IncorrectPassword;
+
 // CLASS: RegisteredUser
 //
 // Author: Shiqing Guo
@@ -10,29 +14,21 @@ package comp3350.grs.objects;
 public class RegisteredUser extends User{
     private String password;
 
-    public RegisteredUser(String userID,String password) throws Exception {
+    public RegisteredUser(String userID,String password) throws IncorrectFormat {
         super(userID);
-        //if userid is not valid, set it to null
-        if (!checkUserID(userID)){
-            super.changeUserID(null);
-        }
+        checkUseridFormat(userID);
+        checkPassNotNull(password);
         //password can't contain space
-        if (!checkPassword(password)){
-            this.password=null;
-        }
-        else{
-            this.password=password;
-        }
-
+        checkPasswordFormat(password);
+        this.password=password;
     }
 
-    public RegisteredUser(String userID) throws Exception {
+    public RegisteredUser(String userID) throws IncorrectFormat {
         super(userID);
-        if (!checkUserID(userID)){
-            super.changeUserID(null);
-        }
-        password=null;
+        checkUseridFormat(userID);
+        this.password=null;
     }
+
 
     public RegisteredUser(){
         super();
@@ -40,44 +36,51 @@ public class RegisteredUser extends User{
     }
 
     //------------------------------------------------------
-    // checkUserID
+    // checkUseridFormat
     //
     // PURPOSE:    check if the user id is valid
     // PARAMETERS:
     //     userID: the userid to be checked
-    // Returns: boolean to indicate whether the userid is valid or not
+    //
     //------------------------------------------------------
-    public boolean checkUserID(String userID){
+    private void checkUseridFormat(String userID) throws IncorrectFormat {
         //registered userid shouldn't be "Guest"
         if (userID.equals("Guest")){
-            return false;
-        }
-        else{
-            return true;
+            throw new IncorrectFormat("user id should not be Guest");
         }
     }
 
-    public boolean checkPassword(String password){
-        if (password.contains(" ")){
-            return false;
+    private void checkPassNotNull(String password){
+        if (password==null){
+            throw new NullPointerException("password should not be null.");
         }
-        else {
-            return true;
+    }
+
+    private void checkPasswordFormat(String password) throws IncorrectFormat {
+        if (password!=null&& password.contains(" ")){
+            throw new IncorrectFormat("password should not contain space");
         }
     }
 
     //check if the given password is the same as the password signed up
-    public boolean validPass(String password){
+    public void checkPassMatch(String password) throws IncorrectPassword {
         if (this.password!=null){
-            return this.password.equals(password);
+            if (!this.password.equals(password)){
+                throw new IncorrectPassword("incorrect password");
+            }
         }
         else{
-            return false;
+            throw new NullPointerException("password should not be null");
         }
     }
 
     public String getPassword(){
         return this.password;
+    }
+
+    @Override
+    public boolean validUser(){
+        return super.validUser()&&password!=null;
     }
 
     @Override

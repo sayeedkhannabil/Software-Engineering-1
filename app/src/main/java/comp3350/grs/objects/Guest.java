@@ -1,4 +1,7 @@
 package comp3350.grs.objects;
+
+import comp3350.grs.exceptions.IncorrectFormat;
+
 // CLASS: Guest
 //
 // Author: Shiqing Guo
@@ -10,7 +13,7 @@ package comp3350.grs.objects;
 public class Guest extends User{
 
     //user id of a guest is "Guest"
-    public Guest(){
+    public Guest() throws IncorrectFormat {
         super("Guest");
     }
 

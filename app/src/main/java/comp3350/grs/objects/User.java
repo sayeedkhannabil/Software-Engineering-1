@@ -1,4 +1,7 @@
 package comp3350.grs.objects;
+
+import comp3350.grs.exceptions.IncorrectFormat;
+
 // CLASS: User
 //
 // Author: Shiqing Guo
@@ -15,28 +18,31 @@ public abstract class User
 		userID=null;
 	}
 
-	public User(String userID)
-	{
+	public User(String userID) throws IncorrectFormat {
+		checkUseridNotNull(userID);
 		//userid should not contain space or be empty
-		if (userID.equals("")|| userID.contains(" ")){
-			this.userID=null;
-		}
-		else{
-			this.userID=userID;
-		}
-
-
+		checkUseridFormat(userID);
+		this.userID=userID;
 	}
 
+	private void checkUseridNotNull(String userID){
+		if (userID==null){
+			throw new NullPointerException("userID should not be null.");
+		}
+	}
+
+	private void checkUseridFormat(String userID) throws IncorrectFormat {
+		if (userID.equals("")|| userID.contains(" ")){
+			throw new IncorrectFormat("user id should not be empty or contain" +
+					" space");
+		}
+	}
 
 	public String getUserID()
 	{
 		return userID;
 	}
 
-	public void changeUserID(String newID) throws Exception {
-		this.userID=newID;
-	}
 
 	public String toString()
 	{
@@ -50,6 +56,13 @@ public abstract class User
 		else {
 			return false;
 		}
+	}
+
+	//change user id to new user id
+	public void changeUserID(String newUserID) throws Exception {
+		checkUseridNotNull(newUserID);
+		checkUseridFormat(newUserID);
+		this.userID=newUserID;
 	}
 
 	//------------------------------------------------------

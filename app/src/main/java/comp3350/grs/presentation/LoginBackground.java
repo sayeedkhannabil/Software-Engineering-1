@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import comp3350.grs.R;
 import comp3350.grs.business.AccessUsers;
+import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Guest;
 
 /**
@@ -100,7 +101,11 @@ public class LoginBackground extends Fragment {
         ctnAsGst.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AccessUsers.setActiveUser(new Guest());//set active user as
+                try {
+                    AccessUsers.setActiveUser(new Guest());//set active user as
+                } catch (IncorrectFormat incorrectFormat) {
+                    incorrectFormat.printStackTrace();
+                }
                 // guest
                 Intent intent=new Intent(getActivity(),Game_gallery.class);
                 startActivity(intent);

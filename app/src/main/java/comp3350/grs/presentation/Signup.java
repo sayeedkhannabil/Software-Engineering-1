@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -21,7 +22,7 @@ import comp3350.grs.business.AccessUsers;
 import comp3350.grs.objects.RegisteredUser;
 import comp3350.grs.objects.User;
 
-public class Signup extends AppCompatActivity {
+public class Signup extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

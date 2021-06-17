@@ -7,8 +7,8 @@ package comp3350.grs.presentation;
 // for now icon is hard coded, all the icon are the same
 //
 //-----------------------------------------
-import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,7 +24,7 @@ import comp3350.grs.R;
 import comp3350.grs.business.AccessGames;
 import comp3350.grs.objects.Game;
 
-public class Game_gallery extends AppCompatActivity {
+public class Game_gallery extends Activity {
     private TableLayout tableLayout;//the layout to add thumbnail
     private Game game;//the current game to add
     private View thumbnail;
@@ -55,7 +55,7 @@ public class Game_gallery extends AppCompatActivity {
             }
             inflater = getLayoutInflater();
             thumbnail = inflater.inflate(R.layout.game_thumbnail, newRow, false);
-            textView=thumbnail.findViewById(R.id.game_page_price);
+            textView= (TextView) thumbnail.findViewById(R.id.game_page_price);
             textView.setText(game.getName());
             thumbnail.setId(i);
             newRow.addView(thumbnail);

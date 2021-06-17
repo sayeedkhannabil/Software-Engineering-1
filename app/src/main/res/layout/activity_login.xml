@@ -13,7 +13,7 @@
             tools:layout="@layout/fragment_login_background"
             tools:layout_editor_absoluteY="0dp"
             tools:layout_editor_absoluteX="-16dp"
-            android:id="@+id/fragment2"></fragment>
+            android:id="@+id/fragment2" />
 
     <fragment
             android:name="comp3350.grs.presentation.userid_and_pass"
@@ -22,7 +22,7 @@
             tools:layout="@layout/fragment_userid_and_pass"
             android:id="@+id/fragment4"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"></fragment>
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
             android:text="@string/welcome"

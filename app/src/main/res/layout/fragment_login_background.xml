@@ -5,8 +5,10 @@
         android:layout_height="match_parent"
         tools:context="comp3350.grs.presentation.LoginBackground"
         android:background="@color/blue2"
-        android:paddingVertical="15dp"
-        android:paddingHorizontal="30dp">
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
 
     <Button
             android:text="@string/signup"
@@ -16,8 +18,7 @@
             android:background="@drawable/rounded_rectangle"
             android:textColor="@color/blue2"
             android:textSize="35sp"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="10dp"
+            android:padding="10dp"
             app:layout_constraintBottom_toTopOf="@+id/textView2"
             android:layout_marginBottom="32dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,8 +35,7 @@
             android:background="@drawable/rounded_rectangle"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="624dp"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="10dp"
+            android:padding="10dp"
             app:layout_constraintBottom_toTopOf="@+id/button"
             android:layout_marginStart="16dp"
             app:layout_constraintVertical_bias="0.719" />
@@ -64,7 +64,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:focusable="true" />
 
     <ImageView
             android:src="@mipmap/logo1"

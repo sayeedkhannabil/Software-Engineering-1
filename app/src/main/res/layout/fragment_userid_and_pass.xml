@@ -16,7 +16,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="32dp"
             android:layout_marginStart="80dp"
-            android:paddingLeft="5dp">
+            android:paddingStart="5dp">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -36,7 +36,7 @@
             android:layout_marginStart="80dp"
             app:passwordToggleEnabled="true"
             android:id="@+id/textInputLayout"
-            android:paddingLeft="5dp">
+            android:paddingStart="5dp">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"

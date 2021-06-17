@@ -34,6 +34,9 @@ public class Game_page extends Activity {
     private boolean isWritingReview;//indicate if the user pressed the "write
     // review" button
     private LinearLayout review_layout;
+    private LinearLayout scroll_wrapper;
+    private Button write_review_button;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +58,9 @@ public class Game_page extends Activity {
         RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         review_layout =
                 (LinearLayout) findViewById(R.id.review_layout);
-        Button write_review_button=(Button) findViewById(R.id.button5);
-
+        write_review_button=(Button) findViewById(R.id.button5);
+        scroll_wrapper=
+                (LinearLayout) findViewById(R.id.scroll_wrapper);
 
         game_text.setText(game.getName());
         dev_text.setText("dev: " + game.getDev());
@@ -69,13 +73,17 @@ public class Game_page extends Activity {
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                game.addRating((int)rating);
+                game.addRating(rating);
                 accessGames.updateGame(game);
                 ratingBar.setRating((float) game.getRating());
             }
         });
-        LinearLayout scroll_wrapper=
-                (LinearLayout) findViewById(R.id.scroll_wrapper);
+
+        setReviewButton();
+
+    }
+
+    private void setReviewButton(){
         write_review_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +110,9 @@ public class Game_page extends Activity {
                     String review=textInputEditText.getText().toString();
                     review_layout.removeView(textInputLayout);
                     review_layout.removeView(textInputEditText);
-                    game.addReview(5,review);
+                    game.addReview(5,review);//TODO separate review and
+                    // rating; one user should have only one rating, but many
+                    // reviews;guest should not be able to rate
                     showReviews();//update the review
                     scroll_wrapper.getLayoutParams().height=900;//restore the
                     // writing review part to normal
@@ -110,7 +120,6 @@ public class Game_page extends Activity {
 
             }
         });
-
     }
 
     //remove all reviews generated before, and regenerate them according to

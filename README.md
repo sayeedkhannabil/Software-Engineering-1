@@ -148,7 +148,8 @@ The major implemented features in this apps are:
 * `Game info page` is the information page for each individual game in the game library. From `Game library`, for selecting any particular game, users will be able to go to the `Game info page` of the selected games.
 * `Game Feedback` is the rating and review system of the app and the most important one. On the `Game Info page` user will be able to see the given feedbacks of other users and leave there own feedback. In each `Game info page` there is a separate section for feedbacks.
 
-We have also implemented login and sign up option for the users that can be accessed from the homepage. And if the user do not want to create an account, they can select `continue as guest` to use the app without creating an account.
+We have also implemented login and sign up option for the users that can be accessed from the homepage. And if the user do not want to create an account, they can select `continue as guest` to use the app without creating an account. The userid should not contain space and should not be"Guest", as "Guest" is reserved for guest users. The password should not contain space. If the userid or password does not satisfy the format, you won't be able to signup. If the userid and password does not match, you won't be able to login. We don't have much time, so there is no error prompt when you are login or signup. It simply do nothing when something went wrong with userid or password.
+There is a slide bar on the home page.It does nothing for now, but in future we will add some guide picture to the homepage, and every time you slide the bar, the guide picture changes.
 
 
 

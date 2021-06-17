@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">My Application</string>
+    //<string name="app_name">My Application</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="signup">SIGNUP</string>
     <string name="continueAsGuest">CONTINUE AS GUEST</string>
     <string name="alreadyHaveAcc">Already have an account?</string>
@@ -7,4 +9,15 @@
     <string name="welcomeJoin">Welcome to join us!</string>
     <string name="confirmSignup">confirm and login</string>
     <string name="welcome">Welcome!</string>
+    
+    //For Registration and browse games by hasin
+    
+    <string name="app_name">GRS</string>
+    <string name="register">Register</string>
+    <string name="fname">First Name</string>
+    <string name="lname">Last Name</string>
+    <string name="email">Email</string>
+    <string name="welcome_msg">Welcome to Game Rating System</string>
+    <string name="guest_msg">Or continue as a guest user </string>
+    
 </resources>

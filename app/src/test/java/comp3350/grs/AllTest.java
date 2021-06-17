@@ -2,9 +2,6 @@ package comp3350.grs;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
-import comp3350.grs.objects.Feedback;
-import comp3350.grs.persistence.DataAccessStubTest;
 import comp3350.grs.objects.FeedbackTest;
 import comp3350.grs.objects.ReviewTest;
 import comp3350.grs.objects.GameTest;

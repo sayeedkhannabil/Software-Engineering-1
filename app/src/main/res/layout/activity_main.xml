@@ -15,18 +15,4 @@
             tools:layout_editor_absoluteY="0dp"
             tools:layout_editor_absoluteX="0dp" />
 
-    <SeekBar
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="330dp"
-            android:layout_height="wrap_content"
-            android:max="4"
-            android:progress="1"
-            android:id="@+id/seekBar"
-            android:progressTint="@color/orange"
-            app:layout_constraintTop_toTopOf="@+id/fragment"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="124dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.693" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

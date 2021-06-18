@@ -8,14 +8,14 @@ public class Main
 
 	public static void main(String[] args)
 	{
-		startUp(null);
+		startUp();
 		shutDown();
 		System.out.println("All done");
 	}
 
-	public static void startUp(String content)
+	public static void startUp()
 	{
-		Services.createDataAccess(dbName,content);
+		Services.createDataAccess(dbName);
 	}
 
 	public static void shutDown()

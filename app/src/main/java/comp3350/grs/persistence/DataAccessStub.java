@@ -6,31 +6,30 @@ package comp3350.grs.persistence;
 // REMARKS: the database which stores users and games
 //
 //-----------------------------------------
-import android.content.Context;
-import android.content.res.Resources;
-import android.os.Environment;
+
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import comp3350.grs.R;
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Guest;
 import comp3350.grs.objects.User;
 import comp3350.grs.objects.Game;
 import comp3350.grs.application.Main;
+import comp3350.grs.presentation.MainActivity;
+
 
 public class DataAccessStub
 {
@@ -67,16 +66,27 @@ public class DataAccessStub
 	//		string content as parameter
 	// Returns: void
 	//------------------------------------------------------
-	public void open(String dbName,String content) {
+	public void open() {
+		String content;
+		InputStream inputStream=null;
 		games=new ArrayList<Game>();
 
-		if (content==null){
+
+		if (MainActivity.getIsRunning()){
+			inputStream=
+					this.getClass().getClassLoader().getResourceAsStream("res/raw/csvjson.json");
+		}
+		else {
 			try {
-				content = new Scanner(new File("src/main/res/raw/csvjson.json")).useDelimiter("\\Z").next();
+				inputStream=new FileInputStream("src/main/res/raw/csvjson.json");
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
 		}
+
+
+		Scanner s = new Scanner(inputStream).useDelimiter("\\A");
+		content = s.hasNext() ? s.next() : "";
 
 		JSONArray jsonArray = null;
 		try {

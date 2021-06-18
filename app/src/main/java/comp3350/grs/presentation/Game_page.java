@@ -17,6 +17,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -28,7 +29,7 @@ import comp3350.grs.business.AccessGames;
 import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Review;
 
-public class Game_page extends Activity {
+public class Game_page extends AppCompatActivity {
     private AccessGames accessGames;
     private Game game;//the game we will show the details
     private TextInputLayout textInputLayout;

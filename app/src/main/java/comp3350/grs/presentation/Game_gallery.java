@@ -18,13 +18,15 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.List;
 
 import comp3350.grs.R;
 import comp3350.grs.business.AccessGames;
 import comp3350.grs.objects.Game;
 
-public class Game_gallery extends Activity {
+public class Game_gallery extends AppCompatActivity {
     private TableLayout tableLayout;//the layout to add thumbnail
     private Game game;//the current game to add
     private View thumbnail;

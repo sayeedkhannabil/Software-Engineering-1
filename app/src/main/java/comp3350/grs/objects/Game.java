@@ -9,24 +9,28 @@
 package comp3350.grs.objects;
 import java.util.ArrayList;
 
+import comp3350.grs.business.AccessUsers;
+
 public class Game
 {
     private String name;
     private String dev; //name of company/game developer
-    private String description; // genre, etc
+    private String genre;
+    private String description;
     private double currPrice; //current price of game
 
-    private double overallRating; //average of all ratings provided by users for this game 
-    private ArrayList<Feedback> feedback; //these will determine overallRating (the rating the user sees)
+    private double overallRating; //average of all ratings provided by users for this game
+    private ArrayList<Review> reviews;
     private double qualPts; //all ratings added (to get average)
     private int numRatings;
     private int numReviews;
 
     //detailed constructor
-    public Game(String gameName, String gameDev, String desc, double price)
+    public Game(String gameName, String gameDev, String g, String desc, double price)
     {
         name = gameName;
         dev = gameDev;
+        genre = g;
         description = desc;
         currPrice = price;
 
@@ -36,7 +40,7 @@ public class Game
 
         //initialize overallRating and reviews to 0 and empty as the game is just being added (hence has no reviews/rating yet)
         overallRating = 0.0;
-        feedback = new ArrayList<Feedback>();
+        reviews = new ArrayList<Review>();
     }
 
     //simple constructor
@@ -44,6 +48,7 @@ public class Game
     {
         name = gameName;
         dev = null;
+        genre = null;
         description = null;
         currPrice = -1;
 
@@ -53,7 +58,7 @@ public class Game
 
         //initialize overallRating and reviews to 0 and empty as the game is just being added (hence has no reviews/rating yet)
         overallRating = 0.0;
-        feedback = new ArrayList<Feedback>();
+        reviews = new ArrayList<Review>();
     }
 
     //default constructor
@@ -61,6 +66,7 @@ public class Game
     {
         name = "null";
         dev = null;
+        genre = null;
         description = null;
         currPrice = -1;
 
@@ -70,7 +76,7 @@ public class Game
 
         //feedback is a null list for a game with no name (default)
         overallRating = 0.0;
-        feedback = new ArrayList<Feedback>();
+        reviews = new ArrayList<Review>();
     }
 
     public String getName()
@@ -83,6 +89,8 @@ public class Game
         return dev;
     }
 
+    public String getGenre() { return genre; }
+
     //------------------------------------------------------
     // addRating
     //
@@ -94,13 +102,10 @@ public class Game
     //------------------------------------------------------
     public void addRating(double newRating)
     {
-        /* create new Rating object and new Feedback object, add Feedback object to list*/
-        Rating rating = new Rating(newRating);
-        Feedback newFeedback = new Feedback(rating);
-        if(newRating > 0 && !name.equals("null"))
+        /* create new Rating object, update overall rating*/
+        Rating rating = new Rating(newRating, AccessUsers.getActiveUser());
+        if(rating.getRating() > 0 && !name.equals("null"))
         {
-            feedback.add(newFeedback);
-            //update overallRating
             updateOverall(rating);
         }else {
             System.out.println("Unable to add rating.");
@@ -127,18 +132,13 @@ public class Game
     // Returns: void
     //------------------------------------------------------
 
-    public void addReview(double newRating, String newReview)
+    public void addReview(String newReview)
     {
         /* create new Rating object, new Review object and new Feedback object, add Feedback object to list*/
-        Rating rating = new Rating(newRating);
-        Review review = new Review(newReview);
-        Feedback newFeedback;
-        if(rating.getRating() >= 1 && !newReview.equals("") && !name.equals("null"))
+        Review review = new Review(newReview, AccessUsers.getActiveUser());
+        if(!newReview.equals("") && !name.equals("null"))
         {
-            newFeedback = new Feedback(rating, review);
-            feedback.add(newFeedback);
-            //update overallRating
-            updateOverall(rating);
+            reviews.add(review);
             numReviews++;
         }
         else {
@@ -179,18 +179,6 @@ public class Game
         {
             System.out.println("The game "+name+" has not yet been reviewed.");
         }
-        else
-        {
-            for(int i = 0; i < feedback.size(); i++)
-            {
-                if((feedback.get(i)).isReview())
-                {
-                    reviews.add((Review) feedback.get(i).getReview());
-                }
-            }
-        }
-
-
         return reviews;
     }
 
@@ -235,7 +223,7 @@ public class Game
 
     public String toString()
     {
-        return "Game: "+name+", Developer: "+dev+", Overall Rating: "+overallRating+", Current Price: "+currPrice+"\nDescription: "+description;
+        return "Game: "+name+", Developer: "+dev+", Genre: "+genre+", Overall Rating: "+overallRating+", Current Price: "+currPrice+"\nDescription: "+description;
     }
 }
 

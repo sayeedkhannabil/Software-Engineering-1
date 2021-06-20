@@ -7,7 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class GameTest extends TestCase {
-    private Game typicalGame = new Game("TypicalGame", "TypicalDeveloper", "TypicalDescription", 20.00);
+    private Game typicalGame = new Game("TypicalGame", "TypicalDeveloper", "TypicalGenre", "TypicalDescription", 20.00);
     private Game typicalGameSimple = new Game("GameWithOnlyAName");
     private Game nullGame = new Game();
 
@@ -17,6 +17,7 @@ public class GameTest extends TestCase {
         //typical test cases for the game with all four parameters (typicalGame)
         assertEquals("TypicalGame", typicalGame.getName());
         assertEquals("TypicalDeveloper", typicalGame.getDev());
+        assertEquals("TypicalGenre", typicalGame.getGenre());
         assertEquals("TypicalDescription", typicalGame.getDescription());
         assertEquals(20.00, typicalGame.getPrice(), 0);
 
@@ -45,8 +46,8 @@ public class GameTest extends TestCase {
 
         //Test adding typical reviews to typical Game objects (the rating is also updated when adding reviews)
         //first review
-        typicalGame.addReview(4.5, "Good game.");
-        assertEquals("The overall rating for game "+typicalGame.getName()+" should now be 4.75 out of 5 stars.", 4.75, typicalGame.getRating(), 0.01);
+        typicalGame.addReview("Good game.");
+        //assertEquals("The overall rating for game "+typicalGame.getName()+" should now be 4.75 out of 5 stars.", 4.75, typicalGame.getRating(), 0.01);
 
         ArrayList<Review> typicalGameReviews = typicalGame.getReviews();
         assertTrue(typicalGameReviews.size() == 1);
@@ -54,10 +55,10 @@ public class GameTest extends TestCase {
         assertEquals("Good game.", firstReview.getComment());
 
         //add two more reviews
-        typicalGame.addReview(5, "Best game ever." );
-        typicalGame.addReview(2.5, "Game is ok.");
+        typicalGame.addReview("Best game ever." );
+        typicalGame.addReview( "Game is ok.");
         typicalGameReviews = typicalGame.getReviews();
-        assertEquals("Overall rating for game "+typicalGame.getName()+" should now be 4.25 out of 5 stars.", 4.25, typicalGame.getRating(), 0.01);
+        //assertEquals("Overall rating for game "+typicalGame.getName()+" should now be 4.25 out of 5 stars.", 4.25, typicalGame.getRating(), 0.01);
         assertEquals(3, typicalGameReviews.size());
     }
 
@@ -88,7 +89,7 @@ public class GameTest extends TestCase {
     @Test
     public void testEqualsOtherGame()
     {
-        Game sameName = new Game("TypicalGame", "testDev", "TestDesc", 0.0);
+        Game sameName = new Game("TypicalGame", "testDev", "TestGenre","TestDesc", 0.0);
         assertTrue(typicalGame.equals(sameName)); //because they have the same name
 
         assertEquals(false, nullGame.equals(typicalGameSimple));
@@ -99,7 +100,7 @@ public class GameTest extends TestCase {
     @Test
     public void testInvalidInput()
     {
-        Game tester = new Game ("Tester", "TestDev", "TestDesc", 0.0);
+        Game tester = new Game ("Tester", "TestDev", "TestGenre", "TestDesc", 0.0);
 
         //test adding ratings to a null game
         nullGame.addRating(1);
@@ -109,8 +110,8 @@ public class GameTest extends TestCase {
         assertEquals(0, nullGame.getNumRatings(), 0);
 
         //test adding reviews to a null game
-        nullGame.addReview(4, "Good game.");
-        nullGame.addReview(5, "Best game ever.");
+        nullGame.addReview("Good game.");
+        nullGame.addReview("Best game ever.");
         assertEquals(0, nullGame.getReviews().size());
         assertEquals(0,nullGame.getNumReviews());
 
@@ -119,8 +120,8 @@ public class GameTest extends TestCase {
         assertEquals(0, tester.getNumRatings());
         assertTrue(tester.getRating() == 0);
 
-        tester.addReview(1, ""); //can't leave an empty review!
-        tester.addReview(0, "valid review");
+        tester.addReview(""); //can't leave an empty review!
+        tester.addReview("valid review");
         assertEquals(0, tester.getNumRatings());
         assertEquals(0, tester.getNumReviews());
         assertTrue(tester.getReviews().size() == 0);

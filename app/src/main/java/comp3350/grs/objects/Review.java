@@ -18,14 +18,16 @@ public class Review {
     }
 
     //stores review as string
-    public  Review(String comment) {
-        user = AccessUsers.getActiveUser();
+    public  Review(String comment, User currUser) {
+        user = currUser;
         this.comment = comment;
     }
 
     public String getComment() {
         return comment;
     }
+
+    public String getUserID() { return user.getUserID(); }
 
     public String toString() {
         return "UserID: "+user.getUserID()+"\nReview: " + comment+"\n";

@@ -91,16 +91,17 @@ public class DataAccessStub
 		JSONArray jsonArray = null;
 		try {
 			jsonArray = new JSONArray(content);
-			String gameName,gameDev,desc;
+			String gameName,gameDev,genre, desc;
 			double price;
 			Game newGame;
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
 				gameName=jsonObject.getString("title");
 				gameDev=jsonObject.getString("developer");
+				genre = jsonObject.getString("genres");
 				desc=jsonObject.getString("description");
 				price=jsonObject.getDouble("price");
-				newGame=new Game(gameName,gameDev,desc,price);
+				newGame=new Game(gameName,gameDev, genre, desc,price);
 				games.add(newGame);
 			}
 		} catch (JSONException e) {

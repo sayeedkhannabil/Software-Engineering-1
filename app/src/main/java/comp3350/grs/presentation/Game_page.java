@@ -124,7 +124,7 @@ public class Game_page extends AppCompatActivity {
                     review_layout.removeView(textInputLayout);
                     review_layout.removeView(textInputEditText);
 
-                    game.addReview(ratingBar.getRating(),review);
+                    game.addReview(review);
                     showReviews();//update the review
                     scroll_wrapper.getLayoutParams().height=900;//restore the
                     // writing review part to normal

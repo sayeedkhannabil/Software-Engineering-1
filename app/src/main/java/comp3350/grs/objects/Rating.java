@@ -16,14 +16,14 @@ public class Rating
     private double rating; //from one to five
     private User user;
 
-    public Rating (double ratingGiven) {
+    public Rating (double ratingGiven, User currUser) {
         rating = 0.0; // default -- if no ratings (or no valid ratings) given yet
 
         //input validation
         if(ratingGiven > 0 && ratingGiven <= 5)
         {
             rating = ratingGiven;
-            user = AccessUsers.getActiveUser();
+            user = currUser;
         }
         else
         {
@@ -36,9 +36,9 @@ public class Rating
         return rating;
     }
 
-    public User getUser()
+    public String getUser()
     {
-        return user;
+        return user.getUserID();
     }
 
     public String toString()

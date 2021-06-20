@@ -114,3 +114,7 @@ Mon June 14, 2021: Katharine K corrected errors in the Game and GameTest classes
 
 Wed June 16, 2021: Sayeed created documentation in README.md.
 	(expected: 3 hours, actual: 4 hours)
+
+Sat June 19, 2021: Katharine K added "Genre" field to Game object and changed all constructor calls in database to include this field.
+                   - Also removed Feedback from Game and replaced with one Review list
+                   - Rating and Review accept a User parameter

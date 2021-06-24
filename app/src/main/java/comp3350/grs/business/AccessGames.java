@@ -38,7 +38,7 @@ public class AccessGames
 
     public Game findGame(String name)
     {
-        return dataAccess.getGame(new Game(name));
+        return dataAccess.getOneGame(new Game(name));
     }
 
     public Game getSequential()

@@ -114,3 +114,9 @@ Mon June 14, 2021: Katharine K corrected errors in the Game and GameTest classes
 
 Wed June 16, 2021: Sayeed created documentation in README.md.
 	(expected: 3 hours, actual: 4 hours)
+
+june 19 : group meeeting. Discussed how to handle error, decide to create custom
+    exception clas so that it's convenient to show info on alert window;decide
+    to split review and rating , because they are not binded together directly,
+    they are binded to a user, and a user can have one rating and many reviews;
+    discussed and assigned developer tasks.

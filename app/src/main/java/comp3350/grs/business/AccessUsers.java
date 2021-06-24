@@ -78,7 +78,7 @@ public class AccessUsers {
         }
         else
         {
-            currentUser = dataAccess.getUser(new RegisteredUser(userID));
+            currentUser = dataAccess.getOneUser(new RegisteredUser(userID));
         }
         return currentUser;
     }

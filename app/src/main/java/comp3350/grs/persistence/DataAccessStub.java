@@ -17,7 +17,7 @@ import comp3350.grs.objects.User;
 import comp3350.grs.objects.Game;
 
 
-public class DataAccessStub extends DataAccess implements DataAccessI
+public class DataAccessStub extends DataAccess
 {
 
 	@Override

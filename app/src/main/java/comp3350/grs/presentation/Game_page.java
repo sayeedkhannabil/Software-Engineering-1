@@ -17,7 +17,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -29,18 +30,20 @@ import comp3350.grs.business.AccessGames;
 import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Review;
 
-public class Game_page extends AppCompatActivity {
+public class Game_page extends Activity {
     private AccessGames accessGames;
     private Game game;//the game we will show the details
     private TextInputLayout textInputLayout;
     private TextInputEditText textInputEditText;//review edit text
     private boolean isWritingReview;//indicate if the user pressed the "write
     // review" button
-    private LinearLayout review_layout;
-    private LinearLayout scroll_wrapper;
-    private Button write_review_button;
+    private LinearLayout review_wrapper;
+    private ConstraintLayout review_background;
+    private Button review_button;
     private RatingBar ratingBar;
-
+    private TextView description_text;
+    private ConstraintSet constraintSet;
+    private ConstraintLayout game_page_main;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,14 +60,19 @@ public class Game_page extends AppCompatActivity {
         game = accessGames.findGame(game_name);
         TextView game_text = (TextView) findViewById(R.id.textView5);
         TextView dev_text = (TextView) findViewById(R.id.textView6);
-        TextView des_text = (TextView) findViewById(R.id.textView7);
+        TextView des_text = (TextView) findViewById(R.id.game_page_description_text);
         TextView price_text = (TextView) findViewById(R.id.game_page_price);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
-        review_layout =
-                (LinearLayout) findViewById(R.id.review_layout);
-        write_review_button=(Button) findViewById(R.id.button5);
-        scroll_wrapper=
-                (LinearLayout) findViewById(R.id.scroll_wrapper);
+        review_wrapper =
+                (LinearLayout) findViewById(R.id.review_wrapper);
+        review_button =(Button) findViewById(R.id.game_page_review_button);
+        review_background =
+                (ConstraintLayout) findViewById(R.id.game_page_review_background);
+        description_text =
+                findViewById(R.id.game_page_description_text);
+        game_page_main=findViewById(R.id.game_page_main);
+        constraintSet=new ConstraintSet();
+        constraintSet.clone(game_page_main);
 
         game_text.setText(game.getName());
         dev_text.setText("dev: " + game.getDev());
@@ -89,7 +97,7 @@ public class Game_page extends AppCompatActivity {
 
     //set the behaviour when pressed review button
     private void setReviewButton(){
-        write_review_button.setOnClickListener(new View.OnClickListener() {
+        review_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //the user just clicked "write review" button
@@ -101,7 +109,7 @@ public class Game_page extends AppCompatActivity {
                         alertDialog.show();
                     }else {
                         isWritingReview=true;
-                        write_review_button.setText("submit review");//change the
+                        review_button.setText("submit review");//change the
                         // text of the button
                         textInputLayout=new TextInputLayout(Game_page.this);
                         textInputLayout.setBackground(getDrawable(R.drawable.rounded_rectangle));
@@ -110,24 +118,28 @@ public class Game_page extends AppCompatActivity {
                                 new TextInputEditText(Game_page.this);
                         textInputEditText.setTextSize(TypedValue.COMPLEX_UNIT_SP,30);
                         textInputLayout.addView(textInputEditText);
-                        review_layout.addView(textInputLayout);
+                        review_wrapper.addView(textInputLayout);
                         //extend the review part to the whole screen
-                        scroll_wrapper.getLayoutParams().height=
-                                LinearLayout.LayoutParams.MATCH_PARENT;
+                        constraintSet.connect(review_background.getId(),
+                                ConstraintSet.TOP,game_page_main.getId(),ConstraintSet.TOP);
+                        constraintSet.applyTo(game_page_main);
                     }
 
                 }
                 else{
                     isWritingReview=false;
-                    write_review_button.setText("write review");
+                    review_button.setText("write review");
                     String review=textInputEditText.getText().toString();
-                    review_layout.removeView(textInputLayout);
-                    review_layout.removeView(textInputEditText);
+                    review_wrapper.removeView(textInputLayout);
+                    review_wrapper.removeView(textInputEditText);
 
                     game.addReview(ratingBar.getRating(),review);
                     showReviews();//update the review
-                    scroll_wrapper.getLayoutParams().height=900;//restore the
-                    // writing review part to normal
+                    constraintSet.connect(review_background.getId(),
+                            ConstraintSet.TOP,
+                            description_text.getId(),
+                            ConstraintSet.BOTTOM);
+                    constraintSet.applyTo(game_page_main);
                 }
 
             }
@@ -138,8 +150,8 @@ public class Game_page extends AppCompatActivity {
     // the updated game object, to show the newest review
     private void showReviews(){
         //remove reviews, except the "review" text itself
-        while (review_layout.getChildCount() > 1){
-            review_layout.removeView(review_layout.getChildAt(review_layout.getChildCount() - 1));
+        while (review_wrapper.getChildCount() > 1){
+            review_wrapper.removeView(review_wrapper.getChildAt(review_wrapper.getChildCount() - 1));
         }
 
         List<Review> reviews = game.getReviews();
@@ -148,7 +160,7 @@ public class Game_page extends AppCompatActivity {
             TextView newReview = new TextView(this);
             newReview.setTextSize(TypedValue.COMPLEX_UNIT_SP,25);
             newReview.setText(reviews.get(i).toString());
-            review_layout.addView(newReview);
+            review_wrapper.addView(newReview);
         }
     }
 }

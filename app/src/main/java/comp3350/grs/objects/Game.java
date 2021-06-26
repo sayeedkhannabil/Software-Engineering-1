@@ -9,34 +9,26 @@
 package comp3350.grs.objects;
 import java.util.ArrayList;
 
+import comp3350.grs.business.AccessRatings;
+
 public class Game
 {
     private String name;
     private String dev; //name of company/game developer
+    private ArrayList<String> genres;
     private String description; // genre, etc
     private double currPrice; //current price of game
-
-    private double overallRating; //average of all ratings provided by users for this game 
-    private ArrayList<Feedback> feedback; //these will determine overallRating (the rating the user sees)
-    private double qualPts; //all ratings added (to get average)
-    private int numRatings;
-    private int numReviews;
+    private double overallRating; //average of all ratings provided by users for this game
 
     //detailed constructor
-    public Game(String gameName, String gameDev, String desc, double price)
+    public Game(String gameName, String gameDev, ArrayList<String> gen, String desc, double price)
     {
         name = gameName;
         dev = gameDev;
         description = desc;
+        genres = gen;
         currPrice = price;
-
-        qualPts = 0;
-        numRatings = 0;
-        numReviews = 0;
-
-        //initialize overallRating and reviews to 0 and empty as the game is just being added (hence has no reviews/rating yet)
         overallRating = 0.0;
-        feedback = new ArrayList<Feedback>();
     }
 
     //simple constructor
@@ -47,13 +39,7 @@ public class Game
         description = null;
         currPrice = -1;
 
-        qualPts = 0;
-        numRatings = 0;
-        numReviews = 0;
-
-        //initialize overallRating and reviews to 0 and empty as the game is just being added (hence has no reviews/rating yet)
         overallRating = 0.0;
-        feedback = new ArrayList<Feedback>();
     }
 
     //default constructor
@@ -64,13 +50,7 @@ public class Game
         description = null;
         currPrice = -1;
 
-        qualPts = 0;
-        numRatings = 0;
-        numReviews = 0;
-
-        //feedback is a null list for a game with no name (default)
         overallRating = 0.0;
-        feedback = new ArrayList<Feedback>();
     }
 
     public String getName()
@@ -83,32 +63,11 @@ public class Game
         return dev;
     }
 
-    //------------------------------------------------------
-    // addRating
-    //
-    // PURPOSE:    creates Rating object and Feedback object, updates game's overallRating,
-    //              and adds Feedback object to game's Feedback list
-    // PARAMETERS:
-    //     newRating(int): the rating with which to create Rating object and update overall rating, if the rating given is valid
-    // Returns: void
-    //------------------------------------------------------
-    public void addRating(double newRating)
-    {
-        /* create new Rating object and new Feedback object, add Feedback object to list*/
-        Rating rating = new Rating(newRating);
-        Feedback newFeedback = new Feedback(rating);
-        if(newRating > 0 && !name.equals("null"))
-        {
-            feedback.add(newFeedback);
-            //update overallRating
-            updateOverall(rating);
-        }else {
-            System.out.println("Unable to add rating.");
-        }
-    }
-
     public double getRating()
     {
+        AccessRatings newAccess = new AccessRatings();
+        overallRating = newAccess.getOverallRating(name);
+
         if(overallRating == 0.0 && !name.equals("null"))
         {
             System.out.println("The game "+name+" has not yet been rated.");
@@ -116,82 +75,9 @@ public class Game
         return overallRating;
     }
 
-    //------------------------------------------------------
-    // addReview
-    //
-    // PURPOSE:    creates Rating object, Review object, and Feedback object, updates game's overallRating,
-    //              and adds Feedback object to game's Feedback list
-    // PARAMETERS:
-    //     newRating(int): the rating with which to create Rating object and update overall rating, if the rating given is valid
-    //     newReview(String): the review that will be used to create the Review object, if the String is not empty
-    // Returns: void
-    //------------------------------------------------------
-
-    public void addReview(double newRating, String newReview)
+    public ArrayList<String> getGenres()
     {
-        /* create new Rating object, new Review object and new Feedback object, add Feedback object to list*/
-        Rating rating = new Rating(newRating);
-        Review review = new Review(newReview);
-        Feedback newFeedback;
-        if(rating.getRating() >= 1 && !newReview.equals("") && !name.equals("null"))
-        {
-            newFeedback = new Feedback(rating, review);
-            feedback.add(newFeedback);
-            //update overallRating
-            updateOverall(rating);
-            numReviews++;
-        }
-        else {
-            System.out.println("Unable to add review.");
-        }
-    }
-
-    //------------------------------------------------------
-    // updateOverall (private method)
-    //
-    // PURPOSE:    updates the overall rating to display to users for this game.
-    //               this is the logic component of the program so far.
-    // PARAMETERS:
-    //     rating (Rating): obtains the integer value of the rating, and updates the game accordingly.
-    // Returns: void
-    //------------------------------------------------------
-
-    private void updateOverall(Rating rating)
-    {
-        double toAdd = rating.getRating();
-        qualPts += toAdd;
-        numRatings++;
-        overallRating = 1.0 * qualPts/numRatings;
-    }
-
-    //------------------------------------------------------
-    // getReviews
-    //
-    // PURPOSE:    extracts Reviews from Feedback list (which is a mix of Reviews and Ratings), returns list of reviews
-    // PARAMETERS:
-    //     none
-    // Returns: Review ArrayList
-    //------------------------------------------------------
-    public ArrayList<Review> getReviews()
-    {
-        ArrayList<Review> reviews = new ArrayList<>();
-        if(numReviews == 0 && name != null)
-        {
-            System.out.println("The game "+name+" has not yet been reviewed.");
-        }
-        else
-        {
-            for(int i = 0; i < feedback.size(); i++)
-            {
-                if((feedback.get(i)).isReview())
-                {
-                    reviews.add((Review) feedback.get(i).getReview());
-                }
-            }
-        }
-
-
-        return reviews;
+        return genres;
     }
 
     public String getDescription()
@@ -203,10 +89,6 @@ public class Game
     {
         return currPrice;
     }
-
-    public int getNumRatings() { return numRatings; }
-
-    public int getNumReviews() { return numReviews; }
 
     //------------------------------------------------------
     // equals
@@ -235,7 +117,12 @@ public class Game
 
     public String toString()
     {
-        return "Game: "+name+", Developer: "+dev+", Overall Rating: "+overallRating+", Current Price: "+currPrice+"\nDescription: "+description;
+        String genreList = "";
+        for(int i = 0; i < genres.size(); i++)
+        {
+            genreList += genres.get(i) + ", ";
+        }
+        return "Game: "+name+", Developer: "+dev+", Overall Rating: "+overallRating+", Current Price: "+currPrice+"\nGenres: "+genreList+"\nDescription: "+description;
     }
 }
 

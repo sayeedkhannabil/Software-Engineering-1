@@ -22,7 +22,7 @@ public class Rating
     private static int nextRatingID=1;
 
     //create a rating, use auto generated ratingID
-    public Rating (double ratingGiven,String gameName,String userID) throws IncorrectFormat {
+    public Rating (double ratingGiven,String gameName,String userID) {
         rating = 0.0; // default -- if no ratings (or no valid ratings) given yet
         checkRating(ratingGiven);
         //input validation
@@ -45,9 +45,15 @@ public class Rating
         this.ratingID=ratingID;
     }
 
-    private void checkRating(double rating) throws IncorrectFormat {
-        if(rating < 0 || rating > 5){
-            throw new IncorrectFormat("rating should be between 0 and 5.");
+    private void checkRating(double rating){
+        if(rating <= 0 || rating > 5){
+            //surrounding with a try-catch was the only way to avoid the unchecked exception.
+            //Will try to come up with a better way to deal with this in the future, but needed to use the Rating class so needed a quick solution
+            try {
+                throw new IncorrectFormat("rating should be between 0 and 5.");
+            } catch (IncorrectFormat incorrectFormat) {
+                incorrectFormat.printStackTrace();
+            }
         }
     }
 

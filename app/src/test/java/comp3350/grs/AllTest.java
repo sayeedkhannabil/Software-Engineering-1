@@ -8,6 +8,7 @@ import comp3350.grs.objects.GameTest;
 import comp3350.grs.objects.GuestTest;
 import comp3350.grs.objects.RatingTest;
 import comp3350.grs.objects.RegisteredUserTest;
+import comp3350.grs.tests.business.TestAccessRatings;
 
 
 
@@ -28,8 +29,7 @@ public class AllTest {
         suite.addTestSuite(ReviewTest.class);
         suite.addTestSuite(RegisteredUserTest.class);
         suite.addTestSuite(FeedbackTest.class);
-
-
+        suite.addTestSuite(TestAccessRatings.class);
     }
 
 }

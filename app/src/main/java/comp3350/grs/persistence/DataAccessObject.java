@@ -11,12 +11,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Game;
@@ -129,7 +127,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		boolean tableExist=false;
 		try {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
-			resultSet1= databaseMetaData.getTables(null, null, tableName, null);
+			resultSet1 = databaseMetaData.getTables(null, null, tableName, null);
 			if (resultSet1.next()){
 				tableExist=true;
 			}
@@ -184,65 +182,79 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		System.out.println("Closed " +dbType +" database " +dbName);
 	}
 
-	public List<User> getAllUsers(){
-		List<User> userList=new ArrayList<User>();
-		String userID,password;
+	private ResultSet getAll(String tableName){
+		ResultSet resultSet=null;
 		try {
-			preparedStatement=connection.prepareStatement("select * from users");
-			resultSet1=preparedStatement.executeQuery();
+			preparedStatement=connection.prepareStatement("select * from ?");
+			preparedStatement.setString(1,tableName);
+			resultSet=preparedStatement.executeQuery();
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		}
+		return resultSet;
+	}
 
+	private List<User> getUsersByResultset(ResultSet resultSet ){
+		User user=null;
+		List<User> userList=new ArrayList<User>();
+		String password=null;
+		String userID=null;
 		try {
-
-			while (resultSet1.next()){
-				userID=resultSet1.getString(1);
-				password=resultSet1.getString(2);
+			while (resultSet.next()){
+				userID=resultSet.getString(1);
+				password=resultSet.getString(2);
 				if (password==null){
-					userList.add(new Guest());
-				}else {
-					userList.add(new RegisteredUser(userID,password));
+					user=new Guest();
 				}
-
+				else{
+					user=new RegisteredUser(userID,password);
+				}
+				userList.add(user);
 			}
-		} catch (SQLException | IncorrectFormat throwables) {
-			throwables.printStackTrace();
+		} catch (SQLException | IncorrectFormat sqlException) {
+			sqlException.printStackTrace();
 		}
-
 		return userList;
 	}
 
+	public List<User> getAllUsers(){
+		List<User> userList=new ArrayList<User>();
+		String userID,password;
+		resultSet1 = getAll("users");
+		userList=getUsersByResultset(resultSet1);
+		return userList;
+	}
+
+
+
 	public User getUserByID(String userID){
 		User userResult=null;
-		String password=null;
 
 		try {
 			preparedStatement=connection.prepareStatement("select * from " +
 					"users where USERID = ?");
 			preparedStatement.setString(1,userID);
+			resultSet1 =preparedStatement.executeQuery();
+			userResult=getUsersByResultset(resultSet1).get(0);
 		} catch (SQLException sqlException) {
-			sqlException.printStackTrace();
-		}
-		try {
-			resultSet1=preparedStatement.executeQuery();
-		} catch (SQLException sqlException) {
-			sqlException.printStackTrace();
-		}
-		try {
-			if (resultSet1.next()){
-				password=resultSet1.getString(2);
-				if (password==null){
-					userResult=new Guest();
-				}
-				else{
-					userResult=new RegisteredUser(userID,password);
-				}
-			}
-		} catch (SQLException | IncorrectFormat sqlException) {
 			sqlException.printStackTrace();
 		}
 		return userResult;
+	}
+
+	public List<User> getUsersByIDImplicit(String userIDImp){
+		List<User> userList=new ArrayList<>();
+		try {
+			preparedStatement=connection.prepareStatement("select * from " +
+					"users where USERID like ?");
+			preparedStatement.setString(1,userIDImp);
+			resultSet1 =preparedStatement.executeQuery();
+			userList=getUsersByResultset(resultSet1);
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
+
+		return userList;
 	}
 
 	public boolean insertUser(User user) {
@@ -326,52 +338,56 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return deleteSuccess;
 	}
 
-	public List<Game> getAllGames(){
+	private List<Game> getGamesByResultset(ResultSet resultSet){
 		List<Game> gameList=new ArrayList<Game>();
 		String gameName,developer,description;
 		double price;
-
 		try {
-			preparedStatement=connection.prepareStatement("select * from games");
-			resultSet1=preparedStatement.executeQuery();
-		} catch (SQLException sqlException) {
-			sqlException.printStackTrace();
-		}
-
-		try {
-
-			while (resultSet1.next()){
-				gameName=resultSet1.getString(1);
-				developer=resultSet1.getString(2);
-				description=resultSet1.getString(3);
-				price=resultSet1.getDouble(4);
+			while (resultSet.next()){
+				gameName=resultSet.getString(1);
+				developer=resultSet.getString(2);
+				description=resultSet.getString(3);
+				price=resultSet.getDouble(4);
 				gameList.add(new Game(gameName,developer,description,price));
-
 			}
 		} catch (SQLException throwables) {
 			throwables.printStackTrace();
 		}
+		return gameList;
+	}
 
+	public List<Game> getAllGames(){
+		List<Game> gameList=new ArrayList<Game>();
+		resultSet1 =getAll("games");
+		gameList=getGamesByResultset(resultSet1);
+		return gameList;
+	}
+
+	public List<Game> getGamesByNameImplicit(String gameNameImp){
+		List<Game> gameList=new ArrayList<Game>();
+
+		try {
+			preparedStatement= connection.prepareStatement("select * from games " +
+					"where gameName like ?");
+			preparedStatement.setString(1,gameNameImp);
+			resultSet1 =preparedStatement.executeQuery();
+			gameList=getGamesByResultset(resultSet1);
+
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
 		return gameList;
 	}
 
 	public Game getGameByName(String gameName){
 		Game gameResult=null;
-		String developer=null,description=null;
-		double price=0.0;
 
 		try {
 			preparedStatement= connection.prepareStatement("select * from games " +
 					"where gameName=?");
 			preparedStatement.setString(1,gameName);
-			resultSet1=preparedStatement.executeQuery();
-			if (resultSet1.next()){
-				gameName=resultSet1.getString(1);
-				developer=resultSet1.getString(2);
-				description=resultSet1.getString(3);
-				price=resultSet1.getDouble(4);
-				gameResult=new Game(gameName,developer,description,price);
-			}
+			resultSet1 =preparedStatement.executeQuery();
+			gameResult=getGamesByResultset(resultSet1).get(0);
 
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
@@ -380,6 +396,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 	}
 
 	public boolean insertGame(Game game){
+		boolean insertSuccess=false;
 
 		try {
 			preparedStatement=connection.prepareStatement("Insert into Games " +
@@ -389,16 +406,14 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 			preparedStatement.setString(3,game.getDescription());
 			preparedStatement.setDouble(4, game.getPrice());
 			updateCount=preparedStatement.executeUpdate();
+			if (updateCount==1){
+				insertSuccess=true;
+			}
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		}
 
-		if (updateCount!=1){
-			return false;
-		}
-		else {
-			return true;
-		}
+		return insertSuccess;
 	}
 
 	public boolean updateGame(Game game){
@@ -449,25 +464,22 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return deleteSuccess;
 	}
 
-	public List<Review> getAllReviews(){
+	private List<Review> getReviewsByResultset(ResultSet resultSet){
 		List<Review> reviewList=new ArrayList<>();
 
 		int reviewID;
 		String gameName=null,userID=null,reviewContent=null;
-
 		try {
-			preparedStatement= connection.prepareStatement("select * from reviews");
-			resultSet1= preparedStatement.executeQuery();
-			while(resultSet1.next()){
-				reviewID=resultSet1.getInt(1);
-				reviewContent=resultSet1.getString(2);
-				gameName=resultSet1.getString(3);
-				userID=resultSet1.getString(4);
+
+			while(resultSet.next()){
+				reviewID= resultSet.getInt(1);
+				reviewContent= resultSet.getString(2);
+				gameName= resultSet.getString(3);
+				userID= resultSet.getString(4);
 
 				reviewList.add(new Review(reviewID,reviewContent,gameName,
 						userID));
 			}
-
 
 		} catch (SQLException | IncorrectFormat sqlException) {
 			sqlException.printStackTrace();
@@ -475,28 +487,27 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return reviewList;
 	}
 
+	public List<Review> getAllReviews(){
+		List<Review> reviewList=new ArrayList<>();
+		resultSet1=getAll("reviews");
+		reviewList=getReviewsByResultset(resultSet1);
+
+		return reviewList;
+	}
+
+
 
 	public List<Review> getReviewsByGame(String gameName){
 		List<Review> reviewList=new ArrayList<>();
-		int reviewID;
-		String userID=null,reviewContent=null;
 
 		try {
 			preparedStatement= connection.prepareStatement("select * from " +
 					"reviews where gameName=?");
 			preparedStatement.setString(1,gameName);
-			resultSet1= preparedStatement.executeQuery();
-			while(resultSet1.next()){
-				reviewID=resultSet1.getInt(1);
-				reviewContent=resultSet1.getString(2);
-				gameName=resultSet1.getString(3);
-				userID=resultSet1.getString(4);
+			resultSet1 = preparedStatement.executeQuery();
+			reviewList=getReviewsByResultset(resultSet1);
 
-				reviewList.add(new Review(reviewID,reviewContent,gameName,
-						userID));
-			}
-
-		} catch (SQLException | IncorrectFormat sqlException) {
+		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		}
 		return reviewList;
@@ -504,25 +515,14 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 
 	public List<Review> getReviewsByUser(String userID){
 		List<Review> reviewList=new ArrayList<>();
-		int reviewID;
-		String gameName=null,reviewContent=null;
 
 		try {
 			preparedStatement= connection.prepareStatement("select * from " +
 					"reviews where userID=?");
 			preparedStatement.setString(1,userID);
-			resultSet1= preparedStatement.executeQuery();
-			while(resultSet1.next()){
-				reviewID=resultSet1.getInt(1);
-				reviewContent=resultSet1.getString(2);
-				gameName=resultSet1.getString(3);
-				userID=resultSet1.getString(4);
-
-				reviewList.add(new Review(reviewID,reviewContent,gameName,
-						userID));
-			}
-
-		} catch (SQLException | IncorrectFormat sqlException) {
+			resultSet1 = preparedStatement.executeQuery();
+			reviewList=getReviewsByResultset(resultSet1);
+		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		}
 		return reviewList;
@@ -531,31 +531,26 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 	public Review getReviewByID(int reviewID){
 		Review reviewResult=null;
 
-		String userID=null, gameName=null,reviewContent=null;
-
 		try {
 			preparedStatement= connection.prepareStatement("select * from " +
 					"reviews where reviewID=?");
 			preparedStatement.setInt(1,reviewID);
-			resultSet1= preparedStatement.executeQuery();
-			if(resultSet1.next()){
-				reviewContent=resultSet1.getString(2);
-				gameName=resultSet1.getString(3);
-				userID=resultSet1.getString(4);
+			resultSet1 = preparedStatement.executeQuery();
+			reviewResult=getReviewsByResultset(resultSet1).get(0);
 
-				reviewResult=new Review(reviewID,reviewContent,gameName,userID);
-			}
-
-		} catch (SQLException | IncorrectFormat sqlException) {
+		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		}
 		return reviewResult;
 	}
 
+
+
 	public boolean insertReview(Review review){
+		boolean insertSucess=false;
+
 		int reviewID;
 		String reviewContent=null,gameName=null,userID=null;
-		boolean insertSucess=false;
 
 		reviewID=review.getReviewID();
 		reviewContent=review.getComment();
@@ -622,7 +617,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return deleteSuccess;
 	}
 
-	public List<Rating> getAllRatings(){
+	private List<Rating> getRatingsByResultset(ResultSet resultSet){
 		List<Rating> ratingList=new ArrayList<Rating>();
 		double rating=0.0;
 		String gameName=null;
@@ -630,13 +625,11 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		int ratingID;
 
 		try {
-			preparedStatement= connection.prepareStatement("select * from ratings");
-			resultSet1=preparedStatement.executeQuery();
-			while (resultSet1.next()){
-				ratingID=resultSet1.getInt(1);
-				rating=resultSet1.getDouble(2);
-				gameName=resultSet1.getString(3);
-				userID=resultSet1.getString(4);
+			while (resultSet.next()){
+				ratingID= resultSet.getInt(1);
+				rating= resultSet.getDouble(2);
+				gameName= resultSet.getString(3);
+				userID= resultSet.getString(4);
 
 				ratingList.add(new Rating(ratingID,rating,gameName,userID));
 			}
@@ -647,26 +640,25 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return ratingList;
 	}
 
+	public List<Rating> getAllRatings(){
+		List<Rating> ratingList=new ArrayList<Rating>();
+
+		resultSet1=getAll("ratings");
+		ratingList=getRatingsByResultset(resultSet1);
+		return ratingList;
+	}
+
 	public List<Rating> getRatingsByGame(String gameName){
 		List<Rating> ratingList=new ArrayList<Rating>();
-		int ratingID;
-		double rating=0.0;
-		String userID=null;
+
 
 		try {
 			preparedStatement= connection.prepareStatement("select * from ratings" +
 					" where gameName=?");
 			preparedStatement.setString(1,gameName);
-			resultSet1= preparedStatement.executeQuery();
-			while (resultSet1.next()){
-				ratingID=resultSet1.getInt(1);
-				rating=resultSet1.getDouble(2);
-				gameName=resultSet1.getString(3);
-				userID=resultSet1.getString(4);
-
-				ratingList.add(new Rating(ratingID,rating,gameName,userID));
-			}
-		} catch (SQLException | IncorrectFormat sqlException) {
+			resultSet1 = preparedStatement.executeQuery();
+			ratingList=getRatingsByResultset(resultSet1);
+		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		}
 		return ratingList;
@@ -674,24 +666,14 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 
 	public List<Rating> getRatingsByUser(String userID){
 		List<Rating> ratingList=new ArrayList<Rating>();
-		int ratingID;
-		double rating=0.0;
-		String gameName=null;
 
 		try {
 			preparedStatement= connection.prepareStatement("select * from ratings" +
 					" where userID=?");
 			preparedStatement.setString(1,userID);
-			resultSet1= preparedStatement.executeQuery();
-			while (resultSet1.next()){
-				ratingID=resultSet1.getInt(1);
-				rating=resultSet1.getDouble(2);
-				gameName=resultSet1.getString(3);
-				userID=resultSet1.getString(4);
-
-				ratingList.add(new Rating(ratingID,rating,gameName,userID));
-			}
-		} catch (SQLException | IncorrectFormat sqlException) {
+			resultSet1 = preparedStatement.executeQuery();
+			ratingList=getRatingsByResultset(resultSet1);
+		} catch (SQLException  sqlException) {
 			sqlException.printStackTrace();
 		}
 		return ratingList;
@@ -699,25 +681,14 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 
 	public Rating getRatingByID(int ratingID){
 		Rating ratingResult=null;
-		double rating=0.0;
-		String gameName=null;
-		String userID=null;
 
 		try {
 			preparedStatement= connection.prepareStatement("select * from ratings" +
 					" where ratingID=?");
 			preparedStatement.setInt(1,ratingID);
-			resultSet1= preparedStatement.executeQuery();
-
-			if (resultSet1.next()){
-				ratingID=resultSet1.getInt(1);
-				rating=resultSet1.getDouble(2);
-				gameName=resultSet1.getString(3);
-				userID=resultSet1.getString(4);
-
-				ratingResult=new Rating(ratingID,rating,gameName,userID);
-			}
-		} catch (SQLException | IncorrectFormat sqlException) {
+			resultSet1 = preparedStatement.executeQuery();
+			ratingResult=getRatingsByResultset(resultSet1).get(0);
+		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		}
 		return ratingResult;

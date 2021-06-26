@@ -22,6 +22,8 @@ public interface DataAccessI
 
 	List<User> getAllUsers();
 
+	List<User> getUsersByIDImplicit(String userIDImp);
+
 	User getUserByID(String userID);
 
 	boolean insertUser(User user);
@@ -33,6 +35,8 @@ public interface DataAccessI
 	List<Game> getAllGames();
 
 	Game getGameByName(String gameName);
+
+	List<Game> getGamesByNameImplicit(String gameNameImp);
 
 	boolean insertGame(Game game);
 

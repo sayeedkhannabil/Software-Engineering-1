@@ -31,6 +31,7 @@ public class AccessRatings {
     //get a list of all the ratings
     public List<Rating> getRatings()
     {
+        ratings.clear();
         ratings = dataAccess.getAllRatings();
         return ratings;
     }
@@ -55,6 +56,20 @@ public class AccessRatings {
             currentRatingIndex = 0;
         }
         return currentRating;
+    }
+
+    public Rating findByUser(String userID, String gameName)
+    {
+        Rating found = null;
+        getRatings();
+        for(int i = 0; i < ratings.size(); i++)
+        {
+            if(ratings.get(i).getUserID().equals(userID) && ratings.get(i).getGameName().equals(gameName))
+            {
+                found = ratings.get(i);
+            }
+        }
+        return found;
     }
 
     //get an overall rating for a game by the game name

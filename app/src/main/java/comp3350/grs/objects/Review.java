@@ -1,6 +1,6 @@
 package comp3350.grs.objects;
 
-import comp3350.grs.business.AccessUsers;
+import comp3350.grs.business.AccessRatings;
 import comp3350.grs.exceptions.IncorrectFormat;
 
 // CLASS: Review
@@ -46,6 +46,23 @@ public class Review {
             throw new IncorrectFormat("letters of review content should be " +
                     "between 1 and 140");
         }
+    }
+
+    //experimental method to match reviews with ratings by userID
+    //could use this in constructor to determine whether review can be created
+    public boolean hasBeenRated()
+    {
+        boolean alreadyRated = false;
+
+        //access ratings from database
+        AccessRatings ratingAccess = new AccessRatings();
+        Rating rate = ratingAccess.findByUser(userID,gameName);
+        //find match by game and userID -- if match rating found, alreadyRated == true
+        if(rate != null)
+        {
+            alreadyRated = true;
+        }
+        return alreadyRated;
     }
 
     public String getComment() {

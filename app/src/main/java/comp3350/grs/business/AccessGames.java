@@ -6,6 +6,8 @@
 
 
 package comp3350.grs.business; 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List; 
 import java.util.ArrayList;
 
@@ -33,6 +35,126 @@ public class AccessGames
     public List<Game> getGames()
     {
         gameList=dataAccess.getAllGames();
+        return gameList;
+    }
+    
+    // Sorts the Game(s) in accending order of Name
+    public List<Game> accendingNameSort() {
+
+        getGames();
+
+        Collections.sort(gameList, new Comparator<Game>() {
+            @Override
+            public int compare(Game o1, Game o2) {
+                return String.valueOf(o1.getName()).compareTo(o2.getName());
+            }
+        });
+
+        return gameList;
+    }
+
+    // Sorts the Game(s) in descending order of Name
+    public List<Game> descendingNameSort() {
+
+        getGames();
+
+        Collections.sort(gameList, new Comparator<Game>() {
+            @Override
+            public int compare(Game o1, Game o2) {
+                return String.valueOf(o2.getName()).compareTo(o1.getName());
+            }
+        });
+
+        return gameList;
+    }
+
+    // Sorts the Game(s) in accending order of price
+    public List<Game> accendingPriceSort() {
+
+        getGames();
+
+        Collections.sort(gameList, new Comparator<Game>() {
+            @Override
+            public int compare(Game o1, Game o2) {
+                return Double.valueOf(o1.getPrice()).compareTo(o2.getPrice());
+            }
+        });
+
+        return gameList;
+    }
+
+    // Sorts the Game(s) in descending order of price
+    public List<Game> descendingPriceSort() {
+
+        getGames();
+
+        Collections.sort(gameList, new Comparator<Game>() {
+            @Override
+            public int compare(Game o1, Game o2) {
+                return Double.valueOf(o2.getPrice()).compareTo(o1.getPrice());
+            }
+        });
+
+        return gameList;
+    }
+
+    // Sorts the Game(s) in accending order of # of ratings
+    public List<Game> accendingRatingSort() {
+
+        getGames();
+
+        Collections.sort(gameList, new Comparator<Game>() {
+            @Override
+            public int compare(Game o1, Game o2) {
+                return Integer.valueOf(o1.getNumRatings()).compareTo(o2.getNumRatings());
+            }
+        });
+
+        return gameList;
+    }
+
+    // Sorts the Game(s) in descending order of # of ratings
+    public List<Game> descendingRatingSort() {
+
+        getGames();
+
+        Collections.sort(gameList, new Comparator<Game>() {
+            @Override
+            public int compare(Game o1, Game o2) {
+                return Integer.valueOf(o2.getNumRatings()).compareTo(o1.getNumRatings());
+            }
+        });
+
+        return gameList;
+    }
+
+    // Sorts the Game(s) in accending order of # of reviews
+    public List<Game> accendingReviewSort() {
+
+        getGames();
+
+        Collections.sort(gameList, new Comparator<Game>() {
+            @Override
+            public int compare(Game o1, Game o2) {
+                return Integer.valueOf(o1.getNumReviews()).compareTo(o2.getNumReviews());
+            }
+        });
+
+        return gameList;
+    }
+
+    // Sorts the Game(s) in descending order of # of reviews
+    public List<Game> descendingReviewSort() {
+
+        getGames();
+
+        Collections.sort(gameList, new Comparator<Game>() {
+            @Override
+            public int compare(Game o1, Game o2) {
+                return Integer.valueOf(o2.getNumReviews()).compareTo(o1.getNumReviews());
+            }
+        });
+
         return gameList;
     }
 

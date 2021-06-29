@@ -1,6 +1,7 @@
 package comp3350.grs.tests.business;
 import comp3350.grs.business.AccessRatings;
 import comp3350.grs.business.AccessUsers;
+import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Rating;
 import comp3350.grs.objects.User;
 import junit.framework.TestCase;
@@ -16,8 +17,18 @@ public class TestAccessRatings extends TestCase {
         User user = userAccess.getSequential();
 
         //create new "typical" ratings, for the same game
-        Rating newGuestRating = new Rating(3.0, "Valheim", "Guest");
-        Rating newUserRating = new Rating(5.0, "Valheim", user.getUserID());
+        Rating newGuestRating = null;
+        try {
+            newGuestRating = new Rating(3.0, "Valheim", "Guest");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        Rating newUserRating = null;
+        try {
+            newUserRating = new Rating(5.0, "Valheim", user.getUserID());
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
 
         AccessRatings ratingAccess = new AccessRatings();
         boolean insert1 = ratingAccess.insertRating(newGuestRating);

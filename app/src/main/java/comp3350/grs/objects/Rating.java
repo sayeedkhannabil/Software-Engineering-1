@@ -14,46 +14,35 @@ import comp3350.grs.exceptions.IncorrectFormat;
 
 public class Rating
 {
-    private int ratingID;//used to uniquely identify a rating
     private double rating; //from one to five
     private String gameName;
     private String userID;
 
-    private static int nextRatingID=1;
 
     //create a rating, use auto generated ratingID
-    public Rating (double ratingGiven,String gameName,String userID) {
+    public Rating (double ratingGiven,String gameName,String userID) throws IncorrectFormat {
         rating = 0.0; // default -- if no ratings (or no valid ratings) given yet
         checkRating(ratingGiven);
         //input validation
         rating = ratingGiven;
         this.userID=userID;
         this.gameName=gameName;
-        this.ratingID=nextRatingID;
-        nextRatingID++;
+
     }
 
-    //create a rating, specify the ratingID
-    public Rating (int ratingID,double ratingGiven,String gameName,
-                   String userID) throws IncorrectFormat {
+    public Rating(double rating) throws IncorrectFormat {
         rating = 0.0; // default -- if no ratings (or no valid ratings) given yet
-        checkRating(ratingGiven);
+        checkRating(rating);
         //input validation
-        rating = ratingGiven;
-        this.userID=userID;
-        this.gameName=gameName;
-        this.ratingID=ratingID;
+        rating = rating;
+        this.userID=null;
+        this.gameName=null;
     }
 
-    private void checkRating(double rating){
+
+    private void checkRating(double rating) throws IncorrectFormat {
         if(rating <= 0 || rating > 5){
-            //surrounding with a try-catch was the only way to avoid the unchecked exception.
-            //Will try to come up with a better way to deal with this in the future, but needed to use the Rating class so needed a quick solution
-            try {
-                throw new IncorrectFormat("rating should be between 0 and 5.");
-            } catch (IncorrectFormat incorrectFormat) {
-                incorrectFormat.printStackTrace();
-            }
+            throw new IncorrectFormat("rating should be between 0 and 5.");
         }
     }
 
@@ -71,12 +60,9 @@ public class Rating
         return gameName;
     }
 
-    public int getRatingID(){
-        return ratingID;
-    }
 
     public boolean equals(Rating rating){
-        return this.ratingID==rating.getRatingID();
+        return this.userID.equals(rating.userID)&&this.gameName.equals(rating.gameName);
     }
 
     public String toString()

@@ -70,7 +70,7 @@ public interface DataAccessI
 
 	List<Rating> getRatingsByUser(String userID);
 
-	Rating getRatingByID(int ratingID);
+	Rating getRating(String gameName,String userID);
 
 
 }

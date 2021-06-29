@@ -73,19 +73,28 @@ public abstract class DataAccess {
             e.printStackTrace();
         }
 
-        JSONArray jsonArray = null;
+        JSONArray gameJsonArray = null;
+        JSONArray genreJsonArray = null;
+        JSONObject currGame=null;
+        JSONObject currGenre=null;
         try {
-            jsonArray = new JSONArray(content);
+            gameJsonArray = new JSONArray(content);
             String gameName,gameDev,desc;
             double price;
+            List<String>genres=new ArrayList<String>();
             Game newGame;
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                gameName=jsonObject.getString("title");
-                gameDev=jsonObject.getString("developer");
-                desc=jsonObject.getString("description");
-                price=jsonObject.getDouble("price");
-                newGame=new Game(gameName,gameDev,desc,price);
+            for (int i = 0; i < gameJsonArray.length(); i++) {
+                currGame = gameJsonArray.getJSONObject(i);
+                gameName=currGame.getString("title");
+                gameDev=currGame.getString("developer");
+                desc=currGame.getString("description");
+                price=currGame.getDouble("price");
+                genreJsonArray=currGame.getJSONArray("genres");
+                for (int j = 0; j < genreJsonArray.length(); j++) {
+                    currGenre=genreJsonArray.getJSONObject(j);
+                    genres.add(currGenre.getString("genres"));
+                }
+                newGame=new Game(gameName,gameDev,desc,price,genres);
                 games.add(newGame);
             }
         } catch (JSONException e) {

@@ -11,20 +11,21 @@ import java.util.ArrayList;
 
 import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
+import comp3350.grs.persistence.DataAccessI;
 import comp3350.grs.persistence.DataAccessStub;
 import comp3350.grs.objects.Game; 
 
 
 public class AccessGames
 {
-    private DataAccessStub dataAccess; // stub database (name taken from example file)
+    private DataAccessI dataAccess; // stub database (name taken from example file)
     private List<Game> gameList; 
     private Game currGame; 
     private int currGameIndex; 
 
     public AccessGames()
     {
-        dataAccess = (DataAccessStub) Services.getDataAccess(Main.dbName);
+        dataAccess =  Services.getDataAccess(Main.dbName);
         gameList = null; 
         currGame = null; 
         currGameIndex = 0; 
@@ -38,7 +39,7 @@ public class AccessGames
 
     public Game findGame(String name)
     {
-        return dataAccess.getOneGame(new Game(name));
+        return dataAccess.getGameByName(name);
     }
 
     public Game getSequential()

@@ -27,11 +27,16 @@ import java.util.List;
 
 import comp3350.grs.R;
 import comp3350.grs.business.AccessGames;
+import comp3350.grs.business.AccessRatings;
+import comp3350.grs.business.AccessUsers;
+import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Game;
+import comp3350.grs.objects.Rating;
 import comp3350.grs.objects.Review;
 
 public class Game_page extends Activity {
     private AccessGames accessGames;
+    private AccessRatings accessRatings;
     private Game game;//the game we will show the details
     private TextInputLayout textInputLayout;
     private TextInputEditText textInputEditText;//review edit text
@@ -57,6 +62,7 @@ public class Game_page extends Activity {
             game_name = extras.getString("game");//get the game name
         }
         accessGames = new AccessGames();
+        accessRatings=new AccessRatings();
         game = accessGames.findGame(game_name);
         TextView game_text = (TextView) findViewById(R.id.textView5);
         TextView dev_text = (TextView) findViewById(R.id.textView6);
@@ -78,16 +84,33 @@ public class Game_page extends Activity {
         dev_text.setText("dev: " + game.getDev());
         des_text.setText(game.getDescription());
         price_text.setText("$" + game.getPrice());
-        ratingBar.setRating((float) game.getRating());
+        ratingBar.setRating((float) accessRatings.getOverallRating(game_name));
         showReviews();
 
         //when user clicked on the rating bar,update the rating
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                game.addRating(rating);
-                accessGames.updateGame(game);
-                ratingBar.setRating((float) game.getRating());
+                if(accessRatings.getRating(game.getName(),
+                        AccessUsers.getActiveUser().getUserID())==null){
+                    try {
+                        accessRatings.insertRating(new Rating(rating,
+                                game.getName(),AccessUsers.getActiveUser().getUserID()));
+                    } catch (IncorrectFormat incorrectFormat) {
+                        incorrectFormat.printStackTrace();
+                    }
+                }
+                else {
+                    try {
+                        accessRatings.updateRating(new Rating(rating,
+                                game.getName(),
+                                AccessUsers.getActiveUser().getUserID()));
+                    } catch (IncorrectFormat incorrectFormat) {
+                        incorrectFormat.printStackTrace();
+                    }
+                }
+
+                ratingBar.setRating((float) accessRatings.getOverallRating(game.getName()));
             }
         });
 
@@ -133,7 +156,7 @@ public class Game_page extends Activity {
                     review_wrapper.removeView(textInputLayout);
                     review_wrapper.removeView(textInputEditText);
 
-                    game.addReview(ratingBar.getRating(),review);
+//                    game.addReview(ratingBar.getRating(),review);// TODO: 6/28/2021
                     showReviews();//update the review
                     constraintSet.connect(review_background.getId(),
                             ConstraintSet.TOP,
@@ -154,13 +177,13 @@ public class Game_page extends Activity {
             review_wrapper.removeView(review_wrapper.getChildAt(review_wrapper.getChildCount() - 1));
         }
 
-        List<Review> reviews = game.getReviews();
+//        List<Review> reviews = game.getReviews();// TODO: 6/28/2021
         //add all reviews one by one
-        for (int i = 0; i < reviews.size(); i++) {
-            TextView newReview = new TextView(this);
-            newReview.setTextSize(TypedValue.COMPLEX_UNIT_SP,25);
-            newReview.setText(reviews.get(i).toString());
-            review_wrapper.addView(newReview);
-        }
+//        for (int i = 0; i < reviews.size(); i++) {
+//            TextView newReview = new TextView(this);
+//            newReview.setTextSize(TypedValue.COMPLEX_UNIT_SP,25);
+//            newReview.setText(reviews.get(i).toString());
+//            review_wrapper.addView(newReview);
+//        }
     }
 }

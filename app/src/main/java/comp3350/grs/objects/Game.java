@@ -8,6 +8,7 @@
 
 package comp3350.grs.objects;
 import java.util.ArrayList;
+import java.util.List;
 
 import comp3350.grs.business.AccessRatings;
 
@@ -15,20 +16,19 @@ public class Game
 {
     private String name;
     private String dev; //name of company/game developer
-    private ArrayList<String> genres;
-    private String description; // genre, etc
+    private List<String> genres;
+    private String description;
     private double currPrice; //current price of game
-    private double overallRating; //average of all ratings provided by users for this game
 
     //detailed constructor
-    public Game(String gameName, String gameDev, ArrayList<String> gen, String desc, double price)
+    public Game(String gameName, String gameDev, String desc, double price,
+                List<String> gen)
     {
         name = gameName;
         dev = gameDev;
         description = desc;
         genres = gen;
         currPrice = price;
-        overallRating = 0.0;
     }
 
     //simple constructor
@@ -38,19 +38,17 @@ public class Game
         dev = null;
         description = null;
         currPrice = -1;
-
-        overallRating = 0.0;
+        genres=new ArrayList<String>();
     }
 
     //default constructor
     public Game()
     {
-        name = "null";
+        name = null;
         dev = null;
         description = null;
         currPrice = -1;
-
-        overallRating = 0.0;
+        genres=new ArrayList<String>();
     }
 
     public String getName()
@@ -63,19 +61,8 @@ public class Game
         return dev;
     }
 
-    public double getRating()
-    {
-        AccessRatings newAccess = new AccessRatings();
-        overallRating = newAccess.getOverallRating(name);
 
-        if(overallRating == 0.0 && !name.equals("null"))
-        {
-            System.out.println("The game "+name+" has not yet been rated.");
-        }
-        return overallRating;
-    }
-
-    public ArrayList<String> getGenres()
+    public List<String> getGenres()
     {
         return genres;
     }
@@ -107,7 +94,7 @@ public class Game
         if(otherGame instanceof Game)
         {
             other = (Game) otherGame;
-            if((this.name).equals(other.getName()) || ((this.name == null) && (other.getName() == null)))
+            if((this.name).equals(other.getName()) )
             {
                 isSame = true;
             }
@@ -122,7 +109,7 @@ public class Game
         {
             genreList += genres.get(i) + ", ";
         }
-        return "Game: "+name+", Developer: "+dev+", Overall Rating: "+overallRating+", Current Price: "+currPrice+"\nGenres: "+genreList+"\nDescription: "+description;
+        return "Game: "+name+", Developer: "+dev+", Current Price: "+currPrice+"\nGenres: "+genreList+"\nDescription: "+description;
     }
 }
 

@@ -10,7 +10,8 @@ import static org.junit.Assert.*;
 
 public class GameTest extends TestCase {
     private ArrayList<String> genres = new ArrayList<>(Arrays.asList("Genre1", "Genre2", "Genre3"));
-    private Game typicalGame = new Game("TypicalGame", "TypicalDeveloper", genres, "TypicalDescription", 20.00);
+    private Game typicalGame = new Game("TypicalGame", "TypicalDeveloper",
+            "TypicalDescription", 20.00,genres);
     private Game typicalGameSimple = new Game("GameWithOnlyAName");
     private Game nullGame = new Game();
 
@@ -27,9 +28,8 @@ public class GameTest extends TestCase {
         assertEquals("TypicalDescription", typicalGame.getDescription());
         assertEquals(20.00, typicalGame.getPrice(), 0);
 
-        //Test ratings and reviews for a newly initialized Game (not yet rated or reviewed)
-        assertEquals("The overall rating for the game should be zero.", 0.0, typicalGame.getRating(), 0);
-        assertEquals("The overall rating for the game should be zero.", 0.0, typicalGameSimple.getRating(), 0);
+
+
     }
 
     /*
@@ -95,7 +95,7 @@ public class GameTest extends TestCase {
     @Test
     public void testEqualsOtherGame()
     {
-        Game sameName = new Game("TypicalGame", "testDev", genres, "TestDesc", 0.0);
+        Game sameName = new Game("TypicalGame", "testDev",  "TestDesc", 0.0,genres);
         assertTrue(typicalGame.equals(sameName)); //because they have the same name
 
         assertEquals(false, nullGame.equals(typicalGameSimple));

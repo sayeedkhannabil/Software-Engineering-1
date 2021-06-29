@@ -41,6 +41,15 @@ public class Review {
         this.reviewID=reviewID;
     }
 
+    public Review(String comment) throws IncorrectFormat {
+        checkReview(comment);
+        this.comment = comment;
+        this.userID=null;
+        this.gameName=null;
+        reviewID=nextReviewID;
+        nextReviewID++;
+    }
+
     private void checkReview(String review) throws IncorrectFormat {
         if (review.length()>140||review.length()<=0){
             throw new IncorrectFormat("letters of review content should be " +
@@ -56,7 +65,7 @@ public class Review {
 
         //access ratings from database
         AccessRatings ratingAccess = new AccessRatings();
-        Rating rate = ratingAccess.findByUser(userID,gameName);
+        Rating rate = ratingAccess.getRating(gameName,userID);
         //find match by game and userID -- if match rating found, alreadyRated == true
         if(rate != null)
         {

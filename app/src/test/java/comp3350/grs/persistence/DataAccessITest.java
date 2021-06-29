@@ -3,6 +3,7 @@ package comp3350.grs.persistence;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -32,6 +33,7 @@ public class DataAccessITest {
     private int reviewID,ratingID;
     private double price,rating;
     private boolean success;
+    private List<String> genreList;
 
     @Before
     public void initiateDB(){
@@ -46,8 +48,8 @@ public class DataAccessITest {
         game1=null;
         game2=null;
         game3=null;
-        userList=null;
-        gameList=null;
+        userList=new ArrayList<User>();
+        gameList=new ArrayList<Game>();
         userID=null;
         userID2=null;
         password=null;
@@ -66,8 +68,9 @@ public class DataAccessITest {
         rating2=null;
         rating3=null;
         success=false;
-        reviewList=null;
-        ratingList=null;
+        reviewList=new ArrayList<Review>();
+        ratingList=new ArrayList<Rating>();
+        genreList=new ArrayList<String>();
     }
 
     @Test
@@ -122,7 +125,11 @@ public class DataAccessITest {
             developer="myDeveloper";
             description="myDescription";
             price=9.99;
-            game1=new Game(gameName,developer,description,price);
+            genreList.clear();
+            genreList.add("genre1");
+            genreList.add("genre2");
+            genreList.add("genre3");
+            game1=new Game(gameName,developer,description,price,genreList);
             success=dataAccessI.insertGame(game1);
             assert (success) ;
             gameList=dataAccessI.getAllGames();
@@ -132,6 +139,11 @@ public class DataAccessITest {
             assert (game2.getDev().equals(developer));
             assert (game2.getDescription().equals(description));
             assertEquals(price,game2.getPrice(),0.01);
+            genreList=game2.getGenres();
+            assert (genreList.size()==3);
+            assert (genreList.contains("genre1"));
+            assert (genreList.contains("genre2"));
+            assert (genreList.contains("genre3"));
 
             game3=new Game("otherGame2");
             dataAccessI.insertGame(game3);
@@ -141,7 +153,11 @@ public class DataAccessITest {
             developer="anotherDeveloper";
             description="anotherDescription";
             price=99.99;
-            game1=new Game(gameName,developer,description,price);
+            genreList.clear();
+            genreList.add("genre1");
+            genreList.add("genre4");
+
+            game1=new Game(gameName,developer,description,price,genreList);
             dataAccessI.updateGame(game1);
             gameList=dataAccessI.getAllGames();
             assert (gameList.size()==3);
@@ -150,6 +166,10 @@ public class DataAccessITest {
             assert (game2.getDev().equals(developer));
             assert (game2.getDescription().equals(description));
             assertEquals(price,game2.getPrice(),0.01);
+            genreList=game2.getGenres();
+            assert (genreList.size()==2);
+            assert (genreList.contains("genre1"));
+            assert (genreList.contains("genre4"));
 
             dataAccessI.deleteGame(game1);
             gameList=dataAccessI.getAllGames();
@@ -163,12 +183,13 @@ public class DataAccessITest {
             gameList=dataAccessI.getAllGames();
             assert (gameList.size()==0);
 
+            genreList.clear();
             user1=new Guest();
             user2=new RegisteredUser("user2","password");
             user3=new RegisteredUser("user3","password");
-            game1=new Game("game1","dev1","desc1",1.0);
-            game1=new Game("game2","dev2","desc2",2.0);
-            game1=new Game("game3","dev3","desc3",3.0);
+            game1=new Game("game1","dev1","desc1",1.0,genreList);
+            game2=new Game("game2","dev2","desc2",2.0,genreList);
+            game3=new Game("game3","dev3","desc3",3.0,genreList);
 
             dataAccessI.insertUser(user1);
             dataAccessI.insertUser(user2);
@@ -177,11 +198,11 @@ public class DataAccessITest {
             dataAccessI.insertGame(game2);
             dataAccessI.insertGame(game3);
 
-            review1=new Review("content1","Guest","game1");
+            review1=new Review("content1","game1","Guest");
             review2=new Review(5,"content2","game3","Guest");
             review3=new Review("content3","game3","user2");
             rating1=new Rating(4.5,"game1","user2");
-            rating2=new Rating(10,4.6,"game1","user3");
+            rating2=new Rating(4.6,"game1","user3");
             rating3=new Rating(4.0,"game2","user2");
 
             success= dataAccessI.insertReview(review1);
@@ -218,12 +239,12 @@ public class DataAccessITest {
             assert (review1.getComment().equals("content2"));
             assert (review1.getUserID().equals("Guest"));
             assert (review1.getGameName().equals("game3"));
-            review=new Review(5,"newContent","game2","user1" );
+            review=new Review(5,"newContent","game2","user2" );
             success= dataAccessI.updateReview(review);
             assert success;
             review= dataAccessI.getReviewByID(5);
             assert (review1.getComment().equals("newContent"));
-            assert (review1.getUserID().equals("user1"));
+            assert (review1.getUserID().equals("user2"));
             assert (review1.getGameName().equals("game2"));
             success=dataAccessI.deleteReview(review);
             review= dataAccessI.getReviewByID(5);
@@ -246,21 +267,21 @@ public class DataAccessITest {
             assert (ratingList.size()==0);
 
             Rating rating;
-            rating=dataAccessI.getRatingByID(10);
+            rating=dataAccessI.getRating("game1","user3");
             assert (rating.getUserID().equals("user3"));
             assert (rating.getGameName().equals("game1"));
             assertEquals(rating.getRating(),4.6,0.01);
-            assert (rating.getRatingID()==10);
-            rating=new Rating(10,3.0,"game2","Guest");
+            assert (rating.getGameName().equals("game1"));
+            assert (rating.getUserID().equals("user3"));
+            rating=new Rating(3.0,"game1","user3");
             success= dataAccessI.updateRating(rating);
             assert success;
-            rating=dataAccessI.getRatingByID(10);
-            assert (rating.getUserID().equals("Guest"));
-            assert (rating.getGameName().equals("game2"));
+            rating=dataAccessI.getRating("game1","user3");
+            assert (rating.getUserID().equals("user3"));
+            assert (rating.getGameName().equals("game1"));
             assertEquals(rating.getRating(),3.0,0.01);
-            assert (rating.getRatingID()==10);
             success=dataAccessI.deleteRating(rating);
-            rating=dataAccessI.getRatingByID(10);
+            rating= dataAccessI.getRating("game1","user3");
             assertNull(rating);
         } catch (Exception e) {
             e.printStackTrace();

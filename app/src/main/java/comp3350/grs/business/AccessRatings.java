@@ -58,18 +58,18 @@ public class AccessRatings {
         return currentRating;
     }
 
-    public Rating findByUser(String userID, String gameName)
+    public List<Rating> getRatingsByUser(String userID)
     {
-        Rating found = null;
-        getRatings();
-        for(int i = 0; i < ratings.size(); i++)
-        {
-            if(ratings.get(i).getUserID().equals(userID) && ratings.get(i).getGameName().equals(gameName))
-            {
-                found = ratings.get(i);
-            }
-        }
-        return found;
+        return dataAccess.getRatingsByUser(userID);
+    }
+
+    public List<Rating> getRatingsByGame(String gameName)
+    {
+        return dataAccess.getRatingsByGame(gameName);
+    }
+
+    public Rating getRating(String gameName,String userID){
+        return dataAccess.getRating(gameName,userID);
     }
 
     //get an overall rating for a game by the game name
@@ -101,7 +101,9 @@ public class AccessRatings {
         Rating test = null;
         if (newRating != null){
             dataAccess.insertRating(newRating);
-            test = dataAccess.getRatingByID(newRating.getRatingID()); //should return a Rating object associated with newRating's ratingID
+            test = dataAccess.getRating(newRating.getGameName(), newRating.getUserID()); //should
+            // return a
+            // Rating object associated with newRating's ratingID
 
             if(test != null) //if test is null, the newRating was not found in the database (not inserted properly)
             {
@@ -112,28 +114,21 @@ public class AccessRatings {
         return inserted;
     }
 
-    public void updateRating(Rating updatedRating)
+    public boolean updateRating(Rating updatedRating)
     {
+        boolean result=false;
         if (updatedRating != null){
-            dataAccess.updateRating(updatedRating);
+            result=dataAccess.updateRating(updatedRating);
         }
-
+        return result;
     }
 
     public boolean deleteRating(Rating toDelete)
     {
-        boolean deleted = false;
-        Rating test = null;
+        boolean result=false;
         if (toDelete != null){
-            dataAccess.deleteRating(toDelete);
-            test = dataAccess.getRatingByID(toDelete.getRatingID()); //should NOT return a Rating object associated with newRating's ratingID
-
-            if(test == null) //if test is null, the newRating was not found in the database (deletion successful)
-            {
-                deleted = true;
-            }
+            result=dataAccess.deleteRating(toDelete);
         }
-
-        return deleted;
+        return result;
     }
 }

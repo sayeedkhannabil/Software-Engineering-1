@@ -9,8 +9,10 @@ package comp3350.grs.presentation;
 //-----------------------------------------
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TableLayout;
@@ -18,7 +20,11 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import java.util.List;
 
@@ -31,14 +37,21 @@ public class Game_gallery extends AppCompatActivity {
     private Game game;//the current game to add
     private View thumbnail;
     private TextView textView;//name of the game
+    private TextView top_bar_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_gallery);
-
+        setTop_bar();
         tableLayout=(TableLayout) findViewById(R.id.table_layout);
         addGames();
+    }
+
+
+    private void setTop_bar(){
+        top_bar_text=findViewById(R.id.top_bar_text);
+        top_bar_text.setText("Game Gallery");
     }
 
     //generate game thumbnail according to database

@@ -17,6 +17,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
@@ -34,7 +35,7 @@ import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Rating;
 import comp3350.grs.objects.Review;
 
-public class Game_page extends Activity {
+public class Game_page extends AppCompatActivity {
     private AccessGames accessGames;
     private AccessRatings accessRatings;
     private Game game;//the game we will show the details

@@ -31,7 +31,6 @@ public class AccessRatings {
     //get a list of all the ratings
     public List<Rating> getRatings()
     {
-        ratings.clear();
         ratings = dataAccess.getAllRatings();
         return ratings;
     }

@@ -1,5 +1,6 @@
 package comp3350.grs.persistence;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -71,6 +72,11 @@ public class DataAccessITest {
         reviewList=new ArrayList<Review>();
         ratingList=new ArrayList<Rating>();
         genreList=new ArrayList<String>();
+    }
+
+    @After
+    public void closeDatabase(){
+        dataAccessI.close();
     }
 
     @Test

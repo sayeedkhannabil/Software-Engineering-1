@@ -88,6 +88,8 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 			if (!checkTableExist("games")){
 				cmdString="CREATE TABLE GAMES(GAMENAME VARCHAR(40) NOT NULL PRIMARY KEY,DEVELOPER VARCHAR(20),DESCRIPTION VARCHAR(400),PRICE double)";
 				statement1.executeUpdate(cmdString);
+				cmdString="CREATE TABLE genres(GAMENAME VARCHAR(40),genre varchar(20), genreID integer identity primary key,foreign key(GAMENAME) references GAMES(GAMENAME))";
+				statement1.executeUpdate(cmdString);
 				for (int i = 0; i < games.size(); i++) {
 					insertGame(games.get(i));
 				}
@@ -96,17 +98,6 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 			sqlException.printStackTrace();
 		}
 
-		try {
-			if (!checkTableExist("genres")){
-				cmdString="CREATE TABLE genres(GAMENAME VARCHAR(40),genre varchar(20), genreID integer identity primary key,foreign key(GAMENAME) references GAMES(GAMENAME))";
-				statement1.executeUpdate(cmdString);
-				for (int i = 0; i < games.size(); i++) {
-					insertGenres(games.get(i));
-				}
-			}
-		} catch (SQLException sqlException) {
-			sqlException.printStackTrace();
-		}
 
 		if (!checkTableExist("ratings")){
 			cmdString="create TABLE ratings (rating double, GAMENAME VARCHAR(40), USERID VARCHAR(20),primary key(GAMENAME,USERID),foreign key(GAMENAME) references GAMES(GAMENAME),foreign key(USERID) references users(USERID))";
@@ -155,11 +146,11 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 	}
 
 	public void clearDatabase(){
+		deleteTable("reviews");
+		deleteTable("ratings");
 		deleteTable("users");
 		deleteTable("genres");
 		deleteTable("games");
-		deleteTable("reviews");
-		deleteTable("ratings");
 	}
 
 	private void clearTable(String tableName){
@@ -172,11 +163,11 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 	}
 
 	public void clearTable(){
+		clearTable("reviews");
+		clearTable("ratings");
 		clearTable("users");
 		clearTable("genres");
 		clearTable("games");
-		clearTable("reviews");
-		clearTable("ratings");
 	}
 
 

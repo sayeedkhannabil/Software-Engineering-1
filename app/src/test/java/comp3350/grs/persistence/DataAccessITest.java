@@ -198,6 +198,23 @@ public class DataAccessITest {
             dataAccessI.insertGame(game2);
             dataAccessI.insertGame(game3);
 
+            userList=dataAccessI.getUsersByIDImplicit("user*");
+            assert (userList.size()==2);
+            assert (userList.contains(user2));
+            assert (userList.contains(user3));
+            userList=dataAccessI.getUsersByIDImplicit("user");
+            assert (userList.size()==0);
+
+            gameList=dataAccessI.getGamesByNameImplicit("game?");
+            assert (gameList.size()==3);
+            assert (gameList.contains(game1));
+            assert (gameList.contains(game2));
+            assert (gameList.contains(game3));
+            gameList=dataAccessI.getGamesByNameImplicit("ga*");
+            assert (gameList.size()==3);
+            gameList=dataAccessI.getGamesByNameImplicit("game");
+            assert (gameList.size()==0);
+
             review1=new Review("content1","game1","Guest");
             review2=new Review(5,"content2","game3","Guest");
             review3=new Review("content3","game3","user2");

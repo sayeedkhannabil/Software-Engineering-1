@@ -121,6 +121,7 @@ public class Game_page extends AppCompatActivity {
 
     //set the behaviour when pressed review button
     private void setReviewButton(){
+        Utilities.setOnTouchEffect(review_button);
         review_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,7 +146,8 @@ public class Game_page extends AppCompatActivity {
                         review_wrapper.addView(textInputLayout);
                         //extend the review part to the whole screen
                         constraintSet.connect(review_background.getId(),
-                                ConstraintSet.TOP,game_page_main.getId(),ConstraintSet.TOP);
+                                ConstraintSet.TOP,R.id.game_page_top_bar,
+                                ConstraintSet.BOTTOM);
                         constraintSet.applyTo(game_page_main);
                     }
 

@@ -52,7 +52,7 @@
         <ImageView
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:src="@drawable/logo1"
+                android:src="@drawable/gta6"
                 android:background="@drawable/circle"
                 android:id="@+id/game_page_logo"
                 app:layout_constraintTop_toTopOf="@id/game_page_above_wrapper"

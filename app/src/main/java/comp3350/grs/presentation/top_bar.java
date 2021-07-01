@@ -78,6 +78,7 @@ public class top_bar extends Fragment {
     }
 
     private void setBack_to_prev(){
+        Utilities.setOnTouchEffect(back_to_prev);
         back_to_prev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

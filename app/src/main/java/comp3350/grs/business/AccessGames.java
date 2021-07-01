@@ -14,26 +14,27 @@ import java.util.ArrayList;
 import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
 import comp3350.grs.persistence.DataAccessI;
-import comp3350.grs.persistence.DataAccessStub;
-import comp3350.grs.objects.Game; 
+import comp3350.grs.objects.Game;
 
 
 public class AccessGames
 {
-    private DataAccessI dataAccess; // stub database (name taken from example file)
+    private DataAccessI dataAccess;
     private List<Game> gameList; 
     private Game currGame; 
-    private int currGameIndex; 
+    private int currGameIndex;
+    private AccessRatings accessRatings;
 
     public AccessGames()
     {
         dataAccess =  Services.getDataAccess(Main.dbName);
+        accessRatings=new AccessRatings();
         gameList = null; 
         currGame = null; 
         currGameIndex = 0; 
     }
 
-    public List<Game> getGames()
+    public List<Game> getAllGames()
     {
         gameList=dataAccess.getAllGames();
         return gameList;
@@ -42,7 +43,7 @@ public class AccessGames
     // Sorts the Game(s) in accending order of Name
     public List<Game> accendingNameSort() {
 
-        getGames();
+        getAllGames();
 
         Collections.sort(gameList, new Comparator<Game>() {
             @Override
@@ -57,7 +58,7 @@ public class AccessGames
     // Sorts the Game(s) in descending order of Name
     public List<Game> descendingNameSort() {
 
-        getGames();
+        getAllGames();
 
         Collections.sort(gameList, new Comparator<Game>() {
             @Override
@@ -72,7 +73,7 @@ public class AccessGames
     // Sorts the Game(s) in accending order of price
     public List<Game> accendingPriceSort() {
 
-        getGames();
+        getAllGames();
 
         Collections.sort(gameList, new Comparator<Game>() {
             @Override
@@ -87,7 +88,7 @@ public class AccessGames
     // Sorts the Game(s) in descending order of price
     public List<Game> descendingPriceSort() {
 
-        getGames();
+        getAllGames();
 
         Collections.sort(gameList, new Comparator<Game>() {
             @Override
@@ -102,12 +103,12 @@ public class AccessGames
     // Sorts the Game(s) in accending order of # of ratings
     public List<Game> accendingRatingSort() {
 
-        getGames();
+        getAllGames();
 
         Collections.sort(gameList, new Comparator<Game>() {
             @Override
             public int compare(Game o1, Game o2) {
-                return Integer.valueOf(o1.getNumRatings()).compareTo(o2.getNumRatings());
+                return accessRatings.getRatingNumByGame(o1.getName())-accessRatings.getRatingNumByGame(o2.getName());
             }
         });
 
@@ -117,12 +118,12 @@ public class AccessGames
     // Sorts the Game(s) in descending order of # of ratings
     public List<Game> descendingRatingSort() {
 
-        getGames();
+        getAllGames();
 
         Collections.sort(gameList, new Comparator<Game>() {
             @Override
             public int compare(Game o1, Game o2) {
-                return Integer.valueOf(o2.getNumRatings()).compareTo(o1.getNumRatings());
+                return accessRatings.getRatingNumByGame(o2.getName())-accessRatings.getRatingNumByGame(o1.getName());
             }
         });
 
@@ -130,34 +131,34 @@ public class AccessGames
     }
 
     // Sorts the Game(s) in accending order of # of reviews
-    public List<Game> accendingReviewSort() {
-
-        getGames();
-
-        Collections.sort(gameList, new Comparator<Game>() {
-            @Override
-            public int compare(Game o1, Game o2) {
-                return Integer.valueOf(o1.getNumReviews()).compareTo(o2.getNumReviews());
-            }
-        });
-
-        return gameList;
-    }
-
-    // Sorts the Game(s) in descending order of # of reviews
-    public List<Game> descendingReviewSort() {
-
-        getGames();
-
-        Collections.sort(gameList, new Comparator<Game>() {
-            @Override
-            public int compare(Game o1, Game o2) {
-                return Integer.valueOf(o2.getNumReviews()).compareTo(o1.getNumReviews());
-            }
-        });
-
-        return gameList;
-    }
+//    public List<Game> accendingReviewSort() {
+//
+//        getGames();
+//
+//        Collections.sort(gameList, new Comparator<Game>() {
+//            @Override
+//            public int compare(Game o1, Game o2) {
+//                return Integer.valueOf(o1.getNumReviews()).compareTo(o2.getNumReviews());
+//            }
+//        });
+//
+//        return gameList;
+//    }
+//
+//    // Sorts the Game(s) in descending order of # of reviews
+//    public List<Game> descendingReviewSort() {
+//
+//        getGames();
+//
+//        Collections.sort(gameList, new Comparator<Game>() {
+//            @Override
+//            public int compare(Game o1, Game o2) {
+//                return Integer.valueOf(o2.getNumReviews()).compareTo(o1.getNumReviews());
+//            }
+//        });
+//
+//        return gameList;
+//    } todo
 
     public Game findGame(String name)
     {
@@ -169,7 +170,7 @@ public class AccessGames
         if(gameList == null)
         {
             gameList = new ArrayList<Game>();
-            getGames();
+            getAllGames();
             currGameIndex = 0; 
         }
         if(currGameIndex < gameList.size())

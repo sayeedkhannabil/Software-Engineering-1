@@ -71,6 +71,14 @@ public class AccessRatings {
         return dataAccess.getRating(gameName,userID);
     }
 
+    public int getRatingNumByGame(String gameName){
+        return dataAccess.getRatingsByGame(gameName).size();
+    }
+
+    public int getRatingNumByUser(String userID){
+        return dataAccess.getRatingsByUser(userID).size();
+    }
+
     //get an overall rating for a game by the game name
     public double getOverallRating(String gameName){
         double overallRating = 0.0;

@@ -8,24 +8,20 @@ package comp3350.grs.presentation;
 //
 //-----------------------------------------
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.widget.SearchView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import comp3350.grs.R;
@@ -38,14 +34,20 @@ public class Game_gallery extends AppCompatActivity {
     private View thumbnail;
     private TextView textView;//name of the game
     private TextView top_bar_text;
+    private SearchView search_game_bar;
+    private AccessGames accessGames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_gallery);
+
+        accessGames=new AccessGames();
         setTop_bar();
         tableLayout=(TableLayout) findViewById(R.id.table_layout);
-        addGames();
+        List<Game>games=accessGames.getAllGames();
+        generateGamesThumbnail(games);
+        setSearch_game_bar();
     }
 
 
@@ -55,12 +57,11 @@ public class Game_gallery extends AppCompatActivity {
     }
 
     //generate game thumbnail according to database
-    private void addGames(){
+    private void generateGamesThumbnail(List<Game>games){
+        tableLayout.removeAllViews();
         TableRow newRow=null;
-
         LayoutInflater inflater;
-        AccessGames accessGames=new AccessGames();
-        List<Game>games=accessGames.getGames();
+
         for (int i = 0; i < games.size(); i++) {
             game=games.get(i);
             //every row contains two games
@@ -76,6 +77,7 @@ public class Game_gallery extends AppCompatActivity {
             newRow.addView(thumbnail);
             //after click the thumbnail, the page should turned into that
             // game's detail page
+            Utilities.setOnTouchEffect(thumbnail);
             thumbnail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -89,5 +91,41 @@ public class Game_gallery extends AppCompatActivity {
         }
     }
 
+    private void setSearch_game_bar(){// TODO: 6/30/2021
+        search_game_bar=findViewById(R.id.search_game_bar);
+        search_game_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                generateGamesOnSearch(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                generateGamesOnSearch(newText);
+                return false;
+            }
+        });
+
+        search_game_bar.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                List<Game>games=accessGames.getAllGames();
+                generateGamesThumbnail(games);
+                return false;
+            }
+        });
+
+
+    }
+
+    private void generateGamesOnSearch(String text){
+        List<Game> gameList=new ArrayList<Game>();
+        Game game=accessGames.findGame(text);
+        if (game!=null){
+            gameList.add(game);
+        }
+        generateGamesThumbnail(gameList);
+    }
 
 }

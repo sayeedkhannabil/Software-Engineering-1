@@ -120,3 +120,17 @@ june 19 : group meeeting. Discussed how to handle error, decide to create custom
     to split review and rating , because they are not binded together directly,
     they are binded to a user, and a user can have one rating and many reviews;
     discussed and assigned developer tasks.
+
+
+6.21 Shiqing Guo finished the interface of database.(expected:1 hour, actual:1 hour)
+6.22 Shiqing Guo finished user part of sql database.(expected:10 hour actual:15 hour)
+6.24 Shiqing Guo finished game part of sql database.(expected:10 hour actual:10 hour)
+6.24 Shiqing Guo edited review and rating class, added fields, methods.(expected:2 hour, actual:1 hour)
+6.25 Shiqing Guo finished the typical case test of sql database.
+6.26 group meeting: decide to separate review and rating from game class, and put them into their individual classes, to avoid game class to be too complicated; introduced the methods in sql database; discussed what to do in the next week.
+6.26 Shiqing Guo finished review part of sql database.(expected:10 hour actual:8 hour)
+6.28 Shiqing Guo finished rating part of sql database.(expected:10 hour actual:8 hour)
+6.29 Shiqing Guo added top bar to UI (expected:2 hour; actual:3 hour)
+6.30 Shiqing Guo added search bar to UI(exepcted:4 hour; actual:4 hour)
+7.1 Shiqing Guo added sort bar to UI(expected:4 hour; actual:4 hour)
+7.1 Shiqing Guo added genre bar to UI(expected:2 hour; actual:2 hour)

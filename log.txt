@@ -79,21 +79,21 @@ june 19 : group meeeting. Discussed how to handle error, decide to create custom
 june 21 :Shiqing Guo finished the interface of database.(expected:1 hour,
     actual:1 hour)
 june 22 :Shiqing Guo finished user part of sql database.(expected:10 hour
-    actual:15 hour)
+    actual:12 hour)
 june 24 :Shiqing Guo finished game part of sql database.(expected:10 hour
-    actual:10 hour)
+    actual:9 hour)
 june 24 :Shiqing Guo edited review and rating class, added fields, methods.
     (expected:2 hour, actual:1 hour)
-june 25 :Shiqing Guo finished the typical case test of sql database.(expected:7
-    hours,actual:5 hours)
+june 25 :Shiqing Guo finished the typical case test of sql database.(expected:6
+    hours,actual:4 hours)
 june 26 :group meeting: decide to separate review and rating from game class,
     and put them into their individual classes, to avoid game class to be too
     complicated; introduced the methods in sql database; discussed what to do
     in the next week.
-june 26 :Shiqing Guo finished review part of sql database.(expected:10 hour
-    actual:8 hour)
-june 28 :Shiqing Guo finished rating part of sql database.(expected:10 hour
-    actual:8 hour)
+june 26 :Shiqing Guo finished review part of sql database.(expected:8 hour
+    actual:6 hour)
+june 28 :Shiqing Guo finished rating part of sql database.(expected:8 hour
+    actual:6 hour)
 june 29 :Shiqing Guo added top bar to UI (expected:2 hour; actual:3 hour)
 june 30 :Shiqing Guo added search bar to UI(exepcted:4 hour; actual:4 hour)
 july 1 :Shiqing Guo added sort bar to UI(expected:4 hour; actual:4 hour)

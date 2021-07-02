@@ -32,20 +32,21 @@ public class Utilities {
         return alert11;
     }
 
-    public static void setButtonEffect(View view,double factor){
+    public static void setScale(View view, double factor){
         view.setScaleX((float) factor);
         view.setScaleY((float) factor);
     }
+
 
     public static void setOnTouchEffect(View view){
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction()==MotionEvent.ACTION_DOWN){
-                    setButtonEffect(view,0.95);
+                    setScale(view,0.95);
                 }
                 else if (event.getAction()==MotionEvent.ACTION_UP||event.getAction()==MotionEvent.ACTION_MOVE){
-                    setButtonEffect(view,1.0);
+                    setScale(view,1.0);
                 }
                 return false;
             }

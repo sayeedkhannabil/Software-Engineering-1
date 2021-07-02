@@ -10,10 +10,12 @@ package comp3350.grs.presentation;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -50,6 +52,7 @@ public class Game_page extends AppCompatActivity {
     private TextView description_text;
     private ConstraintSet constraintSet;
     private ConstraintLayout game_page_main;
+    private LinearLayout genre_wrapper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +83,7 @@ public class Game_page extends AppCompatActivity {
         game_page_main=findViewById(R.id.game_page_main);
         constraintSet=new ConstraintSet();
         constraintSet.clone(game_page_main);
+        genre_wrapper=findViewById(R.id.genre_wrapper);
 
         game_text.setText(game.getName());
         dev_text.setText("dev: " + game.getDev());
@@ -116,7 +120,21 @@ public class Game_page extends AppCompatActivity {
         });
 
         setReviewButton();
+        setGenre();
+    }
 
+    private void setGenre(){
+        List<String> genreList=game.getGenres();
+        LayoutInflater inflater = getLayoutInflater();
+        RelativeLayout myLayout;
+        TextView genre;
+
+        for (int i = 0; i < genreList.size(); i++) {
+            myLayout = (RelativeLayout) inflater.inflate(R.layout.genre, null, false);
+            genre= (TextView) myLayout.getChildAt(0);
+            genre.setText(genreList.get(i));
+            genre_wrapper.addView(myLayout);
+        }
     }
 
     //set the behaviour when pressed review button
@@ -127,7 +145,8 @@ public class Game_page extends AppCompatActivity {
             public void onClick(View v) {
                 //the user just clicked "write review" button
                 if(!isWritingReview){
-                    if(ratingBar.getRating()==0.0) {
+                    if(accessRatings.getRating(game.getName(),
+                            AccessUsers.getActiveUser().getUserID())==null) {
                         AlertDialog alertDialog = Utilities.createAlertDialog(
                                 "please rate the game before writing review",
                                 Game_page.this);

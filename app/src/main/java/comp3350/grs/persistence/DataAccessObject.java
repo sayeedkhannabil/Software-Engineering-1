@@ -547,6 +547,33 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		}
 		return gameResult;
 	}
+	
+	public List<Game> searchGame(String name){
+		results=new ArrayList<Game>();
+		List<Game> searchList=this.getAllGames();
+		Game temp;
+		int searchLength=name.length();
+		String gameName;
+		String subName;
+		if(searchLength>0) {
+			for(int i=0;i<searchList.size();i++){
+				temp=searchList.get(i);
+				gameName=temp.getName();
+				if(gameName.length()>=searchLength){
+					subName=gameName.substring(0,searchLength);
+					if(subName.equalsIgnoreCase(name)){
+						results.add(temp);
+					}
+				}
+			}
+		}else{
+			System.out.println("Please input valid game name.");
+		}
+		if(results.size()==0 && searchLength>0){
+			System.out.println("Not found.");
+		}
+		return results;
+	}
 
 
 

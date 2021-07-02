@@ -24,6 +24,7 @@ public abstract class DataAccess {
     protected String dbType;
     protected ArrayList<User> users;
     protected ArrayList<Game> games;
+    protected ArrayList<Game> results;
 
     public DataAccess(String dbName){
         this.dbName=dbName;

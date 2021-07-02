@@ -126,4 +126,6 @@ July 2, 2021: group meeting for iteration 2, report everyone's working process.
 July 2, 2021: Gongyu added game searching method for stub and sql database classes. This method can search game by the game name that user input.
      (expected: 1 hour, actual: 2 hours)
      
-     
+
+July 2, 2021: Sayeed added accessReview method for accessing and modifying reviews in database.
+	(expected: 2 hours, actual: 3 hours)     

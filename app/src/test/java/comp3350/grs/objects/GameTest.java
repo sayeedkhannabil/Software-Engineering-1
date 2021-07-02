@@ -3,11 +3,15 @@ import junit.framework.TestCase;
 
 import org.junit.BeforeClass;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class GameTest extends TestCase {
-    private Game typicalGame = new Game("TypicalGame", "TypicalDeveloper", "TypicalDescription", 20.00);
+    private ArrayList<String> genres = new ArrayList<>(Arrays.asList("Genre1", "Genre2", "Genre3"));
+    private Game typicalGame = new Game("TypicalGame", "TypicalDeveloper",
+            "TypicalDescription", 20.00,genres);
     private Game typicalGameSimple = new Game("GameWithOnlyAName");
     private Game nullGame = new Game();
 
@@ -17,16 +21,18 @@ public class GameTest extends TestCase {
         //typical test cases for the game with all four parameters (typicalGame)
         assertEquals("TypicalGame", typicalGame.getName());
         assertEquals("TypicalDeveloper", typicalGame.getDev());
+        for(int i = 0; i < genres.size(); i++)
+        {
+            assertTrue(genres.get(i).equals(typicalGame.getGenres().get(i))); // all genres should match
+        }
         assertEquals("TypicalDescription", typicalGame.getDescription());
         assertEquals(20.00, typicalGame.getPrice(), 0);
 
-        //Test ratings and reviews for a newly initialized Game (not yet rated or reviewed)
-        assertEquals("The overall rating for the game should be zero.", 0.0, typicalGame.getRating(), 0);
-        assertEquals("The overall rating for the game should be zero.", 0.0, typicalGameSimple.getRating(), 0);
-        assertEquals("There should be no existing reviews.", true, typicalGame.getReviews().isEmpty());
-        assertEquals("There should be no existing reviews.", true, typicalGameSimple.getReviews().isEmpty());
+
+
     }
 
+    /*
     @Test
     public void testOneRatingCalculation()
     {
@@ -60,6 +66,7 @@ public class GameTest extends TestCase {
         assertEquals("Overall rating for game "+typicalGame.getName()+" should now be 4.25 out of 5 stars.", 4.25, typicalGame.getRating(), 0.01);
         assertEquals(3, typicalGameReviews.size());
     }
+    */
 
     @Test
     public void testNull()
@@ -88,7 +95,7 @@ public class GameTest extends TestCase {
     @Test
     public void testEqualsOtherGame()
     {
-        Game sameName = new Game("TypicalGame", "testDev", "TestDesc", 0.0);
+        Game sameName = new Game("TypicalGame", "testDev",  "TestDesc", 0.0,genres);
         assertTrue(typicalGame.equals(sameName)); //because they have the same name
 
         assertEquals(false, nullGame.equals(typicalGameSimple));
@@ -96,6 +103,7 @@ public class GameTest extends TestCase {
         assertEquals(false, typicalGameSimple.equals(typicalGame));
     }
 
+    /*
     @Test
     public void testInvalidInput()
     {
@@ -126,4 +134,5 @@ public class GameTest extends TestCase {
         assertTrue(tester.getReviews().size() == 0);
         assertTrue(tester.getRating() == 0);
     }
+     */
 }

@@ -11,17 +11,17 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Guest;
+import comp3350.grs.objects.Rating;
 import comp3350.grs.objects.RegisteredUser;
+import comp3350.grs.objects.Review;
 import comp3350.grs.objects.User;
 
 
@@ -32,11 +32,11 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 	private Connection connection;
 	private ResultSet resultSet1,resultSet2,resultSet3;
 
-
 	private String cmdString;
 	private int updateCount;
 	private String result;
 	private static String EOF = "  ";
+
 
 	public DataAccessObject(String dbName)
 	{
@@ -62,7 +62,6 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 			statement2 = connection.createStatement();
 			statement3 = connection.createStatement();
 
-
 		}
 		catch (Exception e)
 		{
@@ -71,15 +70,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 
 
 		try {
-			DatabaseMetaData databaseMetaData = connection.getMetaData();
-			resultSet1= databaseMetaData.getTables(null, null, "USERS", null);
-		} catch (SQLException throwables) {
-			throwables.printStackTrace();
-		}
-
-
-		try {
-			if (!resultSet1.next()){
+			if (!checkTableExist("users")){
 				cmdString="CREATE TABLE USERS(USERID VARCHAR(20) " +
 						"NOT NULL PRIMARY KEY,PASSWORD VARCHAR(20))";
 				statement1.executeUpdate(cmdString);
@@ -92,20 +83,15 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		}
 
 
-		try {
-			DatabaseMetaData databaseMetaData = connection.getMetaData();
-			resultSet1= databaseMetaData.getTables(null, null, "GAMES", null);
-		} catch (SQLException throwables) {
-			throwables.printStackTrace();
-		}
 
 		try {
-			if (!resultSet1.next()){
-				cmdString="CREATE TABLE GAMES(GAMENAME VARCHAR(20) " +
-						"NOT NULL " +
-						"PRIMARY KEY,DEVELOPER VARCHAR(20),DESCRIPTION " +
-						"VARCHAR(20),PRICE DOUBLE)";
+			if (!checkTableExist("games")){
+				cmdString="CREATE TABLE GAMES(GAMENAME VARCHAR(40) NOT NULL PRIMARY KEY,DEVELOPER VARCHAR(20),DESCRIPTION VARCHAR(400),PRICE double)";
 				statement1.executeUpdate(cmdString);
+				if (!checkTableExist("genres")) {
+					cmdString = "CREATE TABLE genres(GAMENAME VARCHAR(40),genre varchar(20), genreID integer identity primary key,foreign key(GAMENAME) references GAMES(GAMENAME))";
+					statement1.executeUpdate(cmdString);
+				}
 				for (int i = 0; i < games.size(); i++) {
 					insertGame(games.get(i));
 				}
@@ -115,17 +101,62 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		}
 
 
+		if (!checkTableExist("ratings")){
+			cmdString="create TABLE ratings (rating double, GAMENAME VARCHAR(40), USERID VARCHAR(20),primary key(GAMENAME,USERID),foreign key(GAMENAME) references GAMES(GAMENAME),foreign key(USERID) references users(USERID))";
+			try {
+				statement1.executeUpdate(cmdString);
+			} catch (SQLException sqlException) {
+				sqlException.printStackTrace();
+			}
+		}
+
+		if (!checkTableExist("reviews")){
+			cmdString="CREATE TABLE reviews(reviewID integer,reviewContent VARCHAR(140),GAMENAME VARCHAR(40), USERID VARCHAR(20),primary key(reviewID),foreign key(GAMENAME) references GAMES(GAMENAME),foreign key(USERID) references users(USERID))";
+			try {
+				statement1.executeUpdate(cmdString);
+			} catch (SQLException sqlException) {
+				sqlException.printStackTrace();
+			}
+		}
+
 		System.out.println("Opened " +dbType +" database " +dbPath);
 	}
 
-	public void clearDatabase(){
-		cmdString="drop table users";
+	private boolean checkTableExist(String tableName){
+		boolean tableExist=false;
+		try {
+			tableName=tableName.toUpperCase();
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+			resultSet1 = databaseMetaData.getTables(null, null, tableName, null);
+			if (resultSet1.next()){
+				tableExist=true;
+			}
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+
+		return tableExist;
+	}
+
+	private void deleteTable(String tableName){
+		cmdString="drop table " + tableName;
 		try {
 			statement1.executeUpdate(cmdString);
 		} catch (SQLException throwables) {
 			throwables.printStackTrace();
 		}
-		cmdString="drop table games";
+	}
+
+	public void clearDatabase(){
+		deleteTable("reviews");
+		deleteTable("ratings");
+		deleteTable("users");
+		deleteTable("genres");
+		deleteTable("games");
+	}
+
+	private void clearTable(String tableName){
+		cmdString="delete from "+ tableName;
 		try {
 			statement1.executeUpdate(cmdString);
 		} catch (SQLException throwables) {
@@ -134,18 +165,12 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 	}
 
 	public void clearTable(){
-		cmdString="delete from users";
-		try {
-			statement1.executeUpdate(cmdString);
-		} catch (SQLException throwables) {
-			throwables.printStackTrace();
-		}
-		cmdString="delete from games";
-		try {
-			statement1.executeUpdate(cmdString);
-		} catch (SQLException throwables) {
-			throwables.printStackTrace();
-		}
+		clearTable("reviews");
+		clearTable("ratings");
+		clearTable("users");
+		clearTable("genres");
+		clearTable("games");
+
 	}
 
 
@@ -164,72 +189,89 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		System.out.println("Closed " +dbType +" database " +dbName);
 	}
 
-	public List<User> getAllUsers(){
-		List<User> userList=new ArrayList<User>();
-		String userID,password;
+	private ResultSet getAll(String tableName){
+		ResultSet resultSet=null;
 		try {
-			preparedStatement=connection.prepareStatement("select * from users");
-			resultSet1=preparedStatement.executeQuery();
+			preparedStatement=
+					connection.prepareStatement("select * from " + tableName);
+			resultSet=preparedStatement.executeQuery();
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		}
+		return resultSet;
+	}
 
+	private List<User> getUsersByResultset(ResultSet resultSet ){
+		User user=null;
+		List<User> userList=new ArrayList<User>();
+		String password=null;
+		String userID=null;
 		try {
-
-			while (resultSet1.next()){
-				userID=resultSet1.getString(1);
-				password=resultSet1.getString(2);
+			while (resultSet.next()){
+				userID=resultSet.getString(1);
+				password=resultSet.getString(2);
 				if (password==null){
-					userList.add(new Guest());
-				}else {
-					userList.add(new RegisteredUser(userID,password));
+					user=new Guest();
 				}
-
+				else{
+					user=new RegisteredUser(userID,password);
+				}
+				userList.add(user);
 			}
-		} catch (SQLException | IncorrectFormat throwables) {
-			throwables.printStackTrace();
+		} catch (SQLException | IncorrectFormat sqlException) {
+			sqlException.printStackTrace();
 		}
-
 		return userList;
 	}
 
-	public User getOneUser(User user){
+	public List<User> getAllUsers(){
+		List<User> userList=new ArrayList<User>();
+		String userID,password;
+		resultSet1 = getAll("users");
+		userList=getUsersByResultset(resultSet1);
+		return userList;
+	}
+
+
+
+	public User getUserByID(String userID){
 		User userResult=null;
-		String userID=user.getUserID();
-		String password=null;
+		List<User> userList;
 
 		try {
 			preparedStatement=connection.prepareStatement("select * from " +
 					"users where USERID = ?");
 			preparedStatement.setString(1,userID);
-		} catch (SQLException sqlException) {
-			sqlException.printStackTrace();
-		}
-		try {
-			resultSet1=preparedStatement.executeQuery();
-		} catch (SQLException sqlException) {
-			sqlException.printStackTrace();
-		}
-		try {
-			if (resultSet1.next()){
-				password=resultSet1.getString(2);
-				if (password==null){
-					userResult=new Guest();
-				}
-				else{
-					userResult=new RegisteredUser(userID,password);
-				}
+			resultSet1 =preparedStatement.executeQuery();
+			userList=getUsersByResultset(resultSet1);
+			if (userList.size()>0){
+				userResult=userList.get(0);
 			}
-		} catch (SQLException | IncorrectFormat sqlException) {
+		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		}
 		return userResult;
 	}
 
+	public List<User> getUsersByIDImplicit(String userIDImp){
+		List<User> userList=new ArrayList<>();
+		try {
+			preparedStatement=connection.prepareStatement("select * from " +
+					"users where USERID like ?");
+			preparedStatement.setString(1,userIDImp);
+			resultSet1 =preparedStatement.executeQuery();
+			userList=getUsersByResultset(resultSet1);
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
+
+		return userList;
+	}
+
 	public boolean insertUser(User user) {
 		String values;
-
 		result = null;
+		boolean insertSuccess=false;
 
 		try {
 			preparedStatement=connection.prepareStatement("insert into users " +
@@ -246,31 +288,24 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 				user=(RegisteredUser)user;
 				preparedStatement.setString(2,((RegisteredUser) user).getPassword());
 			}
-		} catch (SQLException sqlException) {
-			sqlException.printStackTrace();
-		}
-
-
-		try {
 			updateCount = preparedStatement.executeUpdate();
+			if (updateCount!=1){
+				insertSuccess=true;
+			}
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		}
-		if (updateCount!=1){
-			return false;
-		}
-		else {
-			return true;
-		}
+
+		return insertSuccess;
 
 	}
 
-	public void updateUser(User user){
+	public boolean updateUser(User user){
 		String userID;
 		String password;
+		boolean updateSuccess=false;
 
 		userID=user.getUserID();
-
 
 		try {
 			preparedStatement= connection.prepareStatement("update users set " +
@@ -285,13 +320,18 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 				preparedStatement.setString(1,password);
 			}
 			updateCount= preparedStatement.executeUpdate();
+			if (updateCount==1){
+				updateSuccess=true;
+			}
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		}
+		return updateSuccess;
 	}
 
-	public void deleteUser(User user){
+	public boolean deleteUser(User user){
 		String userID;
+		boolean deleteSuccess=false;
 
 		userID=user.getUserID();
 		try {
@@ -299,66 +339,66 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 					"where userid=?");
 			preparedStatement.setString(1,userID);
 			updateCount= preparedStatement.executeUpdate();
-		} catch (SQLException sqlException) {
-			sqlException.printStackTrace();
-		}
-	}
-
-	public List<Game> getAllGames(){
-		List<Game> gameList=new ArrayList<Game>();
-		String gameName,developer,description;
-		double price;
-
-		try {
-			preparedStatement=connection.prepareStatement("select * from games");
-			resultSet1=preparedStatement.executeQuery();
-		} catch (SQLException sqlException) {
-			sqlException.printStackTrace();
-		}
-
-		try {
-
-			while (resultSet1.next()){
-				gameName=resultSet1.getString(1);
-				developer=resultSet1.getString(2);
-				description=resultSet1.getString(3);
-				price=resultSet1.getDouble(4);
-				gameList.add(new Game(gameName,developer,description,price));
-
+			if (updateCount==1){
+				deleteSuccess=true;
 			}
-		} catch (SQLException throwables) {
-			throwables.printStackTrace();
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
 		}
 
-		return gameList;
+		return deleteSuccess;
 	}
 
-	public Game getOneGame(Game game){
-		Game gameResult=null;
-		String gameName=null,developer=null,description=null;
-		double price=0.0;
-
-		gameName=game.getName();
+	private boolean insertGenres(Game game){
+		List<String> gameGenres=game.getGenres();
+		boolean insertAllSuccess=false;//all the inserts succeed
+		boolean insertFail=false;//keep track if any one of the insert fails
 
 		try {
-			preparedStatement= connection.prepareStatement("select * from games " +
+			for (int i = 0; i < gameGenres.size()&&!insertFail; i++) {
+				preparedStatement = connection.prepareStatement("insert into genres" +
+						"(gameName,genre) values (?,?)");
+				preparedStatement.setString(1,game.getName());
+				preparedStatement.setString(2,gameGenres.get(i));
+				updateCount= preparedStatement.executeUpdate();
+				if (updateCount!=1){
+					insertFail=true;
+				}
+			}
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
+		if (!insertFail){
+			insertAllSuccess=true;
+		}
+		return insertAllSuccess;
+	}
+
+	private boolean updateGenres(Game game){
+		boolean success=false;
+		deleteGenres(game);
+		success=insertGenres(game);
+		return success;
+	}
+
+	private boolean deleteGenres(Game game){
+		boolean success=false;
+		try {
+			preparedStatement= connection.prepareStatement("delete from genres " +
 					"where gameName=?");
-			preparedStatement.setString(1,gameName);
-			resultSet1=preparedStatement.executeQuery();
-			if (resultSet1.next()){
-				developer=resultSet1.getString(2);
-				description=resultSet1.getString(3);
-				price=resultSet1.getDouble(4);
-				gameResult=new Game(gameName,developer,description,price);
+			preparedStatement.setString(1,game.getName());
+			updateCount=preparedStatement.executeUpdate();
+			if (updateCount>=1){
+				success=true;
 			}
-
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		}
-		return gameResult;
+		return success;
 	}
 
 	public boolean insertGame(Game game){
+		boolean insertSuccess=false;
 
 		try {
 			preparedStatement=connection.prepareStatement("Insert into Games " +
@@ -368,21 +408,21 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 			preparedStatement.setString(3,game.getDescription());
 			preparedStatement.setDouble(4, game.getPrice());
 			updateCount=preparedStatement.executeUpdate();
+			if (updateCount==1){
+				insertSuccess=true;
+				insertSuccess=insertGenres(game);
+			}
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		}
 
-		if (updateCount!=1){
-			return false;
-		}
-		else {
-			return true;
-		}
+		return insertSuccess;
 	}
 
-	public void updateGame(Game game){
+	public boolean updateGame(Game game){
 		String gameName=null,developer=null,description=null;
 		double price=0.0;
+		boolean updateSuccess=false;
 
 		gameName=game.getName();
 		developer=game.getDev();
@@ -390,6 +430,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		price=game.getPrice();
 
 		try {
+			updateGenres(game);
 			preparedStatement= connection.prepareStatement("update games set " +
 					"developer=?,description=?,price=? where gameName=?");
 			preparedStatement.setString(1,developer);
@@ -398,29 +439,452 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 			preparedStatement.setString(4,gameName);
 
 			updateCount= preparedStatement.executeUpdate();
-
+			if (updateCount==1){
+				updateSuccess=true;
+			}
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		}
-
+		return updateSuccess;
 	}
 
-	public void deleteGame(Game game){
+	public boolean deleteGame(Game game){
 		String gameName=null;
+		boolean deleteSuccess=false;
 
 		gameName=game.getName();
 		try {
+			deleteGenres(game);
 			preparedStatement= connection.prepareStatement("delete from games" +
 					" " +
 					"where gameName=?");
 			preparedStatement.setString(1,gameName);
 			updateCount= preparedStatement.executeUpdate();
+			if (updateCount==1){
+				deleteSuccess=true;
+			}
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		}
+		return deleteSuccess;
+	}
 
+	private List<String> getGameGenresByName(String gameName){
+		List<String> genreList=new ArrayList<String>();
+		try {
+			preparedStatement= connection.prepareStatement("select * from " +
+					"genres where gameName=?");
+			preparedStatement.setString(1,gameName);
+			resultSet1= preparedStatement.executeQuery();
+			while (resultSet1.next()){
+				genreList.add(resultSet1.getString(2));
+			}
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
+		return genreList;
+	}
+
+	private List<Game> getGamesByResultset(ResultSet resultSet){
+		List<Game> gameList=new ArrayList<Game>();
+		List<String> genres;
+		String gameName,developer,description;
+		double price;
+		try {
+			while (resultSet.next()){
+				gameName=resultSet.getString(1);
+				developer=resultSet.getString(2);
+				description=resultSet.getString(3);
+				price=resultSet.getDouble(4);
+				genres=getGameGenresByName(gameName);
+				gameList.add(new Game(gameName,developer,description,price,genres));
+			}
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+		return gameList;
+	}
+
+	public List<Game> getAllGames(){
+		List<Game> gameList=new ArrayList<Game>();
+		resultSet1 =getAll("games");
+		gameList=getGamesByResultset(resultSet1);
+		return gameList;
+	}
+
+	public List<Game> getGamesByNameImplicit(String gameNameImp){
+		List<Game> gameList=new ArrayList<Game>();
+
+		try {
+			preparedStatement= connection.prepareStatement("select * from games " +
+					"where gameName like ?");
+			preparedStatement.setString(1,gameNameImp);
+			resultSet1 =preparedStatement.executeQuery();
+			gameList=getGamesByResultset(resultSet1);
+
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
+		return gameList;
+	}
+
+	public Game getGameByName(String gameName){
+		Game gameResult=null;
+		List<Game> gameList;
+
+		try {
+			preparedStatement= connection.prepareStatement("select * from games " +
+					"where gameName=?");
+			preparedStatement.setString(1,gameName);
+			resultSet1 =preparedStatement.executeQuery();
+			gameList=getGamesByResultset(resultSet1);
+			if (gameList.size()>0){
+				gameResult=gameList.get(0);
+			}
+
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
+		return gameResult;
+	}
+	
+	public List<Game> searchGame(String name){
+		results=new ArrayList<Game>();
+		List<Game> searchList=this.getAllGames();
+		Game temp;
+		int searchLength=name.length();
+		String gameName;
+		String subName;
+		if(searchLength>0) {
+			for(int i=0;i<searchList.size();i++){
+				temp=searchList.get(i);
+				gameName=temp.getName();
+				if(gameName.length()>=searchLength){
+					subName=gameName.substring(0,searchLength);
+					if(subName.equalsIgnoreCase(name)){
+						results.add(temp);
+					}
+				}
+			}
+		}else{
+			System.out.println("Please input valid game name.");
+		}
+		if(results.size()==0 && searchLength>0){
+			System.out.println("Not found.");
+		}
+		return results;
 	}
 
 
+
+	private List<Review> getReviewsByResultset(ResultSet resultSet){
+		List<Review> reviewList=new ArrayList<>();
+
+		int reviewID;
+		String gameName=null,userID=null,reviewContent=null;
+		try {
+
+			while(resultSet.next()){
+				reviewID= resultSet.getInt(1);
+				reviewContent= resultSet.getString(2);
+				gameName= resultSet.getString(3);
+				userID= resultSet.getString(4);
+
+				reviewList.add(new Review(reviewID,reviewContent,gameName,
+						userID));
+			}
+
+		} catch (SQLException | IncorrectFormat sqlException) {
+			sqlException.printStackTrace();
+		}
+		return reviewList;
+	}
+
+	public List<Review> getAllReviews(){
+		List<Review> reviewList=new ArrayList<>();
+		resultSet1=getAll("reviews");
+		reviewList=getReviewsByResultset(resultSet1);
+
+		return reviewList;
+	}
+
+
+	public List<Review> getReviewsByGame(String gameName){
+		List<Review> reviewList=new ArrayList<>();
+
+		try {
+			preparedStatement= connection.prepareStatement("select * from " +
+					"reviews where gameName=?");
+			preparedStatement.setString(1,gameName);
+			resultSet1 = preparedStatement.executeQuery();
+			reviewList=getReviewsByResultset(resultSet1);
+
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
+		return reviewList;
+	}
+
+	public List<Review> getReviewsByUser(String userID){
+		List<Review> reviewList=new ArrayList<>();
+
+		try {
+			preparedStatement= connection.prepareStatement("select * from " +
+					"reviews where userID=?");
+			preparedStatement.setString(1,userID);
+			resultSet1 = preparedStatement.executeQuery();
+			reviewList=getReviewsByResultset(resultSet1);
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
+		return reviewList;
+	}
+
+	public Review getReviewByID(int reviewID){
+		Review reviewResult=null;
+		List<Review> reviewList;
+
+		try {
+			preparedStatement= connection.prepareStatement("select * from " +
+					"reviews where reviewID=?");
+			preparedStatement.setInt(1,reviewID);
+			resultSet1 = preparedStatement.executeQuery();
+			reviewList=getReviewsByResultset(resultSet1);
+			if (reviewList.size()>0){
+				reviewResult=reviewList.get(0);
+			}
+
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
+		return reviewResult;
+	}
+
+
+
+	public boolean insertReview(Review review){
+		boolean insertSucess=false;
+
+		int reviewID;
+		String reviewContent=null,gameName=null,userID=null;
+
+		reviewID=review.getReviewID();
+		reviewContent=review.getComment();
+		gameName=review.getGameName();
+		userID=review.getUserID();
+		try {
+			preparedStatement= connection.prepareStatement("insert into reviews " +
+					"values(?,?,?,?)");
+			preparedStatement.setInt(1,reviewID);
+			preparedStatement.setString(2,reviewContent);
+			preparedStatement.setString(3,gameName);
+			preparedStatement.setString(4,userID);
+			updateCount= preparedStatement.executeUpdate();
+			if (updateCount==1){
+				insertSucess=true;
+			}
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
+		return insertSucess;
+	}
+
+	public boolean updateReview(Review review){
+		int reviewID;
+		String reviewContent=null,gameName=null,userID=null;
+		boolean updateSucess=false;
+
+		reviewID=review.getReviewID();
+		reviewContent=review.getComment();
+		gameName=review.getGameName();
+		userID=review.getUserID();
+		try {
+			preparedStatement= connection.prepareStatement("update reviews set " +
+					"reviewContent=?,gameName=?,userID=? where reviewID=?");
+			preparedStatement.setString(1,reviewContent);
+			preparedStatement.setString(2,gameName);
+			preparedStatement.setString(3,userID);
+			preparedStatement.setInt(4,reviewID);
+			updateCount=preparedStatement.executeUpdate();
+			if (updateCount==1){
+				updateSucess=true;
+			}
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
+		return updateSucess;
+	}
+
+	public boolean deleteReview(Review review){
+		int reviewID=review.getReviewID();
+		boolean deleteSuccess=false;
+
+		try {
+			preparedStatement= connection.prepareStatement("delete from reviews " +
+					"where reviewID=?");
+			preparedStatement.setInt(1,reviewID);
+			updateCount=preparedStatement.executeUpdate();
+			if (updateCount==1){
+				deleteSuccess=true;
+			}
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
+		return deleteSuccess;
+	}
+
+	private List<Rating> getRatingsByResultset(ResultSet resultSet){
+		List<Rating> ratingList=new ArrayList<Rating>();
+		double rating=0.0;
+		String gameName=null;
+		String userID=null;
+
+		try {
+			while (resultSet.next()){
+				rating= resultSet.getDouble(1);
+				gameName= resultSet.getString(2);
+				userID= resultSet.getString(3);
+
+				ratingList.add(new Rating(rating,gameName,userID));
+			}
+		} catch (SQLException | IncorrectFormat sqlException) {
+			sqlException.printStackTrace();
+		}
+
+		return ratingList;
+	}
+
+	public List<Rating> getAllRatings(){
+		List<Rating> ratingList=new ArrayList<Rating>();
+
+		resultSet1=getAll("ratings");
+		ratingList=getRatingsByResultset(resultSet1);
+		return ratingList;
+	}
+
+	public List<Rating> getRatingsByGame(String gameName){
+		List<Rating> ratingList=new ArrayList<Rating>();
+
+
+		try {
+			preparedStatement= connection.prepareStatement("select * from ratings" +
+					" where gameName=?");
+			preparedStatement.setString(1,gameName);
+			resultSet1 = preparedStatement.executeQuery();
+			ratingList=getRatingsByResultset(resultSet1);
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
+		return ratingList;
+	}
+
+	public List<Rating> getRatingsByUser(String userID){
+		List<Rating> ratingList=new ArrayList<Rating>();
+
+		try {
+			preparedStatement= connection.prepareStatement("select * from ratings" +
+					" where userID=?");
+			preparedStatement.setString(1,userID);
+			resultSet1 = preparedStatement.executeQuery();
+			ratingList=getRatingsByResultset(resultSet1);
+		} catch (SQLException  sqlException) {
+			sqlException.printStackTrace();
+		}
+		return ratingList;
+	}
+
+	public Rating getRating(String gameName,String userID){
+		Rating ratingResult=null;
+		List<Rating> ratingList;
+
+		try {
+			preparedStatement= connection.prepareStatement("select * from ratings" +
+					" where gameName=? and userID=?");
+			preparedStatement.setString(1,gameName);
+			preparedStatement.setString(2,userID);
+			resultSet1 = preparedStatement.executeQuery();
+			ratingList=getRatingsByResultset(resultSet1);
+			if (ratingList.size()>0){
+				ratingResult=ratingList.get(0);
+			}
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
+		return ratingResult;
+	}
+
+	public boolean insertRating(Rating theRating){
+		boolean insertSuccess=false;
+		int ratingID;
+		double rating=0.0;
+		String gameName=null;
+		String userID=null;
+
+		rating= theRating.getRating();
+		gameName= theRating.getGameName();
+		userID= theRating.getUserID();
+
+		try {
+			preparedStatement= connection.prepareStatement("insert into ratings " +
+					"values(?,?,?)");
+			preparedStatement.setDouble(1,rating);
+			preparedStatement.setString(2,gameName);
+			preparedStatement.setString(3,userID);
+			updateCount= preparedStatement.executeUpdate();
+			if (updateCount==1){
+				insertSuccess=true;
+			}
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
+		return insertSuccess;
+	}
+
+	public boolean updateRating(Rating theRating){
+		boolean updateSuccess=false;
+		int ratingID;
+		double rating=0.0;
+		String gameName=null;
+		String userID=null;
+
+		rating= theRating.getRating();
+		gameName= theRating.getGameName();
+		userID= theRating.getUserID();
+
+		try {
+			preparedStatement= connection.prepareStatement("update ratings " +
+					"set rating=? where gameName=? and userID=?");
+
+			preparedStatement.setDouble(1,rating);
+			preparedStatement.setString(2,gameName);
+			preparedStatement.setString(3,userID);
+			updateCount= preparedStatement.executeUpdate();
+			if (updateCount==1){
+				updateSuccess=true;
+			}
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
+		return updateSuccess;
+	}
+
+	public boolean deleteRating(Rating rating){
+		boolean deleteSuccess=false;
+		int ratingID;
+
+		try {
+			preparedStatement= connection.prepareStatement("delete from ratings " +
+					"where gameName=? and userID=?");
+			preparedStatement.setString(1,rating.getGameName());
+			preparedStatement.setString(2,rating.getUserID());
+			updateCount=preparedStatement.executeUpdate();
+			if (updateCount==1){
+				deleteSuccess=true;
+			}
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
+		return deleteSuccess;
+	}
 
 }

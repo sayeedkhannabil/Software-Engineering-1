@@ -32,9 +32,9 @@ public abstract class User
 	}
 
 	private void checkUseridFormat(String userID) throws IncorrectFormat {
-		if (userID.equals("")|| userID.contains(" ")){
+		if (userID.equals("")|| userID.contains(" ")||userID.length()>20){
 			throw new IncorrectFormat("user id should not be empty or contain" +
-					" space");
+					" space or more than 20 letters");
 		}
 	}
 

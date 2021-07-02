@@ -1,168 +1,106 @@
 Thursday May 20, 2021: Sayeed created the project, added readme and log
 	(expected: 15 minutes, actual: 15 minutes)
-
 5.27:meeting:decide to use the sample project , since it will be easier;make a
     list of developer tasks ;distribute the tasks to group members
-
 5.29:Shiqing Guo scraped some data from steam and stored it into a csv file
     (expected:3 hour;actual:2 hour);
-
 Monday May 31, 2021: Katharine K created Rating object class
 	(expected: 30 min, actual: 30 min)
-
 Monday May 31, 2021: Katharine K created AccessRatings business object class
 	(expected: 30 min, actual: 30 min)
-	
 Mon May 31, 2021: Gongyu Liao process the scraped data from steam in a csv file
         (expected: 1 hour, actual: 1 hour)
-
-6.1:meeting :get all members into the github repo;everyone report what
+june 1:group meeting :get all members into the github repo;everyone report what
     we have done, how we implement it, and what we will do
-
-6.3:meeting:discuessed what we have done
-
-6.1~6.3:Shiqing Guo write the user class. The class contains two sub calsses
+june 3: group meeting:discuessed what we have done
+june 3:Shiqing Guo write the user class. The class contains two sub calsses
     which are registered user and guest.(expected:4 hour;actual:3 hour)
-
 Thurs June 3, 2021: Katharine K created Game Class
 	(expected: 30 min, actual: 1 hour)
-
 Thurs June 3, 2021: Sayeed created review class.
 	(expected: 30 minutes, actual: 30 minutes)
-
 Fri June 4, 2021: Katharine K created AccessGame Class
 	(expected: 20 min, actual: 1 hour)
-
 Fro June 4, 2021: Sayeed created Feedback class.
 	(expected: 30 minutes, actual: 1 hour)
-
-6.4: Shiqing Guo write the business object for user class.(expected: 3 hour;
+june 4: Shiqing Guo write the business object for user class.(expected: 3 hour;
     actual:3 hour)
-
-6.4~6.6:Shiqing Guo write the databse class for user class(expected:8 hour;
+june 6:Shiqing Guo write the databse class for user class(expected:8 hour;
     actual:4 hour)
-
 Fri June 4, 2021: Hasin finished the UI for login
 	(expected: 4 hours, actual: 4 hours)
-
 Sun June 6, 2021: Katharine K added Game and AccessGames to repository
 	Updated DataAccessStub to include functions for AccessGames
 	(expected: 1 hour, actual: 1.5 hours)
-
 Tue June 8, 2021: Hasin finished the UI for BrowseGame
 	(expected: 5 hours, actual: 6 hours)
-
-6.8: Meeting4 : decide to include a list of feedback in game class, instead of
+june 8: Meeting4 : decide to include a list of feedback in game class, instead of
     separate review and rating, because sometimes review and rating are binded
     together; decide to finish all the work, except readme file before sunday ;
     decide everyone should follow the programming standard;decide to redesign
     the UI to make it prettier.
-
-
 Wed June 9, 2021: Katharine K updated Feedback class, updated Game class to support Feedback list
 	(expected: 2 hours, actual: 3 hours)
-
-6.10: Shiqing Guo finished the "open" method of databse.(expected: 2 hours,
+june 10: Shiqing Guo finished the "open" method of databse.(expected: 2 hours,
     actual:2 hours)
-
-6.11:Shiqing Guo updated the test guest class and test registered user class.
+june 11:Shiqing Guo updated the test guest class and test registered user class.
     (expected:4 hours, actual:2 hours)
-    
-6.12:Shiqing Guo finished UI for login, signup, game gallery, and game details
+june 12:Shiqing Guo finished UI for login, signup, game gallery, and game details
     (expected:20 hours, actual :13 hours)
-
-
 Sat June 12, 2021: Gongyu Liao edited UI layout and button feature for start page, log-in page, and sign-up page.
     (expected:5 hours, actual: 6 hours)
-
-6.12:Shiqing Guo finished UI for login, signup, game gallery, and game details
+june 12:Shiqing Guo finished UI for login, signup, game gallery, and game details
     (expected:20 hours, actual :13 hours)
-
-    
 Sat June 12, 2021: Katharine K wrote test class for Game object
     (expected: 1 hours, actual: 2 hours)
-
-
 Sun June 13, 2021: Katharine K wrote test class for Game object, updated Review and Rating classes to contain active user data
     (expected: 2 hours, actual: 3 hours)
-
-
 Sun June 13, 2021: Sayeed created test class for Feedback class.
 	(expected: 30 minutes, actual: 3 hours). error: no test found. solution: changing the name of the method.
-
-
 Sun June 13, 2021: Sayeed created tests for Rating class.
 	(expected: 30 minutes, actual: 50 minutes)
-
-
 Sun June 13, 2021: Sayeed created test class for Review class.
 	(expected: 30 minutes, actual: 50 minutes)
-
-
 Sun June 13, 2021: Group Meeting -- Discuss remaining tasks and hand-in time
     45 minutes
-
-July 2, 2021: group meeting for iteration 2, report everyone's working process.
-
-
-6.21 Shiqing Guo finished the interface of database.(expected:1 hour, actual:1 hour)
-6.22 Shiqing Guo finished user part of sql database.(expected:10 hour actual:15 hour)
-6.24 Shiqing Guo finished game part of sql database.(expected:10 hour actual:10 hour)
-6.24 Shiqing Guo edited review and rating class, added fields, methods.(expected:2 hour, actual:1 hour)
-6.25 Shiqing Guo finished the typical case test of sql database.
-6.26 group meeting: decide to separate review and rating from game class, and put them into their individual classes, to avoid game class to be too complicated; introduced the methods in sql database; discussed what to do in the next week.
-6.26 Shiqing Guo finished review part of sql database.(expected:10 hour actual:8 hour)
-6.28 Shiqing Guo finished rating part of sql database.(expected:10 hour actual:8 hour)
-6.29 Shiqing Guo added top bar to UI (expected:2 hour; actual:3 hour)
-6.30 Shiqing Guo added search bar to UI(exepcted:4 hour; actual:4 hour)
-7.1 Shiqing Guo added sort bar to UI(expected:4 hour; actual:4 hour)
-7.1 Shiqing Guo added genre bar to UI(expected:2 hour; actual:2 hour)
-
-July 2, 2021: Gongyu added game searching method for stub and sql database classes. This method can search game by the game name that user input.
-     (expected: 1 hour, actual: 2 hours)
-
-
-July 2, 2021: Sayeed added accessReview method for accessing and modifying reviews in database.
-	(expected: 2 hours, actual: 3 hours)
-
-
 Mon June 14, 2021: Hasin finished the sketch for the System Architecture
 	(expected: 1 hour, actual: 30 mins)
-
 Mon June 14, 2021: Sayeed created test suite for running all of the test class together.
 	(expected: 1 hour, actual: 2 hours)
-
 Mon June 14, 2021: Katharine K corrected errors in the Game and GameTest classes
     (expected: 30 min, actual: 1 hour)
-
 Wed June 16, 2021: Sayeed created documentation in README.md.
 	(expected: 3 hours, actual: 4 hours)
-
 june 19 : group meeeting. Discussed how to handle error, decide to create custom
     exception clas so that it's convenient to show info on alert window;decide
     to split review and rating , because they are not binded together directly,
     they are binded to a user, and a user can have one rating and many reviews;
     discussed and assigned developer tasks.
-
+june 21 :Shiqing Guo finished the interface of database.(expected:1 hour,
+    actual:1 hour)
+june 22 :Shiqing Guo finished user part of sql database.(expected:10 hour
+    actual:15 hour)
+june 24 :Shiqing Guo finished game part of sql database.(expected:10 hour
+    actual:10 hour)
+june 24 :Shiqing Guo edited review and rating class, added fields, methods.
+    (expected:2 hour, actual:1 hour)
+june 25 :Shiqing Guo finished the typical case test of sql database.
+june 26 :group meeting: decide to separate review and rating from game class,
+    and put them into their individual classes, to avoid game class to be too
+    complicated; introduced the methods in sql database; discussed what to do
+    in the next week.
+june 26 :Shiqing Guo finished review part of sql database.(expected:10 hour
+    actual:8 hour)
+june 28 :Shiqing Guo finished rating part of sql database.(expected:10 hour
+    actual:8 hour)
+june 29 :Shiqing Guo added top bar to UI (expected:2 hour; actual:3 hour)
+june 30 :Shiqing Guo added search bar to UI(exepcted:4 hour; actual:4 hour)
+july 1 :Shiqing Guo added sort bar to UI(expected:4 hour; actual:4 hour)
+july 1 :Shiqing Guo added genre bar to UI(expected:2 hour; actual:2 hour)
 July 2, 2021: group meeting for iteration 2, report everyone's working process.
-
 July 2, 2021: Gongyu added game searching method for stub and sql database classes. This method can search game by the game name that user input.
      (expected: 1 hour, actual: 2 hours)
-
-
 July 2, 2021: Sayeed added accessReview method for accessing and modifying reviews in database.
 	(expected: 2 hours, actual: 3 hours)
 
 
-6.21 Shiqing Guo finished the interface of database.(expected:1 hour, actual:1 hour)
-6.22 Shiqing Guo finished user part of sql database.(expected:10 hour actual:15 hour)
-6.24 Shiqing Guo finished game part of sql database.(expected:10 hour actual:10 hour)
-6.24 Shiqing Guo edited review and rating class, added fields, methods.(expected:2 hour, actual:1 hour)
-6.25 Shiqing Guo finished the typical case test of sql database.
-6.26 group meeting: decide to separate review and rating from game class, and put them into their individual classes, to avoid game class to be too complicated; introduced the methods in sql database; discussed what to do in the next week.
-6.26 Shiqing Guo finished review part of sql database.(expected:10 hour actual:8 hour)
-6.28 Shiqing Guo finished rating part of sql database.(expected:10 hour actual:8 hour)
-6.29 Shiqing Guo added top bar to UI (expected:2 hour; actual:3 hour)
-6.30 Shiqing Guo added search bar to UI(exepcted:4 hour; actual:4 hour)
-7.1 Shiqing Guo added sort bar to UI(expected:4 hour; actual:4 hour)
-7.1 Shiqing Guo added genre bar to UI(expected:2 hour; actual:2 hour)

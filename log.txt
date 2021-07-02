@@ -120,3 +120,7 @@ june 19 : group meeeting. Discussed how to handle error, decide to create custom
     to split review and rating , because they are not binded together directly,
     they are binded to a user, and a user can have one rating and many reviews;
     discussed and assigned developer tasks.
+   
+July 2, 2021: group meeting for iteration 2, report everyone's working process.
+
+July 2, 2021: Gongyu updated game search function for database (stub and sql).

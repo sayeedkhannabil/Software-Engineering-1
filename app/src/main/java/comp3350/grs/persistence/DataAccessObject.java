@@ -304,8 +304,8 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		}
 	}
 
-	public List<Game> getAllGames(){
-		List<Game> gameList=new ArrayList<Game>();
+	public ArrayList<Game> getAllGames(){
+		ArrayList<Game> gameList=new ArrayList<Game>();
 		String gameName,developer,description;
 		double price;
 
@@ -419,6 +419,33 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 			sqlException.printStackTrace();
 		}
 
+	}
+	
+	public ArrayList<Game> searchGame(String name){
+		results=new ArrayList<Game>();
+		ArrayList<Game> searchList=this.getAllGames();
+		Game temp;
+		int searchLength=name.length();
+		String gameName;
+		String subName;
+		if(searchLength>0) {
+			for(int i=0;i<searchList.size();i++){
+				temp=searchList.get(i);
+				gameName=temp.getName();
+				if(gameName.length()>=searchLength){
+					subName=gameName.substring(0,searchLength);
+					if(subName.equalsIgnoreCase(name)){
+						results.add(temp);
+					}
+				}
+			}
+		}else{
+			System.out.println("Please input valid game name.");
+		}
+		if(results.size()==0 && searchLength>0){
+			System.out.println("Not found.");
+		}
+		return results;
 	}
 
 

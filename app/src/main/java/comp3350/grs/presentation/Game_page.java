@@ -31,15 +31,19 @@ import java.util.List;
 import comp3350.grs.R;
 import comp3350.grs.business.AccessGames;
 import comp3350.grs.business.AccessRatings;
+import comp3350.grs.business.AccessReviews;
 import comp3350.grs.business.AccessUsers;
 import comp3350.grs.exceptions.IncorrectFormat;
+import comp3350.grs.exceptions.IncorrectOrder;
 import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Rating;
 import comp3350.grs.objects.Review;
+import comp3350.grs.objects.User;
 
 public class Game_page extends AppCompatActivity {
     private AccessGames accessGames;
     private AccessRatings accessRatings;
+    private AccessReviews accessReviews;
     private Game game;//the game we will show the details
     private TextInputLayout textInputLayout;
     private TextInputEditText textInputEditText;//review edit text
@@ -53,6 +57,7 @@ public class Game_page extends AppCompatActivity {
     private ConstraintSet constraintSet;
     private ConstraintLayout game_page_main;
     private LinearLayout genre_wrapper;
+    private String game_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +66,13 @@ public class Game_page extends AppCompatActivity {
 
         isWritingReview=false;
         Bundle extras = getIntent().getExtras();
-        String game_name = null;
+        game_name = null;
         if (extras != null) {
             game_name = extras.getString("game");//get the game name
         }
         accessGames = new AccessGames();
         accessRatings=new AccessRatings();
+        accessReviews=new AccessReviews();
         game = accessGames.findGame(game_name);
         TextView game_text = (TextView) findViewById(R.id.textView5);
         TextView dev_text = (TextView) findViewById(R.id.textView6);
@@ -172,19 +178,26 @@ public class Game_page extends AppCompatActivity {
 
                 }
                 else{
-                    isWritingReview=false;
-                    review_button.setText("write review");
-                    String review=textInputEditText.getText().toString();
-                    review_wrapper.removeView(textInputLayout);
-                    review_wrapper.removeView(textInputEditText);
-
-//                    game.addReview(ratingBar.getRating(),review);// TODO: 6/28/2021
-                    showReviews();//update the review
-                    constraintSet.connect(review_background.getId(),
-                            ConstraintSet.TOP,
-                            description_text.getId(),
-                            ConstraintSet.BOTTOM);
-                    constraintSet.applyTo(game_page_main);
+                    try {
+                        String comment=textInputEditText.getText().toString();
+                        Review newReview=new Review(comment,game_name,
+                                AccessUsers.getActiveUser().getUserID());
+                        accessReviews.insertReview(newReview);
+                        showReviews();//update the review
+                        isWritingReview=false;
+                        review_button.setText("write review");
+                        review_wrapper.removeView(textInputLayout);
+                        review_wrapper.removeView(textInputEditText);
+                        constraintSet.connect(review_background.getId(),
+                                ConstraintSet.TOP,
+                                description_text.getId(),
+                                ConstraintSet.BOTTOM);
+                        constraintSet.applyTo(game_page_main);
+                    } catch (IncorrectFormat incorrectFormat) {
+                        AlertDialog alertDialog =
+                                Utilities.createAlertDialog(incorrectFormat.getMessage(),Game_page.this);
+                        alertDialog.show();
+                    }
                 }
 
             }
@@ -199,13 +212,13 @@ public class Game_page extends AppCompatActivity {
             review_wrapper.removeView(review_wrapper.getChildAt(review_wrapper.getChildCount() - 1));
         }
 
-//        List<Review> reviews = game.getReviews();// TODO: 6/28/2021
-        //add all reviews one by one
-//        for (int i = 0; i < reviews.size(); i++) {
-//            TextView newReview = new TextView(this);
-//            newReview.setTextSize(TypedValue.COMPLEX_UNIT_SP,25);
-//            newReview.setText(reviews.get(i).toString());
-//            review_wrapper.addView(newReview);
-//        }
+        List<Review> reviews = accessReviews.getReviewsByGame(game_name);
+//        add all reviews one by one
+        for (int i = 0; i < reviews.size(); i++) {
+            TextView newReview = new TextView(this);
+            newReview.setTextSize(TypedValue.COMPLEX_UNIT_SP,25);
+            newReview.setText(reviews.get(i).toString());
+            review_wrapper.addView(newReview);
+        }
     }
 }

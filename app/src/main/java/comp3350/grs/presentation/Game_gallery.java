@@ -99,8 +99,13 @@ public class Game_gallery extends AppCompatActivity {
                         gameList=accessGames.descendingRatingSort();
                     }
                 }
-                else{// TODO: 7/1/2021
-
+                else{
+                    if (sortAsc[i]){
+                        gameList=accessGames.accendingReviewSort();
+                    }
+                    else {
+                        gameList=accessGames.descendingReviewSort();
+                    }
                 }
             }
         }
@@ -289,11 +294,8 @@ public class Game_gallery extends AppCompatActivity {
     }
 
     private void generateGamesOnSearch(String text){
-        List<Game> gameList=new ArrayList<Game>();
-        Game game=accessGames.findGame(text);
-        if (game!=null){
-            gameList.add(game);
-        }
+        List<Game> gameList;
+        gameList=accessGames.getGamesByNameImplicit(text);
         generateGamesThumbnail(gameList);
     }
 

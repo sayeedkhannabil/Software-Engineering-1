@@ -18,12 +18,7 @@ public class ReviewTest extends TestCase {
     @Test
     public void testReview() {
         Review r = null;
-        try {
-            r = new Review("This is a good game.");
-            assert("This is a good game.".equals(r.getComment()));
-        } catch (IncorrectFormat incorrectFormat) {
-            incorrectFormat.printStackTrace();
-        }
-
+        r = new Review("This is a good game.");
+        assert("This is a good game.".equals(r.getComment()));
     }
 }

@@ -49,7 +49,7 @@ public abstract class User
 	}
 
 	//change user id to new user id
-	public void changeUserID(String newUserID) throws IncorrectFormat {
+	public void changeUserID(String newUserID) throws IncorrectFormat, Exception {
 		checkUseridFormat(newUserID);
 		this.userID=newUserID;
 	}

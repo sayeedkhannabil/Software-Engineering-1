@@ -12,11 +12,12 @@ import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
 import comp3350.grs.objects.RegisteredUser;
 import comp3350.grs.objects.User;
+import comp3350.grs.persistence.DataAccessI;
 import comp3350.grs.persistence.DataAccessStub;
 
 public class AccessUsers {
 
-    private DataAccessStub dataAccess;
+    private DataAccessI dataAccess;
     private List<User> users;
     private static User activeUser;//the user logged in to the app
     private User currentUser;//used for return sequantial user
@@ -24,7 +25,7 @@ public class AccessUsers {
 
     public AccessUsers()
     {
-        dataAccess = (DataAccessStub) Services.getDataAccess(Main.dbName);
+        dataAccess = Services.getDataAccess(Main.dbName);
         users = null;
         activeUser = null;
         currentUser=null;
@@ -70,40 +71,23 @@ public class AccessUsers {
     }
 
     //get a specific user according to userID
-    public User getRandom(String userID) throws Exception {
-        currentUser = null;
-        if (userID.trim().equals(""))
-        {
-            //System.out.println("*** Invalid student number");
-        }
-        else
-        {
-            currentUser = dataAccess.getOneUser(new RegisteredUser(userID));
-        }
+    public User getUserByID(String userID){
+        currentUser = dataAccess.getUserByID(userID);
         return currentUser;
     }
 
-    public void insertUser(User newUser)
+    public boolean insertUser(User newUser)
     {
-        if (newUser!=null&&newUser.validUser()){
-            dataAccess.insertUser(newUser);
-        }
-
+        return dataAccess.insertUser(newUser);
     }
 
-    public void updateUser(User user)
+    public boolean updateUser(User user)
     {
-        if (user!=null&&user.validUser()){
-            dataAccess.updateUser(user);
-        }
-
+        return dataAccess.updateUser(user);
     }
 
-    public void deleteUser(User user)
+    public boolean deleteUser(User user)
     {
-        if (user!=null&&user.validUser()){
-            dataAccess.deleteUser(user);
-        }
-
+        return dataAccess.deleteUser(user);
     }
 }

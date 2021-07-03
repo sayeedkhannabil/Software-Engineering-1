@@ -19,22 +19,17 @@ public abstract class User
 	}
 
 	public User(String userID) throws IncorrectFormat {
-		checkUseridNotNull(userID);
 		//userid should not contain space or be empty
 		checkUseridFormat(userID);
 		this.userID=userID;
 	}
 
-	private void checkUseridNotNull(String userID){
-		if (userID==null){
-			throw new NullPointerException("userID should not be null.");
-		}
-	}
-
 	private void checkUseridFormat(String userID) throws IncorrectFormat {
-		if (userID.equals("")|| userID.contains(" ")||userID.length()>20){
-			throw new IncorrectFormat("user id should not be empty or contain" +
-					" space or more than 20 letters");
+		if (userID!=null){
+			if (userID.equals("")|| userID.contains(" ")||userID.length()>20){
+				throw new IncorrectFormat("user id should not be empty or contain" +
+						" space or more than 20 letters");
+			}
 		}
 	}
 
@@ -50,17 +45,11 @@ public abstract class User
 	}
 
 	public boolean validUser(){
-		if (this.userID!=null){
-			return true;
-		}
-		else {
-			return false;
-		}
+		return this.userID!=null;
 	}
 
 	//change user id to new user id
-	public void changeUserID(String newUserID) throws Exception {
-		checkUseridNotNull(newUserID);
+	public void changeUserID(String newUserID) throws IncorrectFormat {
 		checkUseridFormat(newUserID);
 		this.userID=newUserID;
 	}

@@ -68,13 +68,7 @@ public class AccessReviews {
     }
 
     public boolean insertReview(Review newReview) {
-        boolean inserted = false;
-
-        if (newReview != null) {
-            inserted = dataAccess.insertReview(newReview);
-        }
-
-        return inserted;
+        return dataAccess.insertReview(newReview);
     }
 
     // get the number of reviews in each game
@@ -83,23 +77,11 @@ public class AccessReviews {
     }
 
     public boolean updateReview(Review uReview) {
-        boolean update = false;
-
-        if (uReview != null) {
-            update = dataAccess.updateReview(uReview);
-        }
-
-        return update;
+        return dataAccess.updateReview(uReview);
     }
 
     public boolean deleteReview(Review dReview) {
-        boolean del = false;
-
-        if (dReview != null) {
-            del = dataAccess.deleteReview(dReview);
-        }
-
-        return del;
+        return dataAccess.deleteReview(dReview);
     }
 
 }

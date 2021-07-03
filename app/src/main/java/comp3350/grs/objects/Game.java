@@ -77,6 +77,9 @@ public class Game
         return currPrice;
     }
 
+    public boolean validGame(){
+        return this.name!=null;
+    }
     //------------------------------------------------------
     // equals
     //

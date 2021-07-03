@@ -104,38 +104,16 @@ public class AccessRatings {
 
     public boolean insertRating(Rating newRating)
     {
-        boolean inserted = false;
-        Rating test = null;
-        if (newRating != null){
-            dataAccess.insertRating(newRating);
-            test = dataAccess.getRating(newRating.getGameName(), newRating.getUserID()); //should
-            // return a
-            // Rating object associated with newRating's ratingID
-
-            if(test != null) //if test is null, the newRating was not found in the database (not inserted properly)
-            {
-                inserted = true;
-            }
-        }
-
-        return inserted;
+        return dataAccess.insertRating(newRating);
     }
 
     public boolean updateRating(Rating updatedRating)
     {
-        boolean result=false;
-        if (updatedRating != null){
-            result=dataAccess.updateRating(updatedRating);
-        }
-        return result;
+        return dataAccess.updateRating(updatedRating);
     }
 
     public boolean deleteRating(Rating toDelete)
     {
-        boolean result=false;
-        if (toDelete != null){
-            result=dataAccess.deleteRating(toDelete);
-        }
-        return result;
+        return dataAccess.deleteRating(toDelete);
     }
 }

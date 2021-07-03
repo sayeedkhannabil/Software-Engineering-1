@@ -24,11 +24,13 @@ public class AccessGames
     private Game currGame; 
     private int currGameIndex;
     private AccessRatings accessRatings;
+    private AccessReviews accessReviews;
 
     public AccessGames()
     {
         dataAccess =  Services.getDataAccess(Main.dbName);
         accessRatings=new AccessRatings();
+        accessReviews=new AccessReviews();
         gameList = null; 
         currGame = null; 
         currGameIndex = 0; 
@@ -130,39 +132,44 @@ public class AccessGames
         return gameList;
     }
 
-    // Sorts the Game(s) in accending order of # of reviews
-//    public List<Game> accendingReviewSort() {
-//
-//        getGames();
-//
-//        Collections.sort(gameList, new Comparator<Game>() {
-//            @Override
-//            public int compare(Game o1, Game o2) {
-//                return Integer.valueOf(o1.getNumReviews()).compareTo(o2.getNumReviews());
-//            }
-//        });
-//
-//        return gameList;
-//    }
-//
-//    // Sorts the Game(s) in descending order of # of reviews
-//    public List<Game> descendingReviewSort() {
-//
-//        getGames();
-//
-//        Collections.sort(gameList, new Comparator<Game>() {
-//            @Override
-//            public int compare(Game o1, Game o2) {
-//                return Integer.valueOf(o2.getNumReviews()).compareTo(o1.getNumReviews());
-//            }
-//        });
-//
-//        return gameList;
-//    } todo
+//     Sorts the Game(s) in accending order of # of reviews
+    public List<Game> accendingReviewSort() {
+
+        getAllGames();
+
+        Collections.sort(gameList, new Comparator<Game>() {
+            @Override
+            public int compare(Game o1, Game o2) {
+                return accessReviews.getReviewNumByGame(o1.getName())-accessReviews.getReviewNumByGame(o2.getName());
+            }
+        });
+
+        return gameList;
+    }
+
+    // Sorts the Game(s) in descending order of # of reviews
+    public List<Game> descendingReviewSort() {
+
+        getAllGames();
+
+        Collections.sort(gameList, new Comparator<Game>() {
+            @Override
+            public int compare(Game o1, Game o2) {
+                return accessReviews.getReviewNumByGame(o2.getName())-accessReviews.getReviewNumByGame(o1.getName());
+            }
+        });
+
+        return gameList;
+   }
 
     public Game findGame(String name)
     {
         return dataAccess.getGameByName(name);
+    }
+
+    public List<Game> getGamesByNameImplicit(String gameName){
+        String gameNameImp="%"+gameName+"%";
+        return dataAccess.getGamesByNameImplicit(gameNameImp);
     }
 
     public Game getSequential()
@@ -182,23 +189,22 @@ public class AccessGames
         {
             gameList = null;
             currGame = null; 
-//            currRating = 0;
         }
         return currGame; 
     }
 
-    public void insertGame(Game currentGame)
+    public boolean insertGame(Game currentGame)
     {
-        dataAccess.insertGame(currentGame);
+        return dataAccess.insertGame(currentGame);
     }
 
-    public void updateGame(Game currentGame)
+    public boolean updateGame(Game currentGame)
     {
-        dataAccess.updateGame(currentGame);
+        return dataAccess.updateGame(currentGame);
     }
 
-    public void deleteGame(Game currentGame)
+    public boolean deleteGame(Game currentGame)
     {
-        dataAccess.deleteGame(currentGame);
+        return dataAccess.deleteGame(currentGame);
     }
 }

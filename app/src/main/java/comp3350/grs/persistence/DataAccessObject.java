@@ -112,7 +112,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		}
 
 		if (!checkTableExist("reviews")){
-			cmdString="CREATE TABLE reviews(reviewID integer,reviewContent VARCHAR(140),GAMENAME VARCHAR(40), USERID VARCHAR(20),primary key(reviewID),foreign key(GAMENAME) references GAMES(GAMENAME),foreign key(USERID) references users(USERID))";
+			cmdString="CREATE TABLE reviews(reviewID integer identity,reviewContent VARCHAR(140),GAMENAME VARCHAR(40), USERID VARCHAR(20),primary key(reviewID),foreign key(GAMENAME) references GAMES(GAMENAME),foreign key(USERID) references users(USERID))";
 			try {
 				statement1.executeUpdate(cmdString);
 			} catch (SQLException sqlException) {
@@ -588,7 +588,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 						userID));
 			}
 
-		} catch (SQLException | IncorrectFormat | IncorrectOrder sqlException) {
+		} catch (SQLException | IncorrectFormat sqlException) {
 			sqlException.printStackTrace();
 		}
 		return reviewList;
@@ -673,12 +673,21 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 				reviewContent=review.getComment();
 				gameName=review.getGameName();
 				userID=review.getUserID();
-				preparedStatement= connection.prepareStatement("insert into reviews " +
-						"values(?,?,?,?)");
-				preparedStatement.setInt(1,reviewID);
-				preparedStatement.setString(2,reviewContent);
-				preparedStatement.setString(3,gameName);
-				preparedStatement.setString(4,userID);
+				if (reviewID==-1){
+					preparedStatement= connection.prepareStatement("insert into reviews(reviewContent,GAMENAME,USERID) values (?,?,?);");
+					preparedStatement.setString(1,reviewContent);
+					preparedStatement.setString(2,gameName);
+					preparedStatement.setString(3,userID);
+				}
+				else {
+					preparedStatement= connection.prepareStatement("insert into reviews " +
+							"values(?,?,?,?)");
+					preparedStatement.setInt(1,reviewID);
+					preparedStatement.setString(2,reviewContent);
+					preparedStatement.setString(3,gameName);
+					preparedStatement.setString(4,userID);
+				}
+
 				updateCount= preparedStatement.executeUpdate();
 				if (updateCount==1){
 					insertSucess=true;
@@ -721,11 +730,10 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 	}
 
 	public boolean deleteReview(Review review){
-		int reviewID=review.getReviewID();
 		boolean deleteSuccess=false;
-
 		if (review!=null&&review.validReview()){
 			try {
+				int reviewID=review.getReviewID();
 				preparedStatement= connection.prepareStatement("delete from reviews " +
 						"where reviewID=?");
 				preparedStatement.setInt(1,reviewID);

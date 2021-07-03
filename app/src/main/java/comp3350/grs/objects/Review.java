@@ -15,7 +15,6 @@ public class Review {
     private String comment;
     private String userID;
     private String gameName;
-    private static int nextReviewID=1;
     private int reviewID;//used to uniquely identify a review
 
     public Review() {
@@ -23,64 +22,42 @@ public class Review {
     }
 
     //create a review, use auto generated reviewID
-    public Review(String comment,String gameName,String userID) throws IncorrectFormat, IncorrectOrder {
+    public Review(String comment,String gameName,String userID) throws IncorrectFormat {
         this.userID=userID;
-        this.comment = comment;
         this.gameName=gameName;
-        reviewID=nextReviewID;
-        nextReviewID++;
         checkComment(comment);
+        this.comment = comment;
+        reviewID=-1;
     }
 
     //specify a reviewID
     public Review(int reviewID, String comment,String gameName,String userID
-                   ) throws IncorrectFormat, IncorrectOrder {
+                   ) throws IncorrectFormat {
         this.userID=userID;
-        this.comment = comment;
         this.gameName=gameName;
-        this.reviewID=reviewID;
         checkComment(comment);
+        this.comment = comment;
+        this.reviewID=reviewID;
     }
 
     public Review(String comment) {
         this.comment = comment;
         this.userID=null;
         this.gameName=null;
-        reviewID=nextReviewID;
-        nextReviewID++;
+        reviewID=-1;
     }
 
-    private void checkComment(String comment) throws IncorrectFormat,
-            IncorrectOrder {
+    private void checkComment(String comment) throws IncorrectFormat{
         if (comment.length()>140||comment.length()<=0){
             throw new IncorrectFormat("letters of review content should be " +
                     "between 1 and 140");
         }
-        else if (!hasBeenRated()){
-            throw new IncorrectOrder("please rate the game first before " +
-                    "writing review");
-        }
     }
 
     public boolean validReview(){
-        return reviewID>=0&&comment!=null&&userID!=null&&gameName!=null;
+        return comment!=null&&userID!=null&&gameName!=null;
     }
-    //experimental method to match reviews with ratings by userID
-    //could use this in constructor to determine whether review can be created
-    public boolean hasBeenRated()
-    {
-        boolean alreadyRated = false;
 
-        //access ratings from database
-        AccessRatings ratingAccess = new AccessRatings();
-        Rating rate = ratingAccess.getRating(gameName,userID);
-        //find match by game and userID -- if match rating found, alreadyRated == true
-        if(rate != null)
-        {
-            alreadyRated = true;
-        }
-        return alreadyRated;
-    }
 
     public String getComment() {
         return comment;

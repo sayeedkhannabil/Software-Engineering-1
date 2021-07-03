@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import comp3350.grs.application.Main;
+import comp3350.grs.application.Services;
 import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Guest;
 import comp3350.grs.objects.Rating;
@@ -38,6 +40,7 @@ public class DataAccessITest {
 
     @Before
     public void initiateDB(){
+
         dataAccessI=new DataAccessObject("TestDB");
 //       dataAccessI=new DataAccessStub("TestDB");
 

@@ -99,8 +99,13 @@ public class Game_gallery extends AppCompatActivity {
                         gameList=accessGames.descendingRatingSort();
                     }
                 }
-                else{// TODO: 7/1/2021
-
+                else{
+                    if (sortAsc[i]){
+                        gameList=accessGames.accendingReviewSort();
+                    }
+                    else {
+                        gameList=accessGames.descendingReviewSort();
+                    }
                 }
             }
         }

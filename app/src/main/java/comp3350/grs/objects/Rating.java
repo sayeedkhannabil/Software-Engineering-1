@@ -9,6 +9,7 @@
 //-----------------------------------------
 package comp3350.grs.objects;
 
+import comp3350.grs.business.AccessGames;
 import comp3350.grs.business.AccessUsers;
 import comp3350.grs.exceptions.IncorrectFormat;
 
@@ -20,10 +21,18 @@ public class Rating
 
 
     //create a rating, use auto generated ratingID
-    public Rating (double ratingGiven,String gameName,String userID) throws IncorrectFormat {
+    public Rating (double ratingGiven,String gameName,String userID) {
         rating = 0.0; // default -- if no ratings (or no valid ratings) given yet
-        checkRating(ratingGiven);
-        //input validation
+
+        try {
+            checkRating(ratingGiven);
+            checkGameName(gameName);
+        }
+        catch (IncorrectFormat incorrectFormat)
+        {
+            System.out.println(incorrectFormat.getMessage());
+        }
+
         rating = ratingGiven;
         this.userID=userID;
         this.gameName=gameName;
@@ -43,6 +52,13 @@ public class Rating
     private void checkRating(double rating) throws IncorrectFormat {
         if(rating <= 0 || rating > 5){
             throw new IncorrectFormat("rating should be between 0 and 5.");
+        }
+    }
+
+    private void checkGameName(String game) throws IncorrectFormat {
+        AccessGames gameAccess = new AccessGames();
+        if(gameAccess.findGame(game) == null){
+            throw new IncorrectFormat("The game does not exist in the database. Cannot rate a non-existent game.");
         }
     }
 

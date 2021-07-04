@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import comp3350.grs.business.AccessRatings;
+import comp3350.grs.exceptions.IncorrectFormat;
 
 public class Game
 {
@@ -22,8 +23,17 @@ public class Game
 
     //detailed constructor
     public Game(String gameName, String gameDev, String desc, double price,
-                List<String> gen)
-    {
+                List<String> gen) {
+        //check for valid input
+        try {
+            validName(gameName);
+            validPrice(price);
+        }
+        catch(IncorrectFormat incorrectFormat)
+        {
+            System.out.println(incorrectFormat.getMessage());
+        }
+
         name = gameName;
         dev = gameDev;
         description = desc;
@@ -34,6 +44,14 @@ public class Game
     //simple constructor
     public Game(String gameName)
     {
+        try
+        {
+            validName(gameName);
+        }
+        catch (IncorrectFormat incorrectFormat)
+        {
+            System.out.println(incorrectFormat.getMessage());
+        }
         name = gameName;
         dev = null;
         description = null;
@@ -61,7 +79,6 @@ public class Game
         return dev;
     }
 
-
     public List<String> getGenres()
     {
         return genres;
@@ -75,6 +92,35 @@ public class Game
     public double getPrice()
     {
         return currPrice;
+    }
+
+    private void validName(String name) throws IncorrectFormat {
+        //check that name is not blank or just space(s)
+        if (name.trim().equals(""))
+        {
+            throw new IncorrectFormat("Game name cannot be blank/empty.");
+        }
+
+    }
+
+    private void validPrice(double price) throws IncorrectFormat{
+
+        if (price < 0.0)
+        {
+            throw new IncorrectFormat("Price cannot be negative.");
+        }
+    }
+
+    public boolean validGame()
+    {
+        boolean valid = false;
+        if(name != null )
+        {
+            if(!name.trim().equals("") && currPrice >= 0.0) {
+                valid = true;
+            }
+        }
+        return valid;
     }
 
     //------------------------------------------------------
@@ -94,9 +140,19 @@ public class Game
         if(otherGame instanceof Game)
         {
             other = (Game) otherGame;
-            if((this.name).equals(other.getName()) )
+            if(this.name != null)
             {
-                isSame = true;
+                if(this.name.equals(other.getName()))
+                {
+                    isSame = true;
+                }
+            }
+            else
+            {
+                if(other.getName() == null)
+                {
+                    isSame = true;
+                }
             }
         }
         return isSame;

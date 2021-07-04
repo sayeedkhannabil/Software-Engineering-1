@@ -22,7 +22,7 @@ public class AccessRatings {
 
     public AccessRatings()
     {
-        dataAccess = (DataAccessI) Services.getDataAccess(Main.dbName);
+        dataAccess = (DataAccessI) Services.createDataAccess(Main.dbName);
         ratings = null;
         currentRating = null;
         currentRatingIndex = 0;

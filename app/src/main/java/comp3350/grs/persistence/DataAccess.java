@@ -95,7 +95,7 @@ public abstract class DataAccess {
                     currGenre=genreJsonArray.getJSONObject(j);
                     genres.add(currGenre.getString("genres"));
                 }
-                newGame=new Game(gameName,gameDev,desc,price,genres);
+                newGame=new Game(gameName, gameDev, desc, price, genres);
                 games.add(newGame);
             }
         } catch (JSONException e) {

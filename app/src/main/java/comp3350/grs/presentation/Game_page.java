@@ -93,21 +93,28 @@ public class Game_page extends Activity {
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 if(accessRatings.getRating(game.getName(),
                         AccessUsers.getActiveUser().getUserID())==null){
-                    try {
+
+                    /*I commented out try-catch as the Rating constructor no longer throws an error
+                    * (there is a try-catch inside the constructor) and an error was given since there is an additional
+                    * try-catch here, where now no error is thrown in this try. If the constructor should actually be throwing
+                    * an error and my code is not ideal, let me know and I can change it.
+                    * - Katharine */
+
+                   // try {
                         accessRatings.insertRating(new Rating(rating,
                                 game.getName(),AccessUsers.getActiveUser().getUserID()));
-                    } catch (IncorrectFormat incorrectFormat) {
+                  /*  } catch (IncorrectFormat incorrectFormat) {
                         incorrectFormat.printStackTrace();
-                    }
+                    }*/
                 }
                 else {
-                    try {
+                    //try {
                         accessRatings.updateRating(new Rating(rating,
                                 game.getName(),
                                 AccessUsers.getActiveUser().getUserID()));
-                    } catch (IncorrectFormat incorrectFormat) {
+                   /* } catch (IncorrectFormat incorrectFormat) {
                         incorrectFormat.printStackTrace();
-                    }
+                    }*/
                 }
 
                 ratingBar.setRating((float) accessRatings.getOverallRating(game.getName()));

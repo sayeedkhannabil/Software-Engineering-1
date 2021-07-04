@@ -25,7 +25,7 @@ public class AccessGames
 
     public AccessGames()
     {
-        dataAccess =  Services.getDataAccess(Main.dbName);
+        dataAccess =  Services.createDataAccess(Main.dbName);
         gameList = null; 
         currGame = null; 
         currGameIndex = 0; 

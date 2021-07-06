@@ -24,7 +24,7 @@ public class Guest extends User{
 
     //a guest should not be able to change user id
     @Override
-    public void changeUserID(String newID) throws Exception {
-        throw new Exception("can't change userID of guest.");
+    public void changeUserID(String newID) throws IncorrectFormat {
+        throw new IncorrectFormat("can't change userID of guest.");
     }
 }

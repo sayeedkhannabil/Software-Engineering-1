@@ -93,7 +93,7 @@ public class AccessRatings {
                 thisRating = ratings.get(i);
                 if((thisRating.getGameName()).equals(gameName))
                 {
-                    totalPts += thisRating.getRating();
+                    totalPts += thisRating.getRatingValue();
                     numRatings ++;
                 }
             }

@@ -6,15 +6,13 @@ import org.junit.Test;
 
 import comp3350.grs.exceptions.IncorrectFormat;
 
-import static org.junit.Assert.*;
-
 public class RatingTest extends TestCase {
     @Test
     public void test() {
         Rating r = null;
         try {
             r = new Rating(3);
-            assert(3 == r.getRating());
+            assert(3 == r.getRatingValue());
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }

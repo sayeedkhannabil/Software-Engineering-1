@@ -101,7 +101,9 @@ july 1 :Shiqing Guo added genre bar to UI(expected:2 hour; actual:2 hour)
 July 2, 2021: group meeting for iteration 2, report everyone's working process.
 July 2, 2021: Gongyu added game searching method for stub and sql database classes. This method can search game by the game name that user input.
      (expected: 1 hour, actual: 2 hours)
-July 2, 2021: Sayeed added accessReview method for accessing and modifying reviews in database.
-	(expected: 2 hours, actual: 3 hours)
+July 2, 2021: Sayeed added accessReview method for accessing and modifying reviews in database.(expected: 2 hours, actual: 3 hours)
+July 2 Shiqing Guo added null checking to sql database(expected:30min actual:30min)
+July 2 Shiqing Guo added validation to game , review and rating(expected:30min actual:30min)
+July 5 Shiqing Guo finished null test and edge test  of database(expected:5 hour ,actual:3hour)
 
 

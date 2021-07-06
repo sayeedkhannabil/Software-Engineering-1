@@ -75,8 +75,16 @@ public class Review {
         return userID;
     }
 
-    public boolean equals(Review review){
-        return this.reviewID==review.getReviewID();
+    public boolean equals(Object object){
+        boolean result;
+        result = false;
+        Review review;
+
+        if (object instanceof Rating){
+            review=(Review) object;
+            result=this.reviewID==review.getReviewID();
+        }
+        return result;
     }
 
     public String toString() {

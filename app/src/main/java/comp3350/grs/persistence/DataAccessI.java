@@ -20,29 +20,29 @@ public interface DataAccessI
 	void clearTable();//clear the content of table without deleting the table
 	// itself
 
-	List<User> getAllUsers();
-
-	List<User> getUsersByIDImplicit(String userIDImp);
-
-	User getUserByID(String userID);
-
 	boolean insertUser(User user);
 
 	boolean updateUser(User user);
 
 	boolean deleteUser(User user);
 
-	List<Game> getAllGames();
+	List<User> getAllUsers();
 
-	Game getGameByName(String gameName);
+	List<User> getUsersByIDImplicit(String userIDImp);
 
-	List<Game> getGamesByNameImplicit(String gameNameImp);
+	User getUserByID(String userID);
 
 	boolean insertGame(Game game);
 
 	boolean updateGame(Game game);
 
 	boolean deleteGame(Game game);
+
+	List<Game> getAllGames();
+
+	Game getGameByName(String gameName);
+
+	List<Game> getGamesByNameImplicit(String gameNameImp);
 
 	boolean insertReview(Review review);
 
@@ -58,11 +58,11 @@ public interface DataAccessI
 
 	Review getReviewByID(int reviewID);
 
-	boolean insertRating(Rating theRating);
+	boolean insertRating(Rating rating);
 
-	boolean updateRating(Rating theRating);
+	boolean updateRating(Rating rating);
 
-	boolean deleteRating(Rating theRating);
+	boolean deleteRating(Rating rating);
 
 	List<Rating> getAllRatings();
 
@@ -71,6 +71,5 @@ public interface DataAccessI
 	List<Rating> getRatingsByUser(String userID);
 
 	Rating getRating(String gameName,String userID);
-
 
 }

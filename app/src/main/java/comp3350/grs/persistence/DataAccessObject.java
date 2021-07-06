@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import comp3350.grs.exceptions.IncorrectFormat;
-import comp3350.grs.exceptions.IncorrectOrder;
 import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Guest;
 import comp3350.grs.objects.Rating;
@@ -103,7 +102,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 
 
 		if (!checkTableExist("ratings")){
-			cmdString="create TABLE ratings (rating double, GAMENAME VARCHAR(40), USERID VARCHAR(20),primary key(GAMENAME,USERID),foreign key(GAMENAME) references GAMES(GAMENAME),foreign key(USERID) references users(USERID))";
+			cmdString="create TABLE ratings (RatingValue double, GAMENAME VARCHAR(40), USERID VARCHAR(20),primary key(GAMENAME,USERID),foreign key(GAMENAME) references GAMES(GAMENAME),foreign key(USERID) references USERS(USERID))";
 			try {
 				statement1.executeUpdate(cmdString);
 			} catch (SQLException sqlException) {
@@ -112,7 +111,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		}
 
 		if (!checkTableExist("reviews")){
-			cmdString="CREATE TABLE reviews(reviewID integer identity,reviewContent VARCHAR(140),GAMENAME VARCHAR(40), USERID VARCHAR(20),primary key(reviewID),foreign key(GAMENAME) references GAMES(GAMENAME),foreign key(USERID) references users(USERID))";
+			cmdString="CREATE TABLE reviews(reviewID integer identity primary key,reviewContent VARCHAR(140),GAMENAME VARCHAR(40), USERID VARCHAR(20),foreign key(GAMENAME) references GAMES(GAMENAME),foreign key(USERID) references USERS(USERID))";
 			try {
 				statement1.executeUpdate(cmdString);
 			} catch (SQLException sqlException) {
@@ -836,21 +835,20 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return ratingResult;
 	}
 
-	public boolean insertRating(Rating theRating){
+	public boolean insertRating(Rating rating){
 		boolean insertSuccess=false;
-		int ratingID;
-		double rating=0.0;
+		double ratingValue=0.0;
 		String gameName=null;
 		String userID=null;
 
-		if (theRating!=null&&theRating.validRating()){
+		if (rating!=null&&rating.validRating()){
 			try {
-				rating= theRating.getRating();
-				gameName= theRating.getGameName();
-				userID= theRating.getUserID();
+				ratingValue= rating.getRatingValue();
+				gameName= rating.getGameName();
+				userID= rating.getUserID();
 				preparedStatement= connection.prepareStatement("insert into ratings " +
 						"values(?,?,?)");
-				preparedStatement.setDouble(1,rating);
+				preparedStatement.setDouble(1,ratingValue);
 				preparedStatement.setString(2,gameName);
 				preparedStatement.setString(3,userID);
 				updateCount= preparedStatement.executeUpdate();
@@ -865,22 +863,21 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return insertSuccess;
 	}
 
-	public boolean updateRating(Rating theRating){
+	public boolean updateRating(Rating rating){
 		boolean updateSuccess=false;
-		int ratingID;
-		double rating=0.0;
+		double ratingValue=0.0;
 		String gameName=null;
 		String userID=null;
 
-		if (theRating!=null&& theRating.validRating()){
+		if (rating!=null&& rating.validRating()){
 			try {
-				rating= theRating.getRating();
-				gameName= theRating.getGameName();
-				userID= theRating.getUserID();
+				ratingValue= rating.getRatingValue();
+				gameName= rating.getGameName();
+				userID= rating.getUserID();
 				preparedStatement= connection.prepareStatement("update ratings " +
-						"set rating=? where gameName=? and userID=?");
+						"set ratingValue=? where gameName=? and userID=?");
 
-				preparedStatement.setDouble(1,rating);
+				preparedStatement.setDouble(1,ratingValue);
 				preparedStatement.setString(2,gameName);
 				preparedStatement.setString(3,userID);
 				updateCount= preparedStatement.executeUpdate();

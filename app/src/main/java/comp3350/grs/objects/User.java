@@ -24,12 +24,11 @@ public abstract class User
 		this.userID=userID;
 	}
 
-	private void checkUseridFormat(String userID) throws IncorrectFormat {
-		if (userID!=null){
-			if (userID.equals("")|| userID.contains(" ")||userID.length()>20){
-				throw new IncorrectFormat("user id should not be empty or contain" +
-						" space or more than 20 letters");
-			}
+	protected void checkUseridFormat(String userID) throws IncorrectFormat {
+		if (userID.length()<=0||userID.length()>10){
+			throw new IncorrectFormat("length of user id should >0 and <=10");
+		}else if (userID.contains(" ")){
+			throw new IncorrectFormat("user id should not contain space");
 		}
 	}
 
@@ -49,7 +48,7 @@ public abstract class User
 	}
 
 	//change user id to new user id
-	public void changeUserID(String newUserID) throws IncorrectFormat, Exception {
+	public void changeUserID(String newUserID) throws IncorrectFormat {
 		checkUseridFormat(newUserID);
 		this.userID=newUserID;
 	}

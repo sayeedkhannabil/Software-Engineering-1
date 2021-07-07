@@ -164,15 +164,29 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		}
 	}
 
-	public void clearTable(){
-		clearTable("reviews");
-		clearTable("ratings");
+	public void clearUsers(){
 		clearTable("users");
-		clearTable("genres");
-		clearTable("games");
-
 	}
 
+	public void clearGames(){
+		clearTable("genres");
+		clearTable("games");
+	}
+
+	public void clearReviews(){
+		clearTable("reviews");
+	}
+
+	public void clearRatings(){
+		clearTable("ratings");
+	}
+
+	public void clearTable(){
+		clearReviews();
+		clearRatings();
+		clearUsers();
+		clearGames();
+	}
 
 	public void close()
 	{
@@ -290,7 +304,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 					preparedStatement.setString(2,((RegisteredUser) user).getPassword());
 				}
 				updateCount = preparedStatement.executeUpdate();
-				if (updateCount!=1){
+				if (updateCount==1){
 					insertSuccess=true;
 				}
 			} catch (SQLException sqlException) {

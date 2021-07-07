@@ -10,7 +10,6 @@ package comp3350.grs.presentation;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -77,7 +76,7 @@ public class Game_gallery extends AppCompatActivity {
                 notSorting=false;
                 if (i==0){
                     if (sortAsc[i]){
-                        gameList=accessGames.accendingNameSort();
+                        gameList=accessGames.ascendingNameSort();
                     }
                     else {
                         gameList=accessGames.descendingNameSort();

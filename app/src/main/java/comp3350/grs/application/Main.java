@@ -13,7 +13,6 @@ public class Main
 	{
 		startUp();
 
-
 		shutDown();
 
 		System.out.println("All done");

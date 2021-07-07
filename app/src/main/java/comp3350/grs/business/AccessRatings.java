@@ -28,6 +28,10 @@ public class AccessRatings {
         currentRatingIndex = 0;
     }
 
+    public void clear(){
+        dataAccess.clearRatings();
+    }
+
     //get a list of all the ratings
     public List<Rating> getRatings()
     {

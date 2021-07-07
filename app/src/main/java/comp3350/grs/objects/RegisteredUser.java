@@ -5,7 +5,6 @@ import comp3350.grs.exceptions.IncorrectPassword;
 
 // CLASS: RegisteredUser
 //
-// Author: Shiqing Guo
 //
 // REMARKS: domain object of the user who will use this app, and willing to
 // signup
@@ -35,7 +34,7 @@ public class RegisteredUser extends User{
     //------------------------------------------------------
     // checkUseridFormat
     //
-    // PURPOSE:    check if the user id is valid
+    // PURPOSE:    check if the user id is of correct format
     // PARAMETERS:
     //     userID: the userid to be checked
     //
@@ -49,7 +48,14 @@ public class RegisteredUser extends User{
         }
     }
 
-
+    //------------------------------------------------------
+    // checkUseridFormat
+    //
+    // PURPOSE:    check if the password is of correct format
+    // PARAMETERS:
+    //     password: the password to be checked
+    //
+    //------------------------------------------------------
     private void checkPasswordFormat(String password) throws IncorrectFormat {
         if (password.contains(" ")){
             throw new IncorrectFormat("password should not contain space");
@@ -59,7 +65,14 @@ public class RegisteredUser extends User{
         }
     }
 
-    //check if the given password is the same as the password signed up
+    //------------------------------------------------------
+    // checkPassMatch
+    //
+    // PURPOSE:    check if the given password is the same as the password signed up
+    // PARAMETERS:
+    //     password: the password to be checked
+    //
+    //------------------------------------------------------
     public void checkPassMatch(String password) throws IncorrectPassword {
         if (!this.password.equals(password)){
             throw new IncorrectPassword("incorrect password");

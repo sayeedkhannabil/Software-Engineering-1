@@ -36,14 +36,18 @@ public class AccessGames
         currGameIndex = 0; 
     }
 
+    public void clear(){
+        dataAccess.clearGames();
+    }
+
     public List<Game> getAllGames()
     {
         gameList=dataAccess.getAllGames();
         return gameList;
     }
     
-    // Sorts the Game(s) in accending order of Name
-    public List<Game> accendingNameSort() {
+    // Sorts the Game(s) in ascending order of Name
+    public List<Game> ascendingNameSort() {
 
         getAllGames();
 

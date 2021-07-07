@@ -33,10 +33,13 @@ public class Rating
         this.gameName=null;
     }
 
+    //used by database to determine if we should insert it to database.
+    //we will not insert any null value, but we don't prevent it to be created
     public boolean validRating(){
         return this.userID!=null&&this.gameName!=null;
     }
 
+    //check the format of rating
     private void checkRating(double rating) throws IncorrectFormat {
         if(rating < 0 || rating > 5){
             throw new IncorrectFormat("rating should >= 0 and <= 5.");

@@ -32,17 +32,24 @@ public class AccessUsers {
         currentUserIndex = 0;
     }
 
+    public void clear(){
+        dataAccess.clearUsers();
+    }
+
     public static User getActiveUser(){
         return activeUser;
     }
 
     //set the user who logged in to be the given user
     public static void setActiveUser(User user){
+        if (user==null){
+            throw new NullPointerException("can't set active user to be null");
+        }
         activeUser=user;
     }
 
     //get a list of all the users
-    public List<User> getUsers()
+    public List<User> getAllUsers()
     {
         users=dataAccess.getAllUsers();
         return users;

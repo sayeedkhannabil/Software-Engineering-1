@@ -75,12 +75,13 @@ public class Review {
         return userID;
     }
 
+    @Override
     public boolean equals(Object object){
         boolean result;
         result = false;
         Review review;
 
-        if (object instanceof Rating){
+        if (object instanceof Review){
             review=(Review) object;
             result=this.reviewID==review.getReviewID();
         }

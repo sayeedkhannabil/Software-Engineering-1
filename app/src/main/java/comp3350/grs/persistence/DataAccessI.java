@@ -19,6 +19,13 @@ public interface DataAccessI
 
 	void clearTable();//clear the content of table without deleting the table
 	// itself
+	void clearUsers();
+
+	void clearGames();
+
+	void clearReviews();
+
+	void clearRatings();
 
 	boolean insertUser(User user);
 

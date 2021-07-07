@@ -28,6 +28,10 @@ public class AccessReviews {
         currentReviewIndex = 0;
     }
 
+    public void clear(){
+        dataAccess.clearReviews();
+    }
+
     //get a list of all reviews
     public List<Review> getReviews() {
         reviews = dataAccess.getAllReviews();

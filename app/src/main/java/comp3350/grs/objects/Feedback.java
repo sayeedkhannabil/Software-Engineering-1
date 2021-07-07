@@ -34,7 +34,7 @@ public class Feedback {
     }
 
 
-    public boolean validFeedback() {
+    public boolean checkFeedback() {
         if (this.rating.getRatingValue() > 0 && this.rating.getRatingValue() <= 5) {
             return true;
         }

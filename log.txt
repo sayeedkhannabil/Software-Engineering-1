@@ -103,5 +103,7 @@ July 2, 2021: Gongyu added game searching method for stub and sql database class
      (expected: 1 hour, actual: 2 hours)
 July 2, 2021: Sayeed added accessReview method for accessing and modifying reviews in database.
 	(expected: 2 hours, actual: 3 hours)
+July 8, 2021: Gongyu update RatingTest file, delete old test method and add new one
+	(expected: 2 hours, actual: 2 hours)
 
 

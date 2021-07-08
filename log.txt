@@ -105,5 +105,9 @@ July 2, 2021: Sayeed added accessReview method for accessing and modifying revie
 July 2 Shiqing Guo added null checking to sql database(expected:30min actual:30min)
 July 2 Shiqing Guo added validation to game , review and rating(expected:30min actual:30min)
 July 5 Shiqing Guo finished null test and edge test  of database(expected:5 hour ,actual:3hour)
+July 2, 2021: Sayeed added accessReview method for accessing and modifying reviews in database.
+	(expected: 2 hours, actual: 3 hours)
+July 8, 2021: Gongyu update RatingTest file, delete old test method and add new one
+	(expected: 2 hours, actual: 2 hours)
 
 

@@ -2,6 +2,8 @@ package comp3350.grs.presentation;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.view.MotionEvent;
+import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
 // CLASS: Utilities...
@@ -29,4 +31,28 @@ public class Utilities {
         androidx.appcompat.app.AlertDialog alert11 = builder1.create();
         return alert11;
     }
+
+    public static void setScale(View view, double factor){
+        view.setScaleX((float) factor);
+        view.setScaleY((float) factor);
+    }
+
+
+    public static void setOnTouchEffect(View view){
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction()==MotionEvent.ACTION_DOWN){
+                    setScale(view,0.95);
+                }
+                else if (event.getAction()==MotionEvent.ACTION_UP||event.getAction()==MotionEvent.ACTION_MOVE){
+                    setScale(view,1.0);
+                }
+                return false;
+            }
+        });
+
+
+    }
+
 }

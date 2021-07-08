@@ -9,42 +9,72 @@
 //-----------------------------------------
 package comp3350.grs.objects;
 
-import comp3350.grs.business.AccessUsers;
+import comp3350.grs.exceptions.IncorrectFormat;
 
 public class Rating
 {
-    private double rating; //from one to five
-    private User user;
+    private double ratingValue; //from one to five
+    private String gameName;
+    private String userID;
 
-    public Rating (double ratingGiven) {
-        rating = 0.0; // default -- if no ratings (or no valid ratings) given yet
 
-        //input validation
-        if(ratingGiven > 0 && ratingGiven <= 5)
-        {
-            rating = ratingGiven;
-            user = AccessUsers.getActiveUser();
-        }
-        else
-        {
-            System.out.println("Rating must be between 1 and 5, inclusive. Try again.");
+    public Rating (double ratingGiven,String gameName,String userID) throws IncorrectFormat {
+        checkRating(ratingGiven);//input validation
+        this.ratingValue = ratingGiven;
+        this.userID=userID;
+        this.gameName=gameName;
+
+    }
+
+    public Rating(double ratingValue) throws IncorrectFormat {
+        checkRating(ratingValue);//input validation
+        this.ratingValue = ratingValue;
+        this.userID=null;
+        this.gameName=null;
+    }
+
+    public boolean validRating(){
+        return this.userID!=null&&this.gameName!=null;
+    }
+
+    private void checkRating(double rating) throws IncorrectFormat {
+        if(rating < 0 || rating > 5){
+            throw new IncorrectFormat("rating should >= 0 and <= 5.");
         }
     }
 
-    public double getRating()
+    public double getRatingValue()
     {
-        return rating;
+        return ratingValue;
     }
 
-    public User getUser()
+    public String getUserID()
     {
-        return user;
+        return userID;
+    }
+
+    public String getGameName(){
+        return gameName;
+    }
+
+
+    public boolean equals(Object object){
+        boolean result;
+        result = false;
+        Rating rating;
+
+        if (object instanceof Rating){
+            rating=(Rating)object;
+            result=
+                    this.userID.equals(rating.userID)&&this.gameName.equals(rating.gameName);
+        }
+        return result;
     }
 
     public String toString()
     {
-        String str = "UserID: "+user.getUserID()+"\nRating: "+rating+" out of 5 points.\n";
-        if(rating == 0)
+        String str = "UserID: "+userID+"\nRating: "+ ratingValue +" out of 5 points.\n";
+        if(ratingValue == 0)
         {
             str = "Invalid rating.";
         }

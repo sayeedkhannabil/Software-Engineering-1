@@ -3,18 +3,33 @@ package comp3350.grs.objects;
 import junit.framework.TestCase;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import comp3350.grs.exceptions.IncorrectFormat;
 
 public class RatingTest extends TestCase {
-    @Test
-    public void test() {
-        Rating r = new Rating(3);
-        assert(3 == r.getRating());
+    public RatingTest(String arg0){
+        super(arg0);
     }
-
-    @Test
-    public void wrongRating() {
-        Rating r = new Rating(7);
-        Rating n = new Rating(-1);
+    public void testRating1(){
+        Rating rate;
+        System.out.println("\nStarting testRating");
+        try{
+            rate = new Rating(1);
+            assertFalse(rate.validRating());
+            assertTrue(rate.getRatingValue() == 1);
+        }catch (IncorrectFormat i){
+            i.printStackTrace();
+        }
+        try{
+            rate = new Rating(2,"GameA","000001");
+            assertTrue(rate.validRating());
+            assertTrue(rate.getRatingValue() == 2);
+            assertTrue("GameA".equals(rate.getGameName()));
+            assertTrue("000001".equals(rate.getUserID()));
+        }catch (IncorrectFormat i){
+            i.printStackTrace();
+        }
+        System.out.println("Finished testRating");
     }
+    
 }

@@ -77,6 +77,7 @@ public class LoginBackground extends Fragment {
                 container, false);
 
         TextView signin=(TextView) view.findViewById(R.id.textView4);
+        Utilities.setOnTouchEffect(signin);
         //after clicking "signin" button
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +89,7 @@ public class LoginBackground extends Fragment {
 
         //after clicking "signup" button
         Button signup=(Button) view.findViewById(R.id.button);
+        Utilities.setOnTouchEffect(signup);
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +100,7 @@ public class LoginBackground extends Fragment {
 
         //after clicked "continue as guest", take the user to game gallery
         Button ctnAsGst=(Button) view.findViewById(R.id.button2);
+        Utilities.setOnTouchEffect(ctnAsGst);
         ctnAsGst.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

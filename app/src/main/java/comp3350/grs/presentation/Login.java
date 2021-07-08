@@ -13,7 +13,6 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -42,7 +41,7 @@ public class Login extends AppCompatActivity {
                 try {
                     RegisteredUser user;
                     AccessUsers accessUsers=new AccessUsers();
-                    user=(RegisteredUser) accessUsers.getRandom(useridStr);
+                    user=(RegisteredUser) accessUsers.getUserByID(useridStr);
                     //user exists in the database, and the password is valid
                     user.checkPassMatch(passwordStr);
                     AccessUsers.setActiveUser(user);//set the user as active

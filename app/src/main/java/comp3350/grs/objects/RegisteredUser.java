@@ -16,8 +16,6 @@ public class RegisteredUser extends User{
 
     public RegisteredUser(String userID,String password) throws IncorrectFormat {
         super(userID);
-        checkUseridFormat(userID);
-        checkPassNotNull(password);
         //password can't contain space
         checkPasswordFormat(password);
         this.password=password;
@@ -25,7 +23,6 @@ public class RegisteredUser extends User{
 
     public RegisteredUser(String userID) throws IncorrectFormat {
         super(userID);
-        checkUseridFormat(userID);
         this.password=null;
     }
 
@@ -43,34 +40,29 @@ public class RegisteredUser extends User{
     //     userID: the userid to be checked
     //
     //------------------------------------------------------
-    private void checkUseridFormat(String userID) throws IncorrectFormat {
+    @Override
+    protected void checkUseridFormat(String userID) throws IncorrectFormat {
+        super.checkUseridFormat(userID);
         //registered userid shouldn't be "Guest"
         if (userID.equals("Guest")){
             throw new IncorrectFormat("user id should not be Guest");
         }
     }
 
-    private void checkPassNotNull(String password){
-        if (password==null){
-            throw new NullPointerException("password should not be null.");
-        }
-    }
 
     private void checkPasswordFormat(String password) throws IncorrectFormat {
-        if (password!=null&& password.contains(" ")){
+        if (password.contains(" ")){
             throw new IncorrectFormat("password should not contain space");
+        }
+        else if(password.length()<3||password.length()>20){
+            throw new IncorrectFormat("length of password should >=3 and <=20");
         }
     }
 
     //check if the given password is the same as the password signed up
     public void checkPassMatch(String password) throws IncorrectPassword {
-        if (this.password!=null){
-            if (!this.password.equals(password)){
-                throw new IncorrectPassword("incorrect password");
-            }
-        }
-        else{
-            throw new NullPointerException("password should not be null");
+        if (!this.password.equals(password)){
+            throw new IncorrectPassword("incorrect password");
         }
     }
 

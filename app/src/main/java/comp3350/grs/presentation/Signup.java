@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
 
@@ -43,7 +42,7 @@ public class Signup extends FragmentActivity {
                             password.getText().toString());
                     AccessUsers accessUsers=new AccessUsers();
                     accessUsers.insertUser(user);
-                    user=accessUsers.getRandom(userid.getText().toString());
+                    user=accessUsers.getUserByID(userid.getText().toString());
                     if(user!=null){//the registration succeed, login to game
                         // gallery
                         AccessUsers.setActiveUser(user);

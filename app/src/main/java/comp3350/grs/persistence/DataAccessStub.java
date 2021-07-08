@@ -17,7 +17,7 @@ import comp3350.grs.objects.User;
 import comp3350.grs.objects.Game;
 
 
-public class DataAccessStub extends DataAccess implements DataAccessI
+public class DataAccessStub extends DataAccess
 {
 
 	@Override
@@ -100,7 +100,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI
 		}
 	}
 
-	public List<Game> getAllGames()
+	public ArrayList<Game> getAllGames()
 	{
 		return games;
 	}
@@ -138,5 +138,32 @@ public class DataAccessStub extends DataAccess implements DataAccessI
 		{
 			games.remove(index);
 		}
+	}
+	
+	public ArrayList<Game> searchGame(String name){
+		results=new ArrayList<Game>();
+		ArrayList<Game> searchList=this.getAllGames();
+		Game temp;
+		int searchLength=name.length();
+		String gameName;
+		String subName;
+		if(searchLength>0) {
+			for(int i=0;i<searchList.size();i++){
+				temp=searchList.get(i);
+				gameName=temp.getName();
+				if(gameName.length()>=searchLength){
+					subName=gameName.substring(0,searchLength);
+					if(subName.equalsIgnoreCase(name)){
+						results.add(temp);
+					}
+				}
+			}
+		}else{
+			System.out.println("Please input valid game name.");
+		}
+		if(results.size()==0 && searchLength>0){
+			System.out.println("Not found.");
+		}
+		return results;
 	}
 }

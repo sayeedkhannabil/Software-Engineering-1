@@ -39,7 +39,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3eaf36e3-637d-4553-87f6-52a15ecbb4a0" name="Default" comment="readme" />
+    <list default="true" id="3eaf36e3-637d-4553-87f6-52a15ecbb4a0" name="Default" comment="bug fix" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -64,11 +64,12 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
-        <option value="JUnit4 Test Class" />
         <option value="layoutResourceFile_vertical" />
+        <option value="JUnit4 Test Class" />
         <option value="resourceFile" />
+        <option value="valueResourceFile" />
         <option value="layoutResourceFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -84,6 +85,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="ProjectId" id="1tMdZTo78NFdjYA08g1Ogk3ypoi" />
   <component name="ProjectLevelVcsManager">
@@ -105,55 +107,59 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="device.picker.selection" value="Nexus_7_API_23" />
-    <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/test/java/comp3350/grs/objects" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/test/java/comp3350/grs/persistence" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/drawable" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.folding" />
     <property name="show.do.not.ask.upgrade.gradle.plugin" value="2.1.0" />
     <property name="sync.plugin.last.upgrade.timestamp" value="1515527005495" />
+    <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="PsdUISettings">
     <option name="LAST_EDITED_BUILD_TYPE" value="release" />
   </component>
   <component name="RecentsManager">
+    <key name="android.template.1955219844">
+      <recent name="comp3350.grs.presentation" />
+    </key>
+    <key name="android.template.1826950975">
+      <recent name="comp3350.grs.presentation" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="comp3350.grs.persistence" />
+      <recent name="comp3350.grs.objects" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="G:\BaiduNetdiskWorkspace\COMP3350\Software-Engineering-1\app\libs" />
       <recent name="G:\BaiduNetdiskWorkspace\COMP3350\Software-Engineering-1\app\src\main\res\layout" />
       <recent name="G:\BaiduNetdiskWorkspace\COMP3350\Software-Engineering-1\app\src\main\res\drawable" />
       <recent name="G:\BaiduNetdiskWorkspace\COMP3350\Software-Engineering-1\app\src\main\res\raw" />
       <recent name="G:\BaiduNetdiskWorkspace\COMP3350\Software-Engineering-1\app\src\main\java\comp3350\grs\persistence" />
-      <recent name="G:\BaiduNetdiskWorkspace\COMP3350\Software-Engineering-1\app\src\main\res\database" />
     </key>
-    <key name="android.template.1955219844">
+    <key name="android.template.147747671">
       <recent name="comp3350.grs.presentation" />
-    </key>
-    <key name="CreateTestDialog.RecentsKey">
-      <recent name="comp3350.grs.objects" />
-      <recent name="comp3350.grs.persistence" />
-    </key>
-    <key name="CreateTestDialog.Recents.Supers">
-      <recent name="" />
+      <recent name="comp3350.grs" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="comp3350.grs" />
       <recent name="comp3350.grs.tests" />
       <recent name="comp3350.srsys.tests" />
     </key>
-    <key name="android.template.147747671">
-      <recent name="comp3350.grs.presentation" />
-      <recent name="comp3350.grs" />
-    </key>
-    <key name="android.template.-987621360">
-      <recent name="comp3350.grs.presentation" />
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="comp3350.grs.persistence" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="G:\BaiduNetdiskWorkspace\COMP3350\Software-Engineering-1\app\src\main\res\drawable" />
+      <recent name="G:\BaiduNetdiskWorkspace\COMP3350\Software-Engineering-1\app\libs" />
       <recent name="G:\BaiduNetdiskWorkspace\COMP3350\Software-Engineering-1\app\src\main\java\comp3350\grs\application" />
       <recent name="G:\BaiduNetdiskWorkspace\COMP3350\Software-Engineering-1\app\src\main\java\comp3350\grs\presentation" />
       <recent name="G:\BaiduNetdiskWorkspace\COMP3350\Software-Engineering-1\app\src\main\res\values" />
-      <recent name="G:\BaiduNetdiskWorkspace\COMP3350\Software-Engineering-1\app\src\main\res\mipmap-hdpi" />
     </key>
     <key name="android.template.-1065412393">
       <recent name="comp3350.grs.presentation" />
@@ -162,6 +168,9 @@
       <recent name="comp3350.grs.presentation" />
     </key>
     <key name="android.template.-1989497584">
+      <recent name="comp3350.grs.presentation" />
+    </key>
+    <key name="android.template.-987621360">
       <recent name="comp3350.grs.presentation" />
     </key>
   </component>
@@ -268,7 +277,24 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DataAccessStubTest.testOpen" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DataAccessITest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Software-Engineering-1.app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="comp3350.grs.persistence.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="comp3350.grs.persistence" />
+      <option name="MAIN_CLASS_NAME" value="comp3350.grs.persistence.DataAccessITest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DataAccessStubTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
       <module name="Software-Engineering-1.app" />
       <extension name="coverage">
         <pattern>
@@ -278,8 +304,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="comp3350.grs.persistence" />
       <option name="MAIN_CLASS_NAME" value="comp3350.grs.persistence.DataAccessStubTest" />
-      <option name="METHOD_NAME" value="testOpen" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
       <method v="2">
@@ -296,23 +321,6 @@
       </extension>
       <option name="PACKAGE_NAME" value="comp3350.grs.objects" />
       <option name="MAIN_CLASS_NAME" value="comp3350.grs.objects.GuestTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <method v="2">
-        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="RegisteredUserTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Software-Engineering-1.app" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="comp3350.grs.objects.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="comp3350.grs.objects" />
-      <option name="MAIN_CLASS_NAME" value="comp3350.grs.objects.RegisteredUserTest" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -529,13 +537,13 @@
         <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1516371913683" />
       </method>
     </configuration>
-    <configuration name="DataAccessStub" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="comp3350.grs.persistence.DataAccessStub" />
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="comp3350.grs.application.Main" />
       <module name="Software-Engineering-1.app" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="comp3350.grs.persistence.*" />
+          <option name="PATTERN" value="comp3350.grs.application.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -594,19 +602,19 @@
     </configuration>
     <list>
       <item itemvalue="Android App.app" />
-      <item itemvalue="Android JUnit.DataAccessStubTest.testOpen" />
-      <item itemvalue="Android JUnit.RegisteredUserTest" />
       <item itemvalue="Android JUnit.GuestTest" />
       <item itemvalue="Android JUnit.AllTest" />
-      <item itemvalue="Application.DataAccessStub" />
+      <item itemvalue="Android JUnit.DataAccessStubTest" />
+      <item itemvalue="Android JUnit.DataAccessITest" />
+      <item itemvalue="Application.Main" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Android JUnit.DataAccessITest" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Android JUnit.DataAccessStubTest" />
         <item itemvalue="Android JUnit.AllTest" />
-        <item itemvalue="Application.DataAccessStub" />
         <item itemvalue="Android JUnit.GuestTest" />
-        <item itemvalue="Android JUnit.RegisteredUserTest" />
-        <item itemvalue="Android JUnit.DataAccessStubTest.testOpen" />
       </list>
     </recent_temporary>
   </component>
@@ -632,6 +640,7 @@
       <workItem from="1622671456073" duration="155000" />
       <workItem from="1622671882730" duration="65000" />
       <workItem from="1623270574129" duration="12000" />
+      <workItem from="1624492892817" duration="26000" />
     </task>
     <task id="LOCAL-00001" summary="sample project">
       <created>1622583057209</created>
@@ -801,7 +810,175 @@
       <option name="project" value="LOCAL" />
       <updated>1623892787645</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="error handling">
+      <created>1623961024497</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1623961024497</updated>
+    </task>
+    <task id="LOCAL-00026" summary="edit database">
+      <created>1624052645502</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1624052645502</updated>
+    </task>
+    <task id="LOCAL-00027" summary="sql database">
+      <created>1624567128524</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1624567128524</updated>
+    </task>
+    <task id="LOCAL-00028" summary="edit review and rating class; added review and rating access methods to sql database">
+      <created>1624585077553</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1624585077553</updated>
+    </task>
+    <task id="LOCAL-00029" summary="bug fix on UI">
+      <created>1624667796315</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1624667796315</updated>
+    </task>
+    <task id="LOCAL-00030" summary="refactor databse">
+      <created>1624721601936</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1624721601936</updated>
+    </task>
+    <task id="LOCAL-00031" summary="rating class: use gameName and userID as primary key,delete ratingID;&#10;edit AccessRatings, make use of the methods in database, deleted duplicate code&#10;DataAccess test: bug fix&#10;DataAccess : bug fix">
+      <created>1624930258356</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1624930258356</updated>
+    </task>
+    <task id="LOCAL-00032" summary="rating class: use gameName and userID as primary key,delete ratingID;&#10;edit AccessRatings, make use of the methods in database, deleted duplicate code&#10;DataAccess test: bug fix&#10;DataAccess : bug fix">
+      <created>1624930792148</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1624930792148</updated>
+    </task>
+    <task id="LOCAL-00033" summary="bug fix on database">
+      <created>1625016184813</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1625016184814</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Merge remote-tracking branch 'origin/persistence' into persistence&#10;&#10;# Conflicts:&#10;#&#9;app/src/main/java/comp3350/grs/persistence/DataAccessObject.java">
+      <created>1625016332956</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1625016332956</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Merge branch 'persistence' into presentation&#10;&#10;# Conflicts:&#10;#&#9;app/src/main/java/comp3350/grs/persistence/DataAccessObject.java">
+      <created>1625016593514</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1625016593514</updated>
+    </task>
+    <task id="LOCAL-00036" summary="test data access">
+      <created>1625021862765</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1625021862765</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Merge remote-tracking branch 'origin/persistence' into persistence">
+      <created>1625022105155</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1625022105155</updated>
+    </task>
+    <task id="LOCAL-00038" summary="add top bar">
+      <created>1625028152258</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1625028152258</updated>
+    </task>
+    <task id="LOCAL-00039" summary="add search bar">
+      <created>1625103306326</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1625103306326</updated>
+    </task>
+    <task id="LOCAL-00040" summary="add sort bar&#10;add genre bar">
+      <created>1625192624710</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1625192624710</updated>
+    </task>
+    <task id="LOCAL-00041" summary="log">
+      <created>1625251954051</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1625251954051</updated>
+    </task>
+    <task id="LOCAL-00042" summary="log">
+      <created>1625256124897</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1625256124897</updated>
+    </task>
+    <task id="LOCAL-00043" summary="log">
+      <created>1625257076760</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1625257076760</updated>
+    </task>
+    <task id="LOCAL-00044" summary="log">
+      <created>1625257704974</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1625257704974</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Merge remote-tracking branch 'origin/main' into main&#10;&#10;# Conflicts:&#10;#&#9;log.txt">
+      <created>1625257926030</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1625257926030</updated>
+    </task>
+    <task id="LOCAL-00046" summary="added null checking to sql database&#10;added validation to game , review and rating">
+      <created>1625273787137</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1625273787137</updated>
+    </task>
+    <task id="LOCAL-00047" summary="bug fix">
+      <created>1625277023717</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1625277023717</updated>
+    </task>
+    <task id="LOCAL-00048" summary="bug fix">
+      <created>1625279878809</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1625279878809</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -841,32 +1018,58 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="sample project" />
-    <MESSAGE value="user class" />
-    <MESSAGE value="log" />
-    <MESSAGE value="accessUsers and part of database class" />
-    <MESSAGE value="ui" />
-    <MESSAGE value="ui xml for signup page" />
-    <MESSAGE value="finish database" />
-    <MESSAGE value="xml for game page" />
-    <MESSAGE value="test user class" />
     <MESSAGE value="UI for login,signup, game gallery , game" />
     <MESSAGE value="comment" />
     <MESSAGE value="delete database test" />
     <MESSAGE value="bug fix, imrpove UI" />
     <MESSAGE value="readme updated" />
     <MESSAGE value="readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="readme" />
+    <MESSAGE value="error handling" />
+    <MESSAGE value="edit database" />
+    <MESSAGE value="sql database" />
+    <MESSAGE value="edit review and rating class; added review and rating access methods to sql database" />
+    <MESSAGE value="bug fix on UI" />
+    <MESSAGE value="refactor databse" />
+    <MESSAGE value="rating class: use gameName and userID as primary key,delete ratingID;&#10;edit AccessRatings, make use of the methods in database, deleted duplicate code&#10;DataAccess test: bug fix&#10;DataAccess : bug fix" />
+    <MESSAGE value="bug fix on database" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/persistence' into persistence&#10;&#10;# Conflicts:&#10;#&#9;app/src/main/java/comp3350/grs/persistence/DataAccessObject.java" />
+    <MESSAGE value="Merge branch 'persistence' into presentation&#10;&#10;# Conflicts:&#10;#&#9;app/src/main/java/comp3350/grs/persistence/DataAccessObject.java" />
+    <MESSAGE value="test data access" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/persistence' into persistence" />
+    <MESSAGE value="add top bar" />
+    <MESSAGE value="add search bar" />
+    <MESSAGE value="add sort bar&#10;add genre bar" />
+    <MESSAGE value="log" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/main' into main&#10;&#10;# Conflicts:&#10;#&#9;log.txt" />
+    <MESSAGE value="added null checking to sql database&#10;added validation to game , review and rating" />
+    <MESSAGE value="bug fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="bug fix" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="286" y="158" key="#PSD" timestamp="1623886922160">
+    <state x="520" y="236" key="#Notifications" timestamp="1624665394722">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="286" y="158" key="#PSD/0.0.1536.824@0.0.1536.824" timestamp="1623886922160" />
-    <state x="531" y="113" key="#com.intellij.ide.util.MemberChooser" timestamp="1623449642537">
+    <state x="520" y="236" key="#Notifications/0.0.1536.824@0.0.1536.824" timestamp="1624665394722" />
+    <state x="286" y="158" key="#PSD" timestamp="1625010702471">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="531" y="113" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1623449642537" />
+    <state x="286" y="158" key="#PSD/0.0.1536.824@0.0.1536.824" timestamp="1625010702471" />
+    <state x="361" y="53" key="#Plugins" timestamp="1624659577033">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="361" y="53" key="#Plugins/0.0.1536.824@0.0.1536.824" timestamp="1624659577033" />
+    <state x="599" y="267" key="#com.intellij.debugger.actions.ViewTextAction" timestamp="1624497104538">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="599" y="267" key="#com.intellij.debugger.actions.ViewTextAction/0.0.1536.824@0.0.1536.824" timestamp="1624497104538" />
+    <state x="516" y="214" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1624408995637">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="516" y="214" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1624408995637" />
+    <state x="531" y="113" key="#com.intellij.ide.util.MemberChooser" timestamp="1624407435479">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="531" y="113" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1624407435479" />
     <state x="499" y="188" key="#com.intellij.ide.util.PackageChooserDialog" timestamp="1623273625032">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -883,26 +1086,46 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="540" y="293" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages/0.0.1536.824@0.0.1536.824" timestamp="1623274296931" />
-    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1623714664324">
+    <state x="462" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1624405098525">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1623714664324" />
+    <state x="462" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1624405098525" />
+    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1625102380045">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1625102380045" />
+    <state x="458" y="116" width="562" height="494" key="#xdebugger.XInspectDialog" timestamp="1624497156178">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="458" y="116" width="562" height="494" key="#xdebugger.XInspectDialog/0.0.1536.824@0.0.1536.824" timestamp="1624497156178" />
     <state x="515" y="266" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1623882407622">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="515" y="266" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1536.824@0.0.1536.824" timestamp="1623882407622" />
-    <state x="93" y="93" width="1350" height="638" key="AVDManager" timestamp="1623879583137">
+    <state x="93" y="93" width="1350" height="638" key="AVDManager" timestamp="1625276990463">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="93" y="93" width="1350" height="638" key="AVDManager/0.0.1536.824@0.0.1536.824" timestamp="1623879583137" />
-    <state x="349" y="167" key="AndroidCreateResourceDirectoryDialog" timestamp="1623358908442">
+    <state x="93" y="93" width="1350" height="638" key="AVDManager/0.0.1536.824@0.0.1536.824" timestamp="1625276990463" />
+    <state x="349" y="167" key="AndroidCreateResourceDirectoryDialog" timestamp="1625085474360">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="349" y="167" key="AndroidCreateResourceDirectoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1623358908442" />
+    <state x="349" y="167" key="AndroidCreateResourceDirectoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1625085474360" />
     <state x="349" y="167" key="AndroidCreateResourceFileDialog" timestamp="1623882633510">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="349" y="167" key="AndroidCreateResourceFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1623882633510" />
+    <state x="559" y="158" key="AndroidProcessChooserDialog" timestamp="1625183868222">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="559" y="158" key="AndroidProcessChooserDialog/0.0.1536.824@0.0.1536.824" timestamp="1625183868222" />
+    <state x="349" y="117" key="AndroidThemeDialog" timestamp="1625022392971">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="349" y="117" key="AndroidThemeDialog/0.0.1536.824@0.0.1536.824" timestamp="1625022392971" />
+    <state width="437" height="465" key="DebuggerActiveHint" timestamp="1624465602700">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="437" height="465" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1624465602700" />
     <state x="147" y="52" key="DiffContextDialog" timestamp="1623887870230">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -911,78 +1134,106 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="449" y="167" key="Downloadable.Font.Dialog.Size/0.0.1536.824@0.0.1536.824" timestamp="1623184357234" />
-    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1623547527095">
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1624045559328">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1623547527095" />
-    <state width="1493" height="191" key="GridCell.Tab.0.bottom" timestamp="1623892940873">
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1624045559328" />
+    <state width="1493" height="210" key="GridCell.Tab.-1.bottom" timestamp="1624466830333">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="191" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1623892940873" />
-    <state width="1493" height="191" key="GridCell.Tab.0.center" timestamp="1623892940873">
+    <state width="1493" height="210" key="GridCell.Tab.-1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1624466830333" />
+    <state width="1493" height="210" key="GridCell.Tab.-1.center" timestamp="1624466830333">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="191" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1623892940873" />
-    <state width="1493" height="191" key="GridCell.Tab.0.left" timestamp="1623892940873">
+    <state width="1493" height="210" key="GridCell.Tab.-1.center/0.0.1536.824@0.0.1536.824" timestamp="1624466830333" />
+    <state width="1493" height="210" key="GridCell.Tab.-1.left" timestamp="1624466830333">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="191" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1623892940873" />
-    <state width="1493" height="191" key="GridCell.Tab.0.right" timestamp="1623892940873">
+    <state width="1493" height="210" key="GridCell.Tab.-1.left/0.0.1536.824@0.0.1536.824" timestamp="1624466830333" />
+    <state width="1493" height="210" key="GridCell.Tab.-1.right" timestamp="1624466830333">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="191" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1623892940873" />
-    <state width="1493" height="210" key="GridCell.Tab.1.bottom" timestamp="1623527081695">
+    <state width="1493" height="210" key="GridCell.Tab.-1.right/0.0.1536.824@0.0.1536.824" timestamp="1624466830333" />
+    <state width="1493" height="191" key="GridCell.Tab.0.bottom" timestamp="1625280022962">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1623527081695" />
-    <state width="1493" height="210" key="GridCell.Tab.1.center" timestamp="1623527081694">
+    <state width="1493" height="191" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1625280022962" />
+    <state width="1493" height="191" key="GridCell.Tab.0.center" timestamp="1625280022961">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1623527081694" />
-    <state width="1493" height="210" key="GridCell.Tab.1.left" timestamp="1623527081694">
+    <state width="1493" height="191" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1625280022961" />
+    <state width="1493" height="191" key="GridCell.Tab.0.left" timestamp="1625280022961">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1623527081694" />
-    <state width="1493" height="210" key="GridCell.Tab.1.right" timestamp="1623527081695">
+    <state width="1493" height="191" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1625280022961" />
+    <state width="1493" height="191" key="GridCell.Tab.0.right" timestamp="1625280022961">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1623527081695" />
-    <state x="147" y="64" key="MergeDialog" timestamp="1623892848042">
+    <state width="1493" height="191" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1625280022961" />
+    <state width="1493" height="210" key="GridCell.Tab.1.bottom" timestamp="1624466826950">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="147" y="64" key="MergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1623892848042" />
-    <state x="370" y="143" key="MultipleFileMergeDialog" timestamp="1623892848051">
+    <state width="1493" height="210" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1624466826950" />
+    <state width="1493" height="210" key="GridCell.Tab.1.center" timestamp="1624466826950">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="370" y="143" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1623892848051" />
-    <state x="277" y="57" key="SettingsEditor" timestamp="1623886562456">
+    <state width="1493" height="210" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1624466826950" />
+    <state width="1493" height="210" key="GridCell.Tab.1.left" timestamp="1624466826950">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1623886562456" />
-    <state x="361" y="132" key="Vcs.Push.Dialog.v2" timestamp="1623892789684">
+    <state width="1493" height="210" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1624466826950" />
+    <state width="1493" height="210" key="GridCell.Tab.1.right" timestamp="1624466826950">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="132" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1623892789684" />
-    <state x="584" y="190" key="chooseDestDirectoryDialog" timestamp="1623448938887">
+    <state width="1493" height="210" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1624466826950" />
+    <state x="147" y="64" key="MergeDialog" timestamp="1625257753468">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="584" y="190" key="chooseDestDirectoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1623448938887" />
-    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1623889968424">
+    <state x="147" y="64" key="MergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1625257753468" />
+    <state x="370" y="143" key="MultipleFileMergeDialog" timestamp="1625257753479">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1623889968424" />
-    <state x="540" y="102" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1623448938905">
+    <state x="370" y="143" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1625257753479" />
+    <state x="277" y="57" key="SettingsEditor" timestamp="1624491396235">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="540" y="102" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1536.824@0.0.1536.824" timestamp="1623448938905" />
-    <state x="250" y="219" width="1213" height="811" key="dock-window-1" timestamp="1623446999106">
+    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1624491396235" />
+    <state x="361" y="132" key="Vcs.Push.Dialog.v2" timestamp="1625279884159">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="250" y="219" width="1213" height="811" key="dock-window-1/0.0.1536.824@0.0.1536.824" timestamp="1623446999106" />
-    <state x="449" y="125" key="git4idea.branch.GitSmartOperationDialog" timestamp="1622841523683">
+    <state x="361" y="132" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1625279884159" />
+    <state x="584" y="190" key="chooseDestDirectoryDialog" timestamp="1624407859505">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="449" y="125" key="git4idea.branch.GitSmartOperationDialog/0.0.1536.824@0.0.1536.824" timestamp="1622841523683" />
+    <state x="584" y="190" key="chooseDestDirectoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1624407859505" />
+    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1625267685504">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1625267685504" />
+    <state x="540" y="102" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1624407859523">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="540" y="102" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1536.824@0.0.1536.824" timestamp="1624407859523" />
+    <state x="642" y="210" width="1239" height="577" key="dock-window-1" timestamp="1624666950507">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="642" y="210" width="1239" height="577" key="dock-window-1/0.0.1536.824@0.0.1536.824" timestamp="1624666950507" />
+    <state x="449" y="125" key="git4idea.branch.GitSmartOperationDialog" timestamp="1625255948780">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="449" y="125" key="git4idea.branch.GitSmartOperationDialog/0.0.1536.824@0.0.1536.824" timestamp="1625255948780" />
+    <state x="504" y="264" key="psd.add.jar.dependency.panel.dimension" timestamp="1625008371392">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="504" y="264" key="psd.add.jar.dependency.panel.dimension/0.0.1536.824@0.0.1536.824" timestamp="1625008371392" />
+    <state x="395" y="155" key="psd.add.library.dependency.panel.dimension" timestamp="1624404157029">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="395" y="155" key="psd.add.library.dependency.panel.dimension/0.0.1536.824@0.0.1536.824" timestamp="1624404157029" />
+    <state x="469" y="159" key="refactoring.ChangeSignatureDialog" timestamp="1625090176146">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="469" y="159" key="refactoring.ChangeSignatureDialog/0.0.1536.824@0.0.1536.824" timestamp="1625090176146" />
     <state x="425" y="187" key="run.anything.popup" timestamp="1623713403755">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

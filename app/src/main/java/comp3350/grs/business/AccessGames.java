@@ -1,11 +1,4 @@
-/* 
-    this is a modification of the business objects from the example files provided on UMLearn.
-    hence most work here is not original, mostly just modified for our project's purposes.
-    as a result, many parts are still incomplete (require connection to stub database, other objects, etc) 
-*/
-
-
-package comp3350.grs.business; 
+package comp3350.grs.business;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List; 
@@ -26,8 +19,7 @@ public class AccessGames
     private AccessRatings accessRatings;
     private AccessReviews accessReviews;
 
-    public AccessGames()
-    {
+    public AccessGames() {
         dataAccess =  Services.getDataAccess(Main.dbName);
         accessRatings=new AccessRatings();
         accessReviews=new AccessReviews();
@@ -36,8 +28,7 @@ public class AccessGames
         currGameIndex = 0; 
     }
 
-    public List<Game> getAllGames()
-    {
+    public List<Game> getAllGames() {
         gameList=dataAccess.getAllGames();
         return gameList;
     }
@@ -162,8 +153,7 @@ public class AccessGames
         return gameList;
    }
 
-    public Game findGame(String name)
-    {
+    public Game findGame(String name) {
         return dataAccess.getGameByName(name);
     }
 
@@ -172,39 +162,32 @@ public class AccessGames
         return dataAccess.getGamesByNameImplicit(gameNameImp);
     }
 
-    public Game getSequential()
-    {
-        if(gameList == null)
-        {
+    public Game getSequential() {
+        if(gameList == null) {
             gameList = new ArrayList<Game>();
             getAllGames();
             currGameIndex = 0; 
         }
-        if(currGameIndex < gameList.size())
-        {
+        if(currGameIndex < gameList.size()) {
             currGame = (Game) gameList.get(currGameIndex);
             currGameIndex++; 
         }
-        else
-        {
+        else {
             gameList = null;
             currGame = null; 
         }
         return currGame; 
     }
 
-    public boolean insertGame(Game currentGame)
-    {
+    public boolean insertGame(Game currentGame) {
         return dataAccess.insertGame(currentGame);
     }
 
-    public boolean updateGame(Game currentGame)
-    {
+    public boolean updateGame(Game currentGame) {
         return dataAccess.updateGame(currentGame);
     }
 
-    public boolean deleteGame(Game currentGame)
-    {
+    public boolean deleteGame(Game currentGame) {
         return dataAccess.deleteGame(currentGame);
     }
 }

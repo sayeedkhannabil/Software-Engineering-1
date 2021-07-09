@@ -1,18 +1,16 @@
 package comp3350.grs.objects;
 import junit.framework.TestCase;
 
-import org.junit.BeforeClass;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class GameTest extends TestCase {
     private ArrayList<String> genres = new ArrayList<>(Arrays.asList("Genre1", "Genre2", "Genre3"));
     private Game typicalGame = new Game("TypicalGame", "TypicalDeveloper",
-            "TypicalDescription", 20.00,genres);
-    private Game typicalGameSimple = new Game("GameWithOnlyAName");
+            "TypicalDescription", 20.00, genres);;
+    private Game typicalGameSimple = new Game("GameWithOnlyAName");;
     private Game nullGame = new Game();
 
     @Test
@@ -27,46 +25,32 @@ public class GameTest extends TestCase {
         }
         assertEquals("TypicalDescription", typicalGame.getDescription());
         assertEquals(20.00, typicalGame.getPrice(), 0);
+        assertTrue(typicalGame.validGame());
 
-
-
-    }
-
-    /*
-    @Test
-    public void testOneRatingCalculation()
-    {
-        //Test adding one typical rating to typical Game objects
-        typicalGame.addRating(1);
-        assertEquals("The overall rating for game "+typicalGame.getName()+" should now be 1 out of 5 stars.", 1, typicalGame.getRating(), 0);
-        typicalGameSimple.addRating(3);
-        assertEquals("The overall rating for game "+typicalGameSimple.getName()+" should now be 3 out of 5 stars.", 3, typicalGameSimple.getRating(), 0);
+        //test cases for game with only name parameter passed
+        assertEquals("GameWithOnlyAName", typicalGameSimple.getName());
+        assertNull(typicalGameSimple.getDescription());
+        assertNull(typicalGameSimple.getDev());
+        assertTrue(typicalGameSimple.getGenres().isEmpty());
+        assertTrue(typicalGameSimple.getPrice() == 0);
+        assertTrue(typicalGameSimple.validGame());
     }
 
     @Test
-    public void testMultipleRatingCalculation()
-    {
-        typicalGame.addRating(5);
-        assertEquals("The overall rating for game "+typicalGame.getName()+" should now be 5 out of 5 stars.", 5, typicalGame.getRating(), 0);
+    public void testEdgeInput() {
+        //test cases for which parameters for a Game object are still "valid" input, but not correct for our purposes
+        ArrayList<String> genres1 = new ArrayList<>(); //empty
+        Game edgeGame = new Game("", "", "", 0, genres1);
+        Game edgeGame1 = new Game(" ", "dev", " ", 100.00, genres1);
+        Game edgeGame2 = new Game("Valid Name", "Dev", "desc", -1.22, genres);
+        Game edgeGame3 = new Game("       ");
 
-        //Test adding typical reviews to typical Game objects (the rating is also updated when adding reviews)
-        //first review
-        typicalGame.addReview(4.5, "Good game.");
-        assertEquals("The overall rating for game "+typicalGame.getName()+" should now be 4.75 out of 5 stars.", 4.75, typicalGame.getRating(), 0.01);
-
-        ArrayList<Review> typicalGameReviews = typicalGame.getReviews();
-        assertTrue(typicalGameReviews.size() == 1);
-        Review firstReview = typicalGameReviews.get(0);
-        assertEquals("Good game.", firstReview.getComment());
-
-        //add two more reviews
-        typicalGame.addReview(5, "Best game ever." );
-        typicalGame.addReview(2.5, "Game is ok.");
-        typicalGameReviews = typicalGame.getReviews();
-        assertEquals("Overall rating for game "+typicalGame.getName()+" should now be 4.25 out of 5 stars.", 4.25, typicalGame.getRating(), 0.01);
-        assertEquals(3, typicalGameReviews.size());
+        //the object should not be instantiated with these inputs
+        assertTrue(!edgeGame.validGame());
+        assertTrue(!edgeGame1.validGame());
+        assertTrue(!edgeGame2.validGame());
+        assertTrue(!edgeGame3.validGame());
     }
-    */
 
     @Test
     public void testNull()
@@ -79,8 +63,20 @@ public class GameTest extends TestCase {
         assertEquals("GameWithOnlyAName", typicalGameSimple.getName());
         assertNull(typicalGameSimple.getDev());
         assertNull(typicalGameSimple.getDescription());
-        assertEquals(-1, typicalGameSimple.getPrice(), 0);
+        assertEquals(0.0, typicalGameSimple.getPrice(), 0);
 
+        //test games passed null values
+        Game null1 = new Game("",null,"description", 1.00, null);
+        assertFalse(null1.validGame()); //not a valid game
+        assertNull(null1.getDev());
+        assertNull(null1.getDescription());
+        assertNull(null1.getGenres());
+
+        assertFalse(nullGame.validGame());
+        assertNull(nullGame.getName());
+        assertNull(nullGame.getDev());
+        assertNull(nullGame.getDescription());
+        assertNull(nullGame.getGenres());
     }
 
     @Test
@@ -93,8 +89,7 @@ public class GameTest extends TestCase {
     }
 
     @Test
-    public void testEqualsOtherGame()
-    {
+    public void testEqualsOtherGame(){
         Game sameName = new Game("TypicalGame", "testDev",  "TestDesc", 0.0,genres);
         assertTrue(typicalGame.equals(sameName)); //because they have the same name
 
@@ -102,37 +97,4 @@ public class GameTest extends TestCase {
         assertEquals(false, nullGame.equals(typicalGame));
         assertEquals(false, typicalGameSimple.equals(typicalGame));
     }
-
-    /*
-    @Test
-    public void testInvalidInput()
-    {
-        Game tester = new Game ("Tester", "TestDev", "TestDesc", 0.0);
-
-        //test adding ratings to a null game
-        nullGame.addRating(1);
-        nullGame.addRating(3);
-        //the rating should not have been recorded, so the number of ratings should be 0, and overallRating should be 0
-        assertEquals(0, nullGame.getRating(), 0);
-        assertEquals(0, nullGame.getNumRatings(), 0);
-
-        //test adding reviews to a null game
-        nullGame.addReview(4, "Good game.");
-        nullGame.addReview(5, "Best game ever.");
-        assertEquals(0, nullGame.getReviews().size());
-        assertEquals(0,nullGame.getNumReviews());
-
-        //test adding invalid ratings and review to a non-null game
-        tester.addRating(0); //can't leave a rating of 0 stars!
-        assertEquals(0, tester.getNumRatings());
-        assertTrue(tester.getRating() == 0);
-
-        tester.addReview(1, ""); //can't leave an empty review!
-        tester.addReview(0, "valid review");
-        assertEquals(0, tester.getNumRatings());
-        assertEquals(0, tester.getNumReviews());
-        assertTrue(tester.getReviews().size() == 0);
-        assertTrue(tester.getRating() == 0);
-    }
-     */
 }

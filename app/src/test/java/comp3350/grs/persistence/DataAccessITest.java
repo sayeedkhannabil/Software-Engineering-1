@@ -44,7 +44,7 @@ public class DataAccessITest {
     public void initiateDB(){
 
         dataAccessI=new DataAccessObject("TestDB");
-//       dataAccessI=new DataAccessStub("TestDB");
+   //    dataAccessI=new DataAccessStub("TestDB");
 
         dataAccessI.open("database/TestDB");
         dataAccessI.clearDatabase();

@@ -2,13 +2,16 @@ package comp3350.grs;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
+import comp3350.grs.business.TestAccessGames;
 import comp3350.grs.objects.FeedbackTest;
 import comp3350.grs.objects.ReviewTest;
 import comp3350.grs.objects.GameTest;
 import comp3350.grs.objects.GuestTest;
 import comp3350.grs.objects.RatingTest;
 import comp3350.grs.objects.RegisteredUserTest;
-import comp3350.grs.tests.business.TestAccessRatings;
+import comp3350.grs.business.TestAccessRatings;
+import comp3350.grs.business.TestAccessGames;
 
 
 
@@ -30,6 +33,7 @@ public class AllTest {
         suite.addTestSuite(RegisteredUserTest.class);
         suite.addTestSuite(FeedbackTest.class);
         suite.addTestSuite(TestAccessRatings.class);
+        suite.addTestSuite(TestAccessGames.class);
     }
 
 }

@@ -92,10 +92,14 @@ june 26 :group meeting: decide to separate review and rating from game class,
     in the next week.
 june 26 :Shiqing Guo finished review part of sql database.(expected:8 hour
     actual:6 hour)
+June 26: Katharine K wrote AccessRatings class and began TestAccessRatings
+         (expected time: 2 hours, actual: 2.5 hours)
 june 28 :Shiqing Guo finished rating part of sql database.(expected:8 hour
     actual:6 hour)
 june 29 :Shiqing Guo added top bar to UI (expected:2 hour; actual:3 hour)
 june 30 :Shiqing Guo added search bar to UI(exepcted:4 hour; actual:4 hour)
+June 30: Katharine K updated Game class and began updating GameTest
+         (expected time: 1 hour, actual: 1.5 hours)
 july 1 :Shiqing Guo added sort bar to UI(expected:4 hour; actual:4 hour)
 july 1 :Shiqing Guo added genre bar to UI(expected:2 hour; actual:2 hour)
 July 2, 2021: group meeting for iteration 2, report everyone's working process.
@@ -107,6 +111,16 @@ July 2 Shiqing Guo added validation to game , review and rating(expected:30min a
 July 5 Shiqing Guo finished null test and edge test  of database(expected:5 hour ,actual:3hour)
 July 2, 2021: Sayeed added accessReview method for accessing and modifying reviews in database.
 	(expected: 2 hours, actual: 3 hours)
+July 3: Katharine began writing TestAccessGames and AccessGames classes
+        (expected: 2 hours, actual: 3 hours)
+July 5: Katharine worked on TestAccessGames and TestAccessRatings classes, made updates to Rating class
+         (expected time: 1 hour, actual: 2.5 hours)
+July 8 Group Meeting: Discussed feedback from iteration1, remaining tasks to be completed for iteration2
+                      Agreed on syntax to use for consistency.
+July 8: Katharine wrote methods to align with the DataAccess Interface to DataAccessStub
+         (expected time: 3 hours, actual: 4.5 hours)
+July 8: Katharine fixed brackets and syntax that were not consistent in some files
+        (expected time: 1 hours, actual: 1 hour)
 July 8, 2021: Gongyu update RatingTest file, delete old test method and add new one
 	(expected: 2 hours, actual: 2 hours)
 

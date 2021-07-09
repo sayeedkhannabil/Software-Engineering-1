@@ -13,22 +13,14 @@ public class RatingTest extends TestCase {
     public void testRating1(){
         Rating rate;
         System.out.println("\nStarting testRating");
-        try{
             rate = new Rating(1);
             assertFalse(rate.validRating());
             assertTrue(rate.getRatingValue() == 1);
-        }catch (IncorrectFormat i){
-            i.printStackTrace();
-        }
-        try{
             rate = new Rating(2,"GameA","000001");
             assertTrue(rate.validRating());
             assertTrue(rate.getRatingValue() == 2);
             assertTrue("GameA".equals(rate.getGameName()));
             assertTrue("000001".equals(rate.getUserID()));
-        }catch (IncorrectFormat i){
-            i.printStackTrace();
-        }
         System.out.println("Finished testRating");
     }
     

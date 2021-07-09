@@ -1,16 +1,10 @@
-// CLASS: Game
-//
-// Author: Katharine Kowalchuk + some modifications by other group members
-//
-// REMARKS: This class represents a game in the system.
-//          A game object contains a list of feedback, which consists of ratings and reviews given by a user.
-//-----------------------------------------
+// This class represents a game in the system.
 
 package comp3350.grs.objects;
 import java.util.ArrayList;
 import java.util.List;
 
-import comp3350.grs.business.AccessRatings;
+import comp3350.grs.exceptions.IncorrectFormat;
 
 public class Game
 {
@@ -22,74 +16,94 @@ public class Game
 
     //detailed constructor
     public Game(String gameName, String gameDev, String desc, double price,
-                List<String> gen)
-    {
-        name = gameName;
-        dev = gameDev;
-        description = desc;
-        genres = gen;
-        currPrice = price;
+                List<String> gen) {
+        //check for valid input
+        try {
+            validName(gameName);
+            validPrice(price);
+
+            name = gameName;
+            dev = gameDev;
+            description = desc;
+            genres = gen;
+            currPrice = price;
+        }
+        catch(IncorrectFormat incorrectFormat) {
+            System.out.println(incorrectFormat.getMessage());
+        }
     }
 
     //simple constructor
-    public Game(String gameName)
-    {
-        name = gameName;
-        dev = null;
-        description = null;
-        currPrice = -1;
-        genres=new ArrayList<String>();
+    public Game(String gameName) {
+        try {
+            validName(gameName);
+
+            name = gameName;
+            dev = null;
+            description = null;
+            currPrice = 0.0;
+            genres=new ArrayList<String>();
+        }
+        catch (IncorrectFormat incorrectFormat) {
+            System.out.println(incorrectFormat.getMessage());
+        }
     }
 
     //default constructor
-    public Game()
-    {
+    public Game() {
         name = null;
         dev = null;
         description = null;
         currPrice = -1;
-        genres=new ArrayList<String>();
+        genres= null;
     }
 
-
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public String getDev()
-    {
+    public String getDev() {
         return dev;
     }
 
-
-    public List<String> getGenres()
-    {
-        return genres;
+    public List<String> getGenres() {
+        List<String> genreCopy = new ArrayList<>();
+        genreCopy.addAll(genres);
+        return genreCopy;
     }
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return description;
     }
 
-    public double getPrice()
-    {
+    public double getPrice() {
         return currPrice;
     }
 
-    public boolean validGame(){
-        return this.name!=null;
+    public boolean validGame() {
+        boolean valid = false;
+        if(name != null) {
+            if(!name.trim().equals("") && currPrice >= 0.0) {
+                valid = true;
+            }
+        }
+        return valid;
     }
-    //------------------------------------------------------
-    // equals
-    //
-    // PURPOSE:    compares another object with this Game to see if they are equal.
-    //              equality depends on the name of the game, for now.
-    // PARAMETERS:
-    //     otherGame (Object): the other object with which to compare this one
-    // Returns: boolean value
-    //------------------------------------------------------
+
+    private void validName(String name) throws IncorrectFormat, NullPointerException {
+        //check that name is not blank or just space(s) or null
+        if (name.trim().equals("")) {
+            throw new IncorrectFormat("Game name cannot be blank/empty.");
+        }
+    }
+
+    private void validPrice(double price) throws IncorrectFormat{
+        if (price < 0.0) {
+            throw new IncorrectFormat("Price cannot be negative.");
+        }
+    }
+
+    // compares another object with this Game to see if they are equal (if names are same)
     public boolean equals(Object otherGame)
     {
         Game other = null;
@@ -109,8 +123,7 @@ public class Game
     public String toString()
     {
         String genreList = "";
-        for(int i = 0; i < genres.size(); i++)
-        {
+        for(int i = 0; i < genres.size(); i++) {
             genreList += genres.get(i) + ", ";
         }
         return "Game: "+name+", Developer: "+dev+", Current Price: "+currPrice+"\nGenres: "+genreList+"\nDescription: "+description;

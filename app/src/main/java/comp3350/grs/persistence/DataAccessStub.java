@@ -122,9 +122,36 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		return usersCopy;
 	}
 
-	public List<User> getUsersByIDImplicit(String userIDImplicit){
-		//will implement this soon
-		return new ArrayList<>();
+	public List<User> getUsersByIDImplicit(String userNameImplicit) {
+		List<User> res = new ArrayList<>();
+		List<User> searchList = this.getAllUsers();
+		int searchLength = userNameImplicit.length();
+		char currChar;
+		String userName, implicit = null;
+		User curr;
+
+		if (searchLength > 0) {
+			for (int i = 0; i < searchList.size(); i++) {
+				curr = searchList.get(i);
+				userName = curr.getUserID();
+				for(int j = 0; j < searchLength; j++){
+					currChar = userNameImplicit.charAt(j);
+					if(currChar != '%' && currChar != '*' && currChar != '?'){
+						implicit += currChar;
+					}
+					if(userName.contains(implicit)){
+						res.add(curr);
+					}
+				}
+			}
+		} else {
+			System.out.println("Please input valid user ID.");
+		}
+		if (res.size() == 0 && searchLength > 0) {
+			System.out.println("Not found.");
+		}
+
+		return res;
 	}
 
 	//get a specific user
@@ -170,8 +197,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		return deleted;
 	}
 
-	public ArrayList<Game> getAllGames()
-	{
+	public ArrayList<Game> getAllGames() {
 		ArrayList<Game> gamesCopy = new ArrayList<>();
 		Game toCopy = null;
 		Game copy = null;
@@ -192,8 +218,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	}
 
 
-	public Game getGameByName(String gameName)
-	{
+	public Game getGameByName(String gameName) {
 		Game toReturn = null;
 		boolean found = false;
 
@@ -208,11 +233,36 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		return toReturn;
 	}
 
-	public List<Game> getGamesByNameImplicit(String gameNameImplicit){
-		results=new ArrayList<Game>();
+	public List<Game> getGamesByNameImplicit(String gameNameImplicit) {
+		List<Game> res = new ArrayList<>();
+		List<Game> searchList = this.getAllGames();
+		int searchLength = gameNameImplicit.length();
+		char currChar;
+		String gameName, implicit = null;
+		Game curr;
 
-		//will implement soon
-		return results;
+		if (searchLength > 0) {
+			for (int i = 0; i < searchList.size(); i++) {
+				curr = searchList.get(i);
+				gameName = curr.getName();
+				for(int j = 0; j < searchLength; j++){
+					currChar = gameNameImplicit.charAt(j);
+					if(currChar != '%' && currChar != '*' && currChar != '?'){
+						implicit += currChar;
+					}
+					if(gameName.contains(implicit)){
+						res.add(curr);
+					}
+				}
+			}
+		} else {
+			System.out.println("Please input valid game name.");
+		}
+		if (res.size() == 0 && searchLength > 0) {
+			System.out.println("Not found.");
+		}
+
+		return res;
 	}
 
 	public boolean insertReview(Review review){
@@ -393,33 +443,5 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		}
 
 		return toReturn;
-	}
-
-	public ArrayList<Game> searchGame(String gameNameImplicit) {
-		ArrayList<Game> results = new ArrayList<>();
-		ArrayList<Game> searchList = this.getAllGames();
-		Game temp;
-		int searchLength = gameNameImplicit.length();
-		String gameName;
-		String subName;
-		if (searchLength > 0) {
-			for (int i = 0; i < searchList.size(); i++) {
-				temp = searchList.get(i);
-				gameName = temp.getName();
-				if (gameName.length() >= searchLength) {
-					subName = gameName.substring(0, searchLength);
-					if (subName.equalsIgnoreCase(gameNameImplicit)) {
-						results.add(temp);
-					}
-				}
-			}
-		} else {
-			System.out.println("Please input valid game name.");
-		}
-		if (results.size() == 0 && searchLength > 0) {
-			System.out.println("Not found.");
-		}
-
-		return results;
 	}
 }

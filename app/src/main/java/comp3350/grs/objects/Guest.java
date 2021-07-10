@@ -3,7 +3,6 @@ package comp3350.grs.objects;
 import comp3350.grs.exceptions.IncorrectFormat;
 
 
-
 //domain object of the user who will use this app, and don't want
 // to sign up, referred to as "guest"
 public class Guest extends User{

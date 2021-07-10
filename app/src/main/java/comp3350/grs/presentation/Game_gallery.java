@@ -1,12 +1,8 @@
 package comp3350.grs.presentation;
-// CLASS: DataAccessStub
-//
-// Author: Shiqing Guo
-//
-// REMARKS: a gallery of game thumbnail
-// for now icon is hard coded, all the icon are the same
-//
-//-----------------------------------------
+
+//  a gallery of game thumbnail
+// for now icon is hard coded, all the game icons are the same
+
 
 import android.content.Intent;
 import android.os.Bundle;

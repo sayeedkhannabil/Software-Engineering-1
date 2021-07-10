@@ -9,6 +9,7 @@ import java.util.List;
 
 import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
+import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Game;
 import comp3350.grs.persistence.DataAccessStub;
 
@@ -33,7 +34,12 @@ public class AccessGamesTest {
         genres.add("genre1");
         genres.add("genre2");
 
-        Game typicalGame = new Game("Game1", "Developer", "Description", 1.00, genres);
+        Game typicalGame = null;
+        try {
+            typicalGame = new Game("Game1", "Developer", "Description", 1.00, genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         gameAccess.insertGame(typicalGame);
         assertTrue(gameAccess.findGame("Game1") != null); //game is in db
         assertTrue(gameAccess.findGame("Game1").equals(typicalGame));
@@ -41,7 +47,12 @@ public class AccessGamesTest {
         //typicalGame = new Game("Game2", "Dev", "Desc", 2.00, genres);
         //gameAccess.updateGame(typicalGame); // commented out because error with the db
 
-        Game typicalGameSimple = new Game("Game2");
+        Game typicalGameSimple = null;
+        try {
+            typicalGameSimple = new Game("Game2");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         boolean inserted = gameAccess.insertGame(typicalGameSimple);
         assertTrue(inserted);
         assertTrue(gameAccess.findGame("Game2") != null);
@@ -59,7 +70,12 @@ public class AccessGamesTest {
     @Test
     public void testInvalid()
     {
-        Game noNameGame = new Game("    ");
+        Game noNameGame = null;
+        try {
+            noNameGame = new Game("    ");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         Game nullGame = null;
 
         boolean inserted = gameAccess.insertGame(noNameGame);

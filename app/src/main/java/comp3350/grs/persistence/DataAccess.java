@@ -22,8 +22,8 @@ import comp3350.grs.presentation.MainActivity;
 public abstract class DataAccess {
     protected String dbName;
     protected String dbType;
-    protected List<User> users;
-    protected List<Game> games;
+    protected List<User> users;//list of all users
+    protected List<Game> games;//list of all games
 
     public DataAccess(String dbName){
         this.dbName=dbName;
@@ -2169,8 +2169,6 @@ public abstract class DataAccess {
             incorrectFormat.printStackTrace();
         }
         games.add(newGame);
-
-
 
 
         users=new ArrayList<User>();

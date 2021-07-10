@@ -1,11 +1,7 @@
 package comp3350.grs.presentation;
-// CLASS: Signup...
-//
-// Author: Shiqing
-//
-// REMARKS: What is the purpose of this class?
+
 // Signup page
-//-----------------------------------------
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;

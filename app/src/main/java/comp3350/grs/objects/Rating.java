@@ -64,7 +64,7 @@ public class Rating
         result = false;
         Rating rating;
 
-        if (this.userID!=null&&this.gameName!=null&& object instanceof Rating){
+        if (validRating()&& object instanceof Rating){
             rating=(Rating)object;
             result=
                     this.userID.equals(rating.userID)&&this.gameName.equals(rating.gameName);

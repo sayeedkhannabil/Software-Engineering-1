@@ -18,6 +18,7 @@ import comp3350.grs.R;
  * Use the {@link top_bar#newInstance} factory method to
  * create an instance of this fragment.
  */
+//the top bar fragment
 public class top_bar extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match

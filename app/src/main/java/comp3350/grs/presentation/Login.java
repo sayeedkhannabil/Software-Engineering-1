@@ -1,11 +1,6 @@
 package comp3350.grs.presentation;
-// CLASS: Login...
-//
-// Author: Shiqing
-//
-// REMARKS: What is the purpose of this class?
+
 // login page
-//-----------------------------------------
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;

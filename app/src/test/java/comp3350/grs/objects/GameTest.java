@@ -11,6 +11,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import comp3350.grs.exceptions.IncorrectFormat;
+
 public class GameTest  {
     private static List<String> genres;
     private static Game typicalGame;
@@ -20,9 +22,17 @@ public class GameTest  {
     @BeforeClass
     public static void beforeClass(){
         genres = new ArrayList<>(Arrays.asList("Genre1", "Genre2", "Genre3"));
-        typicalGame = new Game("TypicalGame", "TypicalDeveloper",
-                "TypicalDescription", 20.00, genres);
-        typicalGameSimple = new Game("GameWithOnlyAName");
+        try {
+            typicalGame = new Game("TypicalGame", "TypicalDeveloper",
+                    "TypicalDescription", 20.00, genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        try {
+            typicalGameSimple = new Game("GameWithOnlyAName");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         nullGame = new Game();
     }
 
@@ -53,16 +63,38 @@ public class GameTest  {
     public void testEdgeInput() {
         //test cases for which parameters for a Game object are still "valid" input, but not correct for our purposes
         ArrayList<String> genres1 = new ArrayList<>(); //empty
-        Game edgeGame = new Game("", "", "", 0, genres1);
-        Game edgeGame1 = new Game(" ", "dev", " ", 100.00, genres1);
-        Game edgeGame2 = new Game("Valid Name", "Dev", "desc", -1.22, genres);
-        Game edgeGame3 = new Game("       ");
+        Game edgeGame = null;
+        Game edgeGame1=null;
+        Game edgeGame2=null;
+        Game edgeGame3=null;
+        try {
+            edgeGame = new Game("", "", "", 0, genres1);
+            edgeGame1 = new Game(" ", "dev", " ", 100.00, genres1);
+            edgeGame2 = new Game("Valid Name", "Dev", "desc", -1.22, genres);
+            edgeGame3 = new Game("       ");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
 
-        //the object should not be instantiated with these inputs
-        assertTrue(!edgeGame.validGame());
-        assertTrue(!edgeGame1.validGame());
-        assertTrue(!edgeGame2.validGame());
-        assertTrue(!edgeGame3.validGame());
+        try {
+            edgeGame1 = new Game(" ", "dev", " ", 100.00, genres1);
+            fail();
+        } catch (IncorrectFormat incorrectFormat) {
+            assertTrue(true);
+        }
+        try {
+            edgeGame2 = new Game("Valid Name", "Dev", "desc", -1.22, genres);
+            fail();
+        } catch (IncorrectFormat incorrectFormat) {
+            assertTrue(true);
+        }
+        try {
+            edgeGame3 = new Game("       ");
+            fail();
+        } catch (IncorrectFormat incorrectFormat) {
+            assertTrue(true);
+        }
+
     }
 
     @Test
@@ -79,11 +111,13 @@ public class GameTest  {
         assertEquals(0.0, typicalGameSimple.getPrice(), 0);
 
         //test games passed null values
-        Game null1 = new Game("",null,"description", 1.00, null);
-        assertFalse(null1.validGame()); //not a valid game
-        assertNull(null1.getDev());
-        assertNull(null1.getDescription());
-        assertNull(null1.getGenres());
+        Game null1 = null;
+        try {
+            null1 = new Game("",null,"description", 1.00, null);
+            fail();
+        } catch (IncorrectFormat incorrectFormat) {
+            assertTrue(true);
+        }
 
         assertFalse(nullGame.validGame());
         assertNull(nullGame.getName());
@@ -102,7 +136,12 @@ public class GameTest  {
 
     @Test
     public void testEqualsOtherGame(){
-        Game sameName = new Game("TypicalGame", "testDev",  "TestDesc", 0.0,genres);
+        Game sameName = null;
+        try {
+            sameName = new Game("TypicalGame", "testDev",  "TestDesc", 0.0,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         assertEquals(sameName,typicalGame);
         assertNotEquals(nullGame, typicalGameSimple);
         assertNotEquals(nullGame, typicalGame);

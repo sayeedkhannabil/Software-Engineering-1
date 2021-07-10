@@ -1,11 +1,7 @@
 package comp3350.grs.presentation;
-// CLASS: userid_and_pass...
-//
-// Author: Shiqing
-//
-// REMARKS: What is the purpose of this class?
+
 // userid_and_pass fragment
-//-----------------------------------------
+
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;

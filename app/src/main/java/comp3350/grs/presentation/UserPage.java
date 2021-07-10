@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import comp3350.grs.R;
 import comp3350.grs.business.AccessUsers;
-
+//user account page
 public class UserPage extends AppCompatActivity {
     private TextView top_bar_text;
     private TextView user_page_user_info;

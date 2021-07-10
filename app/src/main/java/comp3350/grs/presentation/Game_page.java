@@ -1,11 +1,7 @@
 package comp3350.grs.presentation;
-// CLASS: Game_page...
-//
-// Author: Shiqing
-//
-// REMARKS: What is the purpose of this class?
+
+
 // game detail page
-//-----------------------------------------
 
 import android.app.Activity;
 import android.os.Bundle;

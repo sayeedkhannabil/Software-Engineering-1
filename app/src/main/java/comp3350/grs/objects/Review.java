@@ -79,7 +79,7 @@ public class Review {
         result = false;
         Review review;
 
-        if (object instanceof Review){
+        if (validReview()&& object instanceof Review){
             review=(Review) object;
             result=this.reviewID==review.getReviewID();
         }

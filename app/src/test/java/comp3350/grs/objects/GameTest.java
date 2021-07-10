@@ -18,7 +18,7 @@ public class GameTest  {
     private static Game nullGame ;
 
     @BeforeClass
-    public static void setClass(){
+    public static void beforeClass(){
         genres = new ArrayList<>(Arrays.asList("Genre1", "Genre2", "Genre3"));
         typicalGame = new Game("TypicalGame", "TypicalDeveloper",
                 "TypicalDescription", 20.00, genres);

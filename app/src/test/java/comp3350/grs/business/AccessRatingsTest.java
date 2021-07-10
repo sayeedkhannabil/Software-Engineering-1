@@ -1,6 +1,7 @@
 package comp3350.grs.business;
 import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
+import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Rating;
 import comp3350.grs.objects.User;
 import comp3350.grs.persistence.DataAccessStub;
@@ -10,11 +11,13 @@ import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestAccessRatings extends TestCase {
+import static org.junit.Assert.*;
+
+public class AccessRatingsTest {
     AccessUsers userAccess;
 
     @Before
-    public void setup(){
+    public void before(){
         Services.closeDataAccess(); //if there was one open
         Services.createDataAccess(new DataAccessStub(Main.dbName));
 
@@ -25,8 +28,18 @@ public class TestAccessRatings extends TestCase {
         User user = userAccess.getSequential();
 
         //create new "typical" ratings, for the same game
-        Rating newGuestRating = new Rating(3.0, "Valheim", "Guest");
-        Rating newUserRating = new Rating(5.0, "Valheim", user.getUserID());
+        Rating newGuestRating = null;
+        try {
+            newGuestRating = new Rating(3.0, "Valheim", "Guest");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        Rating newUserRating = null;
+        try {
+            newUserRating = new Rating(5.0, "Valheim", user.getUserID());
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
 
         AccessRatings ratingAccess = new AccessRatings();
         boolean insert1 = ratingAccess.insertRating(newGuestRating);
@@ -37,7 +50,12 @@ public class TestAccessRatings extends TestCase {
         assertTrue(ratingAccess.getRatingsByUser(user.getUserID()).size() == 1); //the number of ratings by the user is one
         assertTrue(ratingAccess.getRating("Valheim", user.getUserID()).getRatingValue() == 5.0);
 
-        Rating updated = new Rating(2.0, "Valheim", user.getUserID());
+        Rating updated = null;
+        try {
+            updated = new Rating(2.0, "Valheim", user.getUserID());
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         ratingAccess.updateRating(updated);
         //the rating by user for Valheim should now be updated to 2.0 from 5.0
         assertTrue(ratingAccess.getRating("Valheim", user.getUserID()).getRatingValue() == 2.0);

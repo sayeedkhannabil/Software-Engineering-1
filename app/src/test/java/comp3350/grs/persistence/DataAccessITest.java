@@ -40,7 +40,7 @@ public class DataAccessITest{
 
 
     @Before
-    public void initiateDB(){
+    public void before(){
 //        dataAccessI=new DataAccessObject("TestDB");
         dataAccessI=new DataAccessStub("TestDB");
         dataAccessI.open("database/TestDB");
@@ -78,7 +78,7 @@ public class DataAccessITest{
     }
 
     @AfterClass
-    public static void closeDatabase(){
+    public static void afterClass(){
         dataAccessI.close();
     }
 

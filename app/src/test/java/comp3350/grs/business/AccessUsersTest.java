@@ -24,13 +24,13 @@ public class AccessUsersTest {
     private String userID,password;
 
     @BeforeClass
-    public static void setUpClass(){
+    public static void beforeClass(){
         Services.createDataAccess(new DataAccessObject());
         accessUsers=new AccessUsers();
     }
 
     @Before
-    public void setUp(){
+    public void before(){
         accessUsers.clear();
         user=null;
         user1=null;

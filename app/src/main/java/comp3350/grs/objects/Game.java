@@ -89,12 +89,13 @@ public class Game
 
 
     // compares another object with this Game to see if they are equal (if names are same)
+    @Override
     public boolean equals(Object object)
     {
         Game other = null;
         boolean isSame = false;
 
-        if(validGame()&& object instanceof Game)
+        if(object != null && validGame() && object instanceof Game)
         {
             other = (Game) object;
             if((this.name).equals(other.getName()) )

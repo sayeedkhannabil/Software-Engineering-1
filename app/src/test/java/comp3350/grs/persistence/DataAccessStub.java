@@ -145,30 +145,35 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	public List<User> getUsersByIDImplicit(String userNameImplicit) {
 		List<User> res = new ArrayList<>();
 		List<User> searchList = this.getAllUsers();
-		int searchLength = userNameImplicit.length();
+		int searchLength;
 		char currChar;
-		String userName, implicit = null;
+		String userName, implicit = "";
 		User curr;
 
-		if (searchLength > 0) {
-			for (int i = 0; i < searchList.size(); i++) {
-				curr = searchList.get(i);
-				userName = curr.getUserID();
-				for(int j = 0; j < searchLength; j++){
+		if(userNameImplicit != null) {
+			searchLength = userNameImplicit.length();
+			if (searchLength > 0) {
+				for (int j = 0; j < searchLength; j++) {
 					currChar = userNameImplicit.charAt(j);
-					if(currChar != '%' && currChar != '*' && currChar != '?'){
+					if (currChar != '%' && currChar != '*' && currChar != '?') {
 						implicit += currChar;
 					}
-					if(userName.contains(implicit)){
+				}
+
+				for (int i = 0; i < searchList.size(); i++) {
+					curr = searchList.get(i);
+					userName = curr.getUserID();
+
+					if (implicit.trim().length() > 0 &&  userName.contains(implicit)) {
 						res.add(curr);
 					}
 				}
+			} else {
+				System.out.println("Please input valid game name.");
 			}
-		} else {
-			System.out.println("Please input valid user ID.");
-		}
-		if (res.size() == 0 && searchLength > 0) {
-			System.out.println("Not found.");
+			if (res.size() == 0 && searchLength > 0) {
+				System.out.println("Not found.");
+			}
 		}
 
 		return res;
@@ -191,7 +196,15 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	}
 
 	public boolean insertGame(Game toAdd) {
-		return games.add(toAdd);
+		boolean inserted = false;
+		if(toAdd != null) {
+			if (toAdd.getName() != null) {
+				if(!games.contains(toAdd)){
+					inserted = games.add(toAdd);
+				}
+			}
+		}
+		return inserted;
 	}
 
 	public boolean updateGame(Game toUpdate) {
@@ -264,37 +277,46 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	public List<Game> getGamesByNameImplicit(String gameNameImplicit) {
 		List<Game> res = new ArrayList<>();
 		List<Game> searchList = this.getAllGames();
-		int searchLength = gameNameImplicit.length();
+		int searchLength;
 		char currChar;
-		String gameName, implicit = null;
+		String gameName, implicit = "";
 		Game curr;
 
-		if (searchLength > 0) {
-			for (int i = 0; i < searchList.size(); i++) {
-				curr = searchList.get(i);
-				gameName = curr.getName();
-				for(int j = 0; j < searchLength; j++){
+		if(gameNameImplicit != null) {
+			searchLength = gameNameImplicit.length();
+			if (searchLength > 0) {
+				for (int j = 0; j < searchLength; j++) {
 					currChar = gameNameImplicit.charAt(j);
-					if(currChar != '%' && currChar != '*' && currChar != '?'){
+					if (currChar != '%' && currChar != '*' && currChar != '?') {
 						implicit += currChar;
 					}
-					if(gameName.contains(implicit)){
+				}
+
+				for (int i = 0; i < searchList.size(); i++) {
+					curr = searchList.get(i);
+					gameName = curr.getName();
+
+					if (implicit.trim().length() > 0 &&  gameName.contains(implicit)) {
 						res.add(curr);
 					}
 				}
+			} else {
+				System.out.println("Please input valid game name.");
 			}
-		} else {
-			System.out.println("Please input valid game name.");
-		}
-		if (res.size() == 0 && searchLength > 0) {
-			System.out.println("Not found.");
+			if (res.size() == 0 && searchLength > 0) {
+				System.out.println("Not found.");
+			}
 		}
 
 		return res;
 	}
 
 	public boolean insertReview(Review review){
-		return reviews.add(review);
+		boolean inserted = false;
+		if(!reviews.contains(review)){
+			inserted = reviews.add(review);
+		}
+		return inserted;
 	}
 
 	public boolean updateReview(Review review){
@@ -391,7 +413,11 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	}
 
 	public boolean insertRating(Rating rating){
-		return ratings.add(rating);
+		boolean inserted = false;
+		if(!ratings.contains(rating)){
+			inserted = ratings.add(rating);
+		}
+		return inserted;
 	}
 
 	public boolean updateRating(Rating rating){

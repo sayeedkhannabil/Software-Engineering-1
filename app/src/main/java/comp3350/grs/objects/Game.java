@@ -4,6 +4,7 @@ package comp3350.grs.objects;
 import java.util.ArrayList;
 import java.util.List;
 
+import comp3350.grs.business.AccessRatings;
 import comp3350.grs.exceptions.IncorrectFormat;
 
 public class Game
@@ -71,6 +72,11 @@ public class Game
 
     public String getDescription() {
         return description;
+    }
+
+    public double getOverallRating(){
+        AccessRatings ratingAccess = new AccessRatings();
+        return ratingAccess.getOverallRating(name);
     }
 
     public double getPrice() {

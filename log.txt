@@ -76,6 +76,8 @@ june 19 : group meeeting. Discussed how to handle error, decide to create custom
     to split review and rating , because they are not binded together directly,
     they are binded to a user, and a user can have one rating and many reviews;
     discussed and assigned developer tasks.
+June 19: Katharine updated Game class and GameTest class
+         (expected: 30 min, actual: 1 hour)
 june 21 :Shiqing Guo finished the interface of database.(expected:1 hour,
     actual:1 hour)
 june 22 :Shiqing Guo finished user part of sql database.(expected:10 hour
@@ -123,5 +125,7 @@ July 8: Katharine fixed brackets and syntax that were not consistent in some fil
         (expected time: 1 hours, actual: 1 hour)
 July 8, 2021: Gongyu update RatingTest file, delete old test method and add new one
 	(expected: 2 hours, actual: 2 hours)
-
-
+July 9: Katharine K implemented implicit user and game search in DataAccessStub
+        (expected time: 1 hour, actual: 2 hours)
+July 9: Katharine K added more tests to TestAccessGames, updated Game class, attempted to inject stub database into test class
+        (expected time: 2 hour, actual: 2 hours)

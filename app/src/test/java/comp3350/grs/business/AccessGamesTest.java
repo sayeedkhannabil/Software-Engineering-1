@@ -1,7 +1,6 @@
 package comp3350.grs.business;
-import junit.framework.TestCase;
-
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class AccessGamesTest {
 
     private AccessGames gameAccess;
 
-    @Before
+    @BeforeClass
     public void before(){
         Services.closeDataAccess(); //if there was one open
         Services.createDataAccess(new DataAccessStub(Main.dbName));
@@ -29,7 +28,6 @@ public class AccessGamesTest {
     @Test
     public void testTypical()
     {
-
         List<String> genres = new ArrayList<>();
         genres.add("genre1");
         genres.add("genre2");
@@ -55,7 +53,7 @@ public class AccessGamesTest {
         }
         boolean inserted = gameAccess.insertGame(typicalGameSimple);
         assertTrue(inserted);
-        assertTrue(gameAccess.findGame("Game2") != null);
+        assertNotNull(gameAccess.findGame("Game2"));
         assertTrue(gameAccess.findGame("Game2").equals(typicalGameSimple));
 
         Game sequential = gameAccess.getSequential();
@@ -64,7 +62,41 @@ public class AccessGamesTest {
         boolean deleted = gameAccess.deleteGame(typicalGame);
         assertTrue(deleted);
         Game found = gameAccess.findGame("Game1");
-        assertTrue(found == null);
+        assertTrue(found != null);
+
+        List<Game> allGames = gameAccess.getAllGames();
+        Game firstInListNeutral = allGames.get(0);
+        List<Game> ascendingNames = gameAccess.ascendingNameSort();
+        Game firstInListAsc = ascendingNames.get(0);
+        assertFalse(firstInListNeutral.equals(firstInListAsc));
+
+        List<Game> descendingNames = gameAccess.descendingNameSort();
+        Game firstInListDesc = descendingNames.get(0);
+        assertFalse(firstInListNeutral.equals(firstInListDesc));
+        assertFalse(firstInListAsc.equals(firstInListDesc));
+
+        List<Game> ascendingPrice = gameAccess.ascendingPriceSort();
+        double ascendPrice = ascendingPrice.get(0).getPrice();
+        List<Game> descendingPrice = gameAccess.descendingPriceSort();
+        double descendPrice = descendingPrice.get(0).getPrice();
+        assertTrue(ascendPrice != descendPrice);
+        assertTrue(descendPrice >= ascendPrice);
+
+        AccessRatings ratingAccess = new AccessRatings();
+        List<Game> ascendingRatings = gameAccess.ascendingRatingSort();
+        double ascendRating = ratingAccess.getOverallRating(ascendingRatings.get(0).getName());
+        List<Game> descendingRatings = gameAccess.descendingRatingSort();
+        double descendRating = ratingAccess.getOverallRating(descendingRatings.get(0).getName());
+        assertTrue(descendRating >= ascendRating);
+
+        List<Game> ascendingReviews = gameAccess.ascendingReviewSort();
+        List<Game> descendingReviews = gameAccess.descendingReviewSort();
+        AccessReviews reviewAccess = new AccessReviews();
+        int ascendReviewNum = reviewAccess.getReviewNumByGame(ascendingReviews.get(0).getName());
+        int descendReviewNum = reviewAccess.getReviewNumByGame(descendingReviews.get(0).getName());
+        assertTrue(descendReviewNum >= ascendReviewNum);
+
+        //test implicit search
     }
 
     @Test
@@ -89,5 +121,20 @@ public class AccessGamesTest {
         assertNull(found);
         found = gameAccess.findGame(null);
         assertNull(found);
+    }
+
+    @Test
+    void testEmpty(){
+
+    }
+
+    @Test
+    void testEdge(){
+
+    }
+
+    @AfterClass
+    public void shutDown(){
+        Services.closeDataAccess();
     }
 }

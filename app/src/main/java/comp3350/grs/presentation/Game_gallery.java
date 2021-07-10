@@ -77,7 +77,7 @@ public class Game_gallery extends AppCompatActivity {
                 notSorting=false;
                 if (i==0){
                     if (sortAsc[i]){
-                        gameList=accessGames.accendingNameSort();
+                        gameList=accessGames.ascendingNameSort();
                     }
                     else {
                         gameList=accessGames.descendingNameSort();
@@ -85,7 +85,7 @@ public class Game_gallery extends AppCompatActivity {
                 }
                 else if(i==1){
                     if (sortAsc[i]){
-                        gameList=accessGames.accendingPriceSort();
+                        gameList=accessGames.ascendingPriceSort();
                     }
                     else {
                         gameList=accessGames.descendingPriceSort();
@@ -93,7 +93,7 @@ public class Game_gallery extends AppCompatActivity {
                 }
                 else if(i==2){
                     if (sortAsc[i]){
-                        gameList=accessGames.accendingRatingSort();
+                        gameList=accessGames.ascendingRatingSort();
                     }
                     else {
                         gameList=accessGames.descendingRatingSort();
@@ -101,7 +101,7 @@ public class Game_gallery extends AppCompatActivity {
                 }
                 else{
                     if (sortAsc[i]){
-                        gameList=accessGames.accendingReviewSort();
+                        gameList=accessGames.ascendingReviewSort();
                     }
                     else {
                         gameList=accessGames.descendingReviewSort();

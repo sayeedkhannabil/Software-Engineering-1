@@ -3,6 +3,7 @@ package comp3350.grs;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import comp3350.grs.business.AccessUsers;
 import comp3350.grs.business.TestAccessGames;
 import comp3350.grs.objects.FeedbackTest;
 import comp3350.grs.objects.ReviewTest;
@@ -24,7 +25,6 @@ public class AllTest {
         testObjects();
         return suite;
     }
-
     private static void testObjects() {
         suite.addTestSuite(GameTest.class);
         suite.addTestSuite(GuestTest.class);

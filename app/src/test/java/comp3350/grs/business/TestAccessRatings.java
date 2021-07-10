@@ -1,14 +1,27 @@
 package comp3350.grs.business;
+import comp3350.grs.application.Main;
+import comp3350.grs.application.Services;
 import comp3350.grs.objects.Rating;
 import comp3350.grs.objects.User;
+import comp3350.grs.persistence.DataAccessStub;
+
 import junit.framework.TestCase;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class TestAccessRatings extends TestCase {
+    AccessUsers userAccess;
+
+    @Before
+    public void setup(){
+        Services.closeDataAccess(); //if there was one open
+        Services.createDataAccess(new DataAccessStub(Main.dbName));
+
+        userAccess = new AccessUsers();
+    }
     @Test
     public void testTypical() {
-        AccessUsers userAccess = new AccessUsers();
         User user = userAccess.getSequential();
 
         //create new "typical" ratings, for the same game

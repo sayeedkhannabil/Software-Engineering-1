@@ -73,7 +73,7 @@ public class AccessRatings {
         int numRatings = 0;
         Rating thisRating;
         if (!gameName.trim().equals("")) {
-            getRatings(); //get ratings from database
+            this.getRatings(); //get ratings from database
             for(int i = 0; i < ratings.size(); i++) {
                 thisRating = ratings.get(i);
                 if((thisRating.getGameName()).equals(gameName)) {

@@ -33,8 +33,8 @@ public class AccessGames
         return gameList;
     }
     
-    // Sorts the Game(s) in accending order of Name
-    public List<Game> accendingNameSort() {
+    // Sorts the Game(s) in ascending order of Name
+    public List<Game> ascendingNameSort() {
 
         getAllGames();
 
@@ -63,8 +63,8 @@ public class AccessGames
         return gameList;
     }
 
-    // Sorts the Game(s) in accending order of price
-    public List<Game> accendingPriceSort() {
+    // Sorts the Game(s) in ascending order of price
+    public List<Game> ascendingPriceSort() {
 
         getAllGames();
 
@@ -93,8 +93,8 @@ public class AccessGames
         return gameList;
     }
 
-    // Sorts the Game(s) in accending order of # of ratings
-    public List<Game> accendingRatingSort() {
+    // Sorts the Game(s) in ascending order of # of ratings
+    public List<Game> ascendingRatingSort() {
 
         getAllGames();
 
@@ -123,8 +123,8 @@ public class AccessGames
         return gameList;
     }
 
-//     Sorts the Game(s) in accending order of # of reviews
-    public List<Game> accendingReviewSort() {
+//     Sorts the Game(s) in ascending order of # of reviews
+    public List<Game> ascendingReviewSort() {
 
         getAllGames();
 

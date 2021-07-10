@@ -25,6 +25,7 @@ public class AccessUsersTest {
 
     @BeforeClass
     public static void beforeClass(){
+        Services.closeDataAccess();
         Services.createDataAccess(new DataAccessObject());
         accessUsers=new AccessUsers();
     }

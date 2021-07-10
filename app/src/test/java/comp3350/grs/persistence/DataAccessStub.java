@@ -225,10 +225,18 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		for(int i = 0; i < games.size(); i++){
 			toCopy = games.get(i);
 			if(toCopy.getDev() != null) {
-				copy = new Game(toCopy.getName(), toCopy.getDev(), toCopy.getDescription(), toCopy.getPrice(), toCopy.getGenres());
+				try {
+					copy = new Game(toCopy.getName(), toCopy.getDev(), toCopy.getDescription(), toCopy.getPrice(), toCopy.getGenres());
+				} catch (IncorrectFormat incorrectFormat) {
+					incorrectFormat.printStackTrace();
+				}
 			}
 			else {
-				copy = new Game(toCopy.getName());
+				try {
+					copy = new Game(toCopy.getName());
+				} catch (IncorrectFormat incorrectFormat) {
+					incorrectFormat.printStackTrace();
+				}
 			}
 			gamesCopy.add(copy);
 		}

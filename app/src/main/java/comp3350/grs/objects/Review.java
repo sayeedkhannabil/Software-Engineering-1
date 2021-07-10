@@ -4,13 +4,9 @@ import comp3350.grs.business.AccessRatings;
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.exceptions.IncorrectOrder;
 
-// CLASS: Review
-//
-// Author: Abu Sayeed Khan
-//
-// REMARKS: What is the purpose of this class?
+
+
 // store review of the games
-//-----------------------------------------
 public class Review {
     private String comment;
     private String userID;
@@ -48,12 +44,14 @@ public class Review {
     }
 
     private void checkComment(String comment) throws IncorrectFormat{
-        if (comment.length()>140||comment.length()<=0){
+        final int MAX_LENGTH=140;
+        if (comment.length()>MAX_LENGTH||comment.length()<=0){
             throw new IncorrectFormat("letters of review content should be " +
                     "between 1 and 140");
         }
     }
 
+    //important info is not null
     public boolean validReview(){
         return comment!=null&&userID!=null&&gameName!=null;
     }

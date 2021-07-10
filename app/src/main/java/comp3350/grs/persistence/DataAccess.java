@@ -37,9 +37,10 @@ public abstract class DataAccess {
     public void open(String dbPath) {
         games=new ArrayList<>();
         List<String> genres;
-        Game newGame;
+        Game newGame=null;
         String gameName,gameDev,desc;
         double price;
+
 
         genres=new ArrayList();
         genres.add("Action");
@@ -60,7 +61,11 @@ public abstract class DataAccess {
         gameDev="Streum On Studio";
         desc="Become a Hired Gun. The money�s good, the dog�s loyal, and the gun�s reliable. Embark on a fast-paced, violent, and thrilling FPS set in the darkest reaches of Warhammer 40,000�s most infamous hive city.";
         price=125.8;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Co-op");
@@ -88,7 +93,11 @@ public abstract class DataAccess {
         gameDev="CAPCOM Co., Ltd.";
         desc="Welcome to a new world! In Monster Hunter: World, the latest installment in the series, you can enjoy the ultimate hunting experience, using everything at your disposal to hunt monsters in a new world teeming with surprises and excitement.";
         price=133.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Flight");
@@ -116,7 +125,11 @@ public abstract class DataAccess {
         gameDev="MOTIVE";
         desc="Master the art of starfighter combat in the authentic piloting experience STAR WARS�: Squadrons. Feel the adrenaline of first-person multiplayer space dogfights alongside your squadron, and buckle up in a thrilling STAR WARS� story.";
         price=79.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Open World Survival Craft");
@@ -144,7 +157,11 @@ public abstract class DataAccess {
         gameDev="Iron Gate AB";
         desc="A brutal exploration and survival game for 1-10 players, set in a procedurally-generated purgatory inspired by viking culture. Battle, build, and conquer your way to a saga worthy of Odin�s patronage!";
         price=70.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Strategy");
@@ -164,7 +181,11 @@ public abstract class DataAccess {
         gameDev="Gasket Games";
         desc="Conquer the Mortal Realms! The first strategy videogame adaptation of Age of Sigmar�s dark-fantasy universe. Lead your highly-customisable force in challenging roguelike campaigns, unlocking new units, equipment and skills in dynamic, turn-based warfare.";
         price=125.8;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Simulation");
@@ -192,7 +213,11 @@ public abstract class DataAccess {
         gameDev="BeamNG";
         desc="A dynamic soft-body physics vehicle simulator capable of doing just about anything.";
         price=64.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Open World");
@@ -220,7 +245,11 @@ public abstract class DataAccess {
         gameDev="Rockstar North";
         desc="Niko Bellic, Johnny Klebitz and Luis Lopez all have one thing in common - they live in the worst city in America. Liberty City worships money and status, and is heaven for those who have them and a living nightmare for those who don''t.";
         price=29.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Co-op");
@@ -248,7 +277,11 @@ public abstract class DataAccess {
         gameDev="Hazelight";
         desc="Embark on the craziest journey of your life in It Takes Two. Invite a friend to join for free with Friend�s Pass and work together across a huge variety of gleefully disruptive gameplay challenges.";
         price=0.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Early Access");
@@ -276,7 +309,11 @@ public abstract class DataAccess {
         gameDev="The Fun Pimps";
         desc="7 Days to Die is an open-world game that is a unique combination of first person shooter, survival horror, tower defense, and role-playing games. Play the definitive zombie survival sandbox RPG that came first. Navezgane awaits!";
         price=23.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("RPG");
@@ -308,7 +345,11 @@ public abstract class DataAccess {
         gameDev="Tactical Adventures";
         desc="Roll for initiative, take attacks of opportunity, manage player location and the verticality of the battle field in this upcoming Turn-Based Tactical RPG based on the SRD 5.1 Ruleset. In Solasta, you make the choices, dice decide your destiny.";
         price=103.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Hunting");
@@ -336,7 +377,11 @@ public abstract class DataAccess {
         gameDev="Expansive Worlds";
         desc="Experience an atmospheric hunting game like no other in this realistic and visually breathtaking open world. Immerse yourself in the atmospheric single player campaign, or share the ultimate hunting experience with friends.";
         price=21.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Horror");
@@ -364,7 +409,11 @@ public abstract class DataAccess {
         gameDev="Kinetic Games";
         desc="Phasmophobia is a 4 player online co-op psychological horror. Paranormal activity is on the rise and it�s up to you and your team to use all the ghost hunting equipment at your disposal in order to gather as much evidence as you can.";
         price=47.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Open World Survival Craft");
@@ -392,7 +441,11 @@ public abstract class DataAccess {
         gameDev="Unknown Worlds Entertainment";
         desc="Dive into a freezing underwater adventure on an alien planet. Below Zero is set two years after the original Subnautica. Return to Planet 4546B to uncover the truth behind a deadly cover-up. Survive by building habitats, crafting tools, & diving deeper into the world of Subnautica.";
         price=99.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Open World Survival Craft");
@@ -420,7 +473,11 @@ public abstract class DataAccess {
         gameDev="Endnight Games Ltd";
         desc="As the lone survivor of a passenger jet crash, you find yourself in a mysterious forest battling to stay alive against a society of cannibalistic mutants. Build, explore, survive in this terrifying first person survival horror simulator.";
         price=31.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Difficult");
@@ -448,7 +505,11 @@ public abstract class DataAccess {
         gameDev="Nolla Games";
         desc="Noita is a magical action roguelite set in a world where every pixel is physically simulated. Fight, explore, melt, burn, freeze and evaporate your way through the procedurally generated world using spells you''ve created yourself.";
         price=49.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Cyberpunk");
@@ -476,7 +537,11 @@ public abstract class DataAccess {
         gameDev="CD PROJEKT RED";
         desc="Cyberpunk 2077 is an open-world, action-adventure story set in Night City, a megalopolis obsessed with power, glamour and body modification. You play as V, a mercenary outlaw going after a one-of-a-kind implant that is the key to immortality.";
         price=238.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Survival");
@@ -504,7 +569,11 @@ public abstract class DataAccess {
         gameDev="Gamepires";
         desc="SCUM aims to evolve the multiplayer open world survival game with unprecedented levels of character customization, control and progression, where knowledge and skills are the ultimate weapons for long-term survival.";
         price=77.4;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Open World");
@@ -532,7 +601,11 @@ public abstract class DataAccess {
         gameDev="Ubisoft Quebec";
         desc="Choose your fate in Assassin''s Creed� Odyssey. From outcast to living legend, embark on an odyssey to uncover the secrets of your past and change the fate of Ancient Greece.";
         price=74.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Survival");
@@ -560,7 +633,11 @@ public abstract class DataAccess {
         gameDev="Facepunch Studios";
         desc="The only aim in Rust is to survive - Overcome struggles such as hunger, thirst and cold. Build a fire. Build a shelter. Kill animals. Protect yourself from other players.";
         price=77.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Racing");
@@ -588,7 +665,11 @@ public abstract class DataAccess {
         gameDev="Playground Games";
         desc="Dynamic seasons change everything at the world�s greatest automotive festival. Go it alone or team up with others to explore beautiful and historic Britain in a shared open world.";
         price=188.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Colony Sim");
@@ -616,7 +697,11 @@ public abstract class DataAccess {
         gameDev="Klei Entertainment";
         desc="Oxygen Not Included is a space-colony simulation game. Deep inside an alien space rock your industrious crew will need to master science, overcome strange new lifeforms, and harness incredible space tech to survive, and possibly, thrive.";
         price=23.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Action");
@@ -644,7 +729,11 @@ public abstract class DataAccess {
         gameDev="CAPCOM Co., Ltd.";
         desc="unknown";
         price=168.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Farming Sim");
@@ -672,7 +761,11 @@ public abstract class DataAccess {
         gameDev="ConcernedApe";
         desc="You''ve inherited your grandfather''s old farm plot in Stardew Valley. Armed with hand-me-down tools and a few coins, you set out to begin your new life. Can you learn to live off the land and turn these overgrown fields into a thriving home?";
         price=48.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Open World Survival Craft");
@@ -700,7 +793,11 @@ public abstract class DataAccess {
         gameDev="Re-Logic";
         desc="Dig, fight, explore, build! Nothing is impossible in this action-packed adventure game. Four Pack also available!";
         price=18.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("RPG");
@@ -728,7 +825,11 @@ public abstract class DataAccess {
         gameDev="BioWare";
         desc="The Mass Effect� Legendary Edition includes single-player base content and over 40 DLC from the highly acclaimed Mass Effect, Mass Effect 2, and Mass Effect 3 games, including promo weapons, armors, and packs � remastered and optimized for 4K Ultra HD.";
         price=248.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Open World");
@@ -756,7 +857,11 @@ public abstract class DataAccess {
         gameDev="Hello Games";
         desc="No Man''s Sky is a game about exploration and survival in an infinite procedurally generated universe.";
         price=69.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Base Building");
@@ -784,7 +889,11 @@ public abstract class DataAccess {
         gameDev="Coffee Stain Studios";
         desc="Satisfactory is a first-person open-world factory building game with a dash of exploration and combat. Play alone or with friends, explore an alien planet, create multi-story factories, and enter conveyor belt heaven!";
         price=79.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Multiplayer");
@@ -812,7 +921,11 @@ public abstract class DataAccess {
         gameDev="Mediatonic";
         desc="Fall Guys is a massively multiplayer party game with up to 60 players online in a free-for-all struggle through round after round of escalating chaos until one victor remains!";
         price=58.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Racing");
@@ -840,7 +953,11 @@ public abstract class DataAccess {
         gameDev="Ghost Games";
         desc="Hustle by day and risk it all at night in Need for Speed� Heat Deluxe Edition, a white-knuckle street racer, where the lines of the law fade as the sun starts to set.";
         price=57.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Open World");
@@ -868,7 +985,11 @@ public abstract class DataAccess {
         gameDev="Ubisoft Montreal";
         desc="Welcome to Hope County, Montana, home to a fanatical doomsday cult known as Eden�s Gate. Stand up to cult leader Joseph Seed & his siblings, the Heralds, to spark the fires of resistance & liberate the besieged community.";
         price=44.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Survival");
@@ -896,7 +1017,11 @@ public abstract class DataAccess {
         gameDev="Redbeet Interactive";
         desc="Raft throws you and your friends into an epic oceanic adventure! Alone or together, players battle to survive a perilous voyage across a vast sea! Gather debris, scavenge reefs and build your own floating home, but be wary of the man-eating sharks!";
         price=45.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Dark Humor");
@@ -924,7 +1049,11 @@ public abstract class DataAccess {
         gameDev="Tripwire Interactive";
         desc="Experience the ultimate power fantasy as the apex predator of the seas - a giant Shark! Terrorize the coastal waterways. Tear swimmers and divers limb from limb, give the humans a reason to fear you!";
         price=98.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Cute");
@@ -952,7 +1081,11 @@ public abstract class DataAccess {
         gameDev="Monomi Park";
         desc="Slime Rancher is the tale of Beatrix LeBeau, a plucky, young rancher who sets out for a life a thousand light years away from Earth on the �Far, Far Range� where she tries her hand at making a living wrangling slimes.";
         price=20.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("RPG");
@@ -980,7 +1113,11 @@ public abstract class DataAccess {
         gameDev="BioWare";
         desc="Winner of over 130 Game of the Year awards, discover the definitive Dragon Age: Inquisition experience. The Game of the Year Edition includes the critically acclaimed game, all three official add-ons - Jaws of Hakkon, The Descent, and Trespasser - and more.";
         price=29.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Souls-like");
@@ -1008,7 +1145,11 @@ public abstract class DataAccess {
         gameDev="Gunfire Games";
         desc="The world has been thrown into chaos by an ancient evil from another dimension. As one of the last remnants of humanity, you must set out alone or alongside up to two other survivors to face down hordes of deadly enemies to try to carve a foothold, rebuild, and retake what was lost.";
         price=56.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Open World Survival Craft");
@@ -1036,7 +1177,11 @@ public abstract class DataAccess {
         gameDev="Unknown Worlds Entertainment";
         desc="Descend into the depths of an alien underwater world filled with wonder and peril. Craft equipment, pilot submarines and out-smart wildlife to explore lush coral reefs, volcanoes, cave systems, and more - all while trying to survive.";
         price=99.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Simulation");
@@ -1064,7 +1209,11 @@ public abstract class DataAccess {
         gameDev="SCS Software";
         desc="Travel across Europe as king of the road, a trucker who delivers important cargo across impressive distances! With dozens of cities to explore, your endurance, skill and speed will all be pushed to their limits.";
         price=24.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("RPG");
@@ -1092,7 +1241,11 @@ public abstract class DataAccess {
         gameDev="Zenimax Online Studios";
         desc="Join over 18 million players in the award-winning online multiplayer RPG and experience limitless adventure in a persistent Elder Scrolls world. Battle, craft, steal, or explore, and combine different types of equipment and abilities to create your own style of play. No game subscription required.";
         price=27.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Dark Fantasy");
@@ -1120,7 +1273,11 @@ public abstract class DataAccess {
         gameDev="Awaken Realms Digital";
         desc="A unique, infinitely replayable, story-driven hybrid between a deck-building Roguelike and an RPG game. Explore the ever-changing maps, fight with deadly enemies, and learn what happened to the cursed island of Avalon.";
         price=63.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Dinosaurs");
@@ -1148,7 +1305,11 @@ public abstract class DataAccess {
         gameDev="Afterthought LLC";
         desc="Experience fierce open world survival gameplay as you attempt to stay alive on an unforgiving island inhabited by dinosaurs! Hunt. Grow. Survive.";
         price=51.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Survival");
@@ -1176,7 +1337,11 @@ public abstract class DataAccess {
         gameDev="Klei Entertainment";
         desc="Fight, Farm, Build and Explore Together in the standalone multiplayer expansion to the uncompromising wilderness survival game, Don''t Starve.";
         price=12.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("JRPG");
@@ -1211,7 +1376,11 @@ public abstract class DataAccess {
         gameDev="Square Enix";
         desc="The Definitive Edition includes the critically acclaimed DRAGON QUEST XI, plus additional scenarios, orchestral soundtrack, 2D mode and more! Whether you are a longtime fan or a new adventurer, this is the ultimate DQXI experience.";
         price=184.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Mechs");
@@ -1239,7 +1408,11 @@ public abstract class DataAccess {
         gameDev="Piranha Games Inc.";
         desc="The year is 3015. The battlefields are dominated by war machines known as BattleMechs. Level entire cities and decimate the enemy in your BattleMech. Follow a quest for glory and revenge. Manage an expanding mercenary company. Fight alongside your friends with a four-player PvE co-op.";
         price=90.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Multiplayer");
@@ -1267,7 +1440,11 @@ public abstract class DataAccess {
         gameDev="Crytek";
         desc="Hunt: Showdown is a thrilling, high-stakes PvPvE first-person shooter. Take down nightmarish monsters, as you compete for the bounties that will bring you glory, gear, and gold in this unforgiving � and unforgettable - online multiplayer experience.";
         price=74.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Exploration");
@@ -1295,7 +1472,11 @@ public abstract class DataAccess {
         gameDev="Larian Studios";
         desc="The critically acclaimed RPG that raised the bar, from the creators of Baldur''s Gate 3. Gather your party. Master deep, tactical combat. Venture as a party of up to four - but know that only one of you will have the chance to become a God.";
         price=53.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Action");
@@ -1315,7 +1496,11 @@ public abstract class DataAccess {
         gameDev="YUKE''S";
         desc="A new EDF adventure begins! Only this time, the action unfolds in a parallel world where the Earth is made of digital blocks. This world has befallen into chaos, as the once peaceful square Earth has been shattered into pieces. Shape aside, it is an Earth nonetheless which needs to be defended.";
         price=239.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Action");
@@ -1343,7 +1528,11 @@ public abstract class DataAccess {
         gameDev="Remedy Entertainment";
         desc="Winner of over 80 awards, Control is a visually stunning third-person action-adventure that will keep you on the edge of your seat.";
         price=79.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Survival");
@@ -1371,7 +1560,11 @@ public abstract class DataAccess {
         gameDev="Funcom";
         desc="An online multiplayer survival game, now with mounts and mounted combat, set in the lands of Conan the Barbarian. Survive in a vast open world sandbox, build a home and kingdom, dominate your enemies in single or multiplayer.";
         price=38.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Mature");
@@ -1399,7 +1592,11 @@ public abstract class DataAccess {
         gameDev="Wallpaper Engine Team";
         desc="Use stunning live wallpapers on your desktop. Animate your own images to create new wallpapers or import videos/websites and share them on the Steam Workshop!";
         price=19.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Open World");
@@ -1427,7 +1624,11 @@ public abstract class DataAccess {
         gameDev="Bend Studio";
         desc="Ride and fight into a deadly, post pandemic America. Play as Deacon St. John, a drifter and bounty hunter who rides the broken road, fighting to survive while searching for a reason to live in this open-world action-adventure game.";
         price=279.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Open World Survival Craft");
@@ -1455,7 +1656,11 @@ public abstract class DataAccess {
         gameDev="Studio Wildcard";
         desc="Stranded on the shores of a mysterious island, you must learn to survive. Use your cunning to kill or tame the primeval creatures roaming the land, and encounter other players to survive, dominate... and escape!";
         price=27.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Anime");
@@ -1483,7 +1688,11 @@ public abstract class DataAccess {
         gameDev="CyberConnect2 Co. Ltd.";
         desc="The latest opus in the acclaimed STORM series is taking you on a colourful and breathtaking ride. Take advantage of the totally revamped battle system and prepare to dive into the most epic fights you�ve ever seen !";
         price=38.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Open World");
@@ -1511,7 +1720,11 @@ public abstract class DataAccess {
         gameDev="Rockstar Games";
         desc="Winner of over 175 Game of the Year Awards and recipient of over 250 perfect scores, RDR2 is the epic tale of outlaw Arthur Morgan and the infamous Van der Linde gang, on the run across America at the dawn of the modern age. Also includes access to the shared living world of Red Dead Online.";
         price=166.8;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Survival");
@@ -1539,7 +1752,11 @@ public abstract class DataAccess {
         gameDev="KRAFTON, Inc.";
         desc="PLAYERUNKNOWN''S BATTLEGROUNDS is a battle royale shooter that pits 100 players against each other in a struggle for survival. Gather supplies and outwit your opponents to become the last person standing.";
         price=98.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Early Access");
@@ -1567,7 +1784,11 @@ public abstract class DataAccess {
         gameDev="Larian Studios";
         desc="Gather your party, and return to the Forgotten Realms in a tale of fellowship and betrayal, sacrifice and survival, and the lure of absolute power.";
         price=298.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Action");
@@ -1595,7 +1816,11 @@ public abstract class DataAccess {
         gameDev="Bohemia Interactive";
         desc="Experience true combat gameplay in a massive military sandbox. Deploying a wide variety of single- and multiplayer content, over 20 vehicles and 40 weapons, and limitless opportunities for content creation, this is the PC�s premier military game. Authentic, diverse, open - Arma 3 sends you to war.";
         price=29.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Adventure");
@@ -1622,7 +1847,11 @@ public abstract class DataAccess {
         gameDev="Studio Wildcard";
         desc="unknown";
         price=87.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Exploration");
@@ -1650,7 +1879,11 @@ public abstract class DataAccess {
         gameDev="Mobius Digital";
         desc="Named Game of the Year 2019 by Giant Bomb, Polygon, Eurogamer, and The Guardian, Outer Wilds is a critically-acclaimed and award-winning open world mystery about a solar system trapped in an endless time loop.";
         price=48.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Survival");
@@ -1678,7 +1911,11 @@ public abstract class DataAccess {
         gameDev="The Indie Stone";
         desc="Project Zomboid is the ultimate in zombie survival. Alone or in MP: you loot, build, craft, fight, farm and fish in a struggle to survive. A hardcore RPG skillset, a vast map, a massively customisable sandbox and a cute tutorial raccoon await the unwary. So how will you die? All it takes is a bite�";
         price=32.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Military");
@@ -1706,7 +1943,11 @@ public abstract class DataAccess {
         gameDev="Offworld Industries";
         desc="Squad is a tactical FPS that provides authentic combat experiences through teamwork, constant communication, and gameplay. It bridges the large gap between arcade shooter and military simulation with 100 player battles, combined arms combat, base building, and a great integrated VoIP system";
         price=111.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Zombies");
@@ -1734,7 +1975,11 @@ public abstract class DataAccess {
         gameDev="Techland";
         desc="First-person action survival game set in a post-apocalyptic open world overrun by flesh-hungry zombies. Roam a city devastated by a mysterious virus epidemic. Scavenge for supplies, craft weapons, and face hordes of the infected.";
         price=43.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("RPG");
@@ -1762,7 +2007,11 @@ public abstract class DataAccess {
         gameDev="Gearbox Software";
         desc="The original shooter-looter returns, packing bazillions of guns and a mayhem-fueled adventure! Blast through new worlds and enemies as one of four new Vault Hunters.";
         price=65.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Multiplayer");
@@ -1786,7 +2035,11 @@ public abstract class DataAccess {
         gameDev="Velan Studios";
         desc="Team up and duke it out with rival Crews in Knockout City�, where EPIC DODGEBALL BATTLES settle the score in team-based multiplayer matches. Throw, catch, pass, dodge, and tackle your way to dodgeball dominance!";
         price=118.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Medieval");
@@ -1814,7 +2067,11 @@ public abstract class DataAccess {
         gameDev="TaleWorlds Entertainment";
         desc="The horns sound, the ravens gather. An empire is torn by civil war. Beyond its borders, new kingdoms rise. Gird on your sword, don your armour, summon your followers and ride forth to win glory on the battlefields of Calradia. Establish your hegemony and create a new world out of the ashes of the old.";
         price=223.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Survival");
@@ -1842,7 +2099,11 @@ public abstract class DataAccess {
         gameDev="Bohemia Interactive";
         desc="How long can you survive a post-apocalyptic world? A land overrun with an infected zombie population, where you compete with other survivors for limited resources. Will you team up with strangers and stay strong together? Or play as a lone wolf to avoid betrayal? This is DayZ � this is your story.";
         price=119.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("Open World");
@@ -1870,7 +2131,11 @@ public abstract class DataAccess {
         gameDev="Guerrilla";
         desc="Experience Aloy�s legendary quest to unravel the mysteries of a future Earth ruled by Machines. Use devastating tactical attacks against your prey and explore a majestic open world in this award-winning action RPG!";
         price=279.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
         genres=new ArrayList();
         genres.add("RPG");
@@ -1898,8 +2163,14 @@ public abstract class DataAccess {
         gameDev="ZA/UM";
         desc="Disco Elysium - The Final Cut is a groundbreaking role playing game. You�re a detective with a unique skill system at your disposal and a whole city to carve your path across. Interrogate unforgettable characters, crack murders or take bribes. Become a hero or an absolute disaster of a human being.";
         price=87.0;
-        newGame=new Game(gameName,gameDev,desc,price,genres);
+        try {
+            newGame=new Game(gameName,gameDev,desc,price,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         games.add(newGame);
+
+
 
 
         users=new ArrayList<User>();

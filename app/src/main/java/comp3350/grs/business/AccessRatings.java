@@ -10,32 +10,32 @@ import comp3350.grs.persistence.DataAccessI;
 
 public class AccessRatings {
 
-    private DataAccessI dataAccess;
+    private DataAccessI dataAccessI;
     private List<Rating> ratings;
     private Rating currentRating;
     private int currentRatingIndex;//index of the rating in the current position in the list
 
     public AccessRatings() {
-        dataAccess = (DataAccessI) Services.getDataAccess(Main.dbName);
+        dataAccessI =  Services.getDataAccess(Main.dbName);
         ratings = null;
         currentRating = null;
         currentRatingIndex = 0;
     }
 
     public void clear(){
-        dataAccess.clearRatings();
+        dataAccessI.clearRatings();
     }
 
     //get a list of all the ratings
-    public List<Rating> getRatings() {
-        ratings = dataAccess.getAllRatings();
+    public List<Rating> getAllRatings() {
+        ratings = dataAccessI.getAllRatings();
         return ratings;
     }
 
     //get the next rating
     public Rating getSequential() {
         if (ratings == null) {
-            ratings = dataAccess.getAllRatings();
+            getAllRatings();
             currentRatingIndex = 0;
         }
         if (currentRatingIndex < ratings.size()) {
@@ -51,23 +51,23 @@ public class AccessRatings {
     }
 
     public List<Rating> getRatingsByUser(String userID){
-        return dataAccess.getRatingsByUser(userID);
+        return dataAccessI.getRatingsByUser(userID);
     }
 
     public List<Rating> getRatingsByGame(String gameName) {
-        return dataAccess.getRatingsByGame(gameName);
+        return dataAccessI.getRatingsByGame(gameName);
     }
 
     public Rating getRating(String gameName,String userID){
-        return dataAccess.getRating(gameName,userID);
+        return dataAccessI.getRating(gameName,userID);
     }
 
     public int getRatingNumByGame(String gameName){
-        return dataAccess.getRatingsByGame(gameName).size();
+        return dataAccessI.getRatingsByGame(gameName).size();
     }
 
     public int getRatingNumByUser(String userID){
-        return dataAccess.getRatingsByUser(userID).size();
+        return dataAccessI.getRatingsByUser(userID).size();
     }
 
     //get an overall rating for a game by the game name
@@ -77,7 +77,7 @@ public class AccessRatings {
         int numRatings = 0;
         Rating thisRating;
         if (!gameName.trim().equals("")) {
-            this.getRatings(); //get ratings from database
+            this.getAllRatings(); //get ratings from database
             for(int i = 0; i < ratings.size(); i++) {
                 thisRating = ratings.get(i);
                 if((thisRating.getGameName()).equals(gameName)) {
@@ -91,14 +91,14 @@ public class AccessRatings {
     }
 
     public boolean insertRating(Rating newRating) {
-        return dataAccess.insertRating(newRating);
+        return dataAccessI.insertRating(newRating);
     }
 
     public boolean updateRating(Rating updatedRating) {
-        return dataAccess.updateRating(updatedRating);
+        return dataAccessI.updateRating(updatedRating);
     }
 
     public boolean deleteRating(Rating toDelete) {
-        return dataAccess.deleteRating(toDelete);
+        return dataAccessI.deleteRating(toDelete);
     }
 }

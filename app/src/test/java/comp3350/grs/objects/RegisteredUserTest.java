@@ -72,14 +72,24 @@ public class RegisteredUserTest extends TestCase {
     }
 
     @Test
-    public void testOneLetter() throws Exception {
-        RegisteredUser user=new RegisteredUser("u","p");
-        assert (user.validUser());
-        assert (user.getUserID().equals("u"));
-        assert (user.equals(new RegisteredUser("u")));
-        assertFalse(user.equals(new RegisteredUser("p")));
+    public void testEdge(){
+        RegisteredUser user= null;
+
         try {
-            user.checkPassMatch("p");
+            user = new RegisteredUser("u","password");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        assertNotNull(user);
+
+        try {
+            user = new RegisteredUser("longidlongidlongidlongidlongidlongidlongidlongidlongidlongidlongidlongid","password");
+            fail();
+        } catch (IncorrectFormat incorrectFormat) {
+            assertTrue(true);
+        }
+        try {
+            user.checkPassMatch("password");
             assert (true);
         }catch (Exception e){
             fail();

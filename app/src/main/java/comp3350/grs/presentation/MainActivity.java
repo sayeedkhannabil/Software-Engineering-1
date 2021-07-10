@@ -32,10 +32,9 @@ public class MainActivity extends AppCompatActivity {
     private void setDB(){
         Context context = getApplicationContext();
         File dataDirectory = context.getDir("database", Context.MODE_PRIVATE);
+        //when running on the emulator, change the database path to correct
+        // position
         Main.setDBPathName(dataDirectory.toString() + "/" + Main.dbName);
     }
 
-    public static boolean getIsRunning(){
-        return isRunning;
-    }
 }

@@ -37,7 +37,7 @@ public class Utilities {
         view.setScaleY((float) factor);
     }
 
-
+    //when user touch a button, let it shrink and then back to normal
     public static void setOnTouchEffect(View view){
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override

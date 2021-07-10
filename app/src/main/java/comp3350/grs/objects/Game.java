@@ -17,36 +17,25 @@ public class Game
 
     //detailed constructor
     public Game(String gameName, String gameDev, String desc, double price,
-                List<String> gen) {
+                List<String> gen) throws IncorrectFormat {
         //check for valid input
-        try {
-            checkName(gameName);
-            checkPrice(price);
-            name = gameName;
-            dev = gameDev;
-            description = desc;
-            genres = gen;
-            currPrice = price;
-        }
-        catch(IncorrectFormat incorrectFormat) {
-            System.out.println(incorrectFormat.getMessage());
-        }
+        checkName(gameName);
+        checkPrice(price);
+        name = gameName;
+        dev = gameDev;
+        description = desc;
+        genres = gen;
+        currPrice = price;
     }
 
     //simple constructor
-    public Game(String gameName) {
-        try {
-            checkName(gameName);
-
-            name = gameName;
-            dev = null;
-            description = null;
-            currPrice = 0.0;
-            genres=new ArrayList<String>();
-        }
-        catch (IncorrectFormat incorrectFormat) {
-            System.out.println(incorrectFormat.getMessage());
-        }
+    public Game(String gameName) throws IncorrectFormat {
+        checkName(gameName);
+        name = gameName;
+        dev = null;
+        description = null;
+        currPrice = 0.0;
+        genres=new ArrayList<String>();
     }
 
     //default constructor
@@ -56,6 +45,19 @@ public class Game
         description = null;
         currPrice = -1;
         genres= null;
+    }
+
+    private void checkName(String name) throws IncorrectFormat{
+        //check that name is not blank or just space(s) or null
+        if (name.trim().equals("")) {
+            throw new IncorrectFormat("Game name cannot be blank/empty.");
+        }
+    }
+
+    private void checkPrice(double price) throws IncorrectFormat{
+        if (price < 0.0) {
+            throw new IncorrectFormat("Price cannot be negative.");
+        }
     }
 
     public String getName() {
@@ -74,10 +76,6 @@ public class Game
         return description;
     }
 
-    public double getOverallRating(){
-        AccessRatings ratingAccess = new AccessRatings();
-        return ratingAccess.getOverallRating(name);
-    }
 
     public double getPrice() {
         return currPrice;
@@ -87,28 +85,17 @@ public class Game
         return name!=null;
     }
 
-    private void checkName(String name) throws IncorrectFormat{
-        //check that name is not blank or just space(s) or null
-        if (name.trim().equals("")) {
-            throw new IncorrectFormat("Game name cannot be blank/empty.");
-        }
-    }
 
-    private void checkPrice(double price) throws IncorrectFormat{
-        if (price < 0.0) {
-            throw new IncorrectFormat("Price cannot be negative.");
-        }
-    }
 
     // compares another object with this Game to see if they are equal (if names are same)
-    public boolean equals(Object otherGame)
+    public boolean equals(Object object)
     {
         Game other = null;
         boolean isSame = false;
 
-        if(this.name!=null&& otherGame instanceof Game)
+        if(this.name!=null&& object instanceof Game)
         {
-            other = (Game) otherGame;
+            other = (Game) object;
             if((this.name).equals(other.getName()) )
             {
                 isSame = true;

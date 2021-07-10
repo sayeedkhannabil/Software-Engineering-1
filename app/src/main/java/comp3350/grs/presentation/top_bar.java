@@ -77,8 +77,10 @@ public class top_bar extends Fragment {
         return view;
     }
 
+
     private void setBack_to_prev(){
         Utilities.setOnTouchEffect(back_to_prev);
+        //when press the back arrow, return to the previous activity
         back_to_prev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -24,18 +24,16 @@ import comp3350.grs.objects.RegisteredUser;
 import comp3350.grs.objects.Review;
 import comp3350.grs.objects.User;
 
-
+//the hsql database,used as the real database
 public class DataAccessObject extends DataAccess implements DataAccessI
 {
-	private Statement statement1, statement2, statement3;
+	private Statement statement1,statement2,statement3;
 	private PreparedStatement preparedStatement;
 	private Connection connection;
-	private ResultSet resultSet1,resultSet2,resultSet3;
+	private ResultSet resultSet1;
 
 	private String cmdString;
 	private int updateCount;
-	private String result;
-	private static String EOF = "  ";
 
 
 	public DataAccessObject(String dbName)
@@ -69,6 +67,8 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		}
 
 		try {
+			//if the table does not exist already, create it and load it with
+			// default value
 			if (!checkTableExist("users")){
 				cmdString="CREATE TABLE USERS(USERID VARCHAR(20) " +
 						"NOT NULL PRIMARY KEY,PASSWORD VARCHAR(20))";
@@ -121,6 +121,22 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		System.out.println("Opened " +dbType +" database " +dbPath);
 	}
 
+	public void close()
+	{
+		try
+		{	// commit all changes to the database
+			cmdString = "shutdown compact";
+			resultSet1 = statement1.executeQuery(cmdString);
+			connection.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		System.out.println("Closed " +dbType +" database " +dbName);
+	}
+
+	//check if a table exists
 	private boolean checkTableExist(String tableName){
 		boolean tableExist=false;
 		try {
@@ -137,6 +153,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return tableExist;
 	}
 
+
 	private void deleteTable(String tableName){
 		cmdString="drop table " + tableName;
 		try {
@@ -146,6 +163,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		}
 	}
 
+	//delete all the tables
 	public void clearDatabase(){
 		deleteTable("reviews");
 		deleteTable("ratings");
@@ -154,6 +172,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		deleteTable("games");
 	}
 
+	//clear all the data in a table, without delete the table itself
 	private void clearTable(String tableName){
 		cmdString="delete from "+ tableName;
 		try {
@@ -187,21 +206,8 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		clearGames();
 	}
 
-	public void close()
-	{
-		try
-		{	// commit all changes to the database
-			cmdString = "shutdown compact";
-			resultSet1 = statement1.executeQuery(cmdString);
-			connection.close();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		System.out.println("Closed " +dbType +" database " +dbName);
-	}
 
+	//get all data from a table, return resultset of the data
 	private ResultSet getAll(String tableName){
 		ResultSet resultSet=null;
 		try {
@@ -214,6 +220,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return resultSet;
 	}
 
+	//given a result set, generate a list of users according to the result set
 	private List<User> getUsersByResultset(ResultSet resultSet ){
 		User user=null;
 		List<User> userList=new ArrayList<User>();
@@ -223,7 +230,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 			while (resultSet.next()){
 				userID=resultSet.getString(1);
 				password=resultSet.getString(2);
-				if (password==null){
+				if (password==null){//guest does not have password
 					user=new Guest();
 				}
 				else{
@@ -267,6 +274,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return userResult;
 	}
 
+	//search users implicitly; userIDImp is a wildcard
 	public List<User> getUsersByIDImplicit(String userIDImp){
 		List<User> userList=new ArrayList<>();
 
@@ -285,9 +293,8 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return userList;
 	}
 
+	//return true if insert succeed
 	public boolean insertUser(User user) {
-		String values;
-		result = null;
 		boolean insertSuccess=false;
 
 		if (user!=null&&user.validUser()){
@@ -295,12 +302,15 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 				preparedStatement=connection.prepareStatement("insert into users " +
 						"values(?,?)");
 				preparedStatement.setString(1,user.getUserID());
-				if (user instanceof Guest){
+				if (user instanceof Guest){//guest does not have password,
+					// set to null
 					preparedStatement.setNull(2, Types.VARCHAR);
 				}
 				else {
-					user=(RegisteredUser)user;
-					preparedStatement.setString(2,((RegisteredUser) user).getPassword());
+					RegisteredUser registeredUser;
+					registeredUser=(RegisteredUser)user;
+					preparedStatement.setString(2,
+							registeredUser.getPassword());
 				}
 				updateCount = preparedStatement.executeUpdate();
 				if (updateCount==1){
@@ -315,6 +325,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 
 	}
 
+	//update a existing user,return true if update succeed
 	public boolean updateUser(User user){
 		String userID;
 		String password;
@@ -330,8 +341,9 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 					preparedStatement.setNull(1,Types.VARCHAR);
 				}
 				else{
-					user=(RegisteredUser)user;
-					password=((RegisteredUser) user).getPassword();
+					RegisteredUser registeredUser;
+					registeredUser=(RegisteredUser)user;
+					password=registeredUser.getPassword();
 					preparedStatement.setString(1,password);
 				}
 				updateCount= preparedStatement.executeUpdate();
@@ -346,6 +358,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return updateSuccess;
 	}
 
+	//delete a given user according to its userid, return true if delete succeed
 	public boolean deleteUser(User user){
 		String userID;
 		boolean deleteSuccess=false;
@@ -368,6 +381,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return deleteSuccess;
 	}
 
+	//insert genres of a game into table
 	private boolean insertGenres(Game game){
 		List<String> gameGenres=game.getGenres();
 		boolean insertAllSuccess=false;//all the inserts succeed
@@ -387,7 +401,8 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		}
-		if (!insertFail){
+		if (!insertFail){//if any insert failed, return false,else set it to
+			// true
 			insertAllSuccess=true;
 		}
 		return insertAllSuccess;
@@ -400,6 +415,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return success;
 	}
 
+	//delete genres of a game
 	private boolean deleteGenres(Game game){
 		boolean success=false;
 		try {
@@ -421,6 +437,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 
 		if (game!=null&&game.validGame()){
 			try {
+				//insert all info of a game, except its genre
 				preparedStatement=connection.prepareStatement("Insert into Games " +
 						"values(?,?,?,?)");
 				preparedStatement.setString(1,game.getName());
@@ -429,7 +446,6 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 				preparedStatement.setDouble(4, game.getPrice());
 				updateCount=preparedStatement.executeUpdate();
 				if (updateCount==1){
-					insertSuccess=true;
 					insertSuccess=insertGenres(game);
 				}
 			} catch (SQLException sqlException) {
@@ -496,6 +512,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return deleteSuccess;
 	}
 
+	//get a list of genre from a game
 	private List<String> getGameGenresByName(String gameName){
 		List<String> genreList=new ArrayList<String>();
 		try {
@@ -526,7 +543,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 				genres=getGameGenresByName(gameName);
 				gameList.add(new Game(gameName,developer,description,price,genres));
 			}
-		} catch (SQLException throwables) {
+		} catch (SQLException | IncorrectFormat throwables) {
 			throwables.printStackTrace();
 		}
 		return gameList;
@@ -539,6 +556,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return gameList;
 	}
 
+	//implicit search a game.gameNameImp is a wildcard
 	public List<Game> getGamesByNameImplicit(String gameNameImp){
 		List<Game> gameList=new ArrayList<Game>();
 
@@ -613,7 +631,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return reviewList;
 	}
 
-
+	//return a list of reviews from a game
 	public List<Review> getReviewsByGame(String gameName){
 		List<Review> reviewList=new ArrayList<>();
 
@@ -633,6 +651,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return reviewList;
 	}
 
+	//return a list of reviews from a user
 	public List<Review> getReviewsByUser(String userID){
 		List<Review> reviewList=new ArrayList<>();
 
@@ -684,7 +703,8 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 				reviewContent=review.getComment();
 				gameName=review.getGameName();
 				userID=review.getUserID();
-				if (reviewID==-1){
+				if (reviewID==-1){//review id is -1 means we should use the
+					// auto generated review id
 					preparedStatement= connection.prepareStatement("insert into reviews(reviewContent,GAMENAME,USERID) values (?,?,?);");
 					preparedStatement.setString(1,reviewContent);
 					preparedStatement.setString(2,gameName);
@@ -789,6 +809,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return ratingList;
 	}
 
+	//return a list of rating from a game
 	public List<Rating> getRatingsByGame(String gameName){
 		List<Rating> ratingList=new ArrayList<Rating>();
 
@@ -807,6 +828,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return ratingList;
 	}
 
+	//return a list of rating from a user
 	public List<Rating> getRatingsByUser(String userID){
 		List<Rating> ratingList=new ArrayList<Rating>();
 
@@ -825,6 +847,8 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return ratingList;
 	}
 
+	//a user can only have one rating on a game, so game and user can
+	// uniquelly identify a rating
 	public Rating getRating(String gameName,String userID){
 		Rating ratingResult=null;
 		List<Rating> ratingList;

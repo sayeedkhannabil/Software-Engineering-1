@@ -1,17 +1,29 @@
 package comp3350.grs.business;
 import junit.framework.TestCase;
+
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import comp3350.grs.application.Main;
+import comp3350.grs.application.Services;
 import comp3350.grs.objects.Game;
+import comp3350.grs.persistence.DataAccessStub;
 
 import static org.junit.Assert.*;
 
 public class AccessGamesTest {
 
-    private AccessGames gameAccess = new AccessGames();
+    private AccessGames gameAccess;
+
+    @Before
+    public void before(){
+        Services.closeDataAccess(); //if there was one open
+        Services.createDataAccess(new DataAccessStub(Main.dbName));
+        gameAccess = new AccessGames();
+    }
 
     @Test
     public void testTypical()

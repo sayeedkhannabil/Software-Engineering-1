@@ -1,15 +1,25 @@
 package comp3350.grs.business;
-import junit.framework.TestCase;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import comp3350.grs.application.Services;
 import comp3350.grs.objects.Game;
+import comp3350.grs.persistence.DataAccessObject;
 
-public class TestAccessGames extends TestCase {
+import static org.junit.Assert.*;
 
-    private AccessGames gameAccess = new AccessGames();
+public class AccessGamesTest {
+
+    private static AccessGames gameAccess;
+
+    @BeforeClass
+    public static void setUpClass(){
+        Services.createDataAccess(new DataAccessObject());
+        gameAccess = new AccessGames();
+    }
 
     @Test
     public void testTypical()

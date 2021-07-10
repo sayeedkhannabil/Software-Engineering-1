@@ -1,19 +1,20 @@
 package comp3350.grs.business;
 
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
+import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import comp3350.grs.application.Main;
+import comp3350.grs.application.Services;
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Guest;
 import comp3350.grs.objects.RegisteredUser;
 import comp3350.grs.objects.User;
+import comp3350.grs.persistence.DataAccessObject;
 
-import static org.junit.Assert.*;
 
 public class AccessUsersTest {
     private static AccessUsers accessUsers;
@@ -24,7 +25,7 @@ public class AccessUsersTest {
 
     @BeforeClass
     public static void setUpClass(){
-        Main.startUp();
+        Services.createDataAccess(new DataAccessObject());
         accessUsers=new AccessUsers();
     }
 

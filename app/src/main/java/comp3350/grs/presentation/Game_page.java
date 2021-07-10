@@ -104,13 +104,21 @@ public class Game_page extends AppCompatActivity {
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 if(accessRatings.getRating(game.getName(),
                         AccessUsers.getActiveUser().getUserID())==null){
+                    try {
                         accessRatings.insertRating(new Rating(rating,
                                 game.getName(),AccessUsers.getActiveUser().getUserID()));
+                    } catch (IncorrectFormat incorrectFormat) {
+                        incorrectFormat.printStackTrace();
+                    }
                 }
                 else {
+                    try {
                         accessRatings.updateRating(new Rating(rating,
                                 game.getName(),
                                 AccessUsers.getActiveUser().getUserID()));
+                    } catch (IncorrectFormat incorrectFormat) {
+                        incorrectFormat.printStackTrace();
+                    }
                 }
 
                 ratingBar.setRating((float) accessRatings.getOverallRating(game.getName()));

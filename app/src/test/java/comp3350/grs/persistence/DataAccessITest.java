@@ -1,6 +1,7 @@
 package comp3350.grs.persistence;
 
-import org.junit.After;
+import junit.framework.TestCase;
+
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,12 +18,10 @@ import comp3350.grs.objects.RegisteredUser;
 import comp3350.grs.objects.Review;
 import comp3350.grs.objects.User;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-public class DataAccessITest {
+
+public class DataAccessITest{
     private static DataAccessI dataAccessI;
     private User user1,user2,user3;
     private Game game1,game2,game3;
@@ -42,10 +41,8 @@ public class DataAccessITest {
 
     @Before
     public void initiateDB(){
-
-        dataAccessI=new DataAccessObject("TestDB");
-   //    dataAccessI=new DataAccessStub("TestDB");
-
+//        dataAccessI=new DataAccessObject("TestDB");
+        dataAccessI=new DataAccessStub("TestDB");
         dataAccessI.open("database/TestDB");
         dataAccessI.clearDatabase();
         dataAccessI.open("database/TestDB");
@@ -85,9 +82,9 @@ public class DataAccessITest {
         dataAccessI.close();
     }
 
+
     @Test
     public void testTypical(){
-
         try {
             user1=new Guest();
         } catch (IncorrectFormat incorrectFormat) {
@@ -440,23 +437,25 @@ public class DataAccessITest {
         assertNull(user2);
 
         genreList=new ArrayList<>();
-        game1=new Game("","","",1.0,genreList);
+        game1=new Game("game1","","",1.0,genreList);
         success= dataAccessI.insertGame(game1);
         assertTrue(success);
-        game2= dataAccessI.getGameByName("");
+        game2= dataAccessI.getGameByName("game1");
         assertEquals(game1,game2);
-        gameList=dataAccessI.getGamesByNameImplicit("");
+        gameList=dataAccessI.getGamesByNameImplicit("g%");
         assertEquals(1,gameList.size());
         game2=gameList.get(0);
         assertEquals(game1,game2);
-        game1=new Game("","","",2.0,genreList);
+        game1=new Game("game1","dev","desc",2.0,genreList);
         success= dataAccessI.updateGame(game1);
         assertTrue(success);
-        game2= dataAccessI.getGameByName("");
-        assertEquals(game2.getPrice(),2.0,0.01);
+        game2= dataAccessI.getGameByName("game1");
+        assertEquals(2.0,game2.getPrice(),0.01);
+        assertEquals("dev", game2.getDev());
+        assertEquals("desc", game2.getDescription());
         success=dataAccessI.deleteGame(game1);
         assertTrue(success);
-        game2= dataAccessI.getGameByName("");
+        game2= dataAccessI.getGameByName("game1");
         assertNull(game2);
 
         game1=new Game("1","","",1.0,genreList);

@@ -47,6 +47,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		super();
 	}
 
+	//open the database, create tables, load default value, initiate variables
 	public void open(String dbPath)
 	{
 		super.open(dbPath);
@@ -61,13 +62,11 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 			statement1 = connection.createStatement();
 			statement2 = connection.createStatement();
 			statement3 = connection.createStatement();
-
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
-
 
 		try {
 			if (!checkTableExist("users")){
@@ -775,7 +774,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 
 				ratingList.add(new Rating(rating,gameName,userID));
 			}
-		} catch (SQLException sqlException) {
+		} catch (SQLException | IncorrectFormat sqlException) {
 			sqlException.printStackTrace();
 		}
 

@@ -19,9 +19,8 @@ public class Game
                 List<String> gen) {
         //check for valid input
         try {
-            validName(gameName);
-            validPrice(price);
-
+            checkName(gameName);
+            checkPrice(price);
             name = gameName;
             dev = gameDev;
             description = desc;
@@ -36,7 +35,7 @@ public class Game
     //simple constructor
     public Game(String gameName) {
         try {
-            validName(gameName);
+            checkName(gameName);
 
             name = gameName;
             dev = null;
@@ -67,9 +66,7 @@ public class Game
     }
 
     public List<String> getGenres() {
-        List<String> genreCopy = new ArrayList<>();
-        genreCopy.addAll(genres);
-        return genreCopy;
+        return genres;
     }
 
     public String getDescription() {
@@ -81,23 +78,17 @@ public class Game
     }
 
     public boolean validGame() {
-        boolean valid = false;
-        if(name != null) {
-            if(!name.trim().equals("") && currPrice >= 0.0) {
-                valid = true;
-            }
-        }
-        return valid;
+        return name!=null;
     }
 
-    private void validName(String name) throws IncorrectFormat, NullPointerException {
+    private void checkName(String name) throws IncorrectFormat{
         //check that name is not blank or just space(s) or null
         if (name.trim().equals("")) {
             throw new IncorrectFormat("Game name cannot be blank/empty.");
         }
     }
 
-    private void validPrice(double price) throws IncorrectFormat{
+    private void checkPrice(double price) throws IncorrectFormat{
         if (price < 0.0) {
             throw new IncorrectFormat("Price cannot be negative.");
         }
@@ -109,7 +100,7 @@ public class Game
         Game other = null;
         boolean isSame = false;
 
-        if(otherGame instanceof Game)
+        if(this.name!=null&& otherGame instanceof Game)
         {
             other = (Game) otherGame;
             if((this.name).equals(other.getName()) )

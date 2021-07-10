@@ -14,34 +14,19 @@ public class Rating
     private String userID;
 
 
-    public Rating (double ratingGiven,String gameName,String userID) {
-        ratingValue = 0.0; // default -- if no ratings (or no valid ratings) given yet
-
-        try {
-            checkRating(ratingGiven);
-            checkGameName(gameName);
-
-            ratingValue = ratingGiven;
-            this.userID=userID;
-            this.gameName=gameName;
-        }
-        catch (IncorrectFormat incorrectFormat) {
-            System.out.println(incorrectFormat.getMessage());
-        }
+    public Rating (double ratingGiven,String gameName,String userID) throws IncorrectFormat {
+        checkRating(ratingGiven);
+        ratingValue = ratingGiven;
+        this.userID=userID;
+        this.gameName=gameName;
     }
 
-    public Rating(double ratingGiven) {
-        ratingValue = 0.0; // default -- if no ratings (or no valid ratings) given yet
-        try {
-            checkRating(ratingGiven);
+    public Rating(double ratingGiven) throws IncorrectFormat {
+        checkRating(ratingGiven);
+        ratingValue = ratingGiven;
+        this.userID = null;
+        this.gameName = null;
 
-            ratingValue = ratingGiven;
-            this.userID = null;
-            this.gameName = null;
-        }
-        catch (IncorrectFormat incorrectFormat) {
-            System.out.println(incorrectFormat.getMessage());
-        }
     }
 
     public Rating(){
@@ -59,12 +44,6 @@ public class Rating
         }
     }
 
-    private void checkGameName(String game) throws IncorrectFormat {
-        AccessGames gameAccess = new AccessGames();
-        if(gameAccess.findGame(game) == null){
-            throw new IncorrectFormat("The game does not exist in the database. Cannot rate a non-existent game.");
-        }
-    }
 
 
     public double getRatingValue() {

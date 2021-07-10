@@ -8,7 +8,7 @@ import comp3350.grs.exceptions.IncorrectFormat;
 
 import static org.junit.Assert.*;
 
-public class GuestTest extends TestCase {
+public class GuestTest{
 
     @Test
     public void test() {

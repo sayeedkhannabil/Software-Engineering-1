@@ -3,15 +3,28 @@ import junit.framework.TestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class GameTest extends TestCase {
-    private ArrayList<String> genres = new ArrayList<>(Arrays.asList("Genre1", "Genre2", "Genre3"));
-    private Game typicalGame = new Game("TypicalGame", "TypicalDeveloper",
-            "TypicalDescription", 20.00, genres);;
-    private Game typicalGameSimple = new Game("GameWithOnlyAName");;
-    private Game nullGame = new Game();
+public class GameTest  {
+    private static List<String> genres;
+    private static Game typicalGame;
+    private static Game typicalGameSimple;
+    private static Game nullGame ;
+
+    @BeforeClass
+    public static void setClass(){
+        genres = new ArrayList<>(Arrays.asList("Genre1", "Genre2", "Genre3"));
+        typicalGame = new Game("TypicalGame", "TypicalDeveloper",
+                "TypicalDescription", 20.00, genres);
+        typicalGameSimple = new Game("GameWithOnlyAName");
+        nullGame = new Game();
+    }
 
     @Test
     public void testTypicalGame()
@@ -83,18 +96,16 @@ public class GameTest extends TestCase {
     public void testEqualsSelf()
     {
         //games are equal if they have the same name (or both have a null field for a name), and are both Game objects
-        assertEquals(true, nullGame.equals(nullGame));
-        assertEquals(true, typicalGameSimple.equals(typicalGameSimple));
-        assertEquals(true, typicalGame.equals(typicalGame));
+        assertEquals(typicalGameSimple,typicalGameSimple);
+        assertEquals(typicalGame,typicalGame);
     }
 
     @Test
     public void testEqualsOtherGame(){
         Game sameName = new Game("TypicalGame", "testDev",  "TestDesc", 0.0,genres);
-        assertTrue(typicalGame.equals(sameName)); //because they have the same name
-
-        assertEquals(false, nullGame.equals(typicalGameSimple));
-        assertEquals(false, nullGame.equals(typicalGame));
-        assertEquals(false, typicalGameSimple.equals(typicalGame));
+        assertEquals(sameName,typicalGame);
+        assertNotEquals(nullGame, typicalGameSimple);
+        assertNotEquals(nullGame, typicalGame);
+        assertNotEquals(typicalGameSimple, typicalGame);
     }
 }

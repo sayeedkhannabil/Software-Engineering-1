@@ -13,7 +13,7 @@ import comp3350.grs.objects.User;
 import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Review;
 
-
+// the database which stores users and games
 public class DataAccessStub extends DataAccess implements DataAccessI {
 	//did not add these to DataAccess, added here instead
 	private List<Review> reviews;
@@ -49,6 +49,26 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	public void clearTable(){
 		users.clear();
 		games.clear();
+	}
+
+	@Override
+	public void clearUsers() {
+		users.clear();
+	}
+
+	@Override
+	public void clearGames() {
+		games.clear();
+	}
+
+	@Override
+	public void clearReviews() {
+		reviews.clear();
+	}
+
+	@Override
+	public void clearRatings() {
+		ratings.clear();
 	}
 
 	public boolean insertUser(User newUser) {
@@ -397,7 +417,11 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		for(int i = 0; i < ratings.size(); i++){
 			toCopy = ratings.get(i);
 			if(toCopy.validRating()){
-				copy = new Rating(toCopy.getRatingValue(),toCopy.getGameName(),toCopy.getUserID());
+				try {
+					copy = new Rating(toCopy.getRatingValue(),toCopy.getGameName(),toCopy.getUserID());
+				} catch (IncorrectFormat incorrectFormat) {
+					incorrectFormat.printStackTrace();
+				}
 			}
 			ratingsCopy.add(copy);
 		}

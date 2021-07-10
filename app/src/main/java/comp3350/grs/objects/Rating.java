@@ -3,12 +3,10 @@
 // the active user giving the rating, as well as a toString() method, input validation,
 // and will have more functionality in the future.
 package comp3350.grs.objects;
-import comp3350.grs.business.AccessGames;
 import comp3350.grs.exceptions.IncorrectFormat;
-
+//domain object, rating of a game
 public class Rating
 {
-    private final int maxRating = 5;
     private double ratingValue; //from one to five
     private String gameName;
     private String userID;
@@ -33,13 +31,15 @@ public class Rating
         ratingValue = 0.0;
     }
 
-
+    //check if the rating is valid(important info is not null)
     public boolean validRating(){
         return this.userID!=null&&this.gameName!=null;
     }
 
+    //check the format of rating is correct
     private void checkRating(double rating) throws IncorrectFormat {
-        if(rating <= 0 || rating > maxRating){
+        final int MAX_RATING = 5;
+        if(rating <= 0 || rating > MAX_RATING){
             throw new IncorrectFormat("rating should be between 0 and 5.");
         }
     }
@@ -64,7 +64,7 @@ public class Rating
         result = false;
         Rating rating;
 
-        if (object instanceof Rating){
+        if (this.userID!=null&&this.gameName!=null&& object instanceof Rating){
             rating=(Rating)object;
             result=
                     this.userID.equals(rating.userID)&&this.gameName.equals(rating.gameName);
@@ -73,10 +73,6 @@ public class Rating
     }
 
     public String toString() {
-        String str = "UserID: "+userID+"\nRating: "+ ratingValue +" out of 5 points.\n";
-        if(ratingValue == 0){
-            str = "Invalid rating.";
-        }
-        return str;
+        return  "UserID: "+userID+"\nRating: "+ ratingValue +" out of 5 points.\n";
     }
 }

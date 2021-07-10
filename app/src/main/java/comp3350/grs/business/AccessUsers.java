@@ -10,30 +10,28 @@ import java.util.List;
 
 import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
-import comp3350.grs.objects.RegisteredUser;
 import comp3350.grs.objects.User;
 import comp3350.grs.persistence.DataAccessI;
-import comp3350.grs.persistence.DataAccessStub;
 
 public class AccessUsers {
 
-    private DataAccessI dataAccess;
-    private List<User> users;
+    private DataAccessI dataAccessI;
+    private List<User> userList;
     private static User activeUser;//the user logged in to the app
     private User currentUser;//used for return sequantial user
     private int currentUserIndex;//index of current user
 
     public AccessUsers()
     {
-        dataAccess = Services.getDataAccess(Main.dbName);
-        users = null;
+        dataAccessI = Services.getDataAccess(Main.dbName);
+        userList = null;
         activeUser = null;
         currentUser=null;
         currentUserIndex = 0;
     }
 
     public void clear(){
-        dataAccess.clearUsers();
+        dataAccessI.clearUsers();
     }
 
     public static User getActiveUser(){
@@ -51,26 +49,26 @@ public class AccessUsers {
     //get a list of all the users
     public List<User> getAllUsers()
     {
-        users=dataAccess.getAllUsers();
-        return users;
+        userList = dataAccessI.getAllUsers();
+        return userList;
     }
 
     //get users one by one
     public User getSequential()
     {
-        if (users == null)
+        if (userList == null)
         {
-            users = dataAccess.getAllUsers();
+            getAllUsers();
             currentUserIndex = 0;
         }
-        if (currentUserIndex < users.size())
+        if (currentUserIndex < userList.size())
         {
-            currentUser =  users.get(currentUserIndex);
+            currentUser =  userList.get(currentUserIndex);
             currentUserIndex++;
         }
         else
         {
-            users = null;
+            userList = null;
             currentUser = null;
             currentUserIndex = 0;
         }
@@ -79,22 +77,22 @@ public class AccessUsers {
 
     //get a specific user according to userID
     public User getUserByID(String userID){
-        currentUser = dataAccess.getUserByID(userID);
+        currentUser = dataAccessI.getUserByID(userID);
         return currentUser;
     }
 
     public boolean insertUser(User newUser)
     {
-        return dataAccess.insertUser(newUser);
+        return dataAccessI.insertUser(newUser);
     }
 
     public boolean updateUser(User user)
     {
-        return dataAccess.updateUser(user);
+        return dataAccessI.updateUser(user);
     }
 
     public boolean deleteUser(User user)
     {
-        return dataAccess.deleteUser(user);
+        return dataAccessI.deleteUser(user);
     }
 }

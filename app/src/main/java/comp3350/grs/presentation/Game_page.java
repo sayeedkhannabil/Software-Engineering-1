@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -58,6 +59,7 @@ public class Game_page extends AppCompatActivity {
     private ConstraintLayout game_page_main;
     private LinearLayout genre_wrapper;
     private String game_name;
+    private boolean userTouch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,36 +99,44 @@ public class Game_page extends AppCompatActivity {
         price_text.setText("$" + game.getPrice());
         ratingBar.setRating((float) accessRatings.getOverallRating(game_name));
         showReviews();
-
+        userTouch=false;
         //when user clicked on the rating bar,update the rating
+        setRatingBar();
+        setReviewButton();
+        setGenre();
+    }
+
+    private void setRatingBar(){
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                if(accessRatings.getRating(game.getName(),
-                        AccessUsers.getActiveUser().getUserID())==null){
-                    try {
-                        accessRatings.insertRating(new Rating(rating,
-                                game.getName(),AccessUsers.getActiveUser().getUserID()));
-                    } catch (IncorrectFormat incorrectFormat) {
-                        incorrectFormat.printStackTrace();
+                if (fromUser){
+                    if(accessRatings.getRating(game.getName(),
+                            AccessUsers.getActiveUser().getUserID())==null){
+                        try {
+                            accessRatings.insertRating(new Rating(rating,
+                                    game.getName(),AccessUsers.getActiveUser().getUserID()));
+                        } catch (IncorrectFormat incorrectFormat) {
+                            incorrectFormat.printStackTrace();
+                        }
                     }
-                }
-                else {
-                    try {
-                        accessRatings.updateRating(new Rating(rating,
-                                game.getName(),
-                                AccessUsers.getActiveUser().getUserID()));
-                    } catch (IncorrectFormat incorrectFormat) {
-                        incorrectFormat.printStackTrace();
+                    else {
+                        try {
+                            accessRatings.updateRating(new Rating(rating,
+                                    game.getName(),
+                                    AccessUsers.getActiveUser().getUserID()));
+                        } catch (IncorrectFormat incorrectFormat) {
+                            incorrectFormat.printStackTrace();
+                        }
                     }
+                    ratingBar.setRating((float) accessRatings.getOverallRating(game.getName()));
                 }
 
-                ratingBar.setRating((float) accessRatings.getOverallRating(game.getName()));
             }
         });
 
-        setReviewButton();
-        setGenre();
+
+
     }
 
     private void setGenre(){

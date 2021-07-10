@@ -41,8 +41,9 @@ public class Game_gallery extends AppCompatActivity {
     private AccessGames accessGames;
     private LinearLayout top_bar_layout;
     private LinearLayout sort_bar;
-    private boolean [] sortAsc;
-    private boolean [] activeSort;
+    private boolean [] sortAsc;//keep track what sort order is(ascending or
+    // descending)
+    private boolean [] activeSort;//keep track which sort button is active
     private boolean openSort,openSearch;
 
     @Override
@@ -68,9 +69,10 @@ public class Game_gallery extends AppCompatActivity {
         setSortBar();
     }
 
+    //set the sort buttons
     private void setSortDisplay(){
         List<Game> gameList=new ArrayList<Game>();
-        boolean notSorting=true;
+        boolean notSorting=true;//all the sort button is inactive
         for (int i = 0; i < activeSort.length&&notSorting; i++) {
             if (activeSort[i]){
                 notSorting=false;
@@ -124,14 +126,14 @@ public class Game_gallery extends AppCompatActivity {
             icon= (ImageView) sortButton.getChildAt(0);
             if (activeSort[i]){
                 sortButton.setBackgroundColor(getResources().getColor(R.color.grey));
-                if (sortAsc[i]){
+                if (sortAsc[i]){//ascending , set the icon to be up arrow
                     icon.setImageResource(R.drawable.up_arrow);
                 }
-                else {
+                else {//descending , set the icon to be down arrow
                     icon.setImageResource(R.drawable.down_arrow);
                 }
             }
-            else {
+            else {//not sorting,set icon to be up and down
                 sortButton.setBackgroundColor(getResources().getColor(R.color.white));
                 icon.setImageResource(R.drawable.sort);
             }
@@ -157,7 +159,9 @@ public class Game_gallery extends AppCompatActivity {
                     Arrays.fill(activeSort, false);
                     activeSort[index] = true;
                 }
+                //set icons and background of the sort buttons
                 setSortBackground(sortButtons);
+                //display the sort result
                 setSortDisplay();
             }
         });
@@ -264,7 +268,7 @@ public class Game_gallery extends AppCompatActivity {
         }
     }
 
-    private void setSearch_game_bar(){// TODO: 6/30/2021
+    private void setSearch_game_bar(){
 
         search_game_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -280,6 +284,7 @@ public class Game_gallery extends AppCompatActivity {
             }
         });
 
+        //when user close the search bar, reset all the games
         search_game_bar.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {

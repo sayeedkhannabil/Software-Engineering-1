@@ -8,6 +8,7 @@ import comp3350.grs.exceptions.IncorrectFormat;
 
 public class RatingTest {
 
+    @Test
     public void testRating1(){
         Rating rate;
         rate=null;

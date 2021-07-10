@@ -8,8 +8,7 @@
 package comp3350.grs.business; 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List; 
-import java.util.ArrayList;
+import java.util.List;
 
 import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
@@ -19,7 +18,7 @@ import comp3350.grs.objects.Game;
 
 public class AccessGames
 {
-    private DataAccessI dataAccess;
+    private DataAccessI dataAccessI;
     private List<Game> gameList; 
     private Game currGame; 
     private int currGameIndex;
@@ -27,7 +26,7 @@ public class AccessGames
     private AccessReviews accessReviews;
 
     public AccessGames() {
-        dataAccess =  Services.getDataAccess(Main.dbName);
+        dataAccessI =  Services.getDataAccess(Main.dbName);
         accessRatings=new AccessRatings();
         accessReviews=new AccessReviews();
         gameList = null; 
@@ -36,12 +35,12 @@ public class AccessGames
     }
 
     public void clear(){
-        dataAccess.clearGames();
+        dataAccessI.clearGames();
     }
 
 
     public List<Game> getAllGames() {
-        gameList=dataAccess.getAllGames();
+        gameList= dataAccessI.getAllGames();
         return gameList;
     }
     
@@ -166,17 +165,16 @@ public class AccessGames
    }
 
     public Game findGame(String name) {
-        return dataAccess.getGameByName(name);
+        return dataAccessI.getGameByName(name);
     }
 
     public List<Game> getGamesByNameImplicit(String gameName){
         String gameNameImp="%"+gameName+"%";
-        return dataAccess.getGamesByNameImplicit(gameNameImp);
+        return dataAccessI.getGamesByNameImplicit(gameNameImp);
     }
 
     public Game getSequential() {
         if(gameList == null) {
-            gameList = new ArrayList<Game>();
             getAllGames();
             currGameIndex = 0; 
         }
@@ -192,14 +190,14 @@ public class AccessGames
     }
 
     public boolean insertGame(Game currentGame) {
-        return dataAccess.insertGame(currentGame);
+        return dataAccessI.insertGame(currentGame);
     }
 
     public boolean updateGame(Game currentGame) {
-        return dataAccess.updateGame(currentGame);
+        return dataAccessI.updateGame(currentGame);
     }
 
     public boolean deleteGame(Game currentGame) {
-        return dataAccess.deleteGame(currentGame);
+        return dataAccessI.deleteGame(currentGame);
     }
 }

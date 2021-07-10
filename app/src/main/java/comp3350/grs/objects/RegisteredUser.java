@@ -48,31 +48,21 @@ public class RegisteredUser extends User{
         }
     }
 
-    //------------------------------------------------------
-    // checkUseridFormat
-    //
-    // PURPOSE:    check if the password is of correct format
-    // PARAMETERS:
-    //     password: the password to be checked
-    //
-    //------------------------------------------------------
+
+    //check if the password is of correct format
     private void checkPasswordFormat(String password) throws IncorrectFormat {
+        final int MIN_LENGTH=3;
+        final int MAX_LENGTH=20;
         if (password.contains(" ")){
             throw new IncorrectFormat("password should not contain space");
         }
-        else if(password.length()<3||password.length()>20){
-            throw new IncorrectFormat("length of password should >=3 and <=20");
+        else if(password.length()<MIN_LENGTH||password.length()>MAX_LENGTH){
+            throw new IncorrectFormat("length of password should >="+MIN_LENGTH+" and <="+MAX_LENGTH);
         }
     }
 
-    //------------------------------------------------------
-    // checkPassMatch
-    //
-    // PURPOSE:    check if the given password is the same as the password signed up
-    // PARAMETERS:
-    //     password: the password to be checked
-    //
-    //------------------------------------------------------
+
+    //check if the given password is the same as the password signed up
     public void checkPassMatch(String password) throws IncorrectPassword {
         if (!this.password.equals(password)){
             throw new IncorrectPassword("incorrect password");
@@ -90,6 +80,6 @@ public class RegisteredUser extends User{
 
     @Override
     public String toString() {
-        return "type:registered user,"+super.toString()+","+"password:"+this.password;
+        return "type:registered user\n"+super.toString()+"\npassword:"+ this.password;
     }
 }

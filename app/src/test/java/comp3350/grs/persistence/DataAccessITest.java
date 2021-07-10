@@ -137,7 +137,11 @@ public class DataAccessITest{
         user2= dataAccessI.getUserByID(userID);
         assertNull(user2);
 
-        game3=new Game("otherGame1");
+        try {
+            game3=new Game("otherGame1");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         dataAccessI.insertGame(game3);
         gameList=dataAccessI.getAllGames();
         assertEquals(1,gameList.size());
@@ -150,7 +154,11 @@ public class DataAccessITest{
         genreList.add("genre1");
         genreList.add("genre2");
         genreList.add("genre3");
-        game1=new Game(gameName,developer,description,price,genreList);
+        try {
+            game1=new Game(gameName,developer,description,price,genreList);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         success=dataAccessI.insertGame(game1);
         assertTrue (success); ;
         gameList=dataAccessI.getAllGames();
@@ -166,7 +174,11 @@ public class DataAccessITest{
         assertTrue (genreList.contains("genre2"));
         assertTrue (genreList.contains("genre3"));
 
-        game3=new Game("otherGame2");
+        try {
+            game3=new Game("otherGame2");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         dataAccessI.insertGame(game3);
         gameList=dataAccessI.getAllGames();
         assertEquals(3,gameList.size());
@@ -178,7 +190,11 @@ public class DataAccessITest{
         genreList.add("genre1");
         genreList.add("genre4");
 
-        game1=new Game(gameName,developer,description,price,genreList);
+        try {
+            game1=new Game(gameName,developer,description,price,genreList);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         dataAccessI.updateGame(game1);
         gameList=dataAccessI.getAllGames();
         assertEquals(3,gameList.size());
@@ -213,9 +229,14 @@ public class DataAccessITest{
             incorrectFormat.printStackTrace();
         }
 
-        game1=new Game("game1","dev1","desc1",1.0,genreList);
-        game2=new Game("game2","dev2","desc2",2.0,genreList);
-        game3=new Game("game3","dev3","desc3",3.0,genreList);
+        try {
+            game1=new Game("game1","dev1","desc1",1.0,genreList);
+            game2=new Game("game2","dev2","desc2",2.0,genreList);
+            game3=new Game("game3","dev3","desc3",3.0,genreList);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+
 
         dataAccessI.insertUser(user1);
         dataAccessI.insertUser(user2);
@@ -365,7 +386,11 @@ public class DataAccessITest{
 
         genreList=new ArrayList<>();
         genreList.add("genre");
-        game1=new Game("gameName","dev","desc",1.0,genreList);
+        try {
+            game1=new Game("gameName","dev","desc",1.0,genreList);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         dataAccessI.insertGame(game1);
         gameList=dataAccessI.getGamesByNameImplicit(null);
         assertEquals(0,gameList.size());
@@ -437,7 +462,11 @@ public class DataAccessITest{
         assertNull(user2);
 
         genreList=new ArrayList<>();
-        game1=new Game("game1","","",1.0,genreList);
+        try {
+            game1=new Game("game1","","",1.0,genreList);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         success= dataAccessI.insertGame(game1);
         assertTrue(success);
         game2= dataAccessI.getGameByName("game1");
@@ -446,7 +475,11 @@ public class DataAccessITest{
         assertEquals(1,gameList.size());
         game2=gameList.get(0);
         assertEquals(game1,game2);
-        game1=new Game("game1","dev","desc",2.0,genreList);
+        try {
+            game1=new Game("game1","dev","desc",2.0,genreList);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         success= dataAccessI.updateGame(game1);
         assertTrue(success);
         game2= dataAccessI.getGameByName("game1");
@@ -458,7 +491,11 @@ public class DataAccessITest{
         game2= dataAccessI.getGameByName("game1");
         assertNull(game2);
 
-        game1=new Game("1","","",1.0,genreList);
+        try {
+            game1=new Game("1","","",1.0,genreList);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         dataAccessI.insertGame(game1);
         assertTrue(success);
         game2= dataAccessI.getGameByName("1");
@@ -467,7 +504,11 @@ public class DataAccessITest{
         assertEquals(1,gameList.size());
         game2=gameList.get(0);
         assertEquals(game1,game2);
-        game1=new Game("1","","",3.0,genreList);
+        try {
+            game1=new Game("1","","",3.0,genreList);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         success= dataAccessI.updateGame(game1);
         assertTrue(success);
         game2= dataAccessI.getGameByName("1");
@@ -477,7 +518,11 @@ public class DataAccessITest{
         game2= dataAccessI.getGameByName("1");
         assertNull(game2);
 
-        game1=new Game("gameName");
+        try {
+            game1=new Game("gameName");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         dataAccessI.insertGame(game1);
         try {
             user1=new RegisteredUser("userID","password");

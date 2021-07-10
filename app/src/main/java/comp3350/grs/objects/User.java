@@ -2,14 +2,9 @@ package comp3350.grs.objects;
 
 import comp3350.grs.exceptions.IncorrectFormat;
 
-// CLASS: User
-//
-// Author: Shiqing Guo
-//
-// REMARKS: domain object of the user who will use this app
-//	this is an abstract class
-//
-//-----------------------------------------
+
+// domain object of the user who will use this app
+//	this is an abstract class, have guest and registeredUser as child
 public abstract class User
 {
 	private String userID;
@@ -24,9 +19,11 @@ public abstract class User
 		this.userID=userID;
 	}
 
+	//check the format of user id is correct
 	protected void checkUseridFormat(String userID) throws IncorrectFormat {
-		if (userID.length()<=0||userID.length()>10){
-			throw new IncorrectFormat("length of user id should >0 and <=10");
+		final int MAX_LENGTH=20;
+		if (userID.length()<=0||userID.length()>MAX_LENGTH){
+			throw new IncorrectFormat("length of user id should >0 and <="+MAX_LENGTH);
 		}else if (userID.contains(" ")){
 			throw new IncorrectFormat("user id should not contain space");
 		}
@@ -43,6 +40,7 @@ public abstract class User
 		return "userID:" + userID;
 	}
 
+	//important info is not null
 	public boolean validUser(){
 		return this.userID!=null;
 	}
@@ -53,19 +51,11 @@ public abstract class User
 		this.userID=newUserID;
 	}
 
-	//------------------------------------------------------
-	// equals
-	//
-	// PURPOSE:    compare this user with the user given
-	// PARAMETERS:
-	//     object: the given user to compare
-	// Returns: a boolean to indicate whether this user equals to given user
-	//------------------------------------------------------
+
 	public boolean equals(Object object)
 	{
 		boolean result;
 		User user;
-		
 		result = false;
 		
 		if (this.userID!=null&& object instanceof User)

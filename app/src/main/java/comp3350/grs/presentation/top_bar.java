@@ -1,5 +1,6 @@
 package comp3350.grs.presentation;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -73,16 +74,29 @@ public class top_bar extends Fragment {
         user_button=view.findViewById(R.id.user_button);
 
         setBack_to_prev();
-
+        setUser_button();
         return view;
     }
 
+
     private void setBack_to_prev(){
         Utilities.setOnTouchEffect(back_to_prev);
+        //when press the back arrow, return to the previous activity
         back_to_prev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
+            }
+        });
+    }
+
+    private void setUser_button(){
+        Utilities.setOnTouchEffect(user_button);
+        user_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getActivity(),UserPage.class);
+                startActivity(intent);
             }
         });
     }

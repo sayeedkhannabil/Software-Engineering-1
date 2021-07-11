@@ -210,7 +210,7 @@ public class AccessGamesTest {
     }
 
     @AfterClass
-    public static void shutDown(){
+    public static void AfterClass(){
         Services.closeDataAccess();
     }
 }

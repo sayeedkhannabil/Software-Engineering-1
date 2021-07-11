@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import comp3350.grs.business.AccessRatings;
+import comp3350.grs.business.AccessReviewTest;
 import comp3350.grs.business.AccessUsers;
 import comp3350.grs.business.AccessUsersTest;
 import comp3350.grs.business.AccessGamesTest;
@@ -20,7 +21,7 @@ import comp3350.grs.persistence.DataAccessITest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        AccessGamesTest.class, AccessUsersTest.class,
+        AccessGamesTest.class, AccessUsersTest.class, AccessReviewTest.class,
         GameTest.class,GuestTest.class,RatingTest.class,
         RegisteredUserTest.class,ReviewTest.class,
         DataAccessITest.class

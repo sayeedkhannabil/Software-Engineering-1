@@ -142,6 +142,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		return usersCopy;
 	}
 
+
 	public List<User> getUsersByIDImplicit(String userNameImplicit) {
 		List<User> res = new ArrayList<>();
 		List<User> searchList = this.getAllUsers();
@@ -321,9 +322,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	public boolean insertReview(Review review){
 		boolean inserted = false;
 		if(review != null) {
-			if (!reviews.contains(review)) {
-				inserted = reviews.add(review);
-			}
+			inserted = reviews.add(review);
 		}
 		return inserted;
 	}

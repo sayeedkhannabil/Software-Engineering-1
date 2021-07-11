@@ -49,6 +49,6 @@ public class ReviewTest extends TestCase {
         }
 
         Review r1 = new Review();
-        assertNull(r1);
+        assertNull(r1.getComment());
     }
 }

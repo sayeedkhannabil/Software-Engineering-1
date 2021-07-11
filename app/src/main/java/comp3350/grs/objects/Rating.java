@@ -44,8 +44,6 @@ public class Rating
         }
     }
 
-
-
     public double getRatingValue() {
         return ratingValue;
     }
@@ -58,7 +56,7 @@ public class Rating
         return gameName;
     }
 
-
+    @Override
     public boolean equals(Object object){
         boolean result;
         result = false;

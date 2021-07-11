@@ -17,19 +17,22 @@ import static org.junit.Assert.*;
 
 public class AccessGamesTest {
 
-    private AccessGames gameAccess;
-    private AccessRatings ratingAccess;
-    private AccessReviews reviewAccess;
+    private static AccessGames gameAccess;
+    private static AccessRatings ratingAccess;
+    private static AccessReviews reviewAccess;
     private List<String> genres;
 
-    @Before
-    public void before(){
+    @BeforeClass
+    public static void beforeClass(){
         Services.closeDataAccess(); //if there was one open
         Services.createDataAccess(new DataAccessStub(Main.dbName));
         gameAccess = new AccessGames();
         ratingAccess = new AccessRatings();
         reviewAccess = new AccessReviews();
+    }
 
+    @Before
+    public void before() {
         genres = new ArrayList<>();
         genres.add("genre1");
         genres.add("genre2");

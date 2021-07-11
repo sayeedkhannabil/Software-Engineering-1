@@ -209,10 +209,14 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	public boolean updateGame(Game toUpdate) {
 		boolean updated = false;
-		int index = games.indexOf(toUpdate);
-		if(index >= 0) {
-			games.set(index, toUpdate);
-			updated = true;
+		int index;
+
+		if(toUpdate != null) {
+			index = games.indexOf(toUpdate);
+			if (index >= 0) {
+				games.set(index, toUpdate);
+				updated = true;
+			}
 		}
 
 		return updated;
@@ -220,11 +224,14 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	public boolean deleteGame(Game toDel) {
 		boolean deleted = false;
+		int index;
 
-		int index = games.indexOf(toDel);
-		if(index >= 0) {
-			games.remove(index);
-			deleted = true;
+		if(toDel != null) {
+			index = games.indexOf(toDel);
+			if (index >= 0) {
+				games.remove(index);
+				deleted = true;
+			}
 		}
 
 		return deleted;
@@ -313,30 +320,38 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	public boolean insertReview(Review review){
 		boolean inserted = false;
-		if(!reviews.contains(review)){
-			inserted = reviews.add(review);
+		if(review != null) {
+			if (!reviews.contains(review)) {
+				inserted = reviews.add(review);
+			}
 		}
 		return inserted;
 	}
 
 	public boolean updateReview(Review review){
 		boolean updated = false;
+		int index;
 
-		int index = reviews.indexOf(review);
-		if(index >= 0) {
-			reviews.set(index, review);
-			updated = true;
+		if(review != null) {
+			index = reviews.indexOf(review);
+			if (index >= 0) {
+				reviews.set(index, review);
+				updated = true;
+			}
 		}
 		return updated;
 	}
 
 	public boolean deleteReview(Review review) {
 		boolean deleted = false;
+		int index;
 
-		int index = reviews.indexOf(review);
-		if(index >= 0) {
-			reviews.remove(index);
-			deleted = true;
+		if(review != null) {
+			index = reviews.indexOf(review);
+			if (index >= 0) {
+				reviews.remove(index);
+				deleted = true;
+			}
 		}
 
 		return deleted;
@@ -414,30 +429,42 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	public boolean insertRating(Rating rating){
 		boolean inserted = false;
-		if(!ratings.contains(rating)){
-			inserted = ratings.add(rating);
+		Game ratingGame;
+		User ratingUser;
+		if(rating != null && rating.validRating()) {
+			ratingGame = getGameByName(rating.getGameName());
+			ratingUser = getUserByID(rating.getUserID());
+			if(games.contains(ratingGame) && (users.contains(ratingUser) || rating.getUserID().equals("Guest"))) {
+				inserted = ratings.add(rating);
+			}
 		}
 		return inserted;
 	}
 
 	public boolean updateRating(Rating rating){
 		boolean updated = false;
+		int index;
 
-		int index = ratings.indexOf(rating);
-		if(index >= 0) {
-			ratings.set(index, rating);
-			updated = true;
+		if(rating != null) {
+			 index = ratings.indexOf(rating);
+			if (index >= 0) {
+				ratings.set(index, rating);
+				updated = true;
+			}
 		}
 		return updated;
 	}
 
 	public boolean deleteRating(Rating rating){
 		boolean deleted = false;
+		int index;
 
-		int index = ratings.indexOf(rating);
-		if(index >= 0) {
-			ratings.remove(index);
-			deleted = true;
+		if(rating != null) {
+			index = ratings.indexOf(rating);
+			if (index >= 0) {
+				ratings.remove(index);
+				deleted = true;
+			}
 		}
 
 		return deleted;

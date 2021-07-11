@@ -128,7 +128,7 @@ July 8, 2021: Gongyu update RatingTest file, delete old test method and add new 
 July 9: Katharine K implemented implicit user and game search in DataAccessStub
         (expected time: 1 hour, actual: 2 hours)
 July 9: Katharine K added more tests to AccessGameTest, updated Game class, attempted to inject stub database into test class
-        - did not finish AccessRatingTest as expected
+        - did not finish AccessGameTest as expected
         (expected time: 2 hour, actual: 2 hours)
 july 9: Shiqing Guo finished accessUsersTest(expected:7hours actual:7hours)
 July 10: Katharine K added more tests to AccessGamesTest, fixed bugs in DataAccessStub

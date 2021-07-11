@@ -21,6 +21,9 @@ public class AccessGamesTest {
     private static AccessRatings ratingAccess;
     private static AccessReviews reviewAccess;
     private List<String> genres;
+    private Game typicalGame, typicalGameSimple, nullGame, noNameGame, found;
+    private boolean insert, update, delete;
+    private int numGames;
 
     @BeforeClass
     public static void beforeClass(){
@@ -36,13 +39,22 @@ public class AccessGamesTest {
         genres = new ArrayList<>();
         genres.add("genre1");
         genres.add("genre2");
+
+        typicalGame = null;
+        typicalGameSimple = null;
+        nullGame = null;
+        noNameGame = null;
+        found = null;
+        insert = false;
+        update = false;
+        delete = false;
+        numGames = 0;
     }
 
     @Test
     public void testTypical()
     {
         //typicalGame has all parameters (name, developer, description, price, genres)
-        Game typicalGame = null;
         try {
             typicalGame = new Game("Game1", "Developer", "Description", 1.00, genres);
         } catch (IncorrectFormat incorrectFormat) {
@@ -52,11 +64,10 @@ public class AccessGamesTest {
         gameAccess.insertGame(typicalGame);
         assertTrue(gameAccess.findGame("Game1") != null); //game is in db
         assertEquals(gameAccess.findGame("Game1"), typicalGame);
-        int numGames = gameAccess.getAllGames().size();
+        numGames = gameAccess.getAllGames().size();
         assertTrue(numGames >= 1);
 
         //typicalGameSimple has only the name parameter (no other info)
-        Game typicalGameSimple = null;
         try {
             typicalGameSimple = new Game("Game2");
         } catch (IncorrectFormat incorrectFormat) {
@@ -77,10 +88,10 @@ public class AccessGamesTest {
             incorrectFormat.printStackTrace();
         }
 
-        boolean updated = gameAccess.updateGame(typicalGameSimple);
-        assertTrue(updated);
+        update = gameAccess.updateGame(typicalGameSimple);
+        assertTrue(update);
 
-        Game found = gameAccess.findGame("Game2");
+        found = gameAccess.findGame("Game2");
         assertTrue(found != null);
         assertEquals(found,typicalGameSimple);
 
@@ -93,8 +104,8 @@ public class AccessGamesTest {
         Game sequential = gameAccess.getSequential();
         assertTrue(sequential != null);
 
-        boolean deleted = gameAccess.deleteGame(typicalGame);
-        assertTrue(deleted);
+        delete = gameAccess.deleteGame(typicalGame);
+        assertTrue(delete);
         found = gameAccess.findGame("Game1");
         assertTrue(found == null);
         int numGamesAfterDel = gameAccess.getAllGames().size();
@@ -152,43 +163,41 @@ public class AccessGamesTest {
     @Test
     public void testInvalid()
     {
-        Game nullGame = new Game(); //all parameters will be null, price will be -1
-
-        Game noNameGame = null;
+        nullGame = new Game(); //all parameters will be null, price will be -1
         try {
             noNameGame = new Game("    ");
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
 
-        boolean inserted = gameAccess.insertGame(noNameGame);
-        boolean inserted2 = gameAccess.insertGame(nullGame);
+        insert = gameAccess.insertGame(noNameGame);
+        boolean insert2 = gameAccess.insertGame(nullGame);
 
         //should not have inserted an invalid game
-        assertFalse(inserted);
-        assertFalse(inserted2);
+        assertFalse(insert);
+        assertFalse(insert2);
 
-        Game found = gameAccess.findGame(null);
+        found = gameAccess.findGame(null);
         assertNull(found);
 
         List<Game> implicitGames = gameAccess.getGamesByNameImplicit("");
         assertTrue(implicitGames.isEmpty());
 
         //should not be able to insert two games with the same name (two equal games)
-        Game sameName1 = null;
-        Game sameName2 = null;
+        typicalGameSimple = null;
+        Game sameName = null;
 
         try{
-            sameName1 = new Game("sameName");
-            sameName2 = new Game("sameName");
+            typicalGameSimple = new Game("sameName");
+            sameName = new Game("sameName");
         }
         catch(IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
 
-        gameAccess.insertGame(sameName1);
-        inserted = gameAccess.insertGame(sameName2);
-        assertFalse(inserted);
+        gameAccess.insertGame(typicalGameSimple);
+        insert = gameAccess.insertGame(sameName);
+        assertFalse(insert);
     }
 
     @Test

@@ -136,3 +136,7 @@ July 10: Katharine K added more tests to AccessGamesTest, fixed bugs in DataAcce
 July 10: Katharine K added more tests to AccessRatingsTest, fixed some errors in DataAccessStub
          - did not finish AccessRatingsTest as expected
          (expected time: 2 hours, actual: 3 hours)
+July 11: Gongyu Liao added more test methods to RatingTest.java
+	 (expected: 0.5 hour, actual 0.5 hour)
+
+

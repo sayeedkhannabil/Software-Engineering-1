@@ -7,6 +7,8 @@ import comp3350.grs.objects.User;
 import comp3350.grs.persistence.DataAccessStub;
 
 import junit.framework.TestCase;
+
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -169,6 +171,11 @@ public class AccessReviewTest {
         r = reviewAccess.getSequential();
 
         assertNull(r);
+    }
+
+    @AfterClass
+    public static void shutDown(){
+        Services.closeDataAccess();
     }
 
 

@@ -1,11 +1,7 @@
 package comp3350.grs.business;
-// CLASS: AccessUsers...
-//
-// Author: Shiqing
-//
-// REMARKS: What is the purpose of this class?
-// access users
-//-----------------------------------------
+
+// access users business object
+
 import java.util.List;
 
 import comp3350.grs.application.Main;

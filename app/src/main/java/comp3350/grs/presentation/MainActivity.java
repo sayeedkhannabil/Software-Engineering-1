@@ -1,11 +1,6 @@
 package comp3350.grs.presentation;
-// CLASS: MainActivity...
-//
-// Author: Shiqing
-//
-// REMARKS: What is the purpose of this class?
+
 // homepage
-//-----------------------------------------
 import android.content.Context;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;

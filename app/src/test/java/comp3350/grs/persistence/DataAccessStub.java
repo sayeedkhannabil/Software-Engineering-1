@@ -145,30 +145,35 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	public List<User> getUsersByIDImplicit(String userNameImplicit) {
 		List<User> res = new ArrayList<>();
 		List<User> searchList = this.getAllUsers();
-		int searchLength = userNameImplicit.length();
+		int searchLength;
 		char currChar;
-		String userName, implicit = null;
+		String userName, implicit = "";
 		User curr;
 
-		if (searchLength > 0) {
-			for (int i = 0; i < searchList.size(); i++) {
-				curr = searchList.get(i);
-				userName = curr.getUserID();
-				for(int j = 0; j < searchLength; j++){
+		if(userNameImplicit != null) {
+			searchLength = userNameImplicit.length();
+			if (searchLength > 0) {
+				for (int j = 0; j < searchLength; j++) {
 					currChar = userNameImplicit.charAt(j);
-					if(currChar != '%' && currChar != '*' && currChar != '?'){
+					if (currChar != '%' && currChar != '*' && currChar != '?') {
 						implicit += currChar;
 					}
-					if(userName.contains(implicit)){
+				}
+
+				for (int i = 0; i < searchList.size(); i++) {
+					curr = searchList.get(i);
+					userName = curr.getUserID();
+
+					if (implicit.trim().length() > 0 &&  userName.contains(implicit)) {
 						res.add(curr);
 					}
 				}
+			} else {
+				System.out.println("Please input valid game name.");
 			}
-		} else {
-			System.out.println("Please input valid user ID.");
-		}
-		if (res.size() == 0 && searchLength > 0) {
-			System.out.println("Not found.");
+			if (res.size() == 0 && searchLength > 0) {
+				System.out.println("Not found.");
+			}
 		}
 
 		return res;
@@ -191,15 +196,27 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	}
 
 	public boolean insertGame(Game toAdd) {
-		return games.add(toAdd);
+		boolean inserted = false;
+		if(toAdd != null) {
+			if (toAdd.getName() != null) {
+				if(!games.contains(toAdd)){
+					inserted = games.add(toAdd);
+				}
+			}
+		}
+		return inserted;
 	}
 
 	public boolean updateGame(Game toUpdate) {
 		boolean updated = false;
-		int index = games.indexOf(toUpdate);
-		if(index >= 0) {
-			games.set(index, toUpdate);
-			updated = true;
+		int index;
+
+		if(toUpdate != null) {
+			index = games.indexOf(toUpdate);
+			if (index >= 0) {
+				games.set(index, toUpdate);
+				updated = true;
+			}
 		}
 
 		return updated;
@@ -207,11 +224,14 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	public boolean deleteGame(Game toDel) {
 		boolean deleted = false;
+		int index;
 
-		int index = games.indexOf(toDel);
-		if(index >= 0) {
-			games.remove(index);
-			deleted = true;
+		if(toDel != null) {
+			index = games.indexOf(toDel);
+			if (index >= 0) {
+				games.remove(index);
+				deleted = true;
+			}
 		}
 
 		return deleted;
@@ -264,57 +284,74 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	public List<Game> getGamesByNameImplicit(String gameNameImplicit) {
 		List<Game> res = new ArrayList<>();
 		List<Game> searchList = this.getAllGames();
-		int searchLength = gameNameImplicit.length();
+		int searchLength;
 		char currChar;
-		String gameName, implicit = null;
+		String gameName, implicit = "";
 		Game curr;
 
-		if (searchLength > 0) {
-			for (int i = 0; i < searchList.size(); i++) {
-				curr = searchList.get(i);
-				gameName = curr.getName();
-				for(int j = 0; j < searchLength; j++){
+		if(gameNameImplicit != null) {
+			searchLength = gameNameImplicit.length();
+			if (searchLength > 0) {
+				for (int j = 0; j < searchLength; j++) {
 					currChar = gameNameImplicit.charAt(j);
-					if(currChar != '%' && currChar != '*' && currChar != '?'){
+					if (currChar != '%' && currChar != '*' && currChar != '?') {
 						implicit += currChar;
 					}
-					if(gameName.contains(implicit)){
+				}
+
+				for (int i = 0; i < searchList.size(); i++) {
+					curr = searchList.get(i);
+					gameName = curr.getName();
+
+					if (implicit.trim().length() > 0 &&  gameName.contains(implicit)) {
 						res.add(curr);
 					}
 				}
+			} else {
+				System.out.println("Please input valid game name.");
 			}
-		} else {
-			System.out.println("Please input valid game name.");
-		}
-		if (res.size() == 0 && searchLength > 0) {
-			System.out.println("Not found.");
+			if (res.size() == 0 && searchLength > 0) {
+				System.out.println("Not found.");
+			}
 		}
 
 		return res;
 	}
 
 	public boolean insertReview(Review review){
-		return reviews.add(review);
+		boolean inserted = false;
+		if(review != null) {
+			if (!reviews.contains(review)) {
+				inserted = reviews.add(review);
+			}
+		}
+		return inserted;
 	}
 
 	public boolean updateReview(Review review){
 		boolean updated = false;
+		int index;
 
-		int index = reviews.indexOf(review);
-		if(index >= 0) {
-			reviews.set(index, review);
-			updated = true;
+		if(review != null) {
+			index = reviews.indexOf(review);
+			if (index >= 0) {
+				reviews.set(index, review);
+				updated = true;
+			}
 		}
 		return updated;
 	}
 
 	public boolean deleteReview(Review review) {
 		boolean deleted = false;
+		int index;
 
-		int index = reviews.indexOf(review);
-		if(index >= 0) {
-			reviews.remove(index);
-			deleted = true;
+		if(review != null) {
+			index = reviews.indexOf(review);
+			if (index >= 0) {
+				reviews.remove(index);
+				deleted = true;
+			}
 		}
 
 		return deleted;
@@ -391,27 +428,43 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	}
 
 	public boolean insertRating(Rating rating){
-		return ratings.add(rating);
+		boolean inserted = false;
+		Game ratingGame;
+		User ratingUser;
+		if(rating != null && rating.validRating()) {
+			ratingGame = getGameByName(rating.getGameName());
+			ratingUser = getUserByID(rating.getUserID());
+			if(games.contains(ratingGame) && (users.contains(ratingUser) || rating.getUserID().equals("Guest"))) {
+				inserted = ratings.add(rating);
+			}
+		}
+		return inserted;
 	}
 
 	public boolean updateRating(Rating rating){
 		boolean updated = false;
+		int index;
 
-		int index = ratings.indexOf(rating);
-		if(index >= 0) {
-			ratings.set(index, rating);
-			updated = true;
+		if(rating != null) {
+			 index = ratings.indexOf(rating);
+			if (index >= 0) {
+				ratings.set(index, rating);
+				updated = true;
+			}
 		}
 		return updated;
 	}
 
 	public boolean deleteRating(Rating rating){
 		boolean deleted = false;
+		int index;
 
-		int index = ratings.indexOf(rating);
-		if(index >= 0) {
-			ratings.remove(index);
-			deleted = true;
+		if(rating != null) {
+			index = ratings.indexOf(rating);
+			if (index >= 0) {
+				ratings.remove(index);
+				deleted = true;
+			}
 		}
 
 		return deleted;

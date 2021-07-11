@@ -74,7 +74,7 @@ public class AccessRatings {
     public double getOverallRating(String gameName){
         double overallRating = 0.0;
         double totalPts = 0.0;
-        int numRatings = 0;
+        double numRatings = 0.0;
         Rating thisRating;
         if (!gameName.trim().equals("")) {
             this.getAllRatings(); //get ratings from database
@@ -85,7 +85,7 @@ public class AccessRatings {
                     numRatings ++;
                 }
             }
-            overallRating = totalPts/numRatings;
+            overallRating = (1.0) * totalPts/numRatings;
         }
         return overallRating;
     }

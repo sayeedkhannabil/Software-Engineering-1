@@ -11,8 +11,8 @@ public class Game
 {
     private String name;
     private String dev; //name of company/game developer
-    private List<String> genres;
-    private String description;
+    private List<String> genres;// a list of genre of the game
+    private String description;//description of the game
     private double currPrice; //current price of game
 
     //detailed constructor
@@ -81,6 +81,7 @@ public class Game
         return currPrice;
     }
 
+    //important info is not null
     public boolean validGame() {
         return name!=null;
     }
@@ -88,12 +89,13 @@ public class Game
 
 
     // compares another object with this Game to see if they are equal (if names are same)
+    @Override
     public boolean equals(Object object)
     {
         Game other = null;
         boolean isSame = false;
 
-        if(this.name!=null&& object instanceof Game)
+        if(object != null && validGame() && object instanceof Game)
         {
             other = (Game) object;
             if((this.name).equals(other.getName()) )

@@ -6,13 +6,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
-// CLASS: Utilities...
-//
-// Author: Shiqing
-//
-// REMARKS: What is the purpose of this class?
+
 // a group of useful functions
-//-----------------------------------------
 public class Utilities {
 
     //create an alert dialog which has one button to cancel the dialog

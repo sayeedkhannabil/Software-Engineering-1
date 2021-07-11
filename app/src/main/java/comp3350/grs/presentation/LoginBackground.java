@@ -1,11 +1,7 @@
 package comp3350.grs.presentation;
-// CLASS: LoginBackground...
-//
-// Author: Shiqing
-//
-// REMARKS: What is the purpose of this class?
+
+
 // a fragment, the background(and buttons) when user enter the app
-//-----------------------------------------
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;

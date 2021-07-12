@@ -3,13 +3,10 @@ package comp3350.grs.objects;
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.exceptions.IncorrectPassword;
 
-// CLASS: RegisteredUser
-//
-//
-// REMARKS: domain object of the user who will use this app, and willing to
+
+// domain object of the user who will use this app, and willing to
 // signup
-//
-//-----------------------------------------
+
 public class RegisteredUser extends User{
     private String password;
 
@@ -31,14 +28,8 @@ public class RegisteredUser extends User{
         password=null;
     }
 
-    //------------------------------------------------------
-    // checkUseridFormat
-    //
-    // PURPOSE:    check if the user id is of correct format
-    // PARAMETERS:
-    //     userID: the userid to be checked
-    //
-    //------------------------------------------------------
+
+    // check if the user id is of correct format
     @Override
     protected void checkUseridFormat(String userID) throws IncorrectFormat {
         super.checkUseridFormat(userID);

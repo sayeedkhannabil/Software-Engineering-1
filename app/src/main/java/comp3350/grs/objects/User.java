@@ -58,7 +58,7 @@ public abstract class User
 		User user;
 		result = false;
 		
-		if (validUser()&& object instanceof User)
+		if (object!=null&& validUser()&& object instanceof User)
 		{
 			user = (User) object;
 			//if user id are the same , they are equal

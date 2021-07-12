@@ -23,7 +23,7 @@ public class Review {
         this.gameName=gameName;
         checkComment(comment);
         this.comment = comment;
-        reviewID=-1;
+        reviewID=-1;//default value
     }
 
     //specify a reviewID
@@ -79,7 +79,7 @@ public class Review {
         result = false;
         Review review;
 
-        if (validReview()&& object instanceof Review){
+        if (object!=null&& validReview()&& object instanceof Review){
             review=(Review) object;
             result=this.reviewID==review.getReviewID();
         }

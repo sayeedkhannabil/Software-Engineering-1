@@ -67,14 +67,36 @@ public class GameTest  {
         Game edgeGame1=null;
         Game edgeGame2=null;
         Game edgeGame3=null;
+
+
         try {
             edgeGame = new Game("", "", "", 0, genres1);
-            edgeGame1 = new Game(" ", "dev", " ", 100.00, genres1);
-            edgeGame2 = new Game("Valid Name", "Dev", "desc", -1.22, genres);
-            edgeGame3 = new Game("       ");
+            fail("shoudln't create");
         } catch (IncorrectFormat incorrectFormat) {
-            incorrectFormat.printStackTrace();
+            assertTrue(true);
         }
+        try {
+            edgeGame1 = new Game(" ", "dev", " ", 100.00, genres1);
+            fail("shoudln't create");
+        } catch (IncorrectFormat incorrectFormat) {
+            assertTrue(true);
+
+        }
+        try {
+            edgeGame2 = new Game("Valid Name", "Dev", "desc", -1.22, genres);
+            fail("shoudln't create");
+        } catch (IncorrectFormat incorrectFormat) {
+            assertTrue(true);
+
+        }
+        try {
+            edgeGame3 = new Game("       ");
+            fail("shoudln't create");
+        } catch (IncorrectFormat incorrectFormat) {
+            assertTrue(true);
+
+        }
+
 
         try {
             edgeGame1 = new Game(" ", "dev", " ", 100.00, genres1);

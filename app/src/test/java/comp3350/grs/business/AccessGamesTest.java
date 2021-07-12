@@ -226,8 +226,9 @@ public class AccessGamesTest {
         nullGame = new Game(); //all parameters will be null, price will be -1
         try {
             noNameGame = new Game("    ");
+            fail("shouldn't create");
         } catch (IncorrectFormat incorrectFormat) {
-            incorrectFormat.printStackTrace();
+            assertTrue(true);
         }
 
         insert = gameAccess.insertGame(noNameGame);

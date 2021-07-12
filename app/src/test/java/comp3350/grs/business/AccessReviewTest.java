@@ -153,6 +153,12 @@ public class AccessReviewTest {
         assertTrue(l.contains(updateReview));
         assertTrue(l.contains(newReview2));
 
+        //check reviews 1 by 1
+        Review next = reviewAccess.getSequential();
+        assertEquals(next, updateReview);
+        next = reviewAccess.getSequential();
+        assertEquals(next, newReview2);
+
         //delete reviews
         l = reviewAccess.getReviewsByGame(game1.getName());
         int prevSize = l.size();
@@ -170,8 +176,18 @@ public class AccessReviewTest {
 
     @Test
     public void testEdge() {
+        AccessReviews reviewAccess = new AccessReviews();
+
+        //when no reviews is given
+        List<Review> l = reviewAccess.getAllReviews();
+        assertEquals(l.size(), 0);
+        Review r = reviewAccess.getSequential();
+        assertNull(r);
+
+        Review newReview = null;
+
         try {
-            newReview1 = new Review("", "", "");
+            newReview = new Review("", "", "");
         } catch (IncorrectFormat incorrectFormat) {
             assertTrue(true);
         }
@@ -182,11 +198,12 @@ public class AccessReviewTest {
             incorrectFormat.printStackTrace();
         }
 
-        insert1 = reviewAccess.insertReview(newReview1);
-        assertFalse(insert1);
+        boolean insert = reviewAccess.insertReview(newReview);
+        assertFalse(insert);
 
         reviewAccess.clear();
-        Review r = reviewAccess.getSequential();
+        r = reviewAccess.getSequential();
+
         assertNull(r);
     }
 

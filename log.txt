@@ -129,6 +129,8 @@ July 8: Katharine wrote methods to align with the DataAccess Interface to DataAc
          (expected time: 3 hours, actual: 4.5 hours)
 July 8: Katharine fixed brackets and syntax that were not consistent in some files
         (expected time: 1 hours, actual: 1 hour)
+July 8: Hasin I completed the sort game using number of reviews.
+	 (expected time 2 hours, actual: 1 hour)
 July 8, 2021: Gongyu update RatingTest file, delete old test method and add new one
 	(expected: 2 hours, actual: 2 hours)
 July 9: Katharine K implemented implicit user and game search in DataAccessStub

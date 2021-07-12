@@ -114,13 +114,13 @@ July 2, 2021: Gongyu added game searching method for stub and sql database class
 July 2, 2021: Sayeed added accessReview method for accessing and modifying reviews in database.(expected: 2 hours, actual: 3 hours)
 July 2 Shiqing Guo added null checking to sql database(expected:30min actual:30min)
 July 2 Shiqing Guo added validation to game , review and rating(expected:30min actual:30min)
-July 5 Shiqing Guo finished null test and edge test  of database(expected:5 hour ,actual:3hour)
 July 2, 2021: Sayeed added accessReview method for accessing and modifying reviews in database.
 	(expected: 2 hours, actual: 3 hours)
 July 3: Katharine began writing TestAccessGames and AccessGames classes
         (expected: 2 hours, actual: 3 hours)
 July 5: Katharine worked on TestAccessGames and TestAccessRatings classes, made updates to Rating class
          (expected time: 1 hour, actual: 2.5 hours)
+July 5 Shiqing Guo finished null test and edge test  of database(expected:5 hour ,actual:3hour)
 July 8 Group Meeting: Discussed feedback from iteration1, remaining tasks to be completed for iteration2
                       Agreed on syntax to use for consistency.
 July 8: Katharine wrote methods to align with the DataAccess Interface to DataAccessStub

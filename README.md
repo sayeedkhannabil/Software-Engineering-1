@@ -239,6 +239,15 @@ We have also implemented login and sign up option for the users that can be acce
 You must rate the game, before you write a review.
 
 
+
+## Issues
+
+* We wanted to user to be able to search with released_date of the games. However we realized that it is not very common to search games using released date so we removed the feature.
+* We have added `Genre` to the game description. We wanted to implement a sort functionality to sort the games according to the the `Genre`. However we have decided to sort functionality with genre and decided to do it on the next iteration if we have time.
+
+
+
+
 ## System Requirement:
 
 #### Android Version: 

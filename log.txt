@@ -116,6 +116,8 @@ July 2 Shiqing Guo added null checking to sql database(expected:30min actual:30m
 July 2 Shiqing Guo added validation to game , review and rating(expected:30min actual:30min)
 July 2, 2021: Sayeed added accessReview method for accessing and modifying reviews in database.
 	(expected: 2 hours, actual: 3 hours)
+July 2: Hasin I completed the sort game using number of ratings.
+	 (expected time 2 hours, actual: 1 hour)
 July 3: Katharine began writing TestAccessGames and AccessGames classes
         (expected: 2 hours, actual: 3 hours)
 July 5: Katharine worked on TestAccessGames and TestAccessRatings classes, made updates to Rating class

@@ -100,6 +100,8 @@ June 26: Hasin I completed the sort game using game name.
 	 (expected time 2 hours, actual: 1 hour)
 june 28 :Shiqing Guo finished rating part of sql database.(expected:8 hour
     actual:6 hour)
+June 28: Hasin I completed the sort game using game price.
+	 (expected time 2 hours, actual: 1 hour)
 june 29 :Shiqing Guo added top bar to UI (expected:2 hour; actual:3 hour)
 june 30 :Shiqing Guo added search bar to UI(exepcted:4 hour; actual:4 hour)
 June 30: Katharine K updated Game class and began updating GameTest

@@ -158,4 +158,10 @@ July 11: Katharine K finished DataAccessStub (fixed bugs), finished AccessRating
          made sure all tests pass in all test classes
          (expected: 3 hours, actual: 4 hours)
 
+July 11: Sayeed updated detailed user stories on Github project.
+	(expected: 1 hour, actual: 1.5 hour)
+
+July 11: Sayeed added developer tasks in the Github Projects.
+	(expected: 1 hour, actual: 1 hour)
+
 

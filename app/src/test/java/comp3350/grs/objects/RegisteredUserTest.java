@@ -100,7 +100,7 @@ public class RegisteredUserTest {
         }catch (Exception e){
             assert (true);
         }
-        assert (user.getPassword().equals("p"));
+        assertEquals("password",user.getPassword());
     }
 
     @Test

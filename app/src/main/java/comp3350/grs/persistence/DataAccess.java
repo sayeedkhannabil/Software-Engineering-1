@@ -13,6 +13,7 @@ import comp3350.grs.objects.Review;
 import comp3350.grs.objects.User;
 import comp3350.grs.presentation.MainActivity;
 
+//parent of sql database and stub database, mainly used to load default data
 public abstract class DataAccess {
     protected String dbName;
     protected String dbType;

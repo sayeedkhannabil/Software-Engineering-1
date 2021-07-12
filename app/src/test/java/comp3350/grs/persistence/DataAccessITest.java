@@ -37,15 +37,17 @@ public class DataAccessITest{
     private double price,rating;
     private boolean success;
     private List<String> genreList;
+    private static String dbName="TestDB";
+    private static String dbPath="database/TestDB";
 
 
     @Before
     public void before(){
 //        dataAccessI=new DataAccessObject("TestDB");
-        dataAccessI=new DataAccessStub("TestDB");
-        dataAccessI.open("database/TestDB");
+        dataAccessI=new DataAccessStub(dbName);
+        dataAccessI.open(dbPath);
         dataAccessI.deleteDatabase();
-        dataAccessI.open("database/TestDB");
+        dataAccessI.open(dbPath);
         dataAccessI.clearAllData();
         user1=null;
         user2=null;

@@ -63,7 +63,7 @@ The classes in `Business` package handle the logic of the program. There are 4 c
 #### Major Changes:
 
 * Changed the storage from stub-database to HSQL database for all class and added `AccessReviews` and `AccessRatings`
-* Modified `AccessGames` and `AccessUsers` class so that all of the classes can work with HSQLDB.
+* Modified `AccessGames` and `AccessUsers` class so that all of the classes can work with HSQLDB.Added 8 sort methods and implicit search to `AccessGames`.Added implicit search to `AccessUsers`.
 
 
 
@@ -85,7 +85,7 @@ This is also a child class of `User` . If users do not want to registered themse
 
 ##### Rating:
 
-An user can give a rating between 1-5 for a game. `Rating` class handles the logic behind that rating.
+An user can give a rating between (exclusive)0-5(inclusive) for a game. `Rating` class handles the logic behind that rating.
 
 ##### Review:
 
@@ -100,22 +100,22 @@ An user can leave a review of a game. `Review` class handles how those reviews g
 #### Major Changes:
 
 * Removed `Feedback` class which was used to handle `Review` class and `Rating` class in Iteration 1 to reduce code redundancy.
-* Removed all methods relating to `Review` and `Rating` from the `Game` class to reduce code redundancy.
+* Removed all methods relating to `Review` and `Rating` from the `Game` class to satisfy Single Responsibility Principle.
 * Added more format validation and error handling for all of the classes.
 
 
 
 ### Persistence:
 
-The `persistence` package hold the storage class of the program. There is only one class, one abstract class and one interface in this package.
+The `persistence` package hold the storage class of the program. There is only one class, one abstract class and one interface in this package.Besides, `DataAccessStub` is in the test part of the `persistence` package.
 
 ##### DataAccess:
 
-`DataAccess` is an abstract class which is used to hold the default values for the HSQL database. `DataAccess` is used by the class `DataAccessObject`.
+`DataAccess` is an abstract class which is used to hold the default values for the HSQL database. `DataAccess` is used by the class `DataAccessObject`and `DataAccessStub`to load default data.
 
 ##### DataAccessI:
 
-`DataAccessI` is an interface which is used to define the methods that must be implemented on `DataAccessObject`.
+`DataAccessI` is an interface which is used to define the methods that must be implemented on `DataAccessObject`and `DataAccessStub`.
 
 ##### DataAccessObject:
 
@@ -153,7 +153,7 @@ The `presentation` package is responsible for all of the classes that handles th
 
 ##### LoginBackground:
 
-`LoginBackground` shows that the background and buttons when an user start the app.
+`LoginBackground` is the fragment shows that the background and buttons when an user start the app.
 
 ##### MainActivity:
 
@@ -165,11 +165,11 @@ The `presentation` package is responsible for all of the classes that handles th
 
 ##### userid_and_pass:
 
-`userid_and_pass` is the UI for buttons and boxes for userid and password in login and signup.
+`userid_and_pass` is the fragment for buttons and boxes for userid and password in login and signup.
 
 ##### top_bar:
 
-`top_bar` is the UI for the bar in the top of the application that shows in which part of the app we are currently in.
+`top_bar` is the fragment for the bar in the top of the application that shows in which part of the app we are currently in.
 
 ##### UserPage:
 
@@ -242,7 +242,7 @@ You must rate the game, before you write a review.
 
 ## Issues
 
-* We wanted to user to be able to search with released_date of the games. However we realized that it is not very common to search games using released date so we removed the feature.
+* We wanted user to be able to search with released_date of the games. However we realized that it is not very common to search games using released date so we removed the feature.
 * We have added `Genre` to the game description. We wanted to implement a sort functionality to sort the games according to the the `Genre`. However we have decided to sort functionality with genre and decided to do it on the next iteration if we have time.
 
 

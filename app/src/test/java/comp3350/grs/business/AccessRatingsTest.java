@@ -73,6 +73,16 @@ public class AccessRatingsTest {
         boolean insert2 = ratingAccess.insertRating(newRegisterRating);
         assertTrue(insert);
         assertTrue(insert2);
+
+
+        assertEquals(2, ratingAccess.getAllRatings().size());
+        Rating nextRating = ratingAccess.getSequential();
+        assertNotNull(nextRating);
+        assertEquals(nextRating, newGuestRating);
+        nextRating = ratingAccess.getSequential();
+        assertNotNull(nextRating);
+        assertEquals(nextRating, newRegisterRating);
+
         assertEquals(ratingAccess.getRating(gameName,userID), newRegisterRating);
         assertEquals(ratingAccess.getRating(gameName,guestID), newGuestRating);
         assertTrue((ratingAccess.getOverallRating(gameName)) > 0);
@@ -113,9 +123,10 @@ public class AccessRatingsTest {
 
         try{
             nullRating = new Rating(-1,gameName,userID);
+            fail("rating shouldn't be negative");
         }
         catch(IncorrectFormat incorrectFormat){
-            incorrectFormat.printStackTrace();
+            assertTrue(true);
         }
         insert = ratingAccess.insertRating(nullRating);
         assertFalse(insert);
@@ -123,9 +134,10 @@ public class AccessRatingsTest {
 
         try{
             nullRating = new Rating(0, gameName,userID);
+            fail("rating shouldn't be 0");
         }
         catch (IncorrectFormat incorrectFormat){
-            incorrectFormat.printStackTrace();
+            assertTrue(true);
         }
         insert = ratingAccess.insertRating(nullRating);
         assertFalse(insert);
@@ -136,9 +148,10 @@ public class AccessRatingsTest {
         //update with an invalid rating -- shouldn't work
         try{
             updated = new Rating(6,gameName,userID);
+            fail();
         }
         catch(IncorrectFormat incorrectFormat){
-            incorrectFormat.printStackTrace();
+            assertTrue(true);
         }
         update = ratingAccess.updateRating(updated);
         assertFalse(update);

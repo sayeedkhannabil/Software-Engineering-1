@@ -38,7 +38,7 @@ public class AccessReviews {
         return reviewList;
     }
 
-    // get next rating sequentially
+    // get next review sequentially
     public Review getSequential() {
         if (reviewList == null) {
             getAllReviews();

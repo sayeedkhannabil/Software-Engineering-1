@@ -201,6 +201,27 @@ public class AccessUsersTest {
         user= accessUsers.getUserByID("user");
         assertNull(user);
 
+        accessUsers.clear();
+        try {
+            user1=new RegisteredUser("user1","pass");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        try {
+            user2=new RegisteredUser("user2","pass");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        try {
+            user3=new RegisteredUser("usea","pass");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        accessUsers.insertUser(user1);
+        accessUsers.insertUser(user2);
+        accessUsers.insertUser(user3);
+        userList=accessUsers.getUsersByIDImplicit("user");
+        assertEquals(2,userList.size());
     }
 
     @Test

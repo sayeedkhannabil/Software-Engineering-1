@@ -124,22 +124,11 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 				}
 			}
 			else if(toCopy instanceof RegisteredUser) {
-				if(((RegisteredUser) toCopy).getPassword() != null) {
-					try{
-						copy = new RegisteredUser(toCopy.getUserID(),((RegisteredUser) toCopy).getPassword());
-					}
-					catch (IncorrectFormat incorrectFormat) {
-						incorrectFormat.printStackTrace();
-					}
+				try{
+					copy = new RegisteredUser(toCopy.getUserID(),((RegisteredUser) toCopy).getPassword());
 				}
-				else
-				{
-					try{
-						copy = new RegisteredUser(toCopy.getUserID());
-					}
-					catch (IncorrectFormat incorrectFormat) {
-						incorrectFormat.printStackTrace();
-					}
+				catch (IncorrectFormat incorrectFormat) {
+					incorrectFormat.printStackTrace();
 				}
 			}
 			usersCopy.add(copy);

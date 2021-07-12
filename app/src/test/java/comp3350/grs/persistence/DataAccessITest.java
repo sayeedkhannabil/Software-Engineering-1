@@ -563,7 +563,7 @@ public class DataAccessITest{
         assertNull(review2);
 
         try {
-            rating1=new Rating(0.0,"gameName","userID");
+            rating1=new Rating(0.5,"gameName","userID");
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }

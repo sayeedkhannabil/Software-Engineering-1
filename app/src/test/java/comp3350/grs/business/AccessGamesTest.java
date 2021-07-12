@@ -113,9 +113,6 @@ public class AccessGamesTest {
 
         //put typicalGame back
         gameAccess.insertGame(typicalGame);
-
-        //List<Game> allGames = gameAccess.getAllGames();
-        //Game firstInListNeutral = allGames.get(0);
         List<Game> ascendingNames = gameAccess.ascendingNameSort();
         Game firstInListAsc = ascendingNames.get(0);
 
@@ -131,10 +128,8 @@ public class AccessGamesTest {
 
         List<Game> ascendingRatings = gameAccess.ascendingRatingSort();
         double ascendRating = ratingAccess.getRatingNumByGame(ascendingRatings.get(0).getName());
-        System.out.println(ascendRating);
         List<Game> descendingRatings = gameAccess.descendingRatingSort();
         double descendRating = ratingAccess.getRatingNumByGame(descendingRatings.get(0).getName());
-        System.out.println(descendRating);
         assertTrue(descendRating >= ascendRating);
 
         List<Game> ascendingReviews = gameAccess.ascendingReviewSort();

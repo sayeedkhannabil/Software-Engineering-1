@@ -37,7 +37,8 @@ public class AccessRatingsTest {
     @Before
     public void before(){
         gameName = null;
-        userID = "RegisteredUser";
+        user = userAccess.getSequential();
+        userID = null;
         guestID = "Guest";
         newGuestRating = null;
         newRegisterRating = null;
@@ -47,19 +48,12 @@ public class AccessRatingsTest {
         insert = false;
         update = false;
         delete = false;
-
-        try{
-            user = new RegisteredUser(userID);
-        }
-        catch (IncorrectFormat incorrectFormat){
-            incorrectFormat.printStackTrace();
-        }
     }
 
     @Test
     public void testTypical() {
         gameName = "Valheim";
-        userAccess.insertUser(user);
+        userID = user.getUserID();
 
         try {
             newGuestRating = new Rating(3.0, gameName, guestID);
@@ -77,12 +71,14 @@ public class AccessRatingsTest {
         boolean insert2 = ratingAccess.insertRating(newRegisterRating);
         assertTrue(insert);
         assertTrue(insert2);
+        assertEquals(ratingAccess.getRating(gameName,userID), newRegisterRating);
+        assertEquals(ratingAccess.getRating(gameName,guestID), newGuestRating);
         assertTrue((ratingAccess.getOverallRating(gameName)) > 0);
         assertTrue(ratingAccess.getRatingNumByGame(gameName) > 0);
         List<Rating> gameRatings = ratingAccess.getRatingsByGame(gameName);
         assertTrue(gameRatings.size() >= 2);
-        assertTrue(ratingAccess.getRatingsByUser(userID).size() == 1); //the number of ratings by the user is one
-        assertEquals(1, ratingAccess.getRatingNumByUser(userID));
+        assertTrue(ratingAccess.getRatingsByUser(userID).size() >= 1); //the number of ratings by the user is at least one
+        assertTrue( ratingAccess.getRatingNumByUser(userID) >= 1);
         assertTrue(ratingAccess.getRating(gameName, userID).getRatingValue() == 5.0);
 
         try {
@@ -104,8 +100,6 @@ public class AccessRatingsTest {
         boolean delete2 = ratingAccess.deleteRating(newRegisterRating);
         assertTrue(delete);
         assertTrue(delete2);
-        deleted = ratingAccess.getRating(gameName, userID);
-        assertNull(deleted); //rating of game "Valheim" by user is no longer in database
     }
 
 
@@ -137,16 +131,7 @@ public class AccessRatingsTest {
         assertEquals(0, ratingAccess.getRatingNumByUser(userID));
         assertEquals(initialNumRatings, ratingAccess.getRatingNumByGame(gameName)); //no added ratings
 
-        //create and insert valid rating to then update with an invalid rating
-        try{
-            newRegisterRating = new Rating(2, gameName,userID);
-        }
-        catch (IncorrectFormat incorrectFormat){
-            incorrectFormat.printStackTrace();
-        }
-        insert = ratingAccess.insertRating(newRegisterRating);
-        assertTrue(insert);
-
+        //update with an invalid rating -- shouldn't work
         try{
             updated = new Rating(6,gameName,userID);
         }
@@ -155,12 +140,11 @@ public class AccessRatingsTest {
         }
         update = ratingAccess.updateRating(updated);
         assertFalse(update);
-    }
 
-    @Test
-    public void testEmpty(){
         gameName = "Non-Existent Game";
+        userID = "Non-ExistentUser";
 
+        //invalid game name, valid user
         try{
             newGuestRating = new Rating(2, gameName, guestID);
         }
@@ -170,13 +154,36 @@ public class AccessRatingsTest {
         insert = ratingAccess.insertRating(newGuestRating);
         assertFalse(insert);
 
-        ratingAccess.clear();
-        assertTrue(ratingAccess.getAllRatings().isEmpty());
+        //invalid user and game
+        try{
+            newRegisterRating = new Rating(5, gameName, userID);
+        }
+        catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        insert = ratingAccess.insertRating(newRegisterRating);
+        assertFalse(insert);
+
+        Rating r = ratingAccess.getRating(gameName, userID);
+        assertNull(r);
     }
 
     @Test
-    public void testEdge(){
+    public void testEmpty(){
+        userID = "NonExistentUser";
+        List<Rating> rList = ratingAccess.getRatingsByUser(userID);
+        assertEquals(0, rList.size());
+        assertTrue(rList.isEmpty());
 
+        gameName = "NonExistentGame";
+        rList = ratingAccess.getRatingsByGame(gameName);
+        assertEquals(0, rList.size());
+        assertTrue(rList.isEmpty());
+
+        ratingAccess.clear();
+        assertTrue(ratingAccess.getAllRatings().isEmpty());
+        assertEquals(0, ratingAccess.getAllRatings().size());
+        assertNull(ratingAccess.getSequential());
     }
 
     @AfterClass

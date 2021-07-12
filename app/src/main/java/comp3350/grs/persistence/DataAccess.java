@@ -16,6 +16,9 @@ import comp3350.grs.application.Main;
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Guest;
+import comp3350.grs.objects.Rating;
+import comp3350.grs.objects.RegisteredUser;
+import comp3350.grs.objects.Review;
 import comp3350.grs.objects.User;
 import comp3350.grs.presentation.MainActivity;
 
@@ -24,6 +27,8 @@ public abstract class DataAccess {
     protected String dbType;
     protected List<User> users;//list of all users
     protected List<Game> games;//list of all games
+    protected List<Rating> ratings;//list of all ratings
+    protected List<Review> reviews;//list of all reviews
 
     public DataAccess(String dbName){
         this.dbName=dbName;
@@ -36,6 +41,8 @@ public abstract class DataAccess {
     //load database with default value
     public void open(String dbPath) {
         games=new ArrayList<>();
+        ratings = new ArrayList<>();
+        reviews = new ArrayList<>();
         List<String> genres;
         Game newGame=null;
         String gameName,gameDev,desc;
@@ -2180,6 +2187,73 @@ public abstract class DataAccess {
         }
         users.add(guest);
 
+        User registered = null;
+        try{
+            registered = new RegisteredUser("Registered1");
+        } catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        users.add(registered);
+
+
+        Rating newRating = null;
+        try{
+            newRating = new Rating(3.0, "Stardew Valley", "Registered1");
+        }catch(IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        ratings.add(newRating);
+
+        try{
+            newRating = new Rating(5.0, "Valheim", "Guest");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        ratings.add(newRating);
+
+        try{
+            newRating = new Rating(4.0, "Valheim", "Registered1");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        ratings.add(newRating);
+
+        try{
+            newRating = new Rating(2.0, "It Takes Two", "Guest");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        ratings.add(newRating);
+
+
+        Review newReview = null;
+        try{
+            newReview = new Review("Game is alright.", "Stardew Valley", "Registered1");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        reviews.add(newReview);
+
+        try{
+            newReview = new Review("Great game.", "Valheim", "Guest");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        reviews.add(newReview);
+
+        try{
+            newReview = new Review("Fairly good.", "Valheim", "Registered1");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        reviews.add(newReview);
+
+        try{
+            newReview = new Review("Not my favourite.", "It Takes Two", "Guest");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        reviews.add(newReview);
     }
 
 

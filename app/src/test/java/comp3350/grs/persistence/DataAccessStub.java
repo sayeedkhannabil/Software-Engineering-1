@@ -13,22 +13,14 @@ import comp3350.grs.objects.User;
 import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Review;
 
-// the database which stores users and games
 public class DataAccessStub extends DataAccess implements DataAccessI {
-	//did not add these to DataAccess, added here instead
-	private List<Review> reviews;
-	private List<Rating> ratings;
 
 	public DataAccessStub(String dbName) {
 		super(dbName);
-		reviews = new ArrayList<>();
-		ratings = new ArrayList<>();
 	}
 
 	public DataAccessStub() {
 		super();
-		reviews = new ArrayList<>();
-		ratings = new ArrayList<>();
 	}
 
 	@Override
@@ -44,11 +36,15 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	public void clearDatabase(){
 		users=null;
 		games=null;
+		ratings = null;
+		reviews = null;
 	}
 
 	public void clearTable(){
 		users.clear();
 		games.clear();
+		ratings.clear();
+		reviews.clear();
 	}
 
 	@Override
@@ -72,17 +68,25 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	}
 
 	public boolean insertUser(User newUser) {
-		return users.add(newUser);
+		boolean inserted = false;
+		if(newUser != null) {
+			if(newUser.validUser() && !users.contains(newUser)){
+				inserted = users.add(newUser);
+			}
+		}
+		return inserted;
 	}
 
 	public boolean updateUser(User currentUser) {
 		int index;
 		boolean updated = false;
 
-		index = users.indexOf(currentUser);
-		if (index >= 0) {
-			users.set(index, currentUser);
-			updated = true;
+		if(currentUser != null && currentUser.validUser()) {
+			index = users.indexOf(currentUser);
+			if (index >= 0) {
+				users.set(index, currentUser);
+				updated = true;
+			}
 		}
 
 		return updated;
@@ -92,10 +96,12 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		int index;
 		boolean deleted = false;
 
-		index = users.indexOf(user);
-		if (index >= 0) {
-			users.remove(index);
-			deleted = true;
+		if(user != null) {
+			index = users.indexOf(user);
+			if (index >= 0) {
+				users.remove(index);
+				deleted = true;
+			}
 		}
 
 		return deleted;
@@ -113,7 +119,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 				try {
 					copy = new Guest();
 				} catch (IncorrectFormat incorrectFormat) {
-					System.out.println(incorrectFormat.getMessage());
+					incorrectFormat.printStackTrace();
 				}
 			}
 			else if(toCopy instanceof RegisteredUser) {
@@ -122,7 +128,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 						copy = new RegisteredUser(toCopy.getUserID(),((RegisteredUser) toCopy).getPassword());
 					}
 					catch (IncorrectFormat incorrectFormat) {
-						System.out.println(incorrectFormat.getMessage());
+						incorrectFormat.printStackTrace();
 					}
 				}
 				else
@@ -131,7 +137,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 						copy = new RegisteredUser(toCopy.getUserID());
 					}
 					catch (IncorrectFormat incorrectFormat) {
-						System.out.println(incorrectFormat.getMessage());
+						incorrectFormat.printStackTrace();
 					}
 				}
 			}
@@ -148,16 +154,21 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		List<User> searchList = this.getAllUsers();
 		int searchLength;
 		char currChar;
+		boolean containsWC = false; //contains wild card
 		String userName, implicit = "";
 		User curr;
 
 		if(userNameImplicit != null) {
 			searchLength = userNameImplicit.length();
 			if (searchLength > 0) {
+				//get the username searched for
 				for (int j = 0; j < searchLength; j++) {
 					currChar = userNameImplicit.charAt(j);
 					if (currChar != '%' && currChar != '*' && currChar != '?') {
 						implicit += currChar;
+					}
+					else{
+						containsWC = true;
 					}
 				}
 
@@ -165,12 +176,22 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 					curr = searchList.get(i);
 					userName = curr.getUserID();
 
-					if (implicit.trim().length() > 0 &&  userName.contains(implicit)) {
-						res.add(curr);
+					if (implicit.trim().length() > 0) {
+						//if it contains a wildcard, add if userName contains implicit
+						if(containsWC){
+							if(userName.contains(implicit)) {
+								res.add(curr);
+							}
+						}
+						else{ //if no wildcard, add ONLY if userName is an exact match to implicit
+							if(userName.equals(implicit)){
+								res.add(curr);
+							}
+						}
 					}
 				}
 			} else {
-				System.out.println("Please input valid game name.");
+				System.out.println("Please input valid user ID.");
 			}
 			if (res.size() == 0 && searchLength > 0) {
 				System.out.println("Not found.");
@@ -199,7 +220,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	public boolean insertGame(Game toAdd) {
 		boolean inserted = false;
 		if(toAdd != null) {
-			if (toAdd.getName() != null) {
+			if (toAdd.validGame()) {
 				if(!games.contains(toAdd)){
 					inserted = games.add(toAdd);
 				}
@@ -212,7 +233,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		boolean updated = false;
 		int index;
 
-		if(toUpdate != null) {
+		if(toUpdate != null && toUpdate.validGame()) {
 			index = games.indexOf(toUpdate);
 			if (index >= 0) {
 				games.set(index, toUpdate);
@@ -287,16 +308,21 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		List<Game> searchList = this.getAllGames();
 		int searchLength;
 		char currChar;
+		boolean containsWC = false; //contains wild card
 		String gameName, implicit = "";
 		Game curr;
 
 		if(gameNameImplicit != null) {
 			searchLength = gameNameImplicit.length();
 			if (searchLength > 0) {
+				//get the game name searched for
 				for (int j = 0; j < searchLength; j++) {
 					currChar = gameNameImplicit.charAt(j);
 					if (currChar != '%' && currChar != '*' && currChar != '?') {
 						implicit += currChar;
+					}
+					else{
+						containsWC = true;
 					}
 				}
 
@@ -304,8 +330,18 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 					curr = searchList.get(i);
 					gameName = curr.getName();
 
-					if (implicit.trim().length() > 0 &&  gameName.contains(implicit)) {
-						res.add(curr);
+					if (implicit.trim().length() > 0) {
+						//if it contains a wildcard, add if userName contains implicit
+						if(containsWC){
+							if(gameName.contains(implicit)) {
+								res.add(curr);
+							}
+						}
+						else{ //if no wildcard, add ONLY if userName is an exact match to implicit
+							if(gameName.equals(implicit)){
+								res.add(curr);
+							}
+						}
 					}
 				}
 			} else {
@@ -321,8 +357,14 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	public boolean insertReview(Review review){
 		boolean inserted = false;
-		if(review != null) {
-			inserted = reviews.add(review);
+		Game reviewGame;
+		User reviewUser;
+		if(review != null && review.validReview()) {
+			reviewGame = getGameByName(review.getGameName());
+			reviewUser = getUserByID(review.getUserID());
+			if(games.contains(reviewGame) && (users.contains(reviewUser) || review.getUserID().equals("Guest"))) {
+				inserted = reviews.add(review);
+			}
 		}
 		return inserted;
 	}
@@ -330,12 +372,18 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	public boolean updateReview(Review review){
 		boolean updated = false;
 		int index;
+		Game reviewGame;
+		User reviewUser;
 
-		if(review != null) {
-			index = reviews.indexOf(review);
-			if (index >= 0) {
-				reviews.set(index, review);
-				updated = true;
+		if(review != null && review.validReview()) {
+			reviewGame = getGameByName(review.getGameName());
+			reviewUser = getUserByID(review.getUserID());
+			if(games.contains(reviewGame) && (users.contains(reviewUser) || review.getUserID().equals("Guest"))) {
+				index = reviews.indexOf(review);
+				if (index >= 0) {
+					reviews.set(index, review);
+					updated = true;
+				}
 			}
 		}
 		return updated;
@@ -369,7 +417,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 						copy = new Review(toCopy.getReviewID(),toCopy.getComment(),toCopy.getGameName(),toCopy.getUserID());
 					}
 					catch (IncorrectFormat incorrectFormat){
-						System.out.println(incorrectFormat.getMessage());
+						incorrectFormat.printStackTrace();
 					}
 				}
 				else {
@@ -377,7 +425,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 						copy = new Review(toCopy.getComment(),toCopy.getGameName(),toCopy.getUserID());
 					}
 					catch (IncorrectFormat incorrectFormat){
-						System.out.println(incorrectFormat.getMessage());
+						incorrectFormat.printStackTrace();
 					}
 				}
 			}
@@ -443,12 +491,18 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	public boolean updateRating(Rating rating){
 		boolean updated = false;
 		int index;
+		Game ratingGame;
+		User ratingUser;
 
-		if(rating != null) {
-			 index = ratings.indexOf(rating);
+		if(rating != null && rating.validRating()) {
+			index = ratings.indexOf(rating);
+			ratingGame = getGameByName(rating.getGameName());
+			ratingUser = getUserByID(rating.getUserID());
 			if (index >= 0) {
-				ratings.set(index, rating);
-				updated = true;
+				if(games.contains(ratingGame) && (users.contains(ratingUser) || rating.getUserID().equals("Guest"))) {
+					ratings.set(index, rating);
+					updated = true;
+				}
 			}
 		}
 		return updated;
@@ -493,9 +547,11 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		List<Rating> ratingsCopy = this.getAllRatings();
 		List<Rating> gameRatings = new ArrayList<>();
 
-		for(int i = 0; i < ratingsCopy.size(); i++){
-			if(ratingsCopy.get(i).getGameName().equals(gameName)){
-				gameRatings.add(ratingsCopy.get(i));
+		if(gameName != null) {
+			for (int i = 0; i < ratingsCopy.size(); i++) {
+				if (ratingsCopy.get(i).getGameName().equals(gameName)) {
+					gameRatings.add(ratingsCopy.get(i));
+				}
 			}
 		}
 		return gameRatings;
@@ -505,9 +561,11 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		List<Rating> ratingsCopy = this.getAllRatings();
 		List<Rating> userRatings = new ArrayList<>();
 
-		for(int i = 0; i < ratingsCopy.size(); i++){
-			if(ratingsCopy.get(i).getUserID().equals(userID)){
-				userRatings.add(ratingsCopy.get(i));
+		if(userID != null) {
+			for (int i = 0; i < ratingsCopy.size(); i++) {
+				if (ratingsCopy.get(i).getUserID().equals(userID)) {
+					userRatings.add(ratingsCopy.get(i));
+				}
 			}
 		}
 		return userRatings;
@@ -518,11 +576,13 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		Rating curr = null;
 		boolean found = false;
 
-		for(int i = 0; i < ratings.size() && !found; i++){
-			curr = ratings.get(i);
-			if(curr.getUserID().equals(userID) && curr.getGameName().equals(gameName)){
-				toReturn = curr;
-				found = true;
+		if(gameName != null && userID != null) {
+			for (int i = 0; i < ratings.size() && !found; i++) {
+				curr = ratings.get(i);
+				if (curr.getUserID().equals(userID) && curr.getGameName().equals(gameName)) {
+					toReturn = curr;
+					found = true;
+				}
 			}
 		}
 

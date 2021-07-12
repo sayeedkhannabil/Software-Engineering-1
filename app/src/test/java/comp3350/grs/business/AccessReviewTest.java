@@ -85,16 +85,16 @@ public class AccessReviewTest {
         assertTrue(insert1);
         assertTrue(insert2);
 
-        //numbers of review in game1 should be at least 1
-        assertTrue(reviewAccess.getReviewNumByGame(game1.getName()) >= 1);
+        //numbers of review in game1 should be  1
+        assertEquals(1, reviewAccess.getReviewNumByGame(game1.getName()));
 
         List<Review> l = reviewAccess.getReviewsByGame(game1.getName());
-        assertTrue(l.size() >= 1);
+        assertEquals(1, l.size());
         assertEquals(reviewAccess.getReviewById(newReview1.getReviewID()), newReview1);
 
         //inserting review for different games
         l = reviewAccess.getReviewsByGame(game2.getName());
-        assertTrue(l.size() >= 1);
+        assertEquals(1, l.size());
         assertEquals(reviewAccess.getReviewById(newReview2.getReviewID()), newReview2);
 
         //multiple reviews for same game
@@ -109,16 +109,16 @@ public class AccessReviewTest {
 
         l = reviewAccess.getReviewsByGame(game1.getName());
 
-        assertTrue(l.size() >= 2);
+        assertEquals(2, l.size());
         assertEquals(newReview1.getComment(), "good");
 
         //user-based testing
         l = reviewAccess.getReviewsByUser(userID);
-        assertTrue(l.size() >=  1);
+        assertEquals(1, l.size());
         assertEquals(userID, l.get(0).getUserID());
 
         l = reviewAccess.getReviewsByUser(guestID);
-        assertTrue(l.size() >= 2);
+        assertEquals(2, l.size());
         assertEquals(l.get(0).getUserID(), guestID);
         assertTrue(l.contains(newReview1));
         assertTrue(l.contains(newReview2));
@@ -143,13 +143,13 @@ public class AccessReviewTest {
         assertTrue(update);
 
         l = reviewAccess.getReviewsByGame(game1.getName());
-        assertTrue(l.size() >= 2);
+        assertEquals(2, l.size());
         assertEquals(updateReview.getComment(), updateComment);
 
 
         //getting all reviews
         l = reviewAccess.getAllReviews();
-        assertTrue(l.size() >= 3);
+        assertEquals(3, l.size());
         assertTrue(l.contains(updateReview));
         assertTrue(l.contains(newReview2));
 

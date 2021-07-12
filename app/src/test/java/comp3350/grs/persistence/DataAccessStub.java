@@ -33,14 +33,14 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		System.out.println("Closed " +dbType +" database " +dbName);
 	}
 
-	public void clearDatabase(){
+	public void deleteDatabase(){
 		users=null;
 		games=null;
 		ratings = null;
 		reviews = null;
 	}
 
-	public void clearTable(){
+	public void clearAllData(){
 		users.clear();
 		games.clear();
 		ratings.clear();

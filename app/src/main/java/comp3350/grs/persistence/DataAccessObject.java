@@ -164,7 +164,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 	}
 
 	//delete all the tables
-	public void clearDatabase(){
+	public void deleteDatabase(){
 		deleteTable("reviews");
 		deleteTable("ratings");
 		deleteTable("users");
@@ -199,7 +199,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		clearTable("ratings");
 	}
 
-	public void clearTable(){
+	public void clearAllData(){
 		clearReviews();
 		clearRatings();
 		clearUsers();

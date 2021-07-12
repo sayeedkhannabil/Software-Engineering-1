@@ -1,6 +1,5 @@
 package comp3350.grs.persistence;
 
-import junit.framework.TestCase;
 
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -10,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import comp3350.grs.application.Services;
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Guest;
@@ -44,9 +44,9 @@ public class DataAccessITest{
 //        dataAccessI=new DataAccessObject("TestDB");
         dataAccessI=new DataAccessStub("TestDB");
         dataAccessI.open("database/TestDB");
-        dataAccessI.clearDatabase();
+        dataAccessI.deleteDatabase();
         dataAccessI.open("database/TestDB");
-        dataAccessI.clearTable();
+        dataAccessI.clearAllData();
         user1=null;
         user2=null;
         user3=null;
@@ -214,7 +214,7 @@ public class DataAccessITest{
         game2=dataAccessI.getGameByName(gameName);
         assertNull(game2);
 
-        dataAccessI.clearTable();
+        dataAccessI.clearAllData();
         userList=dataAccessI.getAllUsers();
         assertEquals(0,userList.size());
         gameList=dataAccessI.getAllGames();
@@ -362,6 +362,58 @@ public class DataAccessITest{
         rating= dataAccessI.getRating("game1","user3");
         assertNull(rating);
 
+        User user;
+        dataAccessI.clearAllData();
+        try {
+            user1=new Guest();
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        dataAccessI.insertUser(user1);
+        user=dataAccessI.getUserByID("Guest");
+        assertNotNull(user);
+        dataAccessI.clearUsers();
+        user=dataAccessI.getUserByID("Guest");
+        assertNull(user);
+
+        Game game;
+        try {
+            game1=new Game("gameName");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        dataAccessI.insertGame(game1);
+        game= dataAccessI.getGameByName("gameName");
+        assertNotNull(game);
+        dataAccessI.clearGames();
+        game= dataAccessI.getGameByName("gameName");
+        assertNull(game);
+
+        dataAccessI.insertUser(user1);
+        dataAccessI.insertGame(game1);
+        try {
+            review1=new Review(13,"comment","gameName","Guest");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        dataAccessI.insertReview(review1);
+        review= dataAccessI.getReviewByID(13);
+        assertNotNull(review);
+        dataAccessI.clearReviews();
+        review= dataAccessI.getReviewByID(13);
+        assertNull(review);
+
+        try {
+            rating1=new Rating(3.0,"gameName","Guest");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        dataAccessI.insertRating(rating1);
+        rating= dataAccessI.getRating("gameName","Guest");
+        assertNotNull(rating);
+        dataAccessI.clearRatings();
+        rating= dataAccessI.getRating("gameName","Guest");
+        assertNull(rating);
     }
 
     @Test
@@ -444,6 +496,18 @@ public class DataAccessITest{
         assertEquals(0,ratingList.size());
         rating2= dataAccessI.getRating(null,null);
         assertNull(rating2);
+
+        dataAccessI.close();
+        dataAccessI= Services.createDataAccess(new DataAccessStub());
+        dataAccessI.clearAllData();
+        try {
+            user1=new RegisteredUser("myUserID","myPass");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        dataAccessI.insertUser(user1);
+        userList= dataAccessI.getUsersByIDImplicit("myUserID");
+        assertEquals(1,userList.size());
 
     }
 

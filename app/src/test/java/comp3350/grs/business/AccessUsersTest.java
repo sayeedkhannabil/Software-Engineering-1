@@ -211,6 +211,8 @@ public class AccessUsersTest {
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
+
+
         success= accessUsers.insertUser(user1);
         assertTrue(success);
         success= accessUsers.insertUser(user1);
@@ -236,6 +238,11 @@ public class AccessUsersTest {
         user= accessUsers.getSequential();
         assertNull(user);
 
+        accessUsers.clear();
+        accessUsers.insertUser(user1);
+        accessUsers.getSequential();
+        user= accessUsers.getSequential();
+        assertEquals(user1,user);
     }
 
     @AfterClass

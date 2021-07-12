@@ -1,7 +1,6 @@
 package comp3350.grs.persistence;
 
 
-import java.sql.SQLException;
 import java.util.List;
 
 import comp3350.grs.objects.Game;
@@ -15,10 +14,10 @@ public interface DataAccessI
 
 	void close();
 
-	void clearDatabase();//delete all the tables
+	void deleteDatabase();//delete the database itself
 
-	void clearTable();//clear the content of table without deleting the table
-	// itself
+	void clearAllData();//clear data of the database,without delete the database
+
 	void clearUsers();
 
 	void clearGames();

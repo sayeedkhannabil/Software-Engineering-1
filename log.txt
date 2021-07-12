@@ -131,7 +131,7 @@ July 8: Katharine fixed brackets and syntax that were not consistent in some fil
         (expected time: 1 hours, actual: 1 hour)
 July 8: Hasin I completed the sort game using number of reviews.
 	 (expected time 2 hours, actual: 1 hour)
-July 8, 2021: Gongyu Liao update RatingTest file, delete old test method and add new one
+July 8, 2021: Gongyu update RatingTest file, delete old test method and add new one
 	(expected: 2 hours, actual: 2 hours)
 July 9: Katharine K implemented implicit user and game search in DataAccessStub
         (expected time: 1 hour, actual: 2 hours)
@@ -152,6 +152,9 @@ July 11: Sayeed added AccessReviewTest.java : test class for AccessReview
 
 July 11: Sayeed updated ReviewTest.java: test class for review
 	(expected: 1 hour, actual: 0.5 hours)
+	
+July 8: Hasin I completed the system architecture for iteration 2.
+	 (expected time 2 hours, actual: 1 hour)
 
 July 11 Group Meeting: went over test classes, figured out which were not passing, and decided on last tasks before hand-in
 July 11: Katharine K finished DataAccessStub (fixed bugs), finished AccessRatingsTest and added to other test classes,

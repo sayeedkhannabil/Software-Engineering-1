@@ -157,11 +157,9 @@ July 11 Group Meeting: went over test classes, figured out which were not passin
 July 11: Katharine K finished DataAccessStub (fixed bugs), finished AccessRatingsTest and added to other test classes,
          made sure all tests pass in all test classes
          (expected: 3 hours, actual: 4 hours)
-
 July 11: Sayeed updated detailed user stories on Github project.
 	(expected: 1 hour, actual: 1.5 hour)
-
 July 11: Sayeed added developer tasks in the Github Projects.
 	(expected: 1 hour, actual: 1 hour)
-
-
+July 12: Katharine K removed default reviews+ratings from DataAccess, modified test classes accordingly
+        (expected: 1 hour, actual: 2 hours)

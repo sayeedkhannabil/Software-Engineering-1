@@ -11,6 +11,8 @@ import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Game;
+import comp3350.grs.objects.Rating;
+import comp3350.grs.objects.Review;
 import comp3350.grs.persistence.DataAccessStub;
 
 import static org.junit.Assert.*;
@@ -22,6 +24,8 @@ public class AccessGamesTest {
     private static AccessReviews reviewAccess;
     private List<String> genres;
     private Game typicalGame, typicalGameSimple, nullGame, noNameGame, found;
+    private Rating rating1, rating2, rating3;
+    private Review review1, review2, review3;
     private boolean insert, update, delete;
     private int numGames;
 
@@ -45,6 +49,12 @@ public class AccessGamesTest {
         nullGame = null;
         noNameGame = null;
         found = null;
+        rating1 = null;
+        rating2 = null;
+        rating3 = null;
+        review1 = null;
+        review2 = null;
+        review3 = null;
         insert = false;
         update = false;
         delete = false;
@@ -113,12 +123,63 @@ public class AccessGamesTest {
 
         //put typicalGame back
         gameAccess.insertGame(typicalGame);
+
+
+        //add reviews and ratings to test sorting
+        String gameName = gameAccess.getSequential().getName(); //get a game from the list
+
+        try{
+            rating1 = new Rating(3.0, gameName, "Registered1");
+        }catch(IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        ratingAccess.insertRating(rating1);
+
+        try{
+            rating2 = new Rating(5.0, typicalGame.getName(), "Guest");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        ratingAccess.insertRating(rating2);
+
+        try{
+            rating3 = new Rating(4.0, typicalGame.getName(), "Registered1");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        ratingAccess.insertRating(rating3);
+
+        //reviews
+        try{
+            review1 = new Review("Game is alright.", gameName, "Registered1");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        reviewAccess.insertReview(review1);
+
+        try{
+            review2 = new Review("Great game.", typicalGame.getName(), "Guest");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        reviewAccess.insertReview(review2);
+
+        try{
+            review3 = new Review("Fairly good.", typicalGame.getName(), "Registered1");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        reviewAccess.insertReview(review3);
+
+
         List<Game> ascendingNames = gameAccess.ascendingNameSort();
         Game firstInListAsc = ascendingNames.get(0);
 
         List<Game> descendingNames = gameAccess.descendingNameSort();
         Game firstInListDesc = descendingNames.get(0);
         assertNotEquals(firstInListAsc, firstInListDesc);
+        assertNotEquals(firstInListAsc.getName(), firstInListDesc.getName());
+        assertTrue(firstInListAsc.getName().charAt(0) <= firstInListDesc.getName().charAt(0));
 
         List<Game> ascendingPrice = gameAccess.ascendingPriceSort();
         double ascendPrice = ascendingPrice.get(0).getPrice();
@@ -130,13 +191,13 @@ public class AccessGamesTest {
         double ascendRating = ratingAccess.getRatingNumByGame(ascendingRatings.get(0).getName());
         List<Game> descendingRatings = gameAccess.descendingRatingSort();
         double descendRating = ratingAccess.getRatingNumByGame(descendingRatings.get(0).getName());
-        assertTrue(descendRating >= ascendRating);
+        assertTrue(descendRating > ascendRating);
 
         List<Game> ascendingReviews = gameAccess.ascendingReviewSort();
         List<Game> descendingReviews = gameAccess.descendingReviewSort();
         int ascendReviewNum = reviewAccess.getReviewNumByGame(ascendingReviews.get(0).getName());
         int descendReviewNum = reviewAccess.getReviewNumByGame(descendingReviews.get(0).getName());
-        assertTrue(descendReviewNum >= ascendReviewNum);
+        assertTrue(descendReviewNum > ascendReviewNum);
 
         //test implicit search --- this will be improved once the stub implicit search is improved (soon)
         List<Game> implicit1 = gameAccess.getGamesByNameImplicit("Game");

@@ -73,6 +73,16 @@ public class AccessRatingsTest {
         boolean insert2 = ratingAccess.insertRating(newRegisterRating);
         assertTrue(insert);
         assertTrue(insert2);
+
+
+        assertEquals(2, ratingAccess.getAllRatings().size());
+        Rating nextRating = ratingAccess.getSequential();
+        assertNotNull(nextRating);
+        assertEquals(nextRating, newGuestRating);
+        nextRating = ratingAccess.getSequential();
+        assertNotNull(nextRating);
+        assertEquals(nextRating, newRegisterRating);
+
         assertEquals(ratingAccess.getRating(gameName,userID), newRegisterRating);
         assertEquals(ratingAccess.getRating(gameName,guestID), newGuestRating);
         assertTrue((ratingAccess.getOverallRating(gameName)) > 0);

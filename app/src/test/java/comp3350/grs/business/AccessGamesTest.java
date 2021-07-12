@@ -111,9 +111,6 @@ public class AccessGamesTest {
         assertEquals(2.00, typicalGameSimple.getPrice(), 0);
         assertNotNull(typicalGameSimple.getGenres());
 
-        Game sequential = gameAccess.getSequential();
-        assertTrue(sequential != null);
-
         delete = gameAccess.deleteGame(typicalGame);
         assertTrue(delete);
         found = gameAccess.findGame("Game1");
@@ -124,6 +121,13 @@ public class AccessGamesTest {
         //put typicalGame back
         gameAccess.insertGame(typicalGame);
 
+        assertTrue(gameAccess.getAllGames().size() >= 3);
+        Game nextGame = gameAccess.getSequential();
+        assertNotNull(nextGame);
+        nextGame = gameAccess.getSequential();
+        assertNotNull(nextGame);
+        nextGame = gameAccess.getSequential();
+        assertNotNull(nextGame);
 
         //add reviews and ratings to test sorting
         String gameName = gameAccess.getSequential().getName(); //get a game from the list
@@ -263,6 +267,8 @@ public class AccessGamesTest {
         List<Game> allGames = gameAccess.getAllGames();
         assertTrue(allGames.isEmpty());
         assertEquals(0, allGames.size());
+        Game sequential = gameAccess.getSequential();
+        assertNull(sequential);
     }
 
     @AfterClass

@@ -240,7 +240,10 @@ public class AccessUsersTest {
 
         accessUsers.clear();
         accessUsers.insertUser(user1);
-        accessUsers.getSequential();
+        user= accessUsers.getSequential();
+        while (user!=null){
+            user= accessUsers.getSequential();
+        }
         user= accessUsers.getSequential();
         assertEquals(user1,user);
     }

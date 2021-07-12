@@ -77,6 +77,11 @@ public class AccessUsers {
         return currentUser;
     }
 
+    public List<User> getUsersByIDImplicit(String userID){
+        String userIDImp="%"+userID+"%";
+        return dataAccessI.getUsersByIDImplicit(userIDImp);
+    }
+
     public boolean insertUser(User newUser)
     {
         return dataAccessI.insertUser(newUser);

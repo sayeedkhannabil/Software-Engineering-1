@@ -6,7 +6,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import comp3350.grs.exceptions.IncorrectFormat;
 
-public class RegisteredUserTest extends TestCase {
+public class RegisteredUserTest {
 
     @Test
     public void testTypical() throws Exception {

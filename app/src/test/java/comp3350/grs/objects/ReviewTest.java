@@ -9,7 +9,7 @@ import comp3350.grs.exceptions.IncorrectFormat;
 
 import static org.junit.Assert.*;
 
-public class ReviewTest extends TestCase {
+public class ReviewTest {
     @Test
     public void testTypical() {
         Review r = null;

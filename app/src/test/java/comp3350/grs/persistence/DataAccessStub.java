@@ -15,6 +15,7 @@ import comp3350.grs.objects.Review;
 
 public class DataAccessStub extends DataAccess implements DataAccessI {
 
+
 	public DataAccessStub(String dbName) {
 		super(dbName);
 	}
@@ -69,8 +70,8 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	public boolean insertUser(User newUser) {
 		boolean inserted = false;
-		if(newUser != null) {
-			if(newUser.validUser() && !users.contains(newUser)){
+		if(newUser != null&&newUser.validUser()) {
+			if(!users.contains(newUser)){
 				inserted = users.add(newUser);
 			}
 		}
@@ -123,22 +124,11 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 				}
 			}
 			else if(toCopy instanceof RegisteredUser) {
-				if(((RegisteredUser) toCopy).getPassword() != null) {
-					try{
-						copy = new RegisteredUser(toCopy.getUserID(),((RegisteredUser) toCopy).getPassword());
-					}
-					catch (IncorrectFormat incorrectFormat) {
-						incorrectFormat.printStackTrace();
-					}
+				try{
+					copy = new RegisteredUser(toCopy.getUserID(),((RegisteredUser) toCopy).getPassword());
 				}
-				else
-				{
-					try{
-						copy = new RegisteredUser(toCopy.getUserID());
-					}
-					catch (IncorrectFormat incorrectFormat) {
-						incorrectFormat.printStackTrace();
-					}
+				catch (IncorrectFormat incorrectFormat) {
+					incorrectFormat.printStackTrace();
 				}
 			}
 			usersCopy.add(copy);

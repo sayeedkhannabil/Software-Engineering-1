@@ -3,9 +3,11 @@ import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Game;
+import comp3350.grs.objects.Guest;
 import comp3350.grs.objects.Rating;
 import comp3350.grs.objects.RegisteredUser;
 import comp3350.grs.objects.User;
+import comp3350.grs.persistence.DataAccessI;
 import comp3350.grs.persistence.DataAccessStub;
 
 import org.junit.AfterClass;
@@ -18,10 +20,10 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class AccessRatingsTest {
+    private static DataAccessI dataAccess;
     private static AccessUsers userAccess;
     private static AccessRatings ratingAccess;
     private String gameName, userID, guestID;
-    private User user;
     private Rating newGuestRating, newRegisterRating, nullRating, updated, deleted;
     private boolean insert, update, delete;
 
@@ -37,9 +39,8 @@ public class AccessRatingsTest {
     @Before
     public void before(){
         gameName = null;
-        user = userAccess.getSequential();
         userID = null;
-        guestID = "Guest";
+        guestID = null;
         newGuestRating = null;
         newRegisterRating = null;
         nullRating = null;
@@ -53,7 +54,8 @@ public class AccessRatingsTest {
     @Test
     public void testTypical() {
         gameName = "Valheim";
-        userID = user.getUserID();
+        guestID = "Guest";
+        userID = "RegisteredUser";
 
         try {
             newGuestRating = new Rating(3.0, gameName, guestID);

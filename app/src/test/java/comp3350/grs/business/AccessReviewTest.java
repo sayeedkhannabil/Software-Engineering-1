@@ -23,11 +23,11 @@ public class AccessReviewTest {
     private static AccessUsers userAccess;
     private static AccessGames gameAccess;
     private static AccessReviews reviewAccess;
-    private User user;
     private Game game1, game2;
     private Review newReview1, newReview2;
     private boolean insert1, insert2, update, del;
     private int reviewID1, reviewID2;
+    private String userID, guestID;
 
     @BeforeClass
     public static void beforeClass(){
@@ -41,7 +41,6 @@ public class AccessReviewTest {
 
     @Before
     public void before(){
-        user = null;
         game1 = null;
         game2 = null;
         newReview1 = null;
@@ -52,12 +51,15 @@ public class AccessReviewTest {
         del = false;
         reviewID1 = 0;
         reviewID2 = 0;
+        userID = null;
+        guestID = null;
     }
 
     @Test
     public void testTypical() {
 
-        user = userAccess.getSequential();
+        userID = "RegisteredUser";
+        guestID = "Guest";
         game1 = gameAccess.getSequential();
         game2 = gameAccess.getSequential();
 
@@ -65,13 +67,13 @@ public class AccessReviewTest {
         String rev2 = "not worth it";
 
         try {
-            newReview1 = new Review(rev1, game1.getName(), "Guest");
+            newReview1 = new Review(rev1, game1.getName(), guestID);
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
 
         try {
-            newReview2 = new Review(rev2, game2.getName(), "Guest");
+            newReview2 = new Review(rev2, game2.getName(), guestID);
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
@@ -83,21 +85,21 @@ public class AccessReviewTest {
         assertTrue(insert1);
         assertTrue(insert2);
 
-        //numbers of review in game1 should be at least 1
-        assertTrue(reviewAccess.getReviewNumByGame(game1.getName()) >= 1);
+        //numbers of review in game1 should be  1
+        assertEquals(1, reviewAccess.getReviewNumByGame(game1.getName()));
 
         List<Review> l = reviewAccess.getReviewsByGame(game1.getName());
-        assertTrue(l.size() >= 1);
+        assertEquals(1, l.size());
         assertEquals(reviewAccess.getReviewById(newReview1.getReviewID()), newReview1);
 
         //inserting review for different games
         l = reviewAccess.getReviewsByGame(game2.getName());
-        assertTrue(l.size() >= 1);
+        assertEquals(1, l.size());
         assertEquals(reviewAccess.getReviewById(newReview2.getReviewID()), newReview2);
 
         //multiple reviews for same game
         try {
-            newReview1 = new Review("good", game1.getName(), user.getUserID());
+            newReview1 = new Review("good", game1.getName(), userID);
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
@@ -107,17 +109,17 @@ public class AccessReviewTest {
 
         l = reviewAccess.getReviewsByGame(game1.getName());
 
-        assertTrue(l.size() >= 2);
+        assertEquals(2, l.size());
         assertEquals(newReview1.getComment(), "good");
 
         //user-based testing
-        l = reviewAccess.getReviewsByUser(user.getUserID());
-        assertTrue(l.size() >=  1);
-        assertEquals(user.getUserID(), l.get(0).getUserID());
+        l = reviewAccess.getReviewsByUser(userID);
+        assertEquals(1, l.size());
+        assertEquals(userID, l.get(0).getUserID());
 
-        l = reviewAccess.getReviewsByUser("Guest");
-        assertTrue(l.size() >= 2);
-        assertEquals(l.get(0).getUserID(), "Guest");
+        l = reviewAccess.getReviewsByUser(guestID);
+        assertEquals(2, l.size());
+        assertEquals(l.get(0).getUserID(), guestID);
         assertTrue(l.contains(newReview1));
         assertTrue(l.contains(newReview2));
 
@@ -132,7 +134,7 @@ public class AccessReviewTest {
         String updateComment = "good teammates";
         Review updateReview = null;
         try {
-            updateReview = new Review(id, updateComment, game1.getName(), "Guest");
+            updateReview = new Review(id, updateComment, game1.getName(), guestID);
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
@@ -141,13 +143,13 @@ public class AccessReviewTest {
         assertTrue(update);
 
         l = reviewAccess.getReviewsByGame(game1.getName());
-        assertTrue(l.size() >= 2);
+        assertEquals(2, l.size());
         assertEquals(updateReview.getComment(), updateComment);
 
 
         //getting all reviews
         l = reviewAccess.getAllReviews();
-        assertTrue(l.size() >= 3);
+        assertEquals(3, l.size());
         assertTrue(l.contains(updateReview));
         assertTrue(l.contains(newReview2));
 

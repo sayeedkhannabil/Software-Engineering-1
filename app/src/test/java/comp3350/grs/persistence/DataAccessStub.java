@@ -70,7 +70,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	public boolean insertUser(User newUser) {
 		boolean inserted = false;
-		if(newUser != null) {
+		if(newUser != null&&newUser.validUser()) {
 			if(!users.contains(newUser)){
 				inserted = users.add(newUser);
 			}

@@ -23,11 +23,11 @@ public class AccessReviewTest {
     private static AccessUsers userAccess;
     private static AccessGames gameAccess;
     private static AccessReviews reviewAccess;
-    private User user;
     private Game game1, game2;
     private Review newReview1, newReview2;
     private boolean insert1, insert2, update, del;
     private int reviewID1, reviewID2;
+    private String userID, guestID;
 
     @BeforeClass
     public static void beforeClass(){
@@ -41,7 +41,6 @@ public class AccessReviewTest {
 
     @Before
     public void before(){
-        user = null;
         game1 = null;
         game2 = null;
         newReview1 = null;
@@ -52,12 +51,15 @@ public class AccessReviewTest {
         del = false;
         reviewID1 = 0;
         reviewID2 = 0;
+        userID = null;
+        guestID = null;
     }
 
     @Test
     public void testTypical() {
 
-        user = userAccess.getSequential();
+        userID = "RegisteredUser";
+        guestID = "Guest";
         game1 = gameAccess.getSequential();
         game2 = gameAccess.getSequential();
 
@@ -65,13 +67,13 @@ public class AccessReviewTest {
         String rev2 = "not worth it";
 
         try {
-            newReview1 = new Review(rev1, game1.getName(), "Guest");
+            newReview1 = new Review(rev1, game1.getName(), guestID);
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
 
         try {
-            newReview2 = new Review(rev2, game2.getName(), "Guest");
+            newReview2 = new Review(rev2, game2.getName(), guestID);
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
@@ -97,7 +99,7 @@ public class AccessReviewTest {
 
         //multiple reviews for same game
         try {
-            newReview1 = new Review("good", game1.getName(), user.getUserID());
+            newReview1 = new Review("good", game1.getName(), userID);
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
@@ -111,13 +113,13 @@ public class AccessReviewTest {
         assertEquals(newReview1.getComment(), "good");
 
         //user-based testing
-        l = reviewAccess.getReviewsByUser(user.getUserID());
+        l = reviewAccess.getReviewsByUser(userID);
         assertTrue(l.size() >=  1);
-        assertEquals(user.getUserID(), l.get(0).getUserID());
+        assertEquals(userID, l.get(0).getUserID());
 
-        l = reviewAccess.getReviewsByUser("Guest");
+        l = reviewAccess.getReviewsByUser(guestID);
         assertTrue(l.size() >= 2);
-        assertEquals(l.get(0).getUserID(), "Guest");
+        assertEquals(l.get(0).getUserID(), guestID);
         assertTrue(l.contains(newReview1));
         assertTrue(l.contains(newReview2));
 
@@ -132,7 +134,7 @@ public class AccessReviewTest {
         String updateComment = "good teammates";
         Review updateReview = null;
         try {
-            updateReview = new Review(id, updateComment, game1.getName(), "Guest");
+            updateReview = new Review(id, updateComment, game1.getName(), guestID);
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }

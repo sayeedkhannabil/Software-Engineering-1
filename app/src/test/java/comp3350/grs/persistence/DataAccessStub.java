@@ -15,6 +15,7 @@ import comp3350.grs.objects.Review;
 
 public class DataAccessStub extends DataAccess implements DataAccessI {
 
+
 	public DataAccessStub(String dbName) {
 		super(dbName);
 	}
@@ -70,7 +71,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	public boolean insertUser(User newUser) {
 		boolean inserted = false;
 		if(newUser != null) {
-			if(newUser.validUser() && !users.contains(newUser)){
+			if(!users.contains(newUser)){
 				inserted = users.add(newUser);
 			}
 		}

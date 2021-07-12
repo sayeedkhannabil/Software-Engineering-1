@@ -242,6 +242,7 @@ public class AccessUsersTest {
         accessUsers.insertUser(user1);
         accessUsers.getSequential();
         user= accessUsers.getSequential();
+        System.out.println(user1.getUserID()+", user: "+user.getUserID());
         assertEquals(user1,user);
     }
 

@@ -1,14 +1,5 @@
 package comp3350.grs.persistence;
 
-import org.apache.commons.io.IOUtils;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +40,7 @@ public abstract class DataAccess {
         double price;
 
 
-        genres=new ArrayList();
+        genres=new ArrayList<>();
         genres.add("Action");
         genres.add("Adventure");
         genres.add("Warhammer 40K");
@@ -2177,9 +2168,9 @@ public abstract class DataAccess {
         }
         games.add(newGame);
 
-
+        //add a default guest and registered user
         users=new ArrayList<User>();
-        User guest= null;
+        User guest = null;
         try {
             guest = new Guest();
         } catch (IncorrectFormat incorrectFormat) {
@@ -2187,73 +2178,14 @@ public abstract class DataAccess {
         }
         users.add(guest);
 
-        User registered = null;
+        User user = null;
         try{
-            registered = new RegisteredUser("Registered1");
-        } catch (IncorrectFormat incorrectFormat){
+            user = new RegisteredUser("RegisteredUser","registerPass");
+        }
+        catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
-        users.add(registered);
-
-
-        Rating newRating = null;
-        try{
-            newRating = new Rating(3.0, "Stardew Valley", "Registered1");
-        }catch(IncorrectFormat incorrectFormat){
-            incorrectFormat.printStackTrace();
-        }
-        ratings.add(newRating);
-
-        try{
-            newRating = new Rating(5.0, "Valheim", "Guest");
-        }catch (IncorrectFormat incorrectFormat){
-            incorrectFormat.printStackTrace();
-        }
-        ratings.add(newRating);
-
-        try{
-            newRating = new Rating(4.0, "Valheim", "Registered1");
-        }catch (IncorrectFormat incorrectFormat){
-            incorrectFormat.printStackTrace();
-        }
-        ratings.add(newRating);
-
-        try{
-            newRating = new Rating(2.0, "It Takes Two", "Guest");
-        }catch (IncorrectFormat incorrectFormat){
-            incorrectFormat.printStackTrace();
-        }
-        ratings.add(newRating);
-
-
-        Review newReview = null;
-        try{
-            newReview = new Review("Game is alright.", "Stardew Valley", "Registered1");
-        }catch (IncorrectFormat incorrectFormat){
-            incorrectFormat.printStackTrace();
-        }
-        reviews.add(newReview);
-
-        try{
-            newReview = new Review("Great game.", "Valheim", "Guest");
-        }catch (IncorrectFormat incorrectFormat){
-            incorrectFormat.printStackTrace();
-        }
-        reviews.add(newReview);
-
-        try{
-            newReview = new Review("Fairly good.", "Valheim", "Registered1");
-        }catch (IncorrectFormat incorrectFormat){
-            incorrectFormat.printStackTrace();
-        }
-        reviews.add(newReview);
-
-        try{
-            newReview = new Review("Not my favourite.", "It Takes Two", "Guest");
-        }catch (IncorrectFormat incorrectFormat){
-            incorrectFormat.printStackTrace();
-        }
-        reviews.add(newReview);
+        users.add(user);
     }
 
 

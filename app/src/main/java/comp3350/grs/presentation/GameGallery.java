@@ -2,8 +2,6 @@ package comp3350.grs.presentation;
 
 //  a gallery of game thumbnail
 // for now icon is hard coded, all the game icons are the same
-
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -27,7 +25,7 @@ import comp3350.grs.R;
 import comp3350.grs.business.AccessGames;
 import comp3350.grs.objects.Game;
 
-public class Game_gallery extends AppCompatActivity {
+public class GameGallery extends AppCompatActivity {
     private TableLayout tableLayout;//the layout to add thumbnail
     private Game game;//the current game to add
     private View thumbnail;
@@ -254,7 +252,7 @@ public class Game_gallery extends AppCompatActivity {
             thumbnail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent=new Intent(Game_gallery.this,Game_page.class);
+                    Intent intent=new Intent(GameGallery.this, GamePage.class);
                     game=games.get(v.getId());
                     intent.putExtra("game",game.getName());//pass the game
                     // name to game detail page

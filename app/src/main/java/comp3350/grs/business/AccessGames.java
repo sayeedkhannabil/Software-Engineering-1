@@ -15,7 +15,7 @@ import comp3350.grs.application.Services;
 import comp3350.grs.persistence.DataAccessI;
 import comp3350.grs.objects.Game;
 
-
+//business objeect of game
 public class AccessGames
 {
     private DataAccessI dataAccessI;

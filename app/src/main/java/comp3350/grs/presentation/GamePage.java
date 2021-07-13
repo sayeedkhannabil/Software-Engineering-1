@@ -3,11 +3,9 @@ package comp3350.grs.presentation;
 
 // game detail page
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -31,13 +29,11 @@ import comp3350.grs.business.AccessRatings;
 import comp3350.grs.business.AccessReviews;
 import comp3350.grs.business.AccessUsers;
 import comp3350.grs.exceptions.IncorrectFormat;
-import comp3350.grs.exceptions.IncorrectOrder;
 import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Rating;
 import comp3350.grs.objects.Review;
-import comp3350.grs.objects.User;
 
-public class Game_page extends AppCompatActivity {
+public class GamePage extends AppCompatActivity {
     private AccessGames accessGames;
     private AccessRatings accessRatings;
     private AccessReviews accessReviews;
@@ -161,17 +157,17 @@ public class Game_page extends AppCompatActivity {
                             AccessUsers.getActiveUser().getUserID())==null) {
                         AlertDialog alertDialog = Utilities.createAlertDialog(
                                 "please rate the game before writing review",
-                                Game_page.this);
+                                GamePage.this);
                         alertDialog.show();
                     }else {
                         isWritingReview=true;
                         review_button.setText("submit review");//change the
                         // text of the button
-                        textInputLayout=new TextInputLayout(Game_page.this);
+                        textInputLayout=new TextInputLayout(GamePage.this);
                         textInputLayout.setBackground(getDrawable(R.drawable.rounded_rectangle));
                         //show a input box used to write review
                         textInputEditText=
-                                new TextInputEditText(Game_page.this);
+                                new TextInputEditText(GamePage.this);
                         textInputEditText.setTextSize(TypedValue.COMPLEX_UNIT_SP,30);
                         textInputLayout.addView(textInputEditText);
                         review_wrapper.addView(textInputLayout);
@@ -201,7 +197,7 @@ public class Game_page extends AppCompatActivity {
                         constraintSet.applyTo(game_page_main);
                     } catch (IncorrectFormat incorrectFormat) {
                         AlertDialog alertDialog =
-                                Utilities.createAlertDialog(incorrectFormat.getMessage(),Game_page.this);
+                                Utilities.createAlertDialog(incorrectFormat.getMessage(), GamePage.this);
                         alertDialog.show();
                     }
                 }

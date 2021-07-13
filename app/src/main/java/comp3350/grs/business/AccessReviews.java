@@ -14,7 +14,7 @@ import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
 import comp3350.grs.objects.Review;
 import comp3350.grs.persistence.DataAccessI;
-
+//business object of review
 public class AccessReviews {
     private DataAccessI dataAccessI;
     private List<Review> reviewList;

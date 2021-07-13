@@ -10,7 +10,7 @@
     <fragment
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:name="comp3350.grs.presentation.top_bar"
+            android:name="comp3350.grs.presentation.TopBar"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout="@layout/fragment_top_bar"

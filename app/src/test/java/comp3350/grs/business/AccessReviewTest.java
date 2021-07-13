@@ -208,7 +208,7 @@ public class AccessReviewTest {
     }
 
     @AfterClass
-    public static void AfterClass(){
+    public static void afterClass(){
         Services.closeDataAccess();
     }
 

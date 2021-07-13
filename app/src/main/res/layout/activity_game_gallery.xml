@@ -4,7 +4,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".presentation.Game_gallery"
+        tools:context=".presentation.GameGallery"
         android:background="@color/blue2"
         android:orientation="vertical"
         android:id="@+id/coordinatorLayout">
@@ -12,7 +12,7 @@
     <fragment
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:name="comp3350.grs.presentation.top_bar"
+            android:name="comp3350.grs.presentation.TopBar"
             tools:layout="@layout/fragment_top_bar"
             ></fragment>
 

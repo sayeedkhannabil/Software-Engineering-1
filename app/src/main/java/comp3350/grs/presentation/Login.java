@@ -40,7 +40,7 @@ public class Login extends AppCompatActivity {
                     //user exists in the database, and the password is valid
                     user.checkPassMatch(passwordStr);
                     AccessUsers.setActiveUser(user);//set the user as active
-                    Intent intent=new Intent(Login.this,Game_gallery.class);
+                    Intent intent=new Intent(Login.this, GameGallery.class);
                     //open the game gallery page
                     startActivity(intent);
 

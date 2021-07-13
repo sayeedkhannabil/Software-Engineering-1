@@ -34,7 +34,7 @@ public interface DataAccessI
 
 	List<User> getAllUsers();
 
-	List<User> getUsersByIDImplicit(String userIDImp);
+	List<User> getUsersByIDImplicit(String userIDImp);//implicit search
 
 	User getUserByID(String userID);
 
@@ -48,7 +48,7 @@ public interface DataAccessI
 
 	Game getGameByName(String gameName);
 
-	List<Game> getGamesByNameImplicit(String gameNameImp);
+	List<Game> getGamesByNameImplicit(String gameNameImp);//implicit search
 
 	boolean insertReview(Review review);
 

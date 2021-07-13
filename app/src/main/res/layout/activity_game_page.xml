@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.Game_page"
+        tools:context=".presentation.GamePage"
         android:background="@color/blue2"
         android:id="@+id/game_page_main">
 
@@ -59,7 +59,7 @@
     <fragment
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:name="comp3350.grs.presentation.top_bar"
+            android:name="comp3350.grs.presentation.TopBar"
             android:id="@+id/game_page_top_bar"
             tools:layout="@layout/fragment_top_bar"
             app:layout_constraintTop_toTopOf="parent"

@@ -188,6 +188,7 @@ The `presentation` package is responsible for all of the classes that handles th
 * Added more app functionality like a button shrinks for brief period of time when it is touched to give a more interactive experience to the user when using the app.
 * Improved the overall UI of the app.
 * Added UI for search and sort bar to quickly search a game or sort them according to name, price, ratings and reviews.
+* Added genres of the game(genre bar locates above the description of the game, and can slide horizontally)
 
 
 

@@ -15,11 +15,11 @@ import comp3350.grs.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link top_bar#newInstance} factory method to
+ * Use the {@link TopBar#newInstance} factory method to
  * create an instance of this fragment.
  */
 //the top bar fragment
-public class top_bar extends Fragment {
+public class TopBar extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,7 +33,7 @@ public class top_bar extends Fragment {
     private TextView top_bar_text;
     private ImageView user_button;
 
-    public top_bar() {
+    public TopBar() {
         // Required empty public constructor
     }
 
@@ -46,8 +46,8 @@ public class top_bar extends Fragment {
      * @return A new instance of fragment top_bar.
      */
     // TODO: Rename and change types and number of parameters
-    public static top_bar newInstance(String param1, String param2) {
-        top_bar fragment = new top_bar();
+    public static TopBar newInstance(String param1, String param2) {
+        TopBar fragment = new TopBar();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

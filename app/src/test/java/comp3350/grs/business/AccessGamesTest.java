@@ -273,7 +273,7 @@ public class AccessGamesTest {
     }
 
     @AfterClass
-    public static void AfterClass(){
+    public static void afterClass(){
         Services.closeDataAccess();
     }
 }

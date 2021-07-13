@@ -8,14 +8,14 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".presentation.UserPage"></activity>
-        <activity android:name=".presentation.Game_gallery">
+        <activity android:name=".presentation.GameGallery">
             <meta-data
                     android:name="android.app.default_searchable"
                     android:value=".presentation.SearchGame" />
         </activity>
         <activity android:name=".presentation.Signup" />
         <activity android:name=".presentation.Login" />
-        <activity android:name=".presentation.Game_page" />
+        <activity android:name=".presentation.GamePage" />
         <activity android:name=".presentation.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

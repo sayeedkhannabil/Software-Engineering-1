@@ -42,7 +42,7 @@ public class Signup extends FragmentActivity {
                     if(user!=null){//the registration succeed, login to game
                         // gallery
                         AccessUsers.setActiveUser(user);
-                        Intent intent=new Intent(Signup.this,Game_gallery.class);
+                        Intent intent=new Intent(Signup.this, GameGallery.class);
                         startActivity(intent);
                     }
                 } catch (Exception e) {

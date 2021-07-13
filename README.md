@@ -139,13 +139,13 @@ This is the class that handles the HSQL database and the functionality for the d
 
 The `presentation` package is responsible for all of the classes that handles the UI(user interface).  There are 10 classes in this package.
 
-##### Game_gallery:
+##### GameGallery:
 
-`Game_gallery` is the UI for the gallery where all of the stored games is shown.
+`GameGallery` is the UI for the gallery where all of the stored games is shown.
 
-##### Game_page:
+##### GamePage:
 
-`Game_page` is the UI for individual games where the game info, price and feedback are shown.
+`GamePage` is the UI for individual games where the game info, price and feedback are shown.
 
 ##### Login:
 
@@ -163,13 +163,13 @@ The `presentation` package is responsible for all of the classes that handles th
 
 `Signup` is the UI for sign up page.
 
-##### userid_and_pass:
+##### UseridAndPass:
 
-`userid_and_pass` is the fragment for buttons and boxes for userid and password in login and signup.
+`UseridAndPass` is the fragment for buttons and boxes for userid and password in login and signup.
 
-##### top_bar:
+##### TopBar:
 
-`top_bar` is the fragment for the bar in the top of the application that shows in which part of the app we are currently in.
+`TopBar` is the fragment for the bar in the top of the application that shows in which part of the app we are currently in.
 
 ##### UserPage:
 
@@ -183,7 +183,7 @@ The `presentation` package is responsible for all of the classes that handles th
 
 ### Major Changes:
 
-* Added `top-bar` so new user can easily identify which page they are currently in.
+* Added `top bar` so new user can easily identify which page they are currently in and go back to previous page.
 * Added UI for user account page where the user_id and user_pass can be viewed by the users.
 * Added more app functionality like a button shrinks for brief period of time when it is touched to give a more interactive experience to the user when using the app.
 * Improved the overall UI of the app.

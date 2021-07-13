@@ -199,6 +199,26 @@ We have kept the log of the meetings and individual work in the log file. The fo
 
 
 
+## Big User Stories:
+
+![image](BigUserStories.png)
+
+
+
+## Detailed User Stories:
+
+![image](detailedUserStories.png)
+
+
+
+## Developer Task:
+
+![image](developerTask.png)
+
+
+
+
+
 ## Major Implemented Features:
 
 ### Iteration 2:

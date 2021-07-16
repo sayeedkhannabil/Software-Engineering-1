@@ -1,34 +1,33 @@
 package comp3350.grs.business;
-// CLASS: AccessUsers...
-//
-// Author: Shiqing
-//
-// REMARKS: What is the purpose of this class?
-// access users
-//-----------------------------------------
+
+// access users business object
+
 import java.util.List;
 
 import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
-import comp3350.grs.objects.RegisteredUser;
 import comp3350.grs.objects.User;
-import comp3350.grs.persistence.DataAccessStub;
+import comp3350.grs.persistence.DataAccessI;
 
 public class AccessUsers {
 
-    private DataAccessStub dataAccess;
-    private List<User> users;
+    private DataAccessI dataAccessI;
+    private List<User> userList;
     private static User activeUser;//the user logged in to the app
     private User currentUser;//used for return sequantial user
     private int currentUserIndex;//index of current user
 
     public AccessUsers()
     {
-        dataAccess = (DataAccessStub) Services.getDataAccess(Main.dbName);
-        users = null;
+        dataAccessI = Services.getDataAccess(Main.dbName);
+        userList = null;
         activeUser = null;
         currentUser=null;
         currentUserIndex = 0;
+    }
+
+    public void clear(){
+        dataAccessI.clearUsers();
     }
 
     public static User getActiveUser(){
@@ -37,32 +36,35 @@ public class AccessUsers {
 
     //set the user who logged in to be the given user
     public static void setActiveUser(User user){
+        if (user==null){
+            throw new NullPointerException("can't set active user to be null");
+        }
         activeUser=user;
     }
 
     //get a list of all the users
-    public List<User> getUsers()
+    public List<User> getAllUsers()
     {
-        users=dataAccess.getAllUsers();
-        return users;
+        userList = dataAccessI.getAllUsers();
+        return userList;
     }
 
     //get users one by one
     public User getSequential()
     {
-        if (users == null)
+        if (userList == null)
         {
-            users = dataAccess.getAllUsers();
+            getAllUsers();
             currentUserIndex = 0;
         }
-        if (currentUserIndex < users.size())
+        if (currentUserIndex < userList.size())
         {
-            currentUser =  users.get(currentUserIndex);
+            currentUser =  userList.get(currentUserIndex);
             currentUserIndex++;
         }
         else
         {
-            users = null;
+            userList = null;
             currentUser = null;
             currentUserIndex = 0;
         }
@@ -70,40 +72,28 @@ public class AccessUsers {
     }
 
     //get a specific user according to userID
-    public User getRandom(String userID) throws Exception {
-        currentUser = null;
-        if (userID.trim().equals(""))
-        {
-            //System.out.println("*** Invalid student number");
-        }
-        else
-        {
-            currentUser = dataAccess.getUser(new RegisteredUser(userID));
-        }
+    public User getUserByID(String userID){
+        currentUser = dataAccessI.getUserByID(userID);
         return currentUser;
     }
 
-    public void insertUser(User newUser)
-    {
-        if (newUser!=null&&newUser.validUser()){
-            dataAccess.insertUser(newUser);
-        }
-
+    public List<User> getUsersByIDImplicit(String userID){
+        String userIDImp="%"+userID+"%";
+        return dataAccessI.getUsersByIDImplicit(userIDImp);
     }
 
-    public void updateUser(User user)
+    public boolean insertUser(User newUser)
     {
-        if (user!=null&&user.validUser()){
-            dataAccess.updateUser(user);
-        }
-
+        return dataAccessI.insertUser(newUser);
     }
 
-    public void deleteUser(User user)
+    public boolean updateUser(User user)
     {
-        if (user!=null&&user.validUser()){
-            dataAccess.deleteUser(user);
-        }
+        return dataAccessI.updateUser(user);
+    }
 
+    public boolean deleteUser(User user)
+    {
+        return dataAccessI.deleteUser(user);
     }
 }

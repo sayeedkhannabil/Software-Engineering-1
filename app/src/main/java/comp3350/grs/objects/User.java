@@ -2,14 +2,9 @@ package comp3350.grs.objects;
 
 import comp3350.grs.exceptions.IncorrectFormat;
 
-// CLASS: User
-//
-// Author: Shiqing Guo
-//
-// REMARKS: domain object of the user who will use this app
-//	this is an abstract class
-//
-//-----------------------------------------
+
+// domain object of the user who will use this app
+//	this is an abstract class, have guest and registeredUser as child
 public abstract class User
 {
 	private String userID;
@@ -19,22 +14,18 @@ public abstract class User
 	}
 
 	public User(String userID) throws IncorrectFormat {
-		checkUseridNotNull(userID);
 		//userid should not contain space or be empty
 		checkUseridFormat(userID);
 		this.userID=userID;
 	}
 
-	private void checkUseridNotNull(String userID){
-		if (userID==null){
-			throw new NullPointerException("userID should not be null.");
-		}
-	}
-
-	private void checkUseridFormat(String userID) throws IncorrectFormat {
-		if (userID.equals("")|| userID.contains(" ")){
-			throw new IncorrectFormat("user id should not be empty or contain" +
-					" space");
+	//check the format of user id is correct
+	protected void checkUseridFormat(String userID) throws IncorrectFormat {
+		final int MAX_LENGTH=20;
+		if (userID.length()<=0||userID.length()>MAX_LENGTH){
+			throw new IncorrectFormat("length of user id should >0 and <="+MAX_LENGTH);
+		}else if (userID.contains(" ")){
+			throw new IncorrectFormat("user id should not contain space");
 		}
 	}
 
@@ -49,38 +40,25 @@ public abstract class User
 		return "userID:" + userID;
 	}
 
+	//important info is not null
 	public boolean validUser(){
-		if (this.userID!=null){
-			return true;
-		}
-		else {
-			return false;
-		}
+		return this.userID!=null;
 	}
 
 	//change user id to new user id
-	public void changeUserID(String newUserID) throws Exception {
-		checkUseridNotNull(newUserID);
+	public void changeUserID(String newUserID) throws IncorrectFormat {
 		checkUseridFormat(newUserID);
 		this.userID=newUserID;
 	}
 
-	//------------------------------------------------------
-	// equals
-	//
-	// PURPOSE:    compare this user with the user given
-	// PARAMETERS:
-	//     object: the given user to compare
-	// Returns: a boolean to indicate whether this user equals to given user
-	//------------------------------------------------------
+
 	public boolean equals(Object object)
 	{
 		boolean result;
 		User user;
-		
 		result = false;
 		
-		if (this.userID!=null&& object instanceof User)
+		if (object!=null&& validUser()&& object instanceof User)
 		{
 			user = (User) object;
 			//if user id are the same , they are equal

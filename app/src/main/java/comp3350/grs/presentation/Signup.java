@@ -1,18 +1,13 @@
 package comp3350.grs.presentation;
-// CLASS: Signup...
-//
-// Author: Shiqing
-//
-// REMARKS: What is the purpose of this class?
+
 // Signup page
-//-----------------------------------------
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
 
@@ -43,11 +38,11 @@ public class Signup extends FragmentActivity {
                             password.getText().toString());
                     AccessUsers accessUsers=new AccessUsers();
                     accessUsers.insertUser(user);
-                    user=accessUsers.getRandom(userid.getText().toString());
+                    user=accessUsers.getUserByID(userid.getText().toString());
                     if(user!=null){//the registration succeed, login to game
                         // gallery
                         AccessUsers.setActiveUser(user);
-                        Intent intent=new Intent(Signup.this,Game_gallery.class);
+                        Intent intent=new Intent(Signup.this, GameGallery.class);
                         startActivity(intent);
                     }
                 } catch (Exception e) {

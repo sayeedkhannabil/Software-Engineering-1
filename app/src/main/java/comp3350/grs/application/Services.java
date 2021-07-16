@@ -1,22 +1,34 @@
 package comp3350.grs.application;
 
-import comp3350.grs.persistence.DataAccessStub;
+
+import comp3350.grs.persistence.DataAccessI;
+import comp3350.grs.persistence.DataAccessObject;
 
 public class Services
 {
-	private static DataAccessStub dataAccessService = null;
+	private static DataAccessI dataAccessService = null;
 
-	public static DataAccessStub createDataAccess(String dbName,String content)
+	public static DataAccessI createDataAccess(String dbName)
 	{
 		if (dataAccessService == null)
 		{
-			dataAccessService = new DataAccessStub(dbName);
-			dataAccessService.open(comp3350.grs.application.Main.dbName,content);
+			dataAccessService = new DataAccessObject(dbName);
+			dataAccessService.open(Main.getDBPathName());
 		}
 		return dataAccessService;
 	}
 
-	public static DataAccessStub getDataAccess(String dbName)
+	public static DataAccessI createDataAccess(DataAccessI alternateDataAccessService)
+	{
+		if (dataAccessService == null)
+		{
+			dataAccessService = alternateDataAccessService;
+			dataAccessService.open(Main.getDBPathName());
+		}
+		return dataAccessService;
+	}
+
+	public static DataAccessI getDataAccess(String dbName)
 	{
 		if (dataAccessService == null)
 		{

@@ -1,53 +1,35 @@
 package comp3350.grs.presentation;
-// CLASS: MainActivity...
-//
-// Author: Shiqing
-//
-// REMARKS: What is the purpose of this class?
+
 // homepage
-//-----------------------------------------
-import android.content.res.Resources;
+import android.content.Context;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import comp3350.grs.R;
 import comp3350.grs.application.Main;
+import comp3350.grs.application.Services;
+import comp3350.grs.persistence.DataAccessI;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity {
+    private static boolean isRunning=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Main.startUp(fileToString());
+        isRunning=true;
+        setDB();
+        Main.startUp();
     }
 
-    //convert json to string, used to open database
-    public  String fileToString() {
-        InputStream inputStream=getResources().openRawResource(R.raw.csvjson);
-        StringBuilder text = new StringBuilder();
-        try {
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            while ((line = br.readLine()) != null) {
-                text.append(line);
-                text.append('\n');
-            }
-            br.close() ;
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return text.toString();
+    private void setDB(){
+        Context context = getApplicationContext();
+        File dataDirectory = context.getDir("database", Context.MODE_PRIVATE);
+        //when running on the emulator, change the database path to correct
+        // position
+        Main.setDBPathName(dataDirectory.toString() + "/" + Main.dbName);
     }
 
 }

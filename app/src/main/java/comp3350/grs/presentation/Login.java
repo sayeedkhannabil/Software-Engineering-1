@@ -1,18 +1,13 @@
 package comp3350.grs.presentation;
-// CLASS: Login...
-//
-// Author: Shiqing
-//
-// REMARKS: What is the purpose of this class?
+
 // login page
-//-----------------------------------------
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -21,7 +16,7 @@ import comp3350.grs.business.AccessUsers;
 import comp3350.grs.objects.RegisteredUser;
 
 
-public class Login extends FragmentActivity {
+public class Login extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +36,11 @@ public class Login extends FragmentActivity {
                 try {
                     RegisteredUser user;
                     AccessUsers accessUsers=new AccessUsers();
-                    user=(RegisteredUser) accessUsers.getRandom(useridStr);
+                    user=(RegisteredUser) accessUsers.getUserByID(useridStr);
                     //user exists in the database, and the password is valid
                     user.checkPassMatch(passwordStr);
                     AccessUsers.setActiveUser(user);//set the user as active
-                    Intent intent=new Intent(Login.this,Game_gallery.class);
+                    Intent intent=new Intent(Login.this, GameGallery.class);
                     //open the game gallery page
                     startActivity(intent);
 

@@ -387,7 +387,7 @@
     "developer": "Rockstar North",
     "publisher": "Rockstar Games",
     "price": 29,
-    "description": "Niko Bellic, Johnny Klebitz and Luis Lopez all have one thing in common - they live in the worst city in America. Liberty City worships money and status, and is heaven for those who have them and a living nightmare for those who don't.",
+    "description": "Niko Bellic, Johnny Klebitz and Luis Lopez all have one thing in common - they live in the worst city in America. Liberty City worships money and status, and is heaven for those who have them and a living nightmare for those who don''t.",
     "genres": [
       {
         "genres": "Open World"
@@ -967,7 +967,7 @@
     "developer": "Nolla Games",
     "publisher": "Nolla Games",
     "price": 49,
-    "description": "Noita is a magical action roguelite set in a world where every pixel is physically simulated. Fight, explore, melt, burn, freeze and evaporate your way through the procedurally generated world using spells you've created yourself.",
+    "description": "Noita is a magical action roguelite set in a world where every pixel is physically simulated. Fight, explore, melt, burn, freeze and evaporate your way through the procedurally generated world using spells you''ve created yourself.",
     "genres": [
       {
         "genres": "Difficult"
@@ -1175,12 +1175,12 @@
   },
   {
     "platform": "steam",
-    "title": "Assassin's Creed? Odyssey",
+    "title": "Assassin''s Creed? Odyssey",
     "release_time": "5 Oct, 2018",
     "developer": "Ubisoft Quebec",
     "publisher": "Ubisoft",
     "price": 74,
-    "description": "Choose your fate in Assassin's Creed� Odyssey. From outcast to living legend, embark on an odyssey to uncover the secrets of your past and change the fate of Ancient Greece.",
+    "description": "Choose your fate in Assassin''s Creed� Odyssey. From outcast to living legend, embark on an odyssey to uncover the secrets of your past and change the fate of Ancient Greece.",
     "genres": [
       {
         "genres": "Open World"
@@ -1535,7 +1535,7 @@
     "developer": "ConcernedApe",
     "publisher": "ConcernedApe",
     "price": 48,
-    "description": "You've inherited your grandfather's old farm plot in Stardew Valley. Armed with hand-me-down tools and a few coins, you set out to begin your new life. Can you learn to live off the land and turn these overgrown fields into a thriving home?",
+    "description": "You''ve inherited your grandfather''s old farm plot in Stardew Valley. Armed with hand-me-down tools and a few coins, you set out to begin your new life. Can you learn to live off the land and turn these overgrown fields into a thriving home?",
     "genres": [
       {
         "genres": "Farming Sim"
@@ -1743,12 +1743,12 @@
   },
   {
     "platform": "steam",
-    "title": "No Man's Sky",
+    "title": "No Man''s Sky",
     "release_time": "12 Aug, 2016",
     "developer": "Hello Games",
     "publisher": "Hello Games",
     "price": 69,
-    "description": "No Man's Sky is a game about exploration and survival in an infinite procedurally generated universe.",
+    "description": "No Man''s Sky is a game about exploration and survival in an infinite procedurally generated universe.",
     "genres": [
       {
         "genres": "Open World"
@@ -2808,12 +2808,12 @@
   },
   {
     "platform": "steam",
-    "title": "Don't Starve Together",
+    "title": "Don''t Starve Together",
     "release_time": "21 Apr, 2016",
     "developer": "Klei Entertainment",
     "publisher": "Klei Entertainment",
     "price": 12,
-    "description": "Fight, Farm, Build and Explore Together in the standalone multiplayer expansion to the uncompromising wilderness survival game, Don't Starve.",
+    "description": "Fight, Farm, Build and Explore Together in the standalone multiplayer expansion to the uncompromising wilderness survival game, Don''t Starve.",
     "genres": [
       {
         "genres": "Survival"
@@ -3118,7 +3118,7 @@
     "developer": "Larian Studios",
     "publisher": "Larian Studios",
     "price": 53,
-    "description": "The critically acclaimed RPG that raised the bar, from the creators of Baldur's Gate 3. Gather your party. Master deep, tactical combat. Venture as a party of up to four - but know that only one of you will have the chance to become a God.",
+    "description": "The critically acclaimed RPG that raised the bar, from the creators of Baldur''s Gate 3. Gather your party. Master deep, tactical combat. Venture as a party of up to four - but know that only one of you will have the chance to become a God.",
     "genres": [
       {
         "genres": "Exploration"
@@ -3186,7 +3186,7 @@
     "platform": "steam",
     "title": "EARTH DEFENSE FORCE: WORLD BROTHERS",
     "release_time": "27 May, 2021",
-    "developer": "YUKE'S",
+    "developer": "YUKE''S",
     "publisher": null,
     "price": 239,
     "description": "A new EDF adventure begins! Only this time, the action unfolds in a parallel world where the Earth is made of digital blocks. This world has befallen into chaos, as the once peaceful square Earth has been shattered into pieces. Shape aside, it is an Earth nonetheless which needs to be defended.",
@@ -3642,7 +3642,7 @@
         "genres": "Co-op"
       },
       {
-        "genres": "Beat 'em up"
+        "genres": "Beat ''em up"
       },
       {
         "genres": "Local Co-Op"
@@ -3728,12 +3728,12 @@
   },
   {
     "platform": "steam",
-    "title": "PLAYERUNKNOWN'S BATTLEGROUNDS",
+    "title": "PLAYERUNKNOWN''S BATTLEGROUNDS",
     "release_time": "21 Dec, 2017",
     "developer": "KRAFTON, Inc.",
     "publisher": "KRAFTON, Inc.",
     "price": 98,
-    "description": "PLAYERUNKNOWN'S BATTLEGROUNDS is a battle royale shooter that pits 100 players against each other in a struggle for survival. Gather supplies and outwit your opponents to become the last person standing.",
+    "description": "PLAYERUNKNOWN''S BATTLEGROUNDS is a battle royale shooter that pits 100 players against each other in a struggle for survival. Gather supplies and outwit your opponents to become the last person standing.",
     "genres": [
       {
         "genres": "Survival"
@@ -3799,7 +3799,7 @@
   },
   {
     "platform": "steam",
-    "title": "Baldur's Gate 3",
+    "title": "Baldur''s Gate 3",
     "release_time": "6 Oct, 2020",
     "developer": "Larian Studios",
     "publisher": "Larian Studios",

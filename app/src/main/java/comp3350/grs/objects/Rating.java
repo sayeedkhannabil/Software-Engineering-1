@@ -1,53 +1,76 @@
-// CLASS: Rating
-//
-// Author: Katharine Kowalchuk
-//
-// REMARKS: This class represents the rating of a game in the system.
-//          Any time a valid rating is added to a game, a Rating object is created and holds the rating value,
-//          the active user giving the rating, as well as a toString() method, input validation,
-//          and will have more functionality in the future.
-//-----------------------------------------
+// This class represents the rating of a game in the system.
+// Any time a valid rating is added to a game, a Rating object is created and holds the rating value,
+// the active user giving the rating, as well as a toString() method, input validation,
+// and will have more functionality in the future.
 package comp3350.grs.objects;
-
-import comp3350.grs.business.AccessUsers;
-
+import comp3350.grs.exceptions.IncorrectFormat;
+//domain object, rating of a game
 public class Rating
 {
-    private double rating; //from one to five
-    private User user;
+    private double ratingValue; //from one to five
+    private String gameName;
+    private String userID;
 
-    public Rating (double ratingGiven) {
-        rating = 0.0; // default -- if no ratings (or no valid ratings) given yet
 
-        //input validation
-        if(ratingGiven > 0 && ratingGiven <= 5)
-        {
-            rating = ratingGiven;
-            user = AccessUsers.getActiveUser();
-        }
-        else
-        {
-            System.out.println("Rating must be between 1 and 5, inclusive. Try again.");
+    public Rating (double ratingGiven,String gameName,String userID) throws IncorrectFormat {
+        checkRating(ratingGiven);
+        ratingValue = ratingGiven;
+        this.userID=userID;
+        this.gameName=gameName;
+    }
+
+    public Rating(double ratingGiven) throws IncorrectFormat {
+        checkRating(ratingGiven);
+        ratingValue = ratingGiven;
+        this.userID = null;
+        this.gameName = null;
+
+    }
+
+    public Rating(){
+        ratingValue = 0.0;
+    }
+
+    //check if the rating is valid(important info is not null)
+    public boolean validRating(){
+        return this.userID!=null&&this.gameName!=null;
+    }
+
+    //check the format of rating is correct
+    private void checkRating(double rating) throws IncorrectFormat {
+        final int MAX_RATING = 5;
+        if(rating <= 0 || rating > MAX_RATING){
+            throw new IncorrectFormat("rating should be between 0 and 5.");
         }
     }
 
-    public double getRating()
-    {
-        return rating;
+    public double getRatingValue() {
+        return ratingValue;
     }
 
-    public User getUser()
-    {
-        return user;
+    public String getUserID() {
+        return userID;
     }
 
-    public String toString()
-    {
-        String str = "UserID: "+user.getUserID()+"\nRating: "+rating+" out of 5 points.\n";
-        if(rating == 0)
-        {
-            str = "Invalid rating.";
+    public String getGameName(){
+        return gameName;
+    }
+
+    @Override
+    public boolean equals(Object object){
+        boolean result;
+        result = false;
+        Rating rating;
+
+        if (object!=null&& validRating()&& object instanceof Rating){
+            rating=(Rating)object;
+            result=
+                    this.userID.equals(rating.userID)&&this.gameName.equals(rating.gameName);
         }
-        return str;
+        return result;
+    }
+
+    public String toString() {
+        return  "UserID: "+userID+"\nRating: "+ ratingValue +" out of 5 points.\n";
     }
 }

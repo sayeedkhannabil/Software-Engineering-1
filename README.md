@@ -32,29 +32,48 @@ The `application`  package is for running the whole program. There are two class
 
 `Main`  class is the driver class of the project. Using `Main`  we start and close the program.
 
+#### Major Changes:
+
+There are no major changes on this part in Iteration 2.
+
 
 
 ### Business:
 
-The classes in `Business` package handle the logic of the program. There are two classes in this package.
+The classes in `Business` package handle the logic of the program. There are 4 classes in this package.
 
 ##### AccessGames:
 
-`AccessGames` class handles the logic behind `game` object storage in the stub-database.
+`AccessGames` class handles the logic behind `game` object storage in the HSQL database and used to access and modify games in the database.
 
 ##### AccessUsers:
 
-`AccessUsers` class handles the logic behind `user` object storage in the stub-database.
+`AccessUsers` class handles the logic behind `user` object storage in the HSQL database and used to access and modify user information in the database.
+
+##### AccessRatings:
+
+`AccessRating` class handles the the logic behind `rating` object storage in HSQL database and used to access and modify ratings of games in the database.
+
+##### AccessReviews:
+
+`AccessReviews` class handles the logic behind `review` object storage in HSQL database and used to access and modify reviews of games in the database.
+
+
+
+#### Major Changes:
+
+* Changed the storage from stub-database to HSQL database for all class and added `AccessReviews` and `AccessRatings`
+* Modified `AccessGames` and `AccessUsers` class so that all of the classes can work with HSQLDB.Added 8 sort methods and implicit search to `AccessGames`.Added implicit search to `AccessUsers`.
 
 
 
 ### Objects:
 
-The `objects` package have the necessary object class that the project needed. There are 6 classes and 1 abstract class in this package.
+The `objects` package have the necessary object class that the project needed. There are 5 classes and 1 abstract class in this package.
 
 ##### User:
 
-User's functionality is defined the `User` class. Each user is identified using an unique user id. 
+User's functionality is defined the `User` class. Each user is identified using an unique user id. This is an abstract class for `RegisteredUser` and `Guest` class.
 
 ##### RegisteredUser:
 
@@ -66,15 +85,11 @@ This is also a child class of `User` . If users do not want to registered themse
 
 ##### Rating:
 
-An user can give a rating between 1-5 for a game. `Rating` class handles the logic behind that rating.
+An user can give a rating between (exclusive)0-5(inclusive) for a game. `Rating` class handles the logic behind that rating.
 
 ##### Review:
 
-An user can also leave a review of a game. `Review` class handles how those reviews get processed.
-
-##### Feedback:
-
-`Feedback` class combines both `rating` and `review` together. The ratings and reviews given by the users are saved as `Feedback` in `Game`.
+An user can leave a review of a game. `Review` class handles how those reviews get processed.
 
 ##### Game:
 
@@ -82,27 +97,55 @@ An user can also leave a review of a game. `Review` class handles how those revi
 
 
 
+#### Major Changes:
+
+* Removed `Feedback` class which was used to handle `Review` class and `Rating` class in Iteration 1 to reduce code redundancy.
+* Removed all methods relating to `Review` and `Rating` from the `Game` class to satisfy Single Responsibility Principle.
+* Added more format validation and error handling for all of the classes.
+
+
+
 ### Persistence:
 
-The `persistence` package hold the storage class of the program. There is only one class in this package.
+The `persistence` package hold the storage class of the program. There is only one class, one abstract class and one interface in this package.Besides, `DataAccessStub` is in the test part of the `persistence` package.
 
-##### DataAccessStub:
+##### DataAccess:
 
-`DataAccessStub` is a stub-database. Here all of the game objects and feedbacks of those games are stored.
+`DataAccess` is an abstract class which is used to hold the default values for the HSQL database. `DataAccess` is used by the class `DataAccessObject`and `DataAccessStub`to load default data.
+
+##### DataAccessI:
+
+`DataAccessI` is an interface which is used to define the methods that must be implemented on `DataAccessObject`and `DataAccessStub`.
+
+##### DataAccessObject:
+
+This is the class that handles the HSQL database and the functionality for the database.
+
+
+
+#### Major Changes:
+
+* Implemented HSQLDB.
+* added interface to handle HSQLDB and stub-database.
+* updated database and added more method to the pervious database.
+* implemented implicit search for user and game.
+*  Changed the open method from read from file to create objects manually
+
+
 
 
 
 ### Presentation:
 
-The `presentation` package is responsible for all of the classes that handles the UI(user interface).  There are 7 classes in this package.
+The `presentation` package is responsible for all of the classes that handles the UI(user interface).  There are 10 classes in this package.
 
-##### Game_gallery:
+##### GameGallery:
 
-`Game_gallery` is the UI for the gallery where all of the stored games is shown.
+`GameGallery` is the UI for the gallery where all of the stored games is shown.
 
-##### Game_page:
+##### GamePage:
 
-`Game_page` is the UI for individual games where the game info, price and feedback are shown.
+`GamePage` is the UI for individual games where the game info, price and feedback are shown.
 
 ##### Login:
 
@@ -110,7 +153,7 @@ The `presentation` package is responsible for all of the classes that handles th
 
 ##### LoginBackground:
 
-`LoginBackground` shows that the background and buttons when an user start the app.
+`LoginBackground` is the fragment shows that the background and buttons when an user start the app.
 
 ##### MainActivity:
 
@@ -120,9 +163,32 @@ The `presentation` package is responsible for all of the classes that handles th
 
 `Signup` is the UI for sign up page.
 
-##### userid_and_pass:
+##### UseridAndPass:
 
-`userid_and_pass` is the UI for buttons and boxes for userid and password in login and signup.
+`UseridAndPass` is the fragment for buttons and boxes for userid and password in login and signup.
+
+##### TopBar:
+
+`TopBar` is the fragment for the bar in the top of the application that shows in which part of the app we are currently in.
+
+##### UserPage:
+
+`UserPage` is the UI for user account page for both registered and guest users.
+
+##### Utilites:
+
+`Utilities` is used to implement a bunch of useful features like alert messages, button shrinking when a button is touched by the user, etc.
+
+
+
+### Major Changes:
+
+* Added `top bar` so new user can easily identify which page they are currently in and go back to previous page.
+* Added UI for user account page where the user_id and user_pass can be viewed by the users.
+* Added more app functionality like a button shrinks for brief period of time when it is touched to give a more interactive experience to the user when using the app.
+* Improved the overall UI of the app.
+* Added UI for search and sort bar to quickly search a game or sort them according to name, price, ratings and reviews.
+* Added genres of the game(genre bar locates above the description of the game, and can slide horizontally)
 
 
 
@@ -134,7 +200,49 @@ We have kept the log of the meetings and individual work in the log file. The fo
 
 
 
+## Big User Stories:
+
+![image](BigUserStories.png)
+
+
+
+## Detailed User Stories:
+
+![image](detailedUserStories.png)
+
+
+
+## Developer Task:
+
+![image](developerTask.png)
+
+
+
+
+
 ## Major Implemented Features:
+
+### Iteration 2:
+
+The major implemented features in this apps are:
+
+1. Searching Games
+2. Sorting Games
+3. Genre
+4. More User information
+
+
+
+* `Searching Games	` is easier with the newly updated iterative search which identify the game while typing the game name to give faster search result and more relevant game result to the users.
+* `Sorting Games` can be done in multiple categories. User can sort the games according to the price, name, number of rating a game has or number of reviews in games. All the sorting can be done both in ascending and descending order which gives the users more flexibility to sort the games according to their need.
+* `Genre` is added to the game description so that user can quickly figure out the type of the game. example: `action`, `rpg`, `shooting` etc.
+* `More user information` is added to the app. There is now a dedicated page for a user to view all of their user information.
+
+
+
+
+
+### Iteration 1:
 
 The major implemented features in this apps are:
 
@@ -148,8 +256,49 @@ The major implemented features in this apps are:
 * `Game info page` is the information page for each individual game in the game library. From `Game library`, for selecting any particular game, users will be able to go to the `Game info page` of the selected games.
 * `Game Feedback` is the rating and review system of the app and the most important one. On the `Game Info page` user will be able to see the given feedbacks of other users and leave there own feedback. In each `Game info page` there is a separate section for feedbacks.
 
-We have also implemented login and sign up option for the users that can be accessed from the homepage. And if the user do not want to create an account, they can select `continue as guest` to use the app without creating an account. The userid should not contain space and should not be"Guest", as "Guest" is reserved for guest users. The password should not contain space. If the userid or password does not satisfy the format, you won't be able to signup. If the userid and password does not match, you won't be able to login. 
-You must rate a game first, before writing review.
+We have also implemented login and sign up option for the users that can be accessed from the homepage. And if the user do not want to create an account, they can select `continue as guest` to use the app without creating an account. The userid should not contain space and should not be"Guest", as "Guest" is reserved for guest users. The password should not contain space. If the userid or password does not satisfy the format, you won't be able to signup. If the user_id and password does not match, you won't be able to login. 
+You must rate the game, before you write a review.
+
+
+
+## Issues
+
+* We wanted user to be able to search with released_date of the games. However we realized that it is not very common to search games using released date so we removed the feature.
+* We have added `Genre` to the game description. We wanted to implement a sort functionality to sort the games according to the the `Genre`. However we have decided to sort functionality with genre and decided to do it on the next iteration if we have time.
+
+
+
+## Project Demo
+
+#### Login:
+
+
+
+![gif](https://media.giphy.com/media/lZnhpOwMjqM4A6v45H/giphy.gif)
+
+
+
+#### User Page:
+
+![gif](https://media.giphy.com/media/Yh1OUPKmXGmumZI7jh/giphy.gif)
+
+
+
+
+
+#### Search:
+
+![gif](https://media.giphy.com/media/HmhcexND46wRpxUIVp/giphy.gif)
+
+
+
+#### Sort:
+
+![gif](https://media.giphy.com/media/dtgzcJeVgELrgm9BEi/giphy.gif)
+
+
+
+
 
 
 ## System Requirement:

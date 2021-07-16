@@ -5,6 +5,7 @@ import java.util.List;
 
 import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Rating;
+import comp3350.grs.objects.Request;
 import comp3350.grs.objects.Review;
 import comp3350.grs.objects.User;
 
@@ -23,6 +24,8 @@ public interface DataAccessI
 	void clearGames();
 
 	void clearReviews();
+
+	void clearRequests();
 
 	void clearRatings();
 
@@ -78,4 +81,15 @@ public interface DataAccessI
 
 	Rating getRating(String gameName,String userID);
 
+	List<Request> getAllRequests();
+
+	List<Request> getRequestsByUser();
+
+	Request getRequest(String gameName, String userID);
+
+	boolean insertRequest(Request toInsert);
+
+	boolean updateRequest(Request toUpdate);
+
+	boolean deleteRequest(Request toDelete);
 }

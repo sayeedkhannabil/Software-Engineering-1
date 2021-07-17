@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -8,139 +8,157 @@
         android:background="@color/blue2"
         android:orientation="vertical"
         android:id="@+id/coordinatorLayout">
-
-    <fragment
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:name="comp3350.grs.presentation.TopBar"
-            tools:layout="@layout/fragment_top_bar"
-            ></fragment>
-
-    <androidx.appcompat.widget.SearchView
-            android:id="@+id/search_game_bar"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/rounded_rectangle"
-            android:layout_marginTop="5dp"
-            app:queryHint="search game by name"
-        ></androidx.appcompat.widget.SearchView>
+    <ImageView
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/plus"
+            ></ImageView>
 
     <LinearLayout
-            android:id="@+id/sort_bar"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:layout_marginTop="5dp"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:orientation="vertical"
             >
-        <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:id="@+id/name_sort"
-                android:paddingLeft="5dp"
-                android:paddingVertical="5dp"
-                >
-            <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/sort"
-
-                ></ImageView>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Name"
-                    android:textSize="30dp"
-                    android:textStyle="bold"
-                    ></TextView>
-        </LinearLayout>
-
-        <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:id="@+id/price_sort"
-                android:paddingVertical="5dp"
-                >
-            <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/sort"
-
-                    ></ImageView>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Price"
-                    android:textSize="30dp"
-                    android:textStyle="bold"
-                    ></TextView>
-
-        </LinearLayout>
-
-        <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:id="@+id/rating_sort"
-                android:paddingVertical="5dp"
-                >
-            <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/sort"
-
-                    ></ImageView>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Rating"
-                    android:textSize="30dp"
-                    android:textStyle="bold"
-                    ></TextView>
-
-        </LinearLayout>
-
-        <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.2"
-                android:id="@+id/review_sort"
-                android:paddingVertical="5dp"
-                >
-            <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/sort"
-
-                    ></ImageView>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="#Review"
-                    android:textSize="30dp"
-                    android:textStyle="bold"
-                    ></TextView>
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            >
-        <TableLayout
+        <fragment
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/table_layout">
+                android:name="comp3350.grs.presentation.TopBar"
+                tools:layout="@layout/fragment_top_bar"
+                ></fragment>
+
+        <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_game_bar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/rounded_rectangle"
+                android:layout_marginTop="5dp"
+                app:queryHint="search game by name"
+                ></androidx.appcompat.widget.SearchView>
+
+        <LinearLayout
+                android:id="@+id/sort_bar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                >
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/name_sort"
+                    android:paddingLeft="5dp"
+                    android:paddingVertical="5dp"
+                    >
+                <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/sort"
+
+                        ></ImageView>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Name"
+                        android:textSize="30dp"
+                        android:textStyle="bold"
+                        ></TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/price_sort"
+                    android:paddingVertical="5dp"
+                    >
+                <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/sort"
+
+                        ></ImageView>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Price"
+                        android:textSize="30dp"
+                        android:textStyle="bold"
+                        ></TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/rating_sort"
+                    android:paddingVertical="5dp"
+                    >
+                <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/sort"
+
+                        ></ImageView>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Rating"
+                        android:textSize="30dp"
+                        android:textStyle="bold"
+                        ></TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.2"
+                    android:id="@+id/review_sort"
+                    android:paddingVertical="5dp"
+                    >
+                <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/sort"
+
+                        ></ImageView>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="#Review"
+                        android:textSize="30dp"
+                        android:textStyle="bold"
+                        ></TextView>
+
+            </LinearLayout>
 
 
-        </TableLayout>
-    </ScrollView>
+        </LinearLayout>
+
+        <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                >
+            <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/table_layout">
 
 
-</LinearLayout>
+            </TableLayout>
+        </ScrollView>
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

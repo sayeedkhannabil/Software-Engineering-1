@@ -16,7 +16,7 @@
             android:id="@+id/fragment2" />
 
     <fragment
-            android:name="comp3350.grs.presentation.userid_and_pass"
+            android:name="comp3350.grs.presentation.UseridAndPass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:layout="@layout/fragment_userid_and_pass"

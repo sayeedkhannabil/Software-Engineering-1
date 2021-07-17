@@ -14,40 +14,44 @@ import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
 import comp3350.grs.objects.Review;
 import comp3350.grs.persistence.DataAccessI;
-
+//business object of review
 public class AccessReviews {
-    private DataAccessI dataAccess;
-    private List<Review> reviews;
+    private DataAccessI dataAccessI;
+    private List<Review> reviewList;
     private Review currentReview;
     private int currentReviewIndex;
 
     public AccessReviews() {
-        dataAccess = (DataAccessI) Services.getDataAccess(Main.dbName);
-        reviews = null;
+        dataAccessI = Services.getDataAccess(Main.dbName);
+        reviewList = null;
         currentReview = null;
         currentReviewIndex = 0;
     }
 
-    //get a list of all reviews
-    public List<Review> getReviews() {
-        reviews = dataAccess.getAllReviews();
-        return reviews;
+    public void clear(){
+        dataAccessI.clearReviews();
     }
 
-    // get next rating sequentially
+    //get a list of all reviews
+    public List<Review> getAllReviews() {
+        reviewList = dataAccessI.getAllReviews();
+        return reviewList;
+    }
+
+    // get next review sequentially
     public Review getSequential() {
-        if (reviews == null) {
-            reviews = dataAccess.getAllReviews();
+        if (reviewList == null) {
+            getAllReviews();
             currentReviewIndex = 0;
         }
 
-        if (currentReviewIndex < reviews.size()) {
-            currentReview = reviews.get(currentReviewIndex);
+        if (currentReviewIndex < reviewList.size()) {
+            currentReview = reviewList.get(currentReviewIndex);
             currentReviewIndex++;
         }
 
         else {
-            reviews = null;
+            reviewList = null;
             currentReview = null;
             currentReviewIndex = 0;
         }
@@ -56,50 +60,32 @@ public class AccessReviews {
     }
 
     public List<Review> getReviewsByGame(String gameName) {
-        return dataAccess.getReviewsByGame(gameName);
+        return dataAccessI.getReviewsByGame(gameName);
     }
 
     public List<Review> getReviewsByUser(String userId) {
-        return dataAccess.getReviewsByUser(userId);
+        return dataAccessI.getReviewsByUser(userId);
     }
 
     public Review getReviewById(int id) {
-        return dataAccess.getReviewByID(id);
+        return dataAccessI.getReviewByID(id);
     }
 
     public boolean insertReview(Review newReview) {
-        boolean inserted = false;
-
-        if (newReview != null) {
-            inserted = dataAccess.insertReview(newReview);
-        }
-
-        return inserted;
+        return dataAccessI.insertReview(newReview);
     }
 
     // get the number of reviews in each game
     public int getReviewNumByGame(String gameName) {
-        return dataAccess.getReviewsByGame(gameName).size();
+        return dataAccessI.getReviewsByGame(gameName).size();
     }
 
     public boolean updateReview(Review uReview) {
-        boolean update = false;
-
-        if (uReview != null) {
-            update = dataAccess.updateReview(uReview);
-        }
-
-        return update;
+        return dataAccessI.updateReview(uReview);
     }
 
     public boolean deleteReview(Review dReview) {
-        boolean del = false;
-
-        if (dReview != null) {
-            del = dataAccess.deleteReview(dReview);
-        }
-
-        return del;
+        return dataAccessI.deleteReview(dReview);
     }
 
 }

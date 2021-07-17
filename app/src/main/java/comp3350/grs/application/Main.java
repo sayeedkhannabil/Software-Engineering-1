@@ -1,6 +1,9 @@
 package comp3350.grs.application;
 
 
+import comp3350.grs.persistence.DataAccessI;
+import comp3350.grs.persistence.DataAccessObject;
+
 public class Main
 {
 	public static final String dbName = "MainDB";
@@ -10,8 +13,8 @@ public class Main
 	{
 		startUp();
 
-
 		shutDown();
+
 		System.out.println("All done");
 	}
 

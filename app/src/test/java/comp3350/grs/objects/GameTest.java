@@ -1,22 +1,40 @@
 package comp3350.grs.objects;
 import junit.framework.TestCase;
 
-import org.junit.BeforeClass;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import comp3350.grs.exceptions.IncorrectFormat;
 
-import static org.junit.Assert.*;
+public class GameTest  {
+    private static List<String> genres;
+    private static Game typicalGame;
+    private static Game typicalGameSimple;
+    private static Game nullGame ;
 
-public class GameTest extends TestCase {
-    private ArrayList<String> genres = new ArrayList<>(Arrays.asList("Genre1", "Genre2", "Genre3"));
-    private Game typicalGame = new Game("TypicalGame", "TypicalDeveloper",
-            "TypicalDescription", 20.00, genres);;
-    private Game typicalGameSimple = new Game("GameWithOnlyAName");;
-    private Game nullGame = new Game();
+    @BeforeClass
+    public static void beforeClass(){
+        genres = new ArrayList<>(Arrays.asList("Genre1", "Genre2", "Genre3"));
+        try {
+            typicalGame = new Game("TypicalGame", "TypicalDeveloper",
+                    "TypicalDescription", 20.00, genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        try {
+            typicalGameSimple = new Game("GameWithOnlyAName");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        nullGame = new Game();
+    }
 
     @Test
     public void testTypicalGame()
@@ -31,20 +49,74 @@ public class GameTest extends TestCase {
         assertEquals("TypicalDescription", typicalGame.getDescription());
         assertEquals(20.00, typicalGame.getPrice(), 0);
         assertTrue(typicalGame.validGame());
+
+        //test cases for game with only name parameter passed
+        assertEquals("GameWithOnlyAName", typicalGameSimple.getName());
+        assertNull(typicalGameSimple.getDescription());
+        assertNull(typicalGameSimple.getDev());
+        assertTrue(typicalGameSimple.getGenres().isEmpty());
+        assertTrue(typicalGameSimple.getPrice() == 0);
+        assertTrue(typicalGameSimple.validGame());
     }
 
     @Test
     public void testEdgeInput() {
         //test cases for which parameters for a Game object are still "valid" input, but not correct for our purposes
         ArrayList<String> genres1 = new ArrayList<>(); //empty
-        Game edgeGame = new Game("", "", "", 0, genres1);
-        Game edgeGame1 = new Game(" ", "dev", " ", 100.00, genres1);
-        Game edgeGame2 = new Game("Valid Name", "Dev", "desc", -1.22, genres);
+        Game edgeGame = null;
+        Game edgeGame1=null;
+        Game edgeGame2=null;
+        Game edgeGame3=null;
 
-        //the object should not be instantiated with these inputs
-        assertTrue(!edgeGame.validGame());
-        assertTrue(!edgeGame1.validGame());
-        assertTrue(!edgeGame2.validGame());
+
+        try {
+            edgeGame = new Game("", "", "", 0, genres1);
+            fail("shoudln't create");
+        } catch (IncorrectFormat incorrectFormat) {
+            assertTrue(true);
+        }
+        try {
+            edgeGame1 = new Game(" ", "dev", " ", 100.00, genres1);
+            fail("shoudln't create");
+        } catch (IncorrectFormat incorrectFormat) {
+            assertTrue(true);
+
+        }
+        try {
+            edgeGame2 = new Game("Valid Name", "Dev", "desc", -1.22, genres);
+            fail("shoudln't create");
+        } catch (IncorrectFormat incorrectFormat) {
+            assertTrue(true);
+
+        }
+        try {
+            edgeGame3 = new Game("       ");
+            fail("shoudln't create");
+        } catch (IncorrectFormat incorrectFormat) {
+            assertTrue(true);
+
+        }
+
+
+        try {
+            edgeGame1 = new Game(" ", "dev", " ", 100.00, genres1);
+            fail();
+        } catch (IncorrectFormat incorrectFormat) {
+            assertTrue(true);
+        }
+        try {
+            edgeGame2 = new Game("Valid Name", "Dev", "desc", -1.22, genres);
+            fail();
+        } catch (IncorrectFormat incorrectFormat) {
+            assertTrue(true);
+        }
+        try {
+            edgeGame3 = new Game("       ");
+            fail();
+        } catch (IncorrectFormat incorrectFormat) {
+            assertTrue(true);
+        }
+
     }
 
     @Test
@@ -58,25 +130,43 @@ public class GameTest extends TestCase {
         assertEquals("GameWithOnlyAName", typicalGameSimple.getName());
         assertNull(typicalGameSimple.getDev());
         assertNull(typicalGameSimple.getDescription());
-        assertEquals(-1, typicalGameSimple.getPrice(), 0);
+        assertEquals(0.0, typicalGameSimple.getPrice(), 0);
+
+        //test games passed null values
+        Game null1 = null;
+        try {
+            null1 = new Game("",null,"description", 1.00, null);
+            fail();
+        } catch (IncorrectFormat incorrectFormat) {
+            assertTrue(true);
+        }
+
+        assertFalse(nullGame.validGame());
+        assertNull(nullGame.getName());
+        assertNull(nullGame.getDev());
+        assertNull(nullGame.getDescription());
+        assertNull(nullGame.getGenres());
     }
 
     @Test
     public void testEqualsSelf()
     {
         //games are equal if they have the same name (or both have a null field for a name), and are both Game objects
-        assertEquals(true, nullGame.equals(nullGame));
-        assertEquals(true, typicalGameSimple.equals(typicalGameSimple));
-        assertEquals(true, typicalGame.equals(typicalGame));
+        assertEquals(typicalGameSimple,typicalGameSimple);
+        assertEquals(typicalGame,typicalGame);
     }
 
     @Test
     public void testEqualsOtherGame(){
-        Game sameName = new Game("TypicalGame", "testDev",  "TestDesc", 0.0,genres);
-        assertTrue(typicalGame.equals(sameName)); //because they have the same name
-
-        assertEquals(false, nullGame.equals(typicalGameSimple));
-        assertEquals(false, nullGame.equals(typicalGame));
-        assertEquals(false, typicalGameSimple.equals(typicalGame));
+        Game sameName = null;
+        try {
+            sameName = new Game("TypicalGame", "testDev",  "TestDesc", 0.0,genres);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        assertEquals(sameName,typicalGame);
+        assertNotEquals(nullGame, typicalGameSimple);
+        assertNotEquals(nullGame, typicalGame);
+        assertNotEquals(typicalGameSimple, typicalGame);
     }
 }

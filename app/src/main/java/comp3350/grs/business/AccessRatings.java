@@ -1,9 +1,4 @@
-// CLASS: AccessRatings
-//
-// Author: Katharine Kowalchuk
-//
-// REMARKS: This is the business object for the Rating class. It allows for access to the databases.
-//-----------------------------------------
+// This is the business object for the Rating class.
 
 package comp3350.grs.business;
 import java.util.List;
@@ -15,41 +10,39 @@ import comp3350.grs.persistence.DataAccessI;
 
 public class AccessRatings {
 
-    private DataAccessI dataAccess;
+    private DataAccessI dataAccessI;
     private List<Rating> ratings;
     private Rating currentRating;
     private int currentRatingIndex;//index of the rating in the current position in the list
 
-    public AccessRatings()
-    {
-        dataAccess = (DataAccessI) Services.createDataAccess(Main.dbName);
+    public AccessRatings() {
+        dataAccessI =  Services.getDataAccess(Main.dbName);
         ratings = null;
         currentRating = null;
         currentRatingIndex = 0;
     }
 
+    public void clear(){
+        dataAccessI.clearRatings();
+    }
+
     //get a list of all the ratings
-    public List<Rating> getRatings()
-    {
-        ratings = dataAccess.getAllRatings();
+    public List<Rating> getAllRatings() {
+        ratings = dataAccessI.getAllRatings();
         return ratings;
     }
 
     //get the next rating
-    public Rating getSequential()
-    {
-        if (ratings == null)
-        {
-            ratings = dataAccess.getAllRatings();
+    public Rating getSequential() {
+        if (ratings == null) {
+            getAllRatings();
             currentRatingIndex = 0;
         }
-        if (currentRatingIndex < ratings.size())
-        {
+        if (currentRatingIndex < ratings.size()) {
             currentRating =  ratings.get(currentRatingIndex);
             currentRatingIndex++;
         }
-        else
-        {
+        else {
             ratings = null;
             currentRating = null;
             currentRatingIndex = 0;
@@ -57,77 +50,55 @@ public class AccessRatings {
         return currentRating;
     }
 
-    public List<Rating> getRatingsByUser(String userID)
-    {
-        return dataAccess.getRatingsByUser(userID);
+    public List<Rating> getRatingsByUser(String userID){
+        return dataAccessI.getRatingsByUser(userID);
     }
 
-    public List<Rating> getRatingsByGame(String gameName)
-    {
-        return dataAccess.getRatingsByGame(gameName);
+    public List<Rating> getRatingsByGame(String gameName) {
+        return dataAccessI.getRatingsByGame(gameName);
     }
 
     public Rating getRating(String gameName,String userID){
-        return dataAccess.getRating(gameName,userID);
+        return dataAccessI.getRating(gameName,userID);
+    }
+
+    public int getRatingNumByGame(String gameName){
+        return dataAccessI.getRatingsByGame(gameName).size();
+    }
+
+    public int getRatingNumByUser(String userID){
+        return dataAccessI.getRatingsByUser(userID).size();
     }
 
     //get an overall rating for a game by the game name
     public double getOverallRating(String gameName){
         double overallRating = 0.0;
         double totalPts = 0.0;
-        int numRatings = 0;
+        double numRatings = 0.0;
         Rating thisRating;
-        if (!gameName.trim().equals(""))
-        {
-            getRatings(); //get ratings from database
-            for(int i = 0; i < ratings.size(); i++)
-            {
+        if (!gameName.trim().equals("")) {
+            this.getAllRatings(); //get ratings from database
+            for(int i = 0; i < ratings.size(); i++) {
                 thisRating = ratings.get(i);
-                if((thisRating.getGameName()).equals(gameName))
-                {
-                    totalPts += thisRating.getRating();
+                if((thisRating.getGameName()).equals(gameName)) {
+                    totalPts += thisRating.getRatingValue();
                     numRatings ++;
                 }
             }
-            overallRating = totalPts/numRatings;
+            overallRating = (1.0) * totalPts/numRatings;
         }
         return overallRating;
     }
 
-    public boolean insertRating(Rating newRating)
-    {
-        boolean inserted = false;
-        Rating test = null;
-        if (newRating != null){
-            dataAccess.insertRating(newRating);
-            test = dataAccess.getRating(newRating.getGameName(), newRating.getUserID()); //should
-            // return a
-            // Rating object associated with newRating's ratingID
-
-            if(test != null) //if test is null, the newRating was not found in the database (not inserted properly)
-            {
-                inserted = true;
-            }
-        }
-
-        return inserted;
+    public boolean insertRating(Rating newRating) {
+        return dataAccessI.insertRating(newRating);
     }
 
-    public boolean updateRating(Rating updatedRating)
-    {
-        boolean result=false;
-        if (updatedRating != null){
-            result=dataAccess.updateRating(updatedRating);
-        }
-        return result;
+    public boolean updateRating(Rating updatedRating) {
+        return dataAccessI.updateRating(updatedRating);
     }
 
-    public boolean deleteRating(Rating toDelete)
-    {
-        boolean result=false;
-        if (toDelete != null){
-            result=dataAccess.deleteRating(toDelete);
-        }
-        return result;
+    public boolean deleteRating(Rating toDelete) {
+        return dataAccessI.deleteRating(toDelete);
     }
 }

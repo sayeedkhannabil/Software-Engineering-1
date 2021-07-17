@@ -1,11 +1,11 @@
 package comp3350.grs.persistence;
 
 
-import java.sql.SQLException;
 import java.util.List;
 
 import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Rating;
+import comp3350.grs.objects.Request;
 import comp3350.grs.objects.Review;
 import comp3350.grs.objects.User;
 
@@ -15,16 +15,19 @@ public interface DataAccessI
 
 	void close();
 
-	void clearDatabase();//delete all the tables
+	void deleteDatabase();//delete the database itself
 
-	void clearTable();//clear the content of table without deleting the table
-	// itself
+	void clearAllData();//clear data of the database,without delete the database
 
-	List<User> getAllUsers();
+	void clearUsers();
 
-	List<User> getUsersByIDImplicit(String userIDImp);
+	void clearGames();
 
-	User getUserByID(String userID);
+	void clearReviews();
+
+	void clearRequests();
+
+	void clearRatings();
 
 	boolean insertUser(User user);
 
@@ -32,17 +35,23 @@ public interface DataAccessI
 
 	boolean deleteUser(User user);
 
-	List<Game> getAllGames();
+	List<User> getAllUsers();
 
-	Game getGameByName(String gameName);
+	List<User> getUsersByIDImplicit(String userIDImp);//implicit search
 
-	List<Game> getGamesByNameImplicit(String gameNameImp);
+	User getUserByID(String userID);
 
 	boolean insertGame(Game game);
 
 	boolean updateGame(Game game);
 
 	boolean deleteGame(Game game);
+
+	List<Game> getAllGames();
+
+	Game getGameByName(String gameName);
+
+	List<Game> getGamesByNameImplicit(String gameNameImp);//implicit search
 
 	boolean insertReview(Review review);
 
@@ -58,11 +67,11 @@ public interface DataAccessI
 
 	Review getReviewByID(int reviewID);
 
-	boolean insertRating(Rating theRating);
+	boolean insertRating(Rating rating);
 
-	boolean updateRating(Rating theRating);
+	boolean updateRating(Rating rating);
 
-	boolean deleteRating(Rating theRating);
+	boolean deleteRating(Rating rating);
 
 	List<Rating> getAllRatings();
 
@@ -72,5 +81,15 @@ public interface DataAccessI
 
 	Rating getRating(String gameName,String userID);
 
+	List<Request> getAllRequests();
 
+	List<Request> getRequestsByUser();
+
+	Request getRequest(String gameName, String userID);
+
+	boolean insertRequest(Request toInsert);
+
+	boolean updateRequest(Request toUpdate);
+
+	boolean deleteRequest(Request toDelete);
 }

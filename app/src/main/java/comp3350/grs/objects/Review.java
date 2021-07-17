@@ -2,19 +2,15 @@ package comp3350.grs.objects;
 
 import comp3350.grs.business.AccessRatings;
 import comp3350.grs.exceptions.IncorrectFormat;
+import comp3350.grs.exceptions.IncorrectOrder;
 
-// CLASS: Review
-//
-// Author: Abu Sayeed Khan
-//
-// REMARKS: What is the purpose of this class?
+
+
 // store review of the games
-//-----------------------------------------
 public class Review {
     private String comment;
     private String userID;
     private String gameName;
-    private static int nextReviewID=1;
     private int reviewID;//used to uniquely identify a review
 
     public Review() {
@@ -24,55 +20,42 @@ public class Review {
     //create a review, use auto generated reviewID
     public Review(String comment,String gameName,String userID) throws IncorrectFormat {
         this.userID=userID;
-        checkReview(comment);
-        this.comment = comment;
         this.gameName=gameName;
-        reviewID=nextReviewID;
-        nextReviewID++;
+        checkComment(comment);
+        this.comment = comment;
+        reviewID=-1;//default value
     }
 
     //specify a reviewID
     public Review(int reviewID, String comment,String gameName,String userID
                    ) throws IncorrectFormat {
         this.userID=userID;
-        checkReview(comment);
-        this.comment = comment;
         this.gameName=gameName;
+        checkComment(comment);
+        this.comment = comment;
         this.reviewID=reviewID;
     }
 
-    public Review(String comment) throws IncorrectFormat {
-        checkReview(comment);
+    public Review(String comment) {
         this.comment = comment;
         this.userID=null;
         this.gameName=null;
-        reviewID=nextReviewID;
-        nextReviewID++;
+        reviewID=-1;
     }
 
-    private void checkReview(String review) throws IncorrectFormat {
-        if (review.length()>140||review.length()<=0){
+    private void checkComment(String comment) throws IncorrectFormat{
+        final int MAX_LENGTH=140;
+        if (comment.length()>MAX_LENGTH||comment.length()<=0){
             throw new IncorrectFormat("letters of review content should be " +
                     "between 1 and 140");
         }
     }
 
-    //experimental method to match reviews with ratings by userID
-    //could use this in constructor to determine whether review can be created
-    public boolean hasBeenRated()
-    {
-        boolean alreadyRated = false;
-
-        //access ratings from database
-        AccessRatings ratingAccess = new AccessRatings();
-        Rating rate = ratingAccess.getRating(gameName,userID);
-        //find match by game and userID -- if match rating found, alreadyRated == true
-        if(rate != null)
-        {
-            alreadyRated = true;
-        }
-        return alreadyRated;
+    //important info is not null
+    public boolean validReview(){
+        return comment!=null&&userID!=null&&gameName!=null;
     }
+
 
     public String getComment() {
         return comment;
@@ -90,8 +73,17 @@ public class Review {
         return userID;
     }
 
-    public boolean equals(Review review){
-        return this.reviewID==review.getReviewID();
+    @Override
+    public boolean equals(Object object){
+        boolean result;
+        result = false;
+        Review review;
+
+        if (object!=null&& validReview()&& object instanceof Review){
+            review=(Review) object;
+            result=this.reviewID==review.getReviewID();
+        }
+        return result;
     }
 
     public String toString() {

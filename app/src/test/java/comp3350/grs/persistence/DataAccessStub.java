@@ -662,8 +662,10 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		if(toInsert != null && toInsert.validRequest()) {
 			requestGame = getGameByName(toInsert.getGameName());
 			requestUser = getUserByID(toInsert.getUserID());
-			if(!games.contains(requestGame) && (users.contains(requestUser) || toInsert.getUserID().equals("Guest"))) {
-				inserted = requests.add(toInsert);
+			if(!requests.contains(toInsert)) {
+				if (!games.contains(requestGame) && (users.contains(requestUser) || toInsert.getUserID().equals("Guest"))) {
+					inserted = requests.add(toInsert);
+				}
 			}
 		}
 		return inserted;

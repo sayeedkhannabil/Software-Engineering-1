@@ -51,15 +51,32 @@ public class AccessRequests {
         return currentRequest;
     }
 
-    public List<Request> getRequestsByUser(String userId) {
-        return dataAccessI.getRequestsByUser(userId);
+    public void checkInsert(Request newRequest) throws Error{
+        String gameRequested = newRequest.getGameName();
+        boolean gameAlreadyExists = dataAccessI.getAllGames().contains(dataAccessI.getGameByName(gameRequested));
+        boolean userAlreadyRequested = dataAccessI.getAllRequests().contains(newRequest);
+        if(gameAlreadyExists){
+            throw new Error("The game already exists in the gallery. Request can't be made.");
+        }
+        else if(userAlreadyRequested){
+            throw new Error("This user has already made a request for this game.");
+        }
+    }
+
+    public List<Request> getRequestsByUser(String userID) {
+        return dataAccessI.getRequestsByUser(userID);
+    }
+
+    public List<Request> getRequestsByGame(String gameName){
+        return dataAccessI.getRequestsByGame(gameName);
     }
 
     public Request getRequest(String gameName, String userID) {
         return dataAccessI.getRequest(gameName, userID);
     }
 
-    public boolean insertRequest(Request newRequest) {
+    public boolean insertRequest(Request newRequest) throws Error{
+        checkInsert(newRequest);
         return dataAccessI.insertRequest(newRequest);
     }
 

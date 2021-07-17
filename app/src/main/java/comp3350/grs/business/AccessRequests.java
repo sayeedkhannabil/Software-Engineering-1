@@ -63,11 +63,7 @@ public class AccessRequests {
         return dataAccessI.insertRequest(newRequest);
     }
 
-    public boolean updateRequest(Request updateRequest) {
-        return dataAccessI.updateReview(updateRequest);
-    }
-
     public boolean deleteRequest(Request deleteRequest) {
-        return dataAccessI.deleteReview(deleteRequest);
+        return dataAccessI.deleteRequest(deleteRequest);
     }
 }

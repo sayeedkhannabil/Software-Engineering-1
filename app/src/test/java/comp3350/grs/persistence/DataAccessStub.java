@@ -587,7 +587,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		return toReturn;
 	}
 
-	public List<Review> getAllRequest(){
+	public List<Request> getAllRequests(){
 		List<Request> requestsCopy = new ArrayList<>();
 		Request toCopy = null;
 		Request copy = null;
@@ -609,7 +609,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		return requestsCopy;
 	}
 
-	public List<Rating> getRequestsByUser(String userID){
+	public List<Request> getRequestsByUser(String userID){
 		List<Request> requestsCopy = this.getAllRequests();
 		List<Request> userRequests = new ArrayList<>();
 
@@ -621,6 +621,20 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 			}
 		}
 		return userRequests;
+	}
+
+	public List<Request> getRequestsByGame(String gameName){
+		List<Request> requestsCopy = this.getAllRequests();
+		List<Request> gameRequests = new ArrayList<>();
+
+		if(gameName != null) {
+			for (int i = 0; i < requestsCopy.size(); i++) {
+				if (requestsCopy.get(i).getGameName().equals(gameName)) {
+					gameRequests.add(requestsCopy.get(i));
+				}
+			}
+		}
+		return gameRequests;
 	}
 
 	public Request getRequest(String gameName, String userID){
@@ -653,26 +667,6 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 			}
 		}
 		return inserted;
-	}
-
-	public boolean updateRequest(Request toUpdate){
-		boolean updated = false;
-		int index;
-		Game requestGame;
-		User requestUser;
-
-		if(toUpdate != null && toUpdate.validRequest()) {
-			index = requests.indexOf(toUpdate);
-			requestGame = getGameByName(toUpdate.getGameName());
-			requestUser = getUserByID(toUpdate.getUserID());
-			if (index >= 0) {
-				if(!games.contains(requestGame) && (users.contains(ratingUser) || rating.getUserID().equals("Guest"))) {
-					requests.set(index, toUpdate);
-					updated = true;
-				}
-			}
-		}
-		return updated;
 	}
 
 	public boolean deleteRequest(Request toDelete){

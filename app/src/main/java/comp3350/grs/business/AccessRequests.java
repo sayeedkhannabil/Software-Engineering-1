@@ -56,7 +56,7 @@ public class AccessRequests {
         String gameRequested = newRequest.getGameName();
         boolean gameAlreadyExists = dataAccessI.getAllGames().contains(dataAccessI.getGameByName(gameRequested));
         if(gameAlreadyExists){
-            throw new Error("The game already exists in the gallery. Request can't be made.");
+            throw new Duplicate("The game already exists in the gallery. Request can't be made.");
         }
     }
 

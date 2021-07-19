@@ -19,6 +19,6 @@ public class RequestPage extends AppCompatActivity {
     private void setTopBar(){
         TextView top_bar_text;
         top_bar_text=findViewById(R.id.top_bar_text);
-        top_bar_text.setText("Request Page");
+        top_bar_text.setText("Request Game");
     }
 }

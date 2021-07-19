@@ -102,4 +102,7 @@ public class TopBar extends Fragment {
         });
     }
 
+    public void setTop_bar_text(String text){
+        top_bar_text.setText(text);
+    }
 }

@@ -808,7 +808,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 
 				ratingList.add(new Rating(rating,gameName,userID));
 			}
-		} catch (SQLException sqlException) {
+		} catch (SQLException | IncorrectFormat sqlException) {
 			sqlException.printStackTrace();
 		}
 

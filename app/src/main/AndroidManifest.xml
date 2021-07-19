@@ -7,7 +7,8 @@
             android:label="@string/app_name"
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".presentation.GalleryOrForum"></activity>
+        <activity android:name=".presentation.ForumPage"></activity>
+        <activity android:name=".presentation.GalleryOrForum" />
         <activity android:name=".presentation.RequestPage" />
         <activity android:name=".presentation.UserPage" />
         <activity android:name=".presentation.GameGallery">

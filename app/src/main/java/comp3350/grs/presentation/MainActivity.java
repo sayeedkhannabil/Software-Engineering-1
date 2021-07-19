@@ -13,13 +13,11 @@ import comp3350.grs.application.Services;
 import comp3350.grs.persistence.DataAccessI;
 
 public class MainActivity extends AppCompatActivity {
-    private static boolean isRunning=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        isRunning=true;
         setDB();
         Main.startUp();
     }

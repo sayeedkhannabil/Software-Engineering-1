@@ -10,6 +10,7 @@
         >
 
     <fragment
+            android:id="@+id/request_page_top_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:name="comp3350.grs.presentation.TopBar"
@@ -40,6 +41,7 @@
                 android:orientation="horizontal"
                 >
             <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/request_game_input"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="70dp"
@@ -55,39 +57,77 @@
                     android:backgroundTint="@color/grey"
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="5dp"
+                    android:id="@+id/submit_request_button"
                     ></TextView>
         </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_rectangle"
             android:layout_marginBottom="10dp"
+            android:paddingHorizontal="10dp"
+            android:paddingBottom="10dp"
             >
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Games You Requested:"
                 android:textSize="30dp"
-                android:paddingHorizontal="10dp"
                 android:paddingVertical="10dp"
+                android:background="@drawable/bottom_border"
                 ></TextView>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/games_requested_wrapper"
+                ></LinearLayout>
     </LinearLayout>
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_rectangle"
             android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp"
+            android:paddingBottom="10dp"
             >
+
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Most Requested Games:"
                 android:textSize="30dp"
-                android:paddingHorizontal="10dp"
                 android:paddingVertical="10dp"
+                android:background="@drawable/bottom_border"
                 ></TextView>
+
+        <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/most_requested_game_wrapper">
+            <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bottom_border"
+                    android:paddingBottom="5dp"
+                    >
+                <TextView
+                        android:text="Game Name"
+                        android:textSize="30dp"
+                        android:layout_weight="8"
+                        ></TextView>
+                <TextView
+                        android:text="#Requests"
+                        android:textSize="30dp"
+                        android:layout_weight="1"
+                        ></TextView>
+            </TableRow>
+        </TableLayout>
+
     </LinearLayout>
 </LinearLayout>

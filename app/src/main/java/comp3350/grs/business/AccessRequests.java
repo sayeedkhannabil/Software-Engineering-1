@@ -83,4 +83,8 @@ public class AccessRequests {
     public boolean deleteRequest(Request deleteRequest) {
         return dataAccessI.deleteRequest(deleteRequest);
     }
+
+    public List<String> getGamesByRequestNum(int limit){
+        return dataAccessI.getGamesOrderByRequestNum(limit);
+    }
 }

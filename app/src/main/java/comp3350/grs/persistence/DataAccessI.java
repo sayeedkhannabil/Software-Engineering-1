@@ -93,4 +93,6 @@ public interface DataAccessI
 
 	Request getRequest(String gameName,String userID);
 
+	List<String> getGamesOrderByRequestNum(int limit);
+
 }

@@ -1105,4 +1105,26 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return request;
 	}
 
+	public List<String> getGamesByRequestNum(int limit){
+		List<String> gameList=new ArrayList<>();
+
+		try {
+			preparedStatement= connection.prepareStatement("select " +
+					"gameName,count(userID) as requestNum from " +
+					"requests group by gameName order by requestNum desc " +
+					"limit ?");
+			preparedStatement.setInt(1,limit);
+			resultSet1 = preparedStatement.executeQuery();
+			String gameName;
+			while (resultSet1.next()){
+				gameName=resultSet1.getString(1);
+				gameList.add(gameName);
+			}
+		} catch (SQLException  sqlException) {
+			sqlException.printStackTrace();
+		}
+
+		return gameList;
+	}
+
 }

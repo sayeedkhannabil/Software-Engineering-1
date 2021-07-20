@@ -685,4 +685,8 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 		return deleted;
 	}
+
+	public List<String> getGamesByRequestNum(int limit){
+		return null;
+	}
 }

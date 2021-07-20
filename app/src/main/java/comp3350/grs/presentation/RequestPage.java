@@ -106,6 +106,7 @@ public class RequestPage extends AppCompatActivity {
         View view;
         TextView most_requested_game,most_requested_num;
 
+        most_requested_game_wrapper.removeAllViews();
         gameList=accessRequests.getGamesByRequestNum(3);
         inflater=getLayoutInflater();
         for (int i = 0; i < gameList.size(); i++) {

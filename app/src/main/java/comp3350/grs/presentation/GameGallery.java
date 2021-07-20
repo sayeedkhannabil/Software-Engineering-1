@@ -39,12 +39,23 @@ public class GameGallery extends AppCompatActivity {
     // descending)
     private boolean [] activeSort;//keep track which sort button is active
     private boolean openSort,openSearch;
+    private ImageView request_button;
+    private List<Game>games;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_gallery);
 
+        initiate();
+        setTop_bar();
+        generateGamesThumbnail(games);
+        setSearch_game_bar();
+        setSortBar();
+        setRequest_button();
+    }
+
+    private void initiate(){
         accessGames=new AccessGames();
         sortAsc=new boolean[4];
         Arrays.fill(sortAsc,false);
@@ -53,14 +64,21 @@ public class GameGallery extends AppCompatActivity {
         tableLayout=findViewById(R.id.table_layout);
         sort_bar=findViewById(R.id.sort_bar);
         search_game_bar=findViewById(R.id.search_game_bar);
-        List<Game>games=accessGames.getAllGames();
+        games=accessGames.getAllGames();
         openSort=false;
         openSearch=false;
+        request_button=findViewById(R.id.request_button);
+    }
 
-        setTop_bar();
-        generateGamesThumbnail(games);
-        setSearch_game_bar();
-        setSortBar();
+    private void setRequest_button(){
+        Utilities.setOnTouchEffect(request_button);
+        request_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(GameGallery.this,RequestPage.class);
+                startActivity(intent);
+            }
+        });
     }
 
     //set the sort buttons

@@ -106,7 +106,7 @@ public class LoginBackground extends Fragment {
                     incorrectFormat.printStackTrace();
                 }
                 // guest
-                Intent intent=new Intent(getActivity(), GameGallery.class);
+                Intent intent=new Intent(getActivity(), GalleryOrForum.class);
                 startActivity(intent);
             }
         });

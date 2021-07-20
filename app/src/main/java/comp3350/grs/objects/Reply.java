@@ -38,6 +38,14 @@ public class Reply extends Feedback{
         this.downvote=downvote;
     }
 
+    public void doUpvote(){
+        this.upvote++;
+    }
+
+    public void doDownvote(){
+        this.downvote++;
+    }
+
     public boolean validReply(){
         return replyID>=0 && comment!=null && userID!=null;
     }

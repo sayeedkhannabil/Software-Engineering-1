@@ -8,6 +8,7 @@ import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Guest;
 import comp3350.grs.objects.Rating;
+import comp3350.grs.objects.Request;
 import comp3350.grs.objects.RegisteredUser;
 import comp3350.grs.objects.Review;
 import comp3350.grs.objects.User;
@@ -21,6 +22,7 @@ public abstract class DataAccess {
     protected List<Game> games;//list of all games
     protected List<Rating> ratings;//list of all ratings
     protected List<Review> reviews;//list of all reviews
+    protected List<Request> requests; //list of all game requests
 
     public DataAccess(String dbName){
         this.dbName=dbName;

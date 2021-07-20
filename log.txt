@@ -166,3 +166,8 @@ July 11: Sayeed added developer tasks in the Github Projects.
 	(expected: 1 hour, actual: 1 hour)
 July 12: Katharine K removed default reviews+ratings from DataAccess, modified test classes accordingly
         (expected: 1 hour, actual: 2 hours)
+July 16 Group meeting: completed group retrospective activity, discussed developer tasks and user stories for iteration3. 
+July 16: Katharine K wrote document for group retrospective activity.
+	(expected: 30 min, actual: 45 min)
+July 16: Katharine K created AccessRequests and added necessary methods in database stub and interface
+	(expected: 1 hour, actual: 1 hour)

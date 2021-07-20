@@ -8,6 +8,7 @@ import java.util.List;
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Guest;
 import comp3350.grs.objects.Rating;
+import comp3350.grs.objects.Request;
 import comp3350.grs.objects.RegisteredUser;
 import comp3350.grs.objects.User;
 import comp3350.grs.objects.Game;
@@ -46,6 +47,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		games.clear();
 		ratings.clear();
 		reviews.clear();
+		requests.clear();
 	}
 
 	@Override
@@ -61,6 +63,11 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	@Override
 	public void clearReviews() {
 		reviews.clear();
+	}
+
+	@Override
+	public void clearRequests(){
+		requests.clear();
 	}
 
 	@Override
@@ -578,5 +585,108 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		}
 
 		return toReturn;
+	}
+
+	public List<Review> getAllRequest(){
+		List<Request> requestsCopy = new ArrayList<>();
+		Request toCopy = null;
+		Request copy = null;
+
+		for(int i = 0; i < requests.size(); i++){
+			toCopy = requests.get(i);
+			if(toCopy.validRequest()) {
+				try{
+					copy = new Request(toCopy.getGameName(),toCopy.getUserID());
+				}
+				catch (IncorrectFormat incorrectFormat){
+					incorrectFormat.printStackTrace();
+				}
+			}
+			requestsCopy.add(copy);
+		}
+
+		//we want to return a copy so the original can't be modified through the list returned
+		return requestsCopy;
+	}
+
+	public List<Rating> getRequestsByUser(String userID){
+		List<Request> requestsCopy = this.getAllRequests();
+		List<Request> userRequests = new ArrayList<>();
+
+		if(userID != null) {
+			for (int i = 0; i < requestsCopy.size(); i++) {
+				if (requestsCopy.get(i).getUserID().equals(userID)) {
+					userRequests.add(requestsCopy.get(i));
+				}
+			}
+		}
+		return userRequests;
+	}
+
+	public Request getRequest(String gameName, String userID){
+		Request toReturn = null;
+		Request curr = null;
+		boolean found = false;
+
+		if(gameName != null && userID != null) {
+			for (int i = 0; i < requests.size() && !found; i++) {
+				curr = requests.get(i);
+				if (curr.getUserID().equals(userID) && curr.getGameName().equals(gameName)) {
+					toReturn = curr;
+					found = true;
+				}
+			}
+		}
+
+		return toReturn;
+	}
+
+	public boolean insertRequest(Request toInsert){
+		boolean inserted = false;
+		Game requestGame;
+		User requestUser;
+		if(toInsert != null && toInsert.validRequest()) {
+			requestGame = getGameByName(toInsert.getGameName());
+			requestUser = getUserByID(toInsert.getUserID());
+			if(!games.contains(requestGame) && (users.contains(requestUser) || toInsert.getUserID().equals("Guest"))) {
+				inserted = requests.add(toInsert);
+			}
+		}
+		return inserted;
+	}
+
+	public boolean updateRequest(Request toUpdate){
+		boolean updated = false;
+		int index;
+		Game requestGame;
+		User requestUser;
+
+		if(toUpdate != null && toUpdate.validRequest()) {
+			index = requests.indexOf(toUpdate);
+			requestGame = getGameByName(toUpdate.getGameName());
+			requestUser = getUserByID(toUpdate.getUserID());
+			if (index >= 0) {
+				if(!games.contains(requestGame) && (users.contains(ratingUser) || rating.getUserID().equals("Guest"))) {
+					requests.set(index, toUpdate);
+					updated = true;
+				}
+			}
+		}
+		return updated;
+	}
+
+	public boolean deleteRequest(Request toDelete){
+		boolean deleted = false;
+		int index;
+
+		if(toDelete != null) {
+			index = requests.indexOf(toDelete);
+			if (index >= 0) {
+				requests.remove(index);
+				deleted = true;
+			}
+		}
+
+		return deleted;
 	}
 }

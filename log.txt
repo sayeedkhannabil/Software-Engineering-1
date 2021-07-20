@@ -171,3 +171,7 @@ July 16: Katharine K wrote document for group retrospective activity.
 	(expected: 30 min, actual: 45 min)
 July 16: Katharine K created AccessRequests and added necessary methods in database stub and interface
 	(expected: 1 hour, actual: 1 hour)
+July 20: Gongyu Liao finished Reply and Feedback object class.
+	(expected: 2 hours, actual: 2 hours)
+
+

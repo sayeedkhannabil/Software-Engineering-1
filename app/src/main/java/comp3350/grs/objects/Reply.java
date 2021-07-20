@@ -56,6 +56,12 @@ public class Reply extends Feedback{
     public int getDownvote(){
         return downvote;
     }
+    public void addUpvote(){
+        this.upvote++;
+    }
+    public void addDownvote(){
+        this.downvote++;
+    }
 
     private void checkComment(String comment) throws IncorrectFormat{
         final int MAX_LENGTH=500;

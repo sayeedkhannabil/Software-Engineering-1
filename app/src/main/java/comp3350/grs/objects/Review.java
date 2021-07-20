@@ -53,7 +53,7 @@ public class Review {
 
     //important info is not null
     public boolean validReview(){
-        return comment!=null&&userID!=null&&gameName!=null;
+        return reviewID>=-1&& comment!=null&&userID!=null&&gameName!=null;
     }
 
 

@@ -598,7 +598,7 @@ public class DataAccessITest{
         success= dataAccessI.insertUser(user1);
         assertTrue(success);
         try {
-            review1=new Review(-2,"comment","gameName","userID");
+            review1=new Review(0,"comment","gameName","userID");
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
@@ -612,20 +612,20 @@ public class DataAccessITest{
         assertEquals(1,reviewList.size());
         review2=reviewList.get(0);
         assertEquals(review1,review2);
-        review2= dataAccessI.getReviewByID(-2);
+        review2= dataAccessI.getReviewByID(0);
         assertEquals(review1,review2);
         try {
-            review1=new Review(-2,"newComment","gameName","userID");
+            review1=new Review(0,"newComment","gameName","userID");
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
         success= dataAccessI.updateReview(review1);
         assertTrue(success);
-        review2= dataAccessI.getReviewByID(-2);
+        review2= dataAccessI.getReviewByID(0);
         assertEquals("newComment",review2.getComment());
         success= dataAccessI.deleteReview(review1);
         assertTrue(success);
-        review2= dataAccessI.getReviewByID(-2);
+        review2= dataAccessI.getReviewByID(0);
         assertNull(review2);
 
         try {

@@ -25,9 +25,9 @@ public interface DataAccessI
 
 	void clearReviews();
 
-	void clearRequests();
-
 	void clearRatings();
+
+	void clearRequests();
 
 	boolean insertUser(User user);
 
@@ -81,15 +81,16 @@ public interface DataAccessI
 
 	Rating getRating(String gameName,String userID);
 
+	boolean insertRequest(Request request);
+
+	boolean deleteRequest(Request request);
+
 	List<Request> getAllRequests();
 
-	List<Request> getRequestsByUser();
+	List<Request> getRequestsByGame(String gameName);
 
-	Request getRequest(String gameName, String userID);
+	List<Request> getRequestsByUser(String userID);
 
-	boolean insertRequest(Request toInsert);
+	Request getRequest(String gameName,String userID);
 
-	boolean updateRequest(Request toUpdate);
-
-	boolean deleteRequest(Request toDelete);
 }

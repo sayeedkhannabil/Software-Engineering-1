@@ -5,6 +5,7 @@ import java.util.List;
 
 import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Rating;
+import comp3350.grs.objects.Reply;
 import comp3350.grs.objects.Request;
 import comp3350.grs.objects.Review;
 import comp3350.grs.objects.User;
@@ -29,6 +30,8 @@ public interface DataAccessI
 	void clearRatings();
 
 	void clearRequests();
+
+	void clearReply();
 
 	boolean insertUser(User user);
 
@@ -102,7 +105,22 @@ public interface DataAccessI
 
 	boolean deleteVoteReply(VoteReply voteReply);
 
-	List<VoteReply> getVoteReplysByReply(String replyID);
+	List<VoteReply> getVoteReplysByReply(int replyID);
 
-	VoteReply getVoteReply(String userID, String replyID);
+	VoteReply getVoteReply(String userID, int replyID);
+
+	boolean insertReply(Reply reply);
+
+	boolean updateReply(Reply reply);
+
+	boolean deleteReply(Reply reply);
+
+	List<Reply> getAllReply();
+
+	List<Reply> getReplyByGame(String gameName);
+
+	List<Reply> getReplyByUser(String userId);
+
+	Reply getReply(String gameName, String userId);
+
 }

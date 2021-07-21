@@ -4,6 +4,7 @@ import java.util.List;
 
 import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
+import comp3350.grs.exceptions.Duplicate;
 import comp3350.grs.objects.Request;
 import comp3350.grs.persistence.DataAccessI;
 
@@ -51,15 +52,11 @@ public class AccessRequests {
         return currentRequest;
     }
 
-    public void checkInsert(Request newRequest) throws Error{
+    public void checkGameExists(Request newRequest) throws Duplicate {
         String gameRequested = newRequest.getGameName();
         boolean gameAlreadyExists = dataAccessI.getAllGames().contains(dataAccessI.getGameByName(gameRequested));
-        boolean userAlreadyRequested = dataAccessI.getAllRequests().contains(newRequest);
         if(gameAlreadyExists){
-            throw new Error("The game already exists in the gallery. Request can't be made.");
-        }
-        else if(userAlreadyRequested){
-            throw new Error("This user has already made a request for this game.");
+            throw new Duplicate("The game already exists in the gallery. Request can't be made.");
         }
     }
 
@@ -75,8 +72,8 @@ public class AccessRequests {
         return dataAccessI.getRequest(gameName, userID);
     }
 
-    public boolean insertRequest(Request newRequest) throws Error{
-        checkInsert(newRequest);
+    public boolean insertRequest(Request newRequest) throws Duplicate{
+        checkGameExists(newRequest);
         return dataAccessI.insertRequest(newRequest);
     }
 

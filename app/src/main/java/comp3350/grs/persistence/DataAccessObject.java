@@ -227,6 +227,11 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		clearTable("requests");
 	}
 
+	public void clearReply(){
+		clearTable("replies");
+	}
+
+
 	public void clearAllData(){
 		clearReviews();
 		clearRatings();
@@ -1203,14 +1208,12 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		boolean deleteSuccess=false;
 		VoteI voteI;
 		String userID=null;
-		int value;
 		int replyID;
 
 		if (voteReply!=null&&voteReply.valid()){
 			try {
 				voteI=voteReply.getVoteI();
 				userID=voteI.getUserID();
-				value=voteI.getValue();
 				replyID=voteReply.getReplyID();
 				preparedStatement= connection.prepareStatement("delete from " +
 						"VoteReplys where userID=? and replyID=?");
@@ -1251,35 +1254,33 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return voteReplyList;
 	}
 
-	public List<VoteReply> getVoteReplysByReply(String replyID){
+	public List<VoteReply> getVoteReplysByReply(int replyID){
 		List<VoteReply> voteReplyList=new ArrayList<>();
 
-		if (replyID!=null){
-			try {
-				preparedStatement= connection.prepareStatement("select * from" +
-						" VoteReplys where replyID=?");
-				preparedStatement.setString(1,replyID);
-				resultSet1 = preparedStatement.executeQuery();
-				voteReplyList=getVoteReplysByResultset(resultSet1);
-			} catch (SQLException sqlException) {
-				sqlException.printStackTrace();
-			}
+		try {
+			preparedStatement= connection.prepareStatement("select * from" +
+					" VoteReplys where replyID=?");
+			preparedStatement.setInt(1,replyID);
+			resultSet1 = preparedStatement.executeQuery();
+			voteReplyList=getVoteReplysByResultset(resultSet1);
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
 		}
 
 		return voteReplyList;
 	}
 
-	public VoteReply getVoteReply(String userID, String replyID){
+	public VoteReply getVoteReply(String userID, int replyID){
 		List<VoteReply> voteReplyList=new ArrayList<>();
 		VoteReply voteReply;
 
 		voteReply=null;
-		if (userID!=null&&replyID!=null){
+		if (userID!=null){
 			try {
 				preparedStatement= connection.prepareStatement("select * from" +
 						" VoteReplys where userID=? and replyID=?");
 				preparedStatement.setString(1,userID);
-				preparedStatement.setString(2,replyID);
+				preparedStatement.setInt(2,replyID);
 				resultSet1 = preparedStatement.executeQuery();
 				voteReplyList=getVoteReplysByResultset(resultSet1);
 			} catch (SQLException sqlException) {

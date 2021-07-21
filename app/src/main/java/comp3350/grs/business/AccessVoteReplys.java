@@ -29,12 +29,12 @@ public class AccessVoteReplys {
         return dataAccessI.deleteVoteReply(voteReply);
     }
 
-    public List<VoteReply> getVoteReplysByReply(String replyID){
+    public List<VoteReply> getVoteReplysByReply(int replyID){
         voteReplyList=dataAccessI.getVoteReplysByReply(replyID);
         return voteReplyList;
     }
 
-    public VoteReply getVoteReply(String userID, String replyID){
+    public VoteReply getVoteReply(String userID, int replyID){
         currVoteReply= dataAccessI.getVoteReply(userID, replyID);
         return currVoteReply;
     }

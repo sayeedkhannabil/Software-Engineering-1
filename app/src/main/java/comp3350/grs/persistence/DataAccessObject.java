@@ -213,6 +213,11 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		clearTable("requests");
 	}
 
+	public void clearReply(){
+		clearTable("replies");
+	}
+
+
 	public void clearAllData(){
 		clearReviews();
 		clearRatings();

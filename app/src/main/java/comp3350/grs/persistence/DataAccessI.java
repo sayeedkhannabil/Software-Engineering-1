@@ -104,9 +104,11 @@ public interface DataAccessI
 
 	List<Reply> getAllReply();
 
-	List<Reply> getReplyByGame();
+	List<Reply> getReplyByGame(String gameName);
 
-	List<Reply> getReplyByUser();
+	List<Reply> getReplyByUser(String userId);
+
+	Reply getReply(String gameName, String userId);
 
 
 

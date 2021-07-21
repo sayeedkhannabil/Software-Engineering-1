@@ -1,0 +1,42 @@
+package comp3350.grs.business;
+
+import java.util.List;
+
+import comp3350.grs.application.Main;
+import comp3350.grs.application.Services;
+import comp3350.grs.objects.VoteReply;
+import comp3350.grs.persistence.DataAccessI;
+
+public class AccessVoteReplys {
+    private DataAccessI dataAccessI;
+    private List<VoteReply> voteReplyList;
+    private VoteReply currVoteReply;
+
+    public AccessVoteReplys(){
+        dataAccessI= Services.getDataAccess(Main.dbName);
+        voteReplyList=null;
+    }
+
+    public boolean insertVoteReply(VoteReply voteReply){
+        return dataAccessI.insertVoteReply(voteReply);
+    }
+
+    public boolean updateVoteReply(VoteReply voteReply){
+        return dataAccessI.updateVoteReply(voteReply);
+    }
+
+    public boolean deleteVoteReply(VoteReply voteReply){
+        return dataAccessI.deleteVoteReply(voteReply);
+    }
+
+    public List<VoteReply> getVoteReplysByReply(String replyID){
+        voteReplyList=dataAccessI.getVoteReplysByReply(replyID);
+        return voteReplyList;
+    }
+
+    public VoteReply getVoteReply(String userID, String replyID){
+        currVoteReply= dataAccessI.getVoteReply(userID, replyID);
+        return currVoteReply;
+    }
+
+}

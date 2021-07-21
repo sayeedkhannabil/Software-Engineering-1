@@ -8,6 +8,7 @@ import comp3350.grs.objects.Rating;
 import comp3350.grs.objects.Request;
 import comp3350.grs.objects.Review;
 import comp3350.grs.objects.User;
+import comp3350.grs.objects.VoteReply;
 
 public interface DataAccessI
 {
@@ -95,4 +96,13 @@ public interface DataAccessI
 
 	List<String> getGamesOrderByRequestNum(int limit);
 
+	boolean insertVoteReply(VoteReply voteReply);
+
+	boolean updateVoteReply(VoteReply voteReply);
+
+	boolean deleteVoteReply(VoteReply voteReply);
+
+	List<VoteReply> getVoteReplysByReply(String replyID);
+
+	VoteReply getVoteReply(String userID, String replyID);
 }

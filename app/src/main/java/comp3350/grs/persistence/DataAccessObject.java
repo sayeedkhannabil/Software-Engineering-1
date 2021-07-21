@@ -24,6 +24,9 @@ import comp3350.grs.objects.RegisteredUser;
 import comp3350.grs.objects.Request;
 import comp3350.grs.objects.Review;
 import comp3350.grs.objects.User;
+import comp3350.grs.objects.Vote;
+import comp3350.grs.objects.VoteI;
+import comp3350.grs.objects.VoteReply;
 
 //the hsql database,used as the real database
 public class DataAccessObject extends DataAccess implements DataAccessI
@@ -121,6 +124,17 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 
 		if (!checkTableExist("requests")){
 			cmdString="CREATE TABLE REQUESTS(GAMENAME VARCHAR(40),USERID VARCHAR(20),primary key (GAMENAME,USERID),foreign key(USERID) references USERS(USERID))";
+			try {
+				statement1.executeUpdate(cmdString);
+			} catch (SQLException sqlException) {
+				sqlException.printStackTrace();
+			}
+		}
+
+		// TODO: 7/20/2021 reply ID
+		if (!checkTableExist("VoteReplys")){
+			cmdString="CREATE TABLE VoteReplys(UserID VARCHAR(20),value " +
+					"integer, replyID integer,primary key (userID,replyID),foreign key(USERID) references USERS(USERID))";
 			try {
 				statement1.executeUpdate(cmdString);
 			} catch (SQLException sqlException) {
@@ -1127,4 +1141,156 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return gameList;
 	}
 
+	public boolean insertVoteReply(VoteReply voteReply){
+		boolean insertSuccess=false;
+		VoteI voteI;
+		String userID=null;
+		int value;
+		int replyID;
+
+		if (voteReply!=null&&voteReply.valid()){
+			try {
+				voteI=voteReply.getVoteI();
+				userID=voteI.getUserID();
+				value=voteI.getValue();
+				replyID=voteReply.getReplyID();
+				preparedStatement= connection.prepareStatement("insert into " +
+						"VoteReplys values(?,?,?)");
+				preparedStatement.setString(1,userID);
+				preparedStatement.setInt(2,value);
+				preparedStatement.setInt(3,replyID);
+				updateCount= preparedStatement.executeUpdate();
+				if (updateCount==1){
+					insertSuccess=true;
+				}
+			} catch (SQLException sqlException) {
+				sqlException.printStackTrace();
+			}
+		}
+		return insertSuccess;
+	}
+
+	public boolean updateVoteReply(VoteReply voteReply){
+		boolean updateSuccess=false;
+		VoteI voteI;
+		String userID=null;
+		int value;
+		int replyID;
+
+		if (voteReply!=null&&voteReply.valid()){
+			try {
+				voteI=voteReply.getVoteI();
+				userID=voteI.getUserID();
+				value=voteI.getValue();
+				replyID=voteReply.getReplyID();
+				preparedStatement= connection.prepareStatement("update " +
+						"VoteReplys set value=? where userID=? and replyID=?");
+				preparedStatement.setInt(1,value);
+				preparedStatement.setString(2,userID);
+				preparedStatement.setInt(3,replyID);
+				updateCount= preparedStatement.executeUpdate();
+				if (updateCount==1){
+					updateSuccess=true;
+				}
+			} catch (SQLException sqlException) {
+				sqlException.printStackTrace();
+			}
+		}
+		return updateSuccess;
+	}
+
+	public boolean deleteVoteReply(VoteReply voteReply){
+		boolean deleteSuccess=false;
+		VoteI voteI;
+		String userID=null;
+		int value;
+		int replyID;
+
+		if (voteReply!=null&&voteReply.valid()){
+			try {
+				voteI=voteReply.getVoteI();
+				userID=voteI.getUserID();
+				value=voteI.getValue();
+				replyID=voteReply.getReplyID();
+				preparedStatement= connection.prepareStatement("delete from " +
+						"VoteReplys where userID=? and replyID=?");
+				preparedStatement.setString(1,userID);
+				preparedStatement.setInt(2,replyID);
+				updateCount= preparedStatement.executeUpdate();
+				if (updateCount==1){
+					deleteSuccess=true;
+				}
+			} catch (SQLException sqlException) {
+				sqlException.printStackTrace();
+			}
+		}
+		return deleteSuccess;
+	}
+
+	public List<VoteReply> getVoteReplysByResultset(ResultSet resultSet){
+		List<VoteReply> voteReplyList;
+		VoteI voteI;
+		String userID=null;
+		int value;
+		int replyID;
+
+		voteReplyList=new ArrayList<>();
+		try {
+			while(resultSet.next()){
+				userID=resultSet.getString(1);
+				value=resultSet.getInt(2);
+				replyID=resultSet.getInt(3);
+				voteI= Vote.createVote(userID,value);
+
+				voteReplyList.add(new VoteReply(voteI,replyID));
+			}
+
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
+		return voteReplyList;
+	}
+
+	public List<VoteReply> getVoteReplysByReply(String replyID){
+		List<VoteReply> voteReplyList=new ArrayList<>();
+
+		if (replyID!=null){
+			try {
+				preparedStatement= connection.prepareStatement("select * from" +
+						" VoteReplys where replyID=?");
+				preparedStatement.setString(1,replyID);
+				resultSet1 = preparedStatement.executeQuery();
+				voteReplyList=getVoteReplysByResultset(resultSet1);
+			} catch (SQLException sqlException) {
+				sqlException.printStackTrace();
+			}
+		}
+
+		return voteReplyList;
+	}
+
+	public VoteReply getVoteReply(String userID, String replyID){
+		List<VoteReply> voteReplyList=new ArrayList<>();
+		VoteReply voteReply;
+
+		voteReply=null;
+		if (userID!=null&&replyID!=null){
+			try {
+				preparedStatement= connection.prepareStatement("select * from" +
+						" VoteReplys where userID=? and replyID=?");
+				preparedStatement.setString(1,userID);
+				preparedStatement.setString(2,replyID);
+				resultSet1 = preparedStatement.executeQuery();
+				voteReplyList=getVoteReplysByResultset(resultSet1);
+			} catch (SQLException sqlException) {
+				sqlException.printStackTrace();
+			}
+		}
+
+		if (voteReplyList.size()>0){
+			voteReply=voteReplyList.get(0);
+		}
+
+		return voteReply;
+	}
 }

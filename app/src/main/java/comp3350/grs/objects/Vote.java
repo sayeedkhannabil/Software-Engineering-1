@@ -29,6 +29,10 @@ public abstract class Vote {
         return this.value;
     }
 
+    public String toString(){
+        return "UserID:"+userID+",value:"+value;
+    }
+
     public static VoteI createVote(String userID,int value){
         VoteI voteI;
         voteI=null;

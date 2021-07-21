@@ -1,7 +1,5 @@
 package comp3350.grs.objects;
 
-import junit.framework.TestCase;
-
 import org.junit.Test;
 import static org.junit.Assert.*;
 import comp3350.grs.exceptions.IncorrectFormat;
@@ -14,14 +12,14 @@ public class RatingTest {
         System.out.println("\nStarting testRating");
         try {
             testRating = new Rating(1.0);
-            assertFalse(testRating.validRating());
+            assertFalse(testRating.valid());
             assertTrue(testRating.getRatingValue() == 1.0);
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
         try {
             testRating = new Rating(1.5,"GameA","001");
-            assertTrue(testRating.validRating());
+            assertTrue(testRating.valid());
             assertTrue(testRating.getRatingValue() == 1.5);
             assertTrue(testRating.getGameName().equals("GameA"));
             assertTrue(testRating.getUserID().equals("001"));
@@ -38,8 +36,8 @@ public class RatingTest {
         try {
             rate1 = new Rating(3.5,"GameB","002");
             rate2 = new Rating(3.5,"GameB","002");
-            assertTrue(rate1.validRating());
-            assertTrue(rate2.validRating());
+            assertTrue(rate1.valid());
+            assertTrue(rate2.valid());
             assertTrue(rate1.equals(rate2));
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
@@ -47,8 +45,8 @@ public class RatingTest {
         try {
             rate1 = new Rating(3.5,"GameB","002");
             rate2 = new Rating(2.0,"GameB","002");
-            assertTrue(rate1.validRating());
-            assertTrue(rate2.validRating());
+            assertTrue(rate1.valid());
+            assertTrue(rate2.valid());
             assertTrue(rate1.equals(rate2));
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
@@ -56,8 +54,8 @@ public class RatingTest {
         try {
             rate1 = new Rating(3.5,"GameB","002");
             rate2 = new Rating(3.5,"GameC","002");
-            assertTrue(rate1.validRating());
-            assertTrue(rate2.validRating());
+            assertTrue(rate1.valid());
+            assertTrue(rate2.valid());
             assertFalse(rate1.equals(rate2));
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
@@ -65,8 +63,8 @@ public class RatingTest {
         try {
             rate1 = new Rating(3.5,"GameB","002");
             rate2 = new Rating(3.5,"GameB","003");
-            assertTrue(rate1.validRating());
-            assertTrue(rate2.validRating());
+            assertTrue(rate1.valid());
+            assertTrue(rate2.valid());
             assertFalse(rate1.equals(rate2));
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
@@ -79,7 +77,7 @@ public class RatingTest {
         Rating nullRate=null;
         try {
             nullRate = new Rating(1.0);
-            assertFalse(nullRate.validRating());
+            assertFalse(nullRate.valid());
             assertNotNull(nullRate.getRatingValue());
             assertNull(nullRate.getUserID());
             assertNull(nullRate.getGameName());

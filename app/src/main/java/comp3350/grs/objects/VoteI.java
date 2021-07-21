@@ -8,5 +8,4 @@ public interface VoteI {
 
     public int getValue();
 
-    public static VoteI createVote(String userID,int value);
 }

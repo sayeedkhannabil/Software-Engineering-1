@@ -52,6 +52,7 @@ public abstract class User
 	}
 
 
+
 	public boolean equals(Object object)
 	{
 		boolean result;

@@ -15,7 +15,7 @@ public class VoteReply {
     }
 
     public boolean valid(){
-        return this.voteI!=null;
+        return this.voteI!=null&& voteI.valid()&&replyID>=-1;
     }
 
     public VoteI getVoteI(){
@@ -24,5 +24,24 @@ public class VoteReply {
 
     public int getReplyID(){
         return this.replyID;
+    }
+
+    @Override
+    public String toString(){
+        return voteI.toString()+",ReplyID:"+replyID;
+    }
+
+    @Override
+    public boolean equals(Object object){
+        boolean result;
+        result = false;
+        VoteReply voteReply;
+
+        if (object!=null&& valid()&& object instanceof VoteReply){
+            voteReply=(VoteReply) object;
+            result=
+                    this.voteI.getUserID().equals(voteReply.voteI.getUserID())&&replyID==voteReply.replyID;
+        }
+        return result;
     }
 }

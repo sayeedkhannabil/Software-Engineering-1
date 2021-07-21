@@ -8,7 +8,6 @@ public class Reply extends ForumContent{
         super();
     }
 
-
     public Reply(int replyID,String content,String userID) throws IncorrectFormat{
         super(replyID,content,userID);
     }

@@ -21,6 +21,7 @@ import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Guest;
 import comp3350.grs.objects.Rating;
 import comp3350.grs.objects.RegisteredUser;
+import comp3350.grs.objects.Reply;
 import comp3350.grs.objects.Request;
 import comp3350.grs.objects.Review;
 import comp3350.grs.objects.User;
@@ -227,6 +228,11 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		clearTable("requests");
 	}
 
+	public void clearReply(){
+		clearTable("replies");
+	}
+
+
 	public void clearAllData(){
 		clearReviews();
 		clearRatings();
@@ -326,7 +332,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 	public boolean insertUser(User user) {
 		boolean insertSuccess=false;
 
-		if (user!=null&&user.validUser()){
+		if (user!=null&&user.valid()){
 			try {
 				preparedStatement=connection.prepareStatement("insert into users " +
 						"values(?,?)");
@@ -360,7 +366,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		String password;
 		boolean updateSuccess=false;
 
-		if (user!=null&&user.validUser()){
+		if (user!=null&&user.valid()){
 			try {
 				userID=user.getUserID();
 				preparedStatement= connection.prepareStatement("update users set " +
@@ -392,7 +398,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		String userID;
 		boolean deleteSuccess=false;
 
-		if (user!=null&&user.validUser()){
+		if (user!=null&&user.valid()){
 			try {
 				userID=user.getUserID();
 				preparedStatement= connection.prepareStatement("delete from users " +
@@ -464,7 +470,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 	public boolean insertGame(Game game){
 		boolean insertSuccess=false;
 
-		if (game!=null&&game.validGame()){
+		if (game!=null&&game.valid()){
 			try {
 				//insert all info of a game, except its genre
 				preparedStatement=connection.prepareStatement("Insert into Games " +
@@ -490,7 +496,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		double price=0.0;
 		boolean updateSuccess=false;
 
-		if (game!=null&&game.validGame()){
+		if (game!=null&&game.valid()){
 			try {
 				gameName=game.getName();
 				developer=game.getDev();
@@ -521,7 +527,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		String gameName=null;
 		boolean deleteSuccess=false;
 
-		if (game!=null&&game.validGame()){
+		if (game!=null&&game.valid()){
 			try {
 				gameName=game.getName();
 				deleteGenres(game);
@@ -725,7 +731,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		int reviewID;
 		String reviewContent=null,gameName=null,userID=null;
 
-		if (review!=null&&review.validReview()){
+		if (review!=null&&review.valid()){
 			try {
 				reviewID=review.getReviewID();
 				reviewContent=review.getComment();
@@ -764,7 +770,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		String reviewContent=null,gameName=null,userID=null;
 		boolean updateSucess=false;
 
-		if (review!=null&&review.validReview()){
+		if (review!=null&&review.valid()){
 			try {
 				reviewID=review.getReviewID();
 				reviewContent=review.getComment();
@@ -790,7 +796,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 
 	public boolean deleteReview(Review review){
 		boolean deleteSuccess=false;
-		if (review!=null&&review.validReview()){
+		if (review!=null&&review.valid()){
 			try {
 				int reviewID=review.getReviewID();
 				preparedStatement= connection.prepareStatement("delete from reviews " +
@@ -906,7 +912,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		String gameName=null;
 		String userID=null;
 
-		if (rating!=null&&rating.validRating()){
+		if (rating!=null&&rating.valid()){
 			try {
 				ratingValue= rating.getRatingValue();
 				gameName= rating.getGameName();
@@ -934,7 +940,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		String gameName=null;
 		String userID=null;
 
-		if (rating!=null&& rating.validRating()){
+		if (rating!=null&& rating.valid()){
 			try {
 				ratingValue= rating.getRatingValue();
 				gameName= rating.getGameName();
@@ -961,7 +967,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		boolean deleteSuccess=false;
 		int ratingID;
 
-		if (rating!=null&&rating.validRating()){
+		if (rating!=null&&rating.valid()){
 			try {
 				preparedStatement= connection.prepareStatement("delete from ratings " +
 						"where gameName=? and userID=?");
@@ -984,7 +990,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		String gameName=null;
 		String userID=null;
 
-		if (request!=null&&request.validRequest()){
+		if (request!=null&&request.valid()){
 			try {
 				gameName= request.getGameName();
 				userID= request.getUserID();
@@ -1011,7 +1017,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		String gameName=null;
 		String userID=null;
 
-		if (request!=null&&request.validRequest()){
+		if (request!=null&&request.valid()){
 			try {
 				gameName= request.getGameName();
 				userID= request.getUserID();
@@ -1203,14 +1209,12 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		boolean deleteSuccess=false;
 		VoteI voteI;
 		String userID=null;
-		int value;
 		int replyID;
 
 		if (voteReply!=null&&voteReply.valid()){
 			try {
 				voteI=voteReply.getVoteI();
 				userID=voteI.getUserID();
-				value=voteI.getValue();
 				replyID=voteReply.getReplyID();
 				preparedStatement= connection.prepareStatement("delete from " +
 						"VoteReplys where userID=? and replyID=?");
@@ -1251,35 +1255,33 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		return voteReplyList;
 	}
 
-	public List<VoteReply> getVoteReplysByReply(String replyID){
+	public List<VoteReply> getVoteReplysByReply(int replyID){
 		List<VoteReply> voteReplyList=new ArrayList<>();
 
-		if (replyID!=null){
-			try {
-				preparedStatement= connection.prepareStatement("select * from" +
-						" VoteReplys where replyID=?");
-				preparedStatement.setString(1,replyID);
-				resultSet1 = preparedStatement.executeQuery();
-				voteReplyList=getVoteReplysByResultset(resultSet1);
-			} catch (SQLException sqlException) {
-				sqlException.printStackTrace();
-			}
+		try {
+			preparedStatement= connection.prepareStatement("select * from" +
+					" VoteReplys where replyID=?");
+			preparedStatement.setInt(1,replyID);
+			resultSet1 = preparedStatement.executeQuery();
+			voteReplyList=getVoteReplysByResultset(resultSet1);
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
 		}
 
 		return voteReplyList;
 	}
 
-	public VoteReply getVoteReply(String userID, String replyID){
+	public VoteReply getVoteReply(String userID, int replyID){
 		List<VoteReply> voteReplyList=new ArrayList<>();
 		VoteReply voteReply;
 
 		voteReply=null;
-		if (userID!=null&&replyID!=null){
+		if (userID!=null){
 			try {
 				preparedStatement= connection.prepareStatement("select * from" +
 						" VoteReplys where userID=? and replyID=?");
 				preparedStatement.setString(1,userID);
-				preparedStatement.setString(2,replyID);
+				preparedStatement.setInt(2,replyID);
 				resultSet1 = preparedStatement.executeQuery();
 				voteReplyList=getVoteReplysByResultset(resultSet1);
 			} catch (SQLException sqlException) {
@@ -1292,5 +1294,40 @@ public class DataAccessObject extends DataAccess implements DataAccessI
 		}
 
 		return voteReply;
+	}
+
+	@Override
+	public boolean insertReply(Reply reply) {
+		return false;
+	}
+
+	@Override
+	public boolean updateReply(Reply reply) {
+		return false;
+	}
+
+	@Override
+	public boolean deleteReply(Reply reply) {
+		return false;
+	}
+
+	@Override
+	public List<Reply> getAllReply() {
+		return null;
+	}
+
+	@Override
+	public List<Reply> getReplyByGame(String gameName) {
+		return null;
+	}
+
+	@Override
+	public List<Reply> getReplyByUser(String userId) {
+		return null;
+	}
+
+	@Override
+	public Reply getReply(String gameName, String userId) {
+		return null;
 	}
 }

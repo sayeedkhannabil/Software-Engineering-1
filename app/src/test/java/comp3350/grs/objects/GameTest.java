@@ -1,5 +1,4 @@
 package comp3350.grs.objects;
-import junit.framework.TestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,7 +47,7 @@ public class GameTest  {
         }
         assertEquals("TypicalDescription", typicalGame.getDescription());
         assertEquals(20.00, typicalGame.getPrice(), 0);
-        assertTrue(typicalGame.validGame());
+        assertTrue(typicalGame.valid());
 
         //test cases for game with only name parameter passed
         assertEquals("GameWithOnlyAName", typicalGameSimple.getName());
@@ -56,7 +55,7 @@ public class GameTest  {
         assertNull(typicalGameSimple.getDev());
         assertTrue(typicalGameSimple.getGenres().isEmpty());
         assertTrue(typicalGameSimple.getPrice() == 0);
-        assertTrue(typicalGameSimple.validGame());
+        assertTrue(typicalGameSimple.valid());
     }
 
     @Test
@@ -141,7 +140,7 @@ public class GameTest  {
             assertTrue(true);
         }
 
-        assertFalse(nullGame.validGame());
+        assertFalse(nullGame.valid());
         assertNull(nullGame.getName());
         assertNull(nullGame.getDev());
         assertNull(nullGame.getDescription());

@@ -1,7 +1,5 @@
 package comp3350.grs.objects;
 
-import junit.framework.TestCase;
-
 import org.junit.Test;
 import static org.junit.Assert.*;
 import comp3350.grs.exceptions.IncorrectFormat;
@@ -11,7 +9,7 @@ public class RegisteredUserTest {
     @Test
     public void testTypical() throws Exception {
         RegisteredUser user=new RegisteredUser("myUserID","myPass");
-        assert (user.validUser());
+        assert (user.valid());
         assert(user.getUserID().equals("myUserID"));
         assert (user.equals(new RegisteredUser("myUserID")));
         assert (user.equals(new RegisteredUser("myUserID","anotherPass")));
@@ -31,7 +29,7 @@ public class RegisteredUserTest {
         assert (user.getPassword().equals("myPass"));
 
         user.changeUserID("anotherUserID");
-        assert (user.validUser());
+        assert (user.valid());
         assert(user.getUserID().equals("anotherUserID"));
         assert (user.equals(new RegisteredUser("anotherUserID","anotherPass")));
         assertFalse(user.equals(new RegisteredUser("myUserID")));
@@ -53,7 +51,7 @@ public class RegisteredUserTest {
     @Test
     public void testNull(){
         RegisteredUser user=new RegisteredUser();
-        assertFalse (user.validUser());
+        assertFalse (user.valid());
         assertNull(user.getUserID());
         assertFalse(user.equals(new RegisteredUser()));
         try {

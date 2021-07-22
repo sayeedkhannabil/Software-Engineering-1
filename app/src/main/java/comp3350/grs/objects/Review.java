@@ -1,9 +1,6 @@
 package comp3350.grs.objects;
 
-import comp3350.grs.business.AccessRatings;
 import comp3350.grs.exceptions.IncorrectFormat;
-import comp3350.grs.exceptions.IncorrectOrder;
-
 
 
 // store review of the games
@@ -52,7 +49,7 @@ public class Review {
     }
 
     //important info is not null
-    public boolean validReview(){
+    public boolean valid(){
         return reviewID>=-1&& comment!=null&&userID!=null&&gameName!=null;
     }
 
@@ -79,7 +76,7 @@ public class Review {
         result = false;
         Review review;
 
-        if (object!=null&& validReview()&& object instanceof Review){
+        if (object!=null&& valid()&& object instanceof Review){
             review=(Review) object;
             result=this.reviewID==review.getReviewID();
         }

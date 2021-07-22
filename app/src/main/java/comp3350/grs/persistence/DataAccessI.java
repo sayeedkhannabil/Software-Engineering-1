@@ -10,6 +10,7 @@ import comp3350.grs.objects.Request;
 import comp3350.grs.objects.Post;
 import comp3350.grs.objects.Review;
 import comp3350.grs.objects.User;
+import comp3350.grs.objects.VoteReply;
 
 public interface DataAccessI
 {
@@ -99,6 +100,18 @@ public interface DataAccessI
 
 	Request getRequest(String gameName,String userID);
 
+	List<String> getGamesOrderByRequestNum(int limit);
+
+	boolean insertVoteReply(VoteReply voteReply);
+
+	boolean updateVoteReply(VoteReply voteReply);
+
+	boolean deleteVoteReply(VoteReply voteReply);
+
+	List<VoteReply> getVoteReplysByReply(int replyID);
+
+	VoteReply getVoteReply(String userID, int replyID);
+
 	boolean insertReply(Reply reply);
 
 	boolean updateReply(Reply reply);
@@ -126,11 +139,3 @@ public interface DataAccessI
 	List<Post> getPostByUser(String userId);
 
 	Post getPost(String gameName, String userId);
-
-
-
-
-
-
-
-}

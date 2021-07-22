@@ -32,7 +32,7 @@ public class Rating
     }
 
     //check if the rating is valid(important info is not null)
-    public boolean validRating(){
+    public boolean valid(){
         return this.userID!=null&&this.gameName!=null;
     }
 
@@ -62,7 +62,7 @@ public class Rating
         result = false;
         Rating rating;
 
-        if (object!=null&& validRating()&& object instanceof Rating){
+        if (object!=null&& valid()&& object instanceof Rating){
             rating=(Rating)object;
             result=
                     this.userID.equals(rating.userID)&&this.gameName.equals(rating.gameName);

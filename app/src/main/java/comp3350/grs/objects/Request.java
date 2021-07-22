@@ -23,7 +23,7 @@ public class Request {
         }
     }
 
-    public boolean validRequest(){
+    public boolean valid(){
         return this.gameName!=null&&this.userID!=null;
     }
 
@@ -41,7 +41,7 @@ public class Request {
         Request other = null;
         boolean isSame = false;
 
-        if(object != null && validRequest() && object instanceof Request)
+        if(object != null && valid() && object instanceof Request)
         {
             other = (Request) object;
             if(this.gameName.equals(other.gameName)&& this.userID.equals(other.userID))

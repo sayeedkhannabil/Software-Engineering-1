@@ -4,7 +4,6 @@ package comp3350.grs.objects;
 import java.util.ArrayList;
 import java.util.List;
 
-import comp3350.grs.business.AccessRatings;
 import comp3350.grs.exceptions.IncorrectFormat;
 
 public class Game
@@ -82,7 +81,7 @@ public class Game
     }
 
     //important info is not null
-    public boolean validGame() {
+    public boolean valid() {
         return name!=null;
     }
 
@@ -95,7 +94,7 @@ public class Game
         Game other = null;
         boolean isSame = false;
 
-        if(object != null && validGame() && object instanceof Game)
+        if(object != null && valid() && object instanceof Game)
         {
             other = (Game) object;
             if((this.name).equals(other.getName()) )

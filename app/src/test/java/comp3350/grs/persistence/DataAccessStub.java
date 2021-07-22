@@ -77,7 +77,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	public boolean insertUser(User newUser) {
 		boolean inserted = false;
-		if(newUser != null&&newUser.validUser()) {
+		if(newUser != null&&newUser.valid()) {
 			if(!users.contains(newUser)){
 				inserted = users.add(newUser);
 			}
@@ -89,7 +89,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		int index;
 		boolean updated = false;
 
-		if(currentUser != null && currentUser.validUser()) {
+		if(currentUser != null && currentUser.valid()) {
 			index = users.indexOf(currentUser);
 			if (index >= 0) {
 				users.set(index, currentUser);
@@ -218,7 +218,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	public boolean insertGame(Game toAdd) {
 		boolean inserted = false;
 		if(toAdd != null) {
-			if (toAdd.validGame()) {
+			if (toAdd.valid()) {
 				if(!games.contains(toAdd)){
 					inserted = games.add(toAdd);
 				}
@@ -231,7 +231,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		boolean updated = false;
 		int index;
 
-		if(toUpdate != null && toUpdate.validGame()) {
+		if(toUpdate != null && toUpdate.valid()) {
 			index = games.indexOf(toUpdate);
 			if (index >= 0) {
 				games.set(index, toUpdate);
@@ -357,7 +357,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		boolean inserted = false;
 		Game reviewGame;
 		User reviewUser;
-		if(review != null && review.validReview()) {
+		if(review != null && review.valid()) {
 			reviewGame = getGameByName(review.getGameName());
 			reviewUser = getUserByID(review.getUserID());
 			if(games.contains(reviewGame) && (users.contains(reviewUser) || review.getUserID().equals("Guest"))) {
@@ -373,7 +373,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		Game reviewGame;
 		User reviewUser;
 
-		if(review != null && review.validReview()) {
+		if(review != null && review.valid()) {
 			reviewGame = getGameByName(review.getGameName());
 			reviewUser = getUserByID(review.getUserID());
 			if(games.contains(reviewGame) && (users.contains(reviewUser) || review.getUserID().equals("Guest"))) {
@@ -409,7 +409,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 		for(int i = 0; i < reviews.size(); i++){
 			toCopy = reviews.get(i);
-			if(toCopy.validReview()) {
+			if(toCopy.valid()) {
 				if(toCopy.getReviewID() != -1){
 					try{
 						copy = new Review(toCopy.getReviewID(),toCopy.getComment(),toCopy.getGameName(),toCopy.getUserID());
@@ -476,7 +476,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		boolean inserted = false;
 		Game ratingGame;
 		User ratingUser;
-		if(rating != null && rating.validRating()) {
+		if(rating != null && rating.valid()) {
 			ratingGame = getGameByName(rating.getGameName());
 			ratingUser = getUserByID(rating.getUserID());
 			if(games.contains(ratingGame) && (users.contains(ratingUser) || rating.getUserID().equals("Guest"))) {
@@ -492,7 +492,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		Game ratingGame;
 		User ratingUser;
 
-		if(rating != null && rating.validRating()) {
+		if(rating != null && rating.valid()) {
 			index = ratings.indexOf(rating);
 			ratingGame = getGameByName(rating.getGameName());
 			ratingUser = getUserByID(rating.getUserID());
@@ -528,7 +528,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 		for(int i = 0; i < ratings.size(); i++){
 			toCopy = ratings.get(i);
-			if(toCopy.validRating()){
+			if(toCopy.valid()){
 				try {
 					copy = new Rating(toCopy.getRatingValue(),toCopy.getGameName(),toCopy.getUserID());
 				} catch (IncorrectFormat incorrectFormat) {
@@ -594,7 +594,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 		for(int i = 0; i < requests.size(); i++){
 			toCopy = requests.get(i);
-			if(toCopy.validRequest()) {
+			if(toCopy.valid()) {
 				try{
 					copy = new Request(toCopy.getGameName(),toCopy.getUserID());
 				}
@@ -658,7 +658,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	public boolean insertRequest(Request toInsert){
 		boolean inserted = false;
 		User requestUser;
-		if(toInsert != null && toInsert.validRequest()) {
+		if(toInsert != null && toInsert.valid()) {
 			requestUser = getUserByID(toInsert.getUserID());
 			if (!requests.contains(toInsert) && (users.contains(requestUser) || toInsert.getUserID().equals("Guest"))) {
 				inserted = requests.add(toInsert);
@@ -680,5 +680,9 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		}
 
 		return deleted;
+	}
+
+	public List<String> getGamesOrderByRequestNum(int limit){
+		return null;
 	}
 }

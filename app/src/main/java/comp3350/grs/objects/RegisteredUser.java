@@ -65,8 +65,8 @@ public class RegisteredUser extends User{
     }
 
     @Override
-    public boolean validUser(){
-        return super.validUser()&&password!=null;
+    public boolean valid(){
+        return super.valid()&&password!=null;
     }
 
     @Override

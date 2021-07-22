@@ -7,6 +7,7 @@ import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Rating;
 import comp3350.grs.objects.Reply;
 import comp3350.grs.objects.Request;
+import comp3350.grs.objects.Post;
 import comp3350.grs.objects.Review;
 import comp3350.grs.objects.User;
 
@@ -31,6 +32,8 @@ public interface DataAccessI
 	void clearRequests();
 
 	void clearReply();
+
+	void clearPost();
 
 	boolean insertUser(User user);
 
@@ -109,6 +112,24 @@ public interface DataAccessI
 	List<Reply> getReplyByUser(String userId);
 
 	Reply getReply(String gameName, String userId);
+
+	boolean insertPost(Post post);
+
+	boolean updatePost(Post post);
+
+	boolean deletePost(Post post);
+
+	List<Post> getAllPost();
+
+	List<Post> getPostByGame(String gameName);
+
+	List<Post> getPostByUser(String userId);
+
+	Post getPost(String gameName, String userId);
+
+
+
+
 
 
 

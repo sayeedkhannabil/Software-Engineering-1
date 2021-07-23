@@ -31,9 +31,9 @@ public interface DataAccessI {
 
 	void clearRequests();
 
-	void clearReply();
+	void clearReplys();
 
-	void clearPost();
+	void clearPosts();
 
 	boolean insertUser(User user);
 

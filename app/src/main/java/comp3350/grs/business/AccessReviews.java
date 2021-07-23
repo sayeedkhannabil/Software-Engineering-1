@@ -1,11 +1,3 @@
-// CLASS: AccessReviews
-//
-// Author: Abu Sayeed Khan
-//
-// REMARKS: This is the business object for the Review class. It allows for access to the databases.
-//-----------------------------------------
-
-
 package comp3350.grs.business;
 
 import java.util.List;

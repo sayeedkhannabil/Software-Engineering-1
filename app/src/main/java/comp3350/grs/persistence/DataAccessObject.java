@@ -19,6 +19,7 @@ import java.util.List;
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Guest;
+import comp3350.grs.objects.Post;
 import comp3350.grs.objects.Rating;
 import comp3350.grs.objects.RegisteredUser;
 import comp3350.grs.objects.Reply;
@@ -194,6 +195,8 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 		deleteTable("users");
 		deleteTable("genres");
 		deleteTable("games");
+		deleteTable("replys");
+		deleteTable("posts");
 	}
 
 	//clear all the data in a table, without delete the table itself
@@ -227,8 +230,12 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 		clearTable("requests");
 	}
 
-	public void clearReply() {
+	public void clearReplys() {
 		clearTable("replys");
+	}
+
+	public void clearPosts() {
+		clearTable("posts");
 	}
 
 
@@ -238,7 +245,8 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 		clearRequests();
 		clearUsers();
 		clearGames();
-		clearReply();
+		clearReplys();
+		clearPosts();
 	}
 
 
@@ -1457,6 +1465,101 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 		}
 
 		return replyResult;
+	}
+
+	@Override
+	public boolean insertPost(Post post) {
+		boolean insertSuccess = false;
+		int postID;
+		String postTitle = null;
+		String postContent = null;
+		String userID = null;
+
+		if (post != null && post.valid()) {
+			try {
+				postID = post.getID();
+				postTitle = post.getTitle();
+				postContent = post.getContent();
+				userID = post.getUserID();
+
+				if (postID == -1) {//post id is -1 means we should use the
+					// auto generated post id
+					preparedStatement = connection.prepareStatement("insert into post(postTitle, postContent,USERID) values (?,?,?);");
+					preparedStatement.setString(1, postTitle);
+					preparedStatement.setString(2, postContent);
+					preparedStatement.setString(3, userID);
+				} else {
+					preparedStatement = connection.prepareStatement("insert into post " +
+							"values(?,?,?,?)");
+					preparedStatement.setInt(1, postID);
+					preparedStatement.setString(2, postContent);
+					preparedStatement.setString(3, postContent);
+					preparedStatement.setString(4, userID);
+				}
+
+				updateCount = preparedStatement.executeUpdate();
+				if (updateCount == 1) {
+					insertSuccess = true;
+				}
+			} catch (SQLException sqlException) {
+				sqlException.printStackTrace();
+			}
+		}
+
+		return insertSuccess;
+	}
+
+	@Override
+	public boolean updatePost(Post post) {
+		boolean updateSuccess = false;
+		int postID;
+		String postTitle = null;
+		String postContent = null;
+		String userID = null;
+
+		if (post != null && post.valid()) {
+			try {
+				postID = post.getID();
+				postTitle = post.getTitle();
+				postContent = post.getContent();
+				userID = post.getUserID();
+				preparedStatement = connection.prepareStatement("update post set " +
+						"postTitle=?,postContent=?,userID=? where postID=?");
+				preparedStatement.setString(1, postTitle);
+				preparedStatement.setString(2, postContent);
+				preparedStatement.setString(3, userID);
+				preparedStatement.setInt(4, postID);
+				updateCount = preparedStatement.executeUpdate();
+				if (updateCount == 1) {
+					updateSuccess = true;
+				}
+			} catch (SQLException sqlException) {
+				sqlException.printStackTrace();
+			}
+		}
+
+		return updateSuccess;
+	}
+
+	@Override
+	public boolean deletePost(Post post) {
+		boolean deleteSuccess = false;
+		if (post != null && post.valid()) {
+			try {
+				int postID = post.getID();
+				preparedStatement = connection.prepareStatement("delete from post " +
+						"where postID=?");
+				preparedStatement.setInt(1, postID);
+				updateCount = preparedStatement.executeUpdate();
+				if (updateCount == 1) {
+					deleteSuccess = true;
+				}
+			} catch (SQLException sqlException) {
+				sqlException.printStackTrace();
+			}
+		}
+
+		return deleteSuccess;
 	}
 }
 

@@ -44,4 +44,18 @@ public abstract class Vote {
         }
         return voteI;
     }
+
+    @Override
+    public boolean equals(Object object){
+        boolean result;
+        result = false;
+        Vote vote;
+
+        if (object!=null&& valid()&& object instanceof Vote){
+            vote=(Vote) object;
+            result=this.userID.equals(vote.userID)&&value==vote.value;
+        }
+        return result;
+    }
+
 }

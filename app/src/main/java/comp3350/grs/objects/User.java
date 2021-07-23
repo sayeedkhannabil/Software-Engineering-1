@@ -41,7 +41,7 @@ public abstract class User
 	}
 
 	//important info is not null
-	public boolean validUser(){
+	public boolean valid(){
 		return this.userID!=null;
 	}
 
@@ -59,7 +59,7 @@ public abstract class User
 		User user;
 		result = false;
 		
-		if (object!=null&& validUser()&& object instanceof User)
+		if (object!=null&& valid()&& object instanceof User)
 		{
 			user = (User) object;
 			//if user id are the same , they are equal

@@ -9,6 +9,7 @@ public class VoteReply {
         this.replyID=replyID;
     }
 
+
     public VoteReply(){
         this.voteI=null;
         this.replyID=-1;

@@ -8,11 +8,13 @@ import java.util.List;
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Guest;
 import comp3350.grs.objects.Rating;
+import comp3350.grs.objects.Reply;
 import comp3350.grs.objects.Request;
 import comp3350.grs.objects.RegisteredUser;
 import comp3350.grs.objects.User;
 import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Review;
+import comp3350.grs.objects.VoteReply;
 
 public class DataAccessStub extends DataAccess implements DataAccessI {
 
@@ -68,6 +70,11 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	@Override
 	public void clearRequests(){
 		requests.clear();
+	}
+
+	@Override
+	public void clearReply() {
+
 	}
 
 	@Override
@@ -683,6 +690,66 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	}
 
 	public List<String> getGamesOrderByRequestNum(int limit){
+		return null;
+	}
+
+	@Override
+	public boolean insertVoteReply(VoteReply voteReply) {
+		return false;
+	}
+
+	@Override
+	public boolean updateVoteReply(VoteReply voteReply) {
+		return false;
+	}
+
+	@Override
+	public boolean deleteVoteReply(VoteReply voteReply) {
+		return false;
+	}
+
+	@Override
+	public List<VoteReply> getVoteReplysByReply(int replyID) {
+		return null;
+	}
+
+	@Override
+	public VoteReply getVoteReply(String userID, int replyID) {
+		return null;
+	}
+
+	@Override
+	public boolean insertReply(Reply reply) {
+		return false;
+	}
+
+	@Override
+	public boolean updateReply(Reply reply) {
+		return false;
+	}
+
+	@Override
+	public boolean deleteReply(Reply reply) {
+		return false;
+	}
+
+	@Override
+	public List<Reply> getAllReply() {
+		return null;
+	}
+
+	@Override
+	public List<Reply> getReplyByGame(String gameName) {
+		return null;
+	}
+
+	@Override
+	public List<Reply> getReplyByUser(String userId) {
+		return null;
+	}
+
+	@Override
+	public Reply getReply(String gameName, String userId) {
 		return null;
 	}
 }

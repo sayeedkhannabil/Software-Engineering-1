@@ -16,7 +16,6 @@ public class Reply extends ForumContent{
         super(comment,userID);
     }
 
-
     
     public boolean equals(Object object){
         return super.equals(object)&&object instanceof Reply;

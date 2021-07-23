@@ -37,6 +37,7 @@ public abstract class DataAccess {
         games=new ArrayList<>();
         ratings = new ArrayList<>();
         reviews = new ArrayList<>();
+        requests=new ArrayList<>();
         List<String> genres;
         Game newGame=null;
         String gameName,gameDev,desc;

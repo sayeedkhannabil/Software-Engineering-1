@@ -17,6 +17,7 @@ import java.util.List;
 import comp3350.grs.R;
 import comp3350.grs.business.AccessRequests;
 import comp3350.grs.business.AccessUsers;
+import comp3350.grs.exceptions.Duplicate;
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Request;
 
@@ -66,7 +67,7 @@ public class RequestPage extends AppCompatActivity {
                     accessRequests.insertRequest(request);
                     showGamesRequested();
                     showMostRequestedGames();
-                } catch (IncorrectFormat incorrectFormat) {
+                } catch (IncorrectFormat | Duplicate incorrectFormat) {
                     AlertDialog alertDialog;
                     alertDialog=
                             Utilities.createAlertDialog(incorrectFormat.getMessage(),RequestPage.this);

@@ -15,6 +15,7 @@ import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Guest;
 import comp3350.grs.objects.Rating;
 import comp3350.grs.objects.RegisteredUser;
+import comp3350.grs.objects.Request;
 import comp3350.grs.objects.Review;
 import comp3350.grs.objects.User;
 
@@ -27,10 +28,12 @@ public class DataAccessITest{
     private Game game1,game2,game3;
     private Review review1,review2,review3;
     private Rating rating1,rating2,rating3;
+    private Request request1,request2,request3;
     private List<User> userList;
     private List<Game> gameList;
     private List<Review> reviewList;
     private List<Rating> ratingList;
+    private List<Request> requestList;
     private String userID,userID2,password,password2,gameName,developer,
             description,reviewContent;
     private int reviewID;
@@ -73,10 +76,14 @@ public class DataAccessITest{
         rating1=null;
         rating2=null;
         rating3=null;
+        request1=null;
+        request2=null;
+        request3=null;
         success=false;
-        reviewList=new ArrayList<Review>();
-        ratingList=new ArrayList<Rating>();
-        genreList=new ArrayList<String>();
+        reviewList=new ArrayList<>();
+        ratingList=new ArrayList<>();
+        genreList=new ArrayList<>();
+        requestList=new ArrayList<>();
     }
 
     @AfterClass
@@ -416,6 +423,75 @@ public class DataAccessITest{
         dataAccessI.clearRatings();
         rating= dataAccessI.getRating("gameName","Guest");
         assertNull(rating);
+
+        dataAccessI.clearAllData();
+        try {
+            game1=new Game("game1");
+            game2=new Game("game2");
+            game3=new Game("game3");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        try {
+            user1=new RegisteredUser("user1","pass");
+            user2=new RegisteredUser("user2","pass");
+            user3=new RegisteredUser("user3","pass");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        dataAccessI.insertUser(user1);
+        dataAccessI.insertUser(user2);
+        dataAccessI.insertUser(user3);
+        dataAccessI.insertGame(game1);
+        dataAccessI.insertGame(game2);
+        dataAccessI.insertGame(game3);
+        try {
+            request1=new Request("game1","user1");
+            request2=new Request("game2","user2");
+            request3=new Request("game3","user3");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        success=dataAccessI.insertRequest(request1);
+        assertTrue(success);
+        requestList=dataAccessI.getAllRequests();
+        assertEquals(1,requestList.size());
+        success=dataAccessI.insertRequest(request2);
+        assertTrue(success);
+        success=dataAccessI.insertRequest(request3);
+        assertTrue(success);
+        requestList=dataAccessI.getAllRequests();
+        assertEquals(3,requestList.size());
+        try {
+            request1=new Request("game1","user2");
+            request2=new Request("game1","user3");
+            request3=new Request("game2","user3");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        success=dataAccessI.insertRequest(request1);
+        assertTrue(success);
+        success=dataAccessI.insertRequest(request2);
+        assertTrue(success);
+        success=dataAccessI.insertRequest(request3);
+        assertTrue(success);
+        requestList=dataAccessI.getRequestsByGame("game1");
+        assertEquals(3,requestList.size());
+        requestList=dataAccessI.getRequestsByGame("game2");
+        assertEquals(2,requestList.size());
+        requestList=dataAccessI.getRequestsByUser("user2");
+        assertEquals(2,requestList.size());
+        requestList=dataAccessI.getRequestsByUser("user3");
+        assertEquals(3,requestList.size());
+        request1= dataAccessI.getRequest("game1","user2");
+        assertNotNull(request1);
+        assertEquals("game1",request1.getGameName());
+        assertEquals("user2",request1.getUserID());
+        List<String>  gameNameList;
+        gameNameList=dataAccessI.getGamesOrderByRequestNum(1);
+        assertEquals("game1",gameNameList.get(0));
+        gameNameList=dataAccessI.getGamesOrderByRequestNum(2);
+        assertEquals(2,gameNameList.size());
     }
 
     @Test
@@ -510,6 +586,7 @@ public class DataAccessITest{
         dataAccessI.insertUser(user1);
         userList= dataAccessI.getUsersByIDImplicit("myUserID");
         assertEquals(1,userList.size());
+
 
     }
 
@@ -659,5 +736,39 @@ public class DataAccessITest{
         rating2= dataAccessI.getRating("gameName","userID");
         assertNull(rating2);
 
+        //request
+        dataAccessI.clearAllData();
+        requestList=dataAccessI.getAllRequests();
+        assertEquals(0,requestList.size());
+        try {
+            game1=new Game("game1");
+            game2=new Game("game2");
+            game3=new Game("game3");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        try {
+            user1=new RegisteredUser("user1","pass");
+            user2=new RegisteredUser("user2","pass");
+            user3=new RegisteredUser("user3","pass");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        dataAccessI.insertUser(user1);
+        dataAccessI.insertUser(user2);
+        dataAccessI.insertUser(user3);
+        dataAccessI.insertGame(game1);
+        dataAccessI.insertGame(game2);
+        dataAccessI.insertGame(game3);
+
+        try {
+            request1=new Request("game1","user1");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        success=dataAccessI.insertRequest(request1);
+        assertTrue(success);
+        success=dataAccessI.insertRequest(request1);
+        assertFalse(success);
     }
 }

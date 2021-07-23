@@ -137,6 +137,15 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 			}
 		}
 
+		if (!checkTableExist("posts")) {
+			cmdString = "CREATE TABLE posts(postID integer identity primary key,postTitle VARCHAR(140),postContent VARCHAR(140), USERID VARCHAR(20),foreign key(USERID) references USERS(USERID))";
+			try {
+				statement1.executeUpdate(cmdString);
+			} catch (SQLException sqlException) {
+				sqlException.printStackTrace();
+			}
+		}
+
 		if (!checkTableExist("VoteReplys")) {
 			cmdString = "CREATE TABLE VoteReplys(UserID VARCHAR(20),value " +
 					"integer, replyID integer,primary key (userID,replyID),foreign key(USERID) references USERS(USERID))";
@@ -339,7 +348,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 	public boolean insertUser(User user) {
 		boolean insertSuccess = false;
 
-		if (user != null && user.valid()) {
+		if (user != null && user.validUser()) {
 			try {
 				preparedStatement = connection.prepareStatement("insert into users " +
 						"values(?,?)");
@@ -372,7 +381,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 		String password;
 		boolean updateSuccess = false;
 
-		if (user != null && user.valid()) {
+		if (user != null && user.validUser()) {
 			try {
 				userID = user.getUserID();
 				preparedStatement = connection.prepareStatement("update users set " +
@@ -403,7 +412,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 		String userID;
 		boolean deleteSuccess = false;
 
-		if (user != null && user.valid()) {
+		if (user != null && user.validUser()) {
 			try {
 				userID = user.getUserID();
 				preparedStatement = connection.prepareStatement("delete from users " +
@@ -1560,6 +1569,78 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 		}
 
 		return deleteSuccess;
+	}
+
+	private List<Post> getPostsByResultset(ResultSet resultSet) {
+		List<Post>  postList = new ArrayList<>();
+
+		int postID;
+		String postTitle = null;
+		String postContent = null;
+		String userID = null;
+
+		try {
+			while(resultSet.next()) {
+				postID = resultSet.getInt(1);
+				postTitle = resultSet.getString(2);
+				postContent = resultSet.getString(3);
+				userID = resultSet.getString(4);
+
+				postList.add(new Post(postID, postTitle, postContent, userID));
+			}
+		} catch (SQLException | IncorrectFormat sqlException) {
+			sqlException.printStackTrace();
+		}
+
+		return postList;
+	}
+
+	@Override
+	public List<Post> getAllPost() {
+		List<Post> postList = new ArrayList<Post>();
+		resultSet1 = getAll("posts");
+		postList = getPostsByResultset(resultSet1);
+		return postList;
+	}
+
+	@Override
+	public List<Post> getPostByUser(String userId) {
+		List<Post> postList = new ArrayList<>();
+
+		if (userId != null) {
+			try {
+				preparedStatement = connection.prepareStatement("select * from " +
+						"posts where userID=?");
+				preparedStatement.setString(1, userId);
+				resultSet1 = preparedStatement.executeQuery();
+				postList = getPostsByResultset(resultSet1);
+			} catch (SQLException sqlException) {
+				sqlException.printStackTrace();
+			}
+		}
+
+		return postList;
+	}
+
+	@Override
+	public Post getPostByID(int postID) {
+		Post postResult = null;
+		List<Post> postList;
+
+		try {
+			preparedStatement = connection.prepareStatement("select * from " +
+					"posts where postID=?");
+			preparedStatement.setInt(1, postID);
+			resultSet1 = preparedStatement.executeQuery();
+			postList = getPostsByResultset(resultSet1);
+			if (postList.size() > 0) {
+				postResult = postList.get(0);
+			}
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
+
+		return postResult;
 	}
 }
 

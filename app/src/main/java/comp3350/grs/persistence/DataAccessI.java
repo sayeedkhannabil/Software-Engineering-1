@@ -133,5 +133,5 @@ public interface DataAccessI {
 
 	List<Post> getPostByUser(String userId);
 
-	Post getPost(int postID , String userID);
+	Post getPostByID(int postID);
 }

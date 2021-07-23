@@ -31,10 +31,5 @@ public class RatingTest {
     }
 
 
-    @Test
-    public void testInvalidRating() {
-
-    }
-
 
 }

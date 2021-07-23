@@ -7,6 +7,7 @@ import java.util.List;
 
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Guest;
+import comp3350.grs.objects.Post;
 import comp3350.grs.objects.Rating;
 import comp3350.grs.objects.Reply;
 import comp3350.grs.objects.Request;
@@ -72,8 +73,15 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		requests.clear();
 	}
 
+
+
 	@Override
-	public void clearReply() {
+	public void clearPosts() {
+
+	}
+
+	@Override
+	public void clearReplys() {
 
 	}
 
@@ -738,10 +746,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		return null;
 	}
 
-	@Override
-	public List<Reply> getReplyByGame(String gameName) {
-		return null;
-	}
+
 
 	@Override
 	public List<Reply> getReplyByUser(String userId) {
@@ -749,7 +754,39 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	}
 
 	@Override
-	public Reply getReply(String gameName, String userId) {
+	public Reply getReplyByID(int replyID) {
 		return null;
 	}
+
+	@Override
+	public boolean insertPost(Post post) {
+		return false;
+	}
+
+	@Override
+	public boolean updatePost(Post post) {
+		return false;
+	}
+
+	@Override
+	public boolean deletePost(Post post) {
+		return false;
+	}
+
+	@Override
+	public List<Post> getAllPost() {
+		return null;
+	}
+
+	@Override
+	public List<Post> getPostByUser(String userId) {
+		return null;
+	}
+
+	@Override
+	public Post getPostByID(int postID) {
+		return null;
+	}
+
+
 }

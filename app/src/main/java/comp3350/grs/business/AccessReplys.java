@@ -58,15 +58,15 @@ public class AccessReplys {
         return dataAccessI.getReplyByID(replyID);
     }
 
-    public boolean insertReply(Reply newReply) {
-        return dataAccessI.insertReply(newReply);
+    public boolean insertReply(Reply reply) {
+        return dataAccessI.insertReply(reply);
     }
 
-    public boolean updateReply(Reply uReply) {
-        return dataAccessI.updateReply(uReply);
+    public boolean updateReply(Reply reply) {
+        return dataAccessI.updateReply(reply);
     }
 
-    public boolean deleteReply(Reply dReply) {
-        return dataAccessI.deleteReply(dReply);
+    public boolean deleteReply(Reply reply) {
+        return dataAccessI.deleteReply(reply);
     }
 }

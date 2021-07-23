@@ -126,10 +126,11 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 			}
 		}
 
-		// TODO: 7/20/2021 reply ID
 
 		if (!checkTableExist("replys")) {
-			cmdString = "CREATE TABLE replys(replyID integer identity primary key,reviewContent VARCHAR(140), USERID VARCHAR(20),foreign key(USERID) references USERS(USERID))";
+			cmdString = "CREATE TABLE replys(replyID integer identity primary" +
+					" key,replyContent VARCHAR(500), USERID VARCHAR(20)," +
+					"foreign key(USERID) references USERS(USERID))";
 			try {
 				statement1.executeUpdate(cmdString);
 			} catch (SQLException sqlException) {
@@ -138,7 +139,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 		}
 
 		if (!checkTableExist("posts")) {
-			cmdString = "CREATE TABLE posts(postID integer identity primary key,postTitle VARCHAR(140),postContent VARCHAR(140), USERID VARCHAR(20),foreign key(USERID) references USERS(USERID))";
+			cmdString = "CREATE TABLE posts(postID integer identity primary key,postTitle VARCHAR(140),postContent VARCHAR(500), USERID VARCHAR(20),foreign key(USERID) references USERS(USERID))";
 			try {
 				statement1.executeUpdate(cmdString);
 			} catch (SQLException sqlException) {
@@ -147,8 +148,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 		}
 
 		if (!checkTableExist("VoteReplys")) {
-			cmdString = "CREATE TABLE VoteReplys(UserID VARCHAR(20),value " +
-					"integer, replyID integer,primary key (userID,replyID),foreign key(USERID) references USERS(USERID))";
+			cmdString = "CREATE TABLE VoteReplys(UserID VARCHAR(20),value integer, replyID integer,primary key (userID,replyID),foreign key(USERID) references USERS(USERID)),foreign key(replyID) REFERENCES replys(replyID)";
 			try {
 				statement1.executeUpdate(cmdString);
 			} catch (SQLException sqlException) {
@@ -348,7 +348,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 	public boolean insertUser(User user) {
 		boolean insertSuccess = false;
 
-		if (user != null && user.validUser()) {
+		if (user != null && user.valid()) {
 			try {
 				preparedStatement = connection.prepareStatement("insert into users " +
 						"values(?,?)");
@@ -381,7 +381,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 		String password;
 		boolean updateSuccess = false;
 
-		if (user != null && user.validUser()) {
+		if (user != null && user.valid()) {
 			try {
 				userID = user.getUserID();
 				preparedStatement = connection.prepareStatement("update users set " +
@@ -412,7 +412,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 		String userID;
 		boolean deleteSuccess = false;
 
-		if (user != null && user.validUser()) {
+		if (user != null && user.valid()) {
 			try {
 				userID = user.getUserID();
 				preparedStatement = connection.prepareStatement("delete from users " +
@@ -1444,7 +1444,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 			try{
 				preparedStatement = connection.prepareStatement("select * from " +
 						"replys where userID=?");
-				preparedStatement.setString(2, userID);
+				preparedStatement.setString(1, userID);
 				resultSet1 = preparedStatement.executeQuery();
 				replyList = getReplyByResultset(resultSet1);
 			} catch (SQLException sqlException) {

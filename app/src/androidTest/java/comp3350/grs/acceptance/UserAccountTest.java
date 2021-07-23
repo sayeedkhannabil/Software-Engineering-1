@@ -54,19 +54,5 @@ public class UserAccountTest {
         onView(withId(R.id.user_page_user_info)).check(matches(withText(containsString("userID:Guest"))));
     }
 
-    @Test
-    public void testSignup() {
-
-    }
-
-    @Test
-    public void testSignin() {
-
-    }
-
-    @Test
-    public void testInvalidUser() {
-
-    }
 
 }

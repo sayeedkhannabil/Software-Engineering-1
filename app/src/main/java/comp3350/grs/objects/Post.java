@@ -30,6 +30,10 @@ public class Post extends ForumContent{
 
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     @Override
     public boolean valid(){
         return super.valid()&&title!=null;

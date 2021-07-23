@@ -7,12 +7,12 @@ import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Rating;
 import comp3350.grs.objects.Reply;
 import comp3350.grs.objects.Request;
+import comp3350.grs.objects.Post;
 import comp3350.grs.objects.Review;
 import comp3350.grs.objects.User;
 import comp3350.grs.objects.VoteReply;
 
-public interface DataAccessI
-{
+public interface DataAccessI {
 	void open(String dbPath);
 
 	void close();
@@ -31,7 +31,9 @@ public interface DataAccessI
 
 	void clearRequests();
 
-	void clearReply();
+	void clearReplys();
+
+	void clearPosts();
 
 	boolean insertUser(User user);
 
@@ -83,7 +85,7 @@ public interface DataAccessI
 
 	List<Rating> getRatingsByUser(String userID);
 
-	Rating getRating(String gameName,String userID);
+	Rating getRating(String gameName, String userID);
 
 	boolean insertRequest(Request request);
 
@@ -95,7 +97,7 @@ public interface DataAccessI
 
 	List<Request> getRequestsByUser(String userID);
 
-	Request getRequest(String gameName,String userID);
+	Request getRequest(String gameName, String userID);
 
 	List<String> getGamesOrderByRequestNum(int limit);
 
@@ -117,10 +119,19 @@ public interface DataAccessI
 
 	List<Reply> getAllReply();
 
-	List<Reply> getReplyByGame(String gameName);
+	List<Reply> getReplyByUser(String userID);
 
-	List<Reply> getReplyByUser(String userId);
+	Reply getReplyByID(int replyID);
 
-	Reply getReply(String gameName, String userId);
+	boolean insertPost(Post post);
 
+	boolean updatePost(Post post);
+
+	boolean deletePost(Post post);
+
+	List<Post> getAllPost();
+
+	List<Post> getPostByUser(String userId);
+
+	Post getPostByID(int postID);
 }

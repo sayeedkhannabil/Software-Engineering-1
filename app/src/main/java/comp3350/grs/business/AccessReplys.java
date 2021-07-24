@@ -26,7 +26,7 @@ public class AccessReplys {
     }
 
     public List<Reply> getAllReplys() {
-        replyList = dataAccessI.getAllReply();
+        replyList = dataAccessI.getAllReplys();
         return replyList;
     }
 
@@ -51,11 +51,15 @@ public class AccessReplys {
     }
 
     public List<Reply> getReplyByUser(String userID) {
-        return dataAccessI.getReplyByUser(userID);
+        return dataAccessI.getReplysByUser(userID);
     }
 
     public Reply getReplyById(int replyID) {
         return dataAccessI.getReplyByID(replyID);
+    }
+
+    public List<Reply> getReplyByPost(int postID){
+        return dataAccessI.getReplysByPost(postID);
     }
 
     public boolean insertReply(Reply reply) {
@@ -69,4 +73,6 @@ public class AccessReplys {
     public boolean deleteReply(Reply reply) {
         return dataAccessI.deleteReply(reply);
     }
+
+
 }

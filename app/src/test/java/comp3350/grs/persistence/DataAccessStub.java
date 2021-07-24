@@ -742,14 +742,19 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	}
 
 	@Override
-	public List<Reply> getAllReply() {
+	public List<Reply> getAllReplys() {
 		return null;
 	}
 
 
 
 	@Override
-	public List<Reply> getReplyByUser(String userId) {
+	public List<Reply> getReplysByUser(String userId) {
+		return null;
+	}
+
+	@Override
+	public List<Reply> getReplysByPost(int postID) {
 		return null;
 	}
 
@@ -774,12 +779,12 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	}
 
 	@Override
-	public List<Post> getAllPost() {
+	public List<Post> getAllPosts() {
 		return null;
 	}
 
 	@Override
-	public List<Post> getPostByUser(String userId) {
+	public List<Post> getPostsByUser(String userId) {
 		return null;
 	}
 

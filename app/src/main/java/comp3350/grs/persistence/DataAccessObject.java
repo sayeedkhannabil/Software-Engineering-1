@@ -127,16 +127,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 		}
 
 
-		if (!checkTableExist("replys")) {
-			cmdString = "CREATE TABLE replys(replyID integer identity primary" +
-					" key,replyContent VARCHAR(500), USERID VARCHAR(20)," +
-					"foreign key(USERID) references USERS(USERID))";
-			try {
-				statement1.executeUpdate(cmdString);
-			} catch (SQLException sqlException) {
-				sqlException.printStackTrace();
-			}
-		}
+
 
 		if (!checkTableExist("posts")) {
 			cmdString = "CREATE TABLE posts(postID integer identity primary key,postTitle VARCHAR(140),postContent VARCHAR(500), USERID VARCHAR(20),foreign key(USERID) references USERS(USERID))";
@@ -147,8 +138,17 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 			}
 		}
 
+		if (!checkTableExist("replys")) {
+			cmdString = "CREATE TABLE replys(replyID integer identity primary key,replyContent VARCHAR(500), USERID VARCHAR(20),postID Integer, foreign key(USERID) references USERS(USERID),foreign key(postID) references posts(postID))";
+			try {
+				statement1.executeUpdate(cmdString);
+			} catch (SQLException sqlException) {
+				sqlException.printStackTrace();
+			}
+		}
+
 		if (!checkTableExist("VoteReplys")) {
-			cmdString = "CREATE TABLE VoteReplys(UserID VARCHAR(20),value integer, replyID integer,primary key (userID,replyID),foreign key(USERID) references USERS(USERID)),foreign key(replyID) REFERENCES replys(replyID)";
+			cmdString = "CREATE TABLE VoteReplys(UserID VARCHAR(20),value integer, replyID integer,primary key (userID,replyID),foreign key(USERID) references USERS(USERID),foreign key(replyID) REFERENCES replys(replyID))";
 			try {
 				statement1.executeUpdate(cmdString);
 			} catch (SQLException sqlException) {
@@ -1313,27 +1313,33 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 	public boolean insertReply(Reply reply) {
 		boolean insertSuccess = false;
 		int replyID;
-
 		String replyContent = null;
 		String userID = null;
+		int postID;
 
 		if (reply != null && reply.valid()) {
 			try {
 				replyID = reply.getID();
 				replyContent = reply.getContent();
 				userID = reply.getUserID();
+				postID=reply.getPostID();
 
 				if (replyID == -1) {//reply id is -1 means we should use the
 					// auto generated reply id
-					preparedStatement = connection.prepareStatement("insert into reply(replyContent,USERID) values (?,?);");
+					preparedStatement = connection.prepareStatement("insert " +
+							"into replys(replyContent,USERID,postID) values " +
+							"(?,?,?);");
 					preparedStatement.setString(1, replyContent);
 					preparedStatement.setString(2, userID);
+					preparedStatement.setInt(3,postID);
 				} else {
-					preparedStatement = connection.prepareStatement("insert into reply " +
+					preparedStatement = connection.prepareStatement("insert " +
+							"into replys " +
 							"values(?,?,?)");
 					preparedStatement.setInt(1, replyID);
 					preparedStatement.setString(2, replyContent);
 					preparedStatement.setString(3, userID);
+					preparedStatement.setInt(4,postID);
 				}
 
 				updateCount = preparedStatement.executeUpdate();
@@ -1355,17 +1361,21 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 
 		String replyContent = null;
 		String userID = null;
+		int postID;
 
 		if (reply != null && reply.valid()) {
 			try {
 				replyID = reply.getID();
 				replyContent = reply.getContent();
 				userID = reply.getUserID();
-				preparedStatement = connection.prepareStatement("update reply set " +
-						"replyContent=?,userID=? where replyID=?");
+				postID=reply.getPostID();
+				preparedStatement = connection.prepareStatement("update " +
+						"replys set " +
+						"replyContent=?,userID=?,postID=? where replyID=?");
 				preparedStatement.setString(1, replyContent);
 				preparedStatement.setString(2, userID);
-				preparedStatement.setInt(3, replyID);
+				preparedStatement.setInt(3, postID);
+				preparedStatement.setInt(4, replyID);
 				updateCount = preparedStatement.executeUpdate();
 				if (updateCount == 1) {
 					updateSuccess = true;
@@ -1386,7 +1396,8 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 		if (reply != null && reply.valid()) {
 			try {
 				int replyID = reply.getID();
-				preparedStatement = connection.prepareStatement("delete from reply " +
+				preparedStatement = connection.prepareStatement("delete from " +
+						"replys " +
 						"where replyID=?");
 				preparedStatement.setInt(1, replyID);
 				updateCount = preparedStatement.executeUpdate();
@@ -1408,6 +1419,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 		int replyID;
 		String replyContent = null;
 		String userID = null;
+		int postID;
 
 		try {
 
@@ -1415,8 +1427,9 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 				replyID = resultset.getInt(1);
 				replyContent = resultset.getString(2);
 				userID = resultset.getString(3);
+				postID=resultset.getInt(4);
 
-				replyList.add(new Reply(replyID, replyContent, userID));
+				replyList.add(new Reply(replyID, replyContent, userID,postID));
 
 			}
 		} catch (SQLException | IncorrectFormat sqlException) {
@@ -1427,7 +1440,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 	}
 
 	@Override
-	public List<Reply> getAllReply() {
+	public List<Reply> getAllReplys() {
 		List<Reply> replyList = new ArrayList<Reply>();
 
 		resultSet1 = getAll("replys");
@@ -1437,7 +1450,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 
 
 	@Override
-	public List<Reply> getReplyByUser(String userID) {
+	public List<Reply> getReplysByUser(String userID) {
 		List<Reply> replyList = new ArrayList<>();
 
 		if (userID != null) {
@@ -1451,6 +1464,25 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 				sqlException.printStackTrace();
 			}
 		}
+
+		return replyList;
+	}
+
+	@Override
+	public List<Reply> getReplysByPost(int postID) {
+		List<Reply> replyList = new ArrayList<>();
+
+
+		try{
+			preparedStatement = connection.prepareStatement("select * from " +
+					"replys where postID=?");
+			preparedStatement.setInt(1, postID);
+			resultSet1 = preparedStatement.executeQuery();
+			replyList = getReplyByResultset(resultSet1);
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
+
 
 		return replyList;
 	}
@@ -1493,12 +1525,14 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 
 				if (postID == -1) {//post id is -1 means we should use the
 					// auto generated post id
-					preparedStatement = connection.prepareStatement("insert into post(postTitle, postContent,USERID) values (?,?,?);");
+					preparedStatement = connection.prepareStatement("insert " +
+							"into posts(postTitle, postContent,USERID) values (?,?,?);");
 					preparedStatement.setString(1, postTitle);
 					preparedStatement.setString(2, postContent);
 					preparedStatement.setString(3, userID);
 				} else {
-					preparedStatement = connection.prepareStatement("insert into post " +
+					preparedStatement = connection.prepareStatement("insert " +
+							"into posts " +
 							"values(?,?,?,?)");
 					preparedStatement.setInt(1, postID);
 					preparedStatement.setString(2, postContent);
@@ -1532,7 +1566,8 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 				postTitle = post.getTitle();
 				postContent = post.getContent();
 				userID = post.getUserID();
-				preparedStatement = connection.prepareStatement("update post set " +
+				preparedStatement = connection.prepareStatement("update posts" +
+						" set " +
 						"postTitle=?,postContent=?,userID=? where postID=?");
 				preparedStatement.setString(1, postTitle);
 				preparedStatement.setString(2, postContent);
@@ -1556,7 +1591,8 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 		if (post != null && post.valid()) {
 			try {
 				int postID = post.getID();
-				preparedStatement = connection.prepareStatement("delete from post " +
+				preparedStatement = connection.prepareStatement("delete from " +
+						"posts " +
 						"where postID=?");
 				preparedStatement.setInt(1, postID);
 				updateCount = preparedStatement.executeUpdate();
@@ -1596,7 +1632,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 	}
 
 	@Override
-	public List<Post> getAllPost() {
+	public List<Post> getAllPosts() {
 		List<Post> postList = new ArrayList<Post>();
 		resultSet1 = getAll("posts");
 		postList = getPostsByResultset(resultSet1);
@@ -1604,7 +1640,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 	}
 
 	@Override
-	public List<Post> getPostByUser(String userId) {
+	public List<Post> getPostsByUser(String userId) {
 		List<Post> postList = new ArrayList<>();
 
 		if (userId != null) {

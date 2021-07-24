@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="5dp"
+        >
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/less_rounded_rectangle"
+            android:paddingHorizontal="10dp"
+        >
+        <TextView
+                android:id="@+id/single_reply_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="that's true"
+                android:textSize="20dp"
+                android:background="@drawable/bottom_border"
+                ></TextView>
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:id="@+id/post_vote_wrapper"
+                >
+            <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/user"
+                    android:id="@+id/post_page_reply_user"
+                    ></ImageView>
+            <TextView
+                    android:id="@+id/single_reply_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="20dp"
+                    android:text="another User"
+                    android:paddingHorizontal="5dp"
+                    android:layout_toRightOf="@id/post_page_reply_user"
+                    ></TextView>
+
+            <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/up_arrow_hollow"
+                    android:layout_toLeftOf="@id/single_reply_upvote_num"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/single_reply_upvote_icon"
+                    ></ImageView>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/single_reply_upvote_num"
+                    android:text="100"
+                    android:textSize="20dp"
+                    android:layout_toLeftOf="@id/single_reply_downvote_icon"
+                    ></TextView>
+
+
+            <ImageView
+
+                    android:id="@+id/single_reply_downvote_icon"
+                    android:layout_width="25dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/down_arrow_hollow"
+                    android:layout_toLeftOf="@id/single_reply_downvote_num"
+                    android:layout_centerVertical="true"
+                    ></ImageView>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/single_reply_downvote_num"
+                    android:text="100"
+                    android:textSize="20dp"
+                    android:layout_alignParentEnd="true"
+                    ></TextView>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

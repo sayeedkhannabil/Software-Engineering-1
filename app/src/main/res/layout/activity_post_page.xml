@@ -41,31 +41,46 @@
                         android:layout_marginBottom="10dp"
                         >
 
-                    <LinearLayout
+                    <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/post_page_author_wrapper"
                             android:orientation="horizontal"
-                            android:background="@drawable/bottom_border"
-                            >
+                            android:background="@drawable/bottom_border">
+
                         <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:src="@drawable/user"
+                                android:layout_toLeftOf="@id/post_page_post_user"
+
                                 ></ImageView>
+
                         <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:text="userID"
                                 android:textSize="20dp"
-                                android:textStyle="bold"
+                                android:id="@+id/post_page_post_user"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="10dp"
                                 ></TextView>
-                    </LinearLayout>
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="Title"
+                                android:textSize="30dp"
+                                android:textStyle="bold"
+                                android:id="@+id/post_page_post_title"
+                                ></TextView>
+                    </RelativeLayout>
+
                     <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Your group will be implementing a complete, self-contained Java Android application. The software will include a graphical user interface, a database for storage, and some data processing.It must execute on aproperly-configuredWindows systemand on a Nexus 7 tablet;support for any other platforms is optional. A sample project and architecture will be given; you can choose to use it as a starting point, or to start from scratch. Many of the details will be your own decisions.The goal is to produce a solid, well-written, real-world application."
                             android:textSize="25dp"
+                            android:id="@+id/post_page_post_content"
                             ></TextView>
                 </LinearLayout>
                 <LinearLayout
@@ -74,84 +89,6 @@
                         android:id="@+id/post_page_reply_wrapper"
                         android:orientation="vertical"
                         >
-
-                    <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginBottom="5dp"
-                            android:background="@drawable/less_rounded_rectangle"
-                            android:paddingHorizontal="10dp"
-                            >
-                        <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="that's true"
-                                android:textSize="20dp"
-                                android:background="@drawable/bottom_border"
-                                ></TextView>
-                        <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:id="@+id/post_vote_wrapper"
-                                >
-                            <ImageView
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
-                                    android:src="@drawable/user"
-                                    android:id="@+id/post_page_reply_user"
-                                    ></ImageView>
-                            <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:textSize="20dp"
-                                    android:text="another User"
-                                    android:paddingHorizontal="5dp"
-                                    android:layout_toRightOf="@id/post_page_reply_user"
-                                    ></TextView>
-
-                            <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
-                                    android:src="@drawable/up_arrow_hollow"
-                                    android:layout_toLeftOf="@id/post_reply_upvote_num"
-                                    android:layout_centerVertical="true"
-                                    ></ImageView>
-
-                            <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:id="@+id/post_reply_upvote_num"
-                                    android:text="100"
-                                    android:textSize="20dp"
-                                    android:layout_toLeftOf="@id/reply_downvote_img"
-                                    ></TextView>
-
-
-                            <ImageView
-                                    android:id="@+id/reply_downvote_img"
-                                    android:layout_width="25dp"
-                                    android:layout_height="20dp"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    android:src="@drawable/down_arrow_hollow"
-                                    android:layout_toLeftOf="@id/post_reply_downvote_num"
-                                    android:layout_centerVertical="true"
-                                    ></ImageView>
-
-                            <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    android:id="@+id/post_reply_downvote_num"
-                                    android:text="100"
-                                    android:textSize="20dp"
-                                    android:layout_alignParentEnd="true"
-                                    ></TextView>
-
-                        </RelativeLayout>
-                    </LinearLayout>
 
                 </LinearLayout>
             </LinearLayout>
@@ -166,6 +103,28 @@
                 android:gravity="center"
                 android:id="@+id/write_reply_button"
                 ></TextView>
+    <LinearLayout
+            android:id="@+id/write_reply_wrapper"
+            android:layout_above="@id/write_reply_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/blue"
+            android:background="@drawable/rounded_rectangle"
+            android:orientation="vertical"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="10dp"
+            android:visibility="gone"
+            >
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="30dp"
+                android:background="@drawable/bottom_border"
+                android:hint="Content"
+                android:id="@+id/post_page_reply_content"
+                ></EditText>
 
+
+    </LinearLayout>
 
 </RelativeLayout>

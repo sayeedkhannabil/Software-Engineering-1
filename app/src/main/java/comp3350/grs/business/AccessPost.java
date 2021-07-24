@@ -26,7 +26,7 @@ public class AccessPost {
     }
 
     public List<Post> getAllPosts() {
-        postList = dataAccessI.getAllPost();
+        postList = dataAccessI.getAllPosts();
         return postList;
     }
 
@@ -51,7 +51,7 @@ public class AccessPost {
     }
 
     public List<Post> getPostsByUser(String userID) {
-        return dataAccessI.getPostByUser(userID);
+        return dataAccessI.getPostsByUser(userID);
     }
 
     public Post getPostById(int id) {

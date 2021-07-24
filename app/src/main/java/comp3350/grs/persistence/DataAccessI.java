@@ -117,9 +117,11 @@ public interface DataAccessI {
 
 	boolean deleteReply(Reply reply);
 
-	List<Reply> getAllReply();
+	List<Reply> getAllReplys();
 
-	List<Reply> getReplyByUser(String userID);
+	List<Reply> getReplysByUser(String userID);
+
+	List<Reply> getReplysByPost(int postID);
 
 	Reply getReplyByID(int replyID);
 
@@ -129,9 +131,9 @@ public interface DataAccessI {
 
 	boolean deletePost(Post post);
 
-	List<Post> getAllPost();
+	List<Post> getAllPosts();
 
-	List<Post> getPostByUser(String userId);
+	List<Post> getPostsByUser(String userId);
 
 	Post getPostByID(int postID);
 }

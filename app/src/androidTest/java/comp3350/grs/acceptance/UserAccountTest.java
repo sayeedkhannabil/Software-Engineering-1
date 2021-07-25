@@ -28,7 +28,7 @@ import static org.hamcrest.Matchers.*;
 @MediumTest
 //user want to see their account
 public class UserAccountTest {
-    DataAccessI dataAccessI;
+    private DataAccessI dataAccessI;
 
     @Rule
     public ActivityTestRule<MainActivity> homeActivity =

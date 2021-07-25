@@ -32,7 +32,7 @@ public class ForumContent {
         final int MAX_LENGTH = 500 ;
         final int MIN_LENGTH = 0 ;
         if (content.length()>MAX_LENGTH || content.length()<=MIN_LENGTH) {
-            throw new IncorrectFormat("Letters of Post content should be " +
+            throw new IncorrectFormat("Letters of content should be " +
                     "between 1 to 500");
         }
     }

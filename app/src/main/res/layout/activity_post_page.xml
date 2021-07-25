@@ -18,6 +18,7 @@
             android:layout_marginBottom="5dp"
             ></fragment>
         <ScrollView
+                android:id="@+id/post_page_scroll_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/post_page_top_bar"

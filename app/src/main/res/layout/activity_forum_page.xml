@@ -18,9 +18,11 @@
             android:layout_marginBottom="5dp"
             ></fragment>
     <ScrollView
+            android:id="@+id/forum_page_post_scroll_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/forum_page_top_bar"
+            android:layout_above="@id/write_post_button"
             >
         <LinearLayout
                 android:layout_width="match_parent"

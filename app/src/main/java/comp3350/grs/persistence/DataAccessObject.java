@@ -201,11 +201,13 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 	public void deleteDatabase() {
 		deleteTable("reviews");
 		deleteTable("ratings");
-		deleteTable("users");
 		deleteTable("genres");
+		deleteTable("requests");
 		deleteTable("games");
+		deleteTable("VoteReplys");
 		deleteTable("replys");
 		deleteTable("posts");
+		deleteTable("users");
 	}
 
 	//clear all the data in a table, without delete the table itself
@@ -247,15 +249,19 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 		clearTable("posts");
 	}
 
+	public void clearVoteReplys(){
+		clearTable("voteReplys");
+	}
 
 	public void clearAllData() {
 		clearReviews();
 		clearRatings();
 		clearRequests();
-		clearUsers();
 		clearGames();
+		clearVoteReplys();
 		clearReplys();
 		clearPosts();
+		clearUsers();
 	}
 
 
@@ -1335,7 +1341,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 				} else {
 					preparedStatement = connection.prepareStatement("insert " +
 							"into replys " +
-							"values(?,?,?)");
+							"values(?,?,?,?)");
 					preparedStatement.setInt(1, replyID);
 					preparedStatement.setString(2, replyContent);
 					preparedStatement.setString(3, userID);
@@ -1535,7 +1541,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 							"into posts " +
 							"values(?,?,?,?)");
 					preparedStatement.setInt(1, postID);
-					preparedStatement.setString(2, postContent);
+					preparedStatement.setString(2, postTitle);
 					preparedStatement.setString(3, postContent);
 					preparedStatement.setString(4, userID);
 				}

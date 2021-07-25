@@ -3,6 +3,9 @@ package comp3350.grs.persistence;
 // the stub database which stores users and games
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import comp3350.grs.exceptions.IncorrectFormat;
@@ -698,7 +701,8 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	}
 
 	public List<String> getGamesOrderByRequestNum(int limit){
-		return null;
+		List<String> gameNames = null;
+		return gameNames;
 	}
 
 	@Override

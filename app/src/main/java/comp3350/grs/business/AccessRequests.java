@@ -31,33 +31,13 @@ public class AccessRequests {
         return requestList;
     }
 
-    // get next review sequentially
-    public Request getSequential() {
-        if (requestList == null) {
-            getAllRequests();
-            currentRequestIndex = 0;
-        }
-
-        if (currentRequestIndex < requestList.size()) {
-            currentRequest = requestList.get(currentRequestIndex);
-            currentRequestIndex++;
-        }
-
-        else {
-            requestList = null;
-            currentRequest = null;
-            currentRequestIndex = 0;
-        }
-
-        return currentRequest;
-    }
-
-    public void checkGameExists(Request newRequest) throws Duplicate {
+    public boolean checkGameExists(Request newRequest) throws Duplicate {
         String gameRequested = newRequest.getGameName();
         boolean gameAlreadyExists = dataAccessI.getAllGames().contains(dataAccessI.getGameByName(gameRequested));
         if(gameAlreadyExists){
             throw new Duplicate("The game already exists in the gallery. Request can't be made.");
         }
+        return gameAlreadyExists;
     }
 
     public List<Request> getRequestsByUser(String userID) {

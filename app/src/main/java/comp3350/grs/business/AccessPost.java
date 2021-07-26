@@ -30,26 +30,6 @@ public class AccessPost {
         return postList;
     }
 
-    public Post getSequential() {
-        if (postList == null) {
-            getAllPosts();
-            currentPostIndex = 0;
-        }
-
-        if (currentPostIndex < postList.size()) {
-            currentPost = postList.get(currentPostIndex);
-            currentPostIndex++;
-        }
-
-        else {
-            postList = null;
-            currentPost = null;
-            currentPostIndex = 0;
-        }
-
-        return currentPost;
-    }
-
     public List<Post> getPostsByUser(String userID) {
         return dataAccessI.getPostsByUser(userID);
     }
@@ -58,15 +38,15 @@ public class AccessPost {
         return dataAccessI.getPostByID(id);
     }
 
-    public boolean insertPost(Post newPost) {
-        return dataAccessI.insertPost(newPost);
+    public boolean insertPost(Post post) {
+        return dataAccessI.insertPost(post);
     }
 
-    public boolean updatePost(Post uPost) {
-        return dataAccessI.updatePost(uPost);
+    public boolean updatePost(Post post) {
+        return dataAccessI.updatePost(post);
     }
 
-    public boolean deletePost(Post dPost) {
-        return dataAccessI.deletePost(dPost);
+    public boolean deletePost(Post post) {
+        return dataAccessI.deletePost(post);
     }
 }

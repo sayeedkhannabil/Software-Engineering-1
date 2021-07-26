@@ -30,26 +30,6 @@ public class AccessReplys {
         return replyList;
     }
 
-    public Reply getSequential() {
-        if (replyList == null) {
-            getAllReplys();
-            currentReplyIndex = 0;
-        }
-
-        if (currentReplyIndex < replyList.size()) {
-            currentReply = replyList.get(currentReplyIndex);
-            currentReplyIndex++;
-        }
-
-        else {
-            replyList = null;
-            currentReply = null;
-            currentReplyIndex = 0;
-        }
-
-        return currentReply;
-    }
-
     public List<Reply> getReplyByUser(String userID) {
         return dataAccessI.getReplysByUser(userID);
     }

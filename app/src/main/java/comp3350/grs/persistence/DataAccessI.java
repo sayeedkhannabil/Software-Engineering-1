@@ -33,6 +33,8 @@ public interface DataAccessI {
 
 	void clearReplys();
 
+	void clearVoteReplys();
+
 	void clearPosts();
 
 	boolean insertUser(User user);

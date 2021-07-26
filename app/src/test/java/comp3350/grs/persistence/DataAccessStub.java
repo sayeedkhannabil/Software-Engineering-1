@@ -3,9 +3,8 @@ package comp3350.grs.persistence;
 // the stub database which stores users and games
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
+import java.util.Comparator;
 import java.util.List;
 
 import comp3350.grs.exceptions.IncorrectFormat;
@@ -46,6 +45,8 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		games=null;
 		ratings = null;
 		reviews = null;
+		voteReplies = null;
+		replies = null;
 	}
 
 	public void clearAllData(){
@@ -54,6 +55,8 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		ratings.clear();
 		reviews.clear();
 		requests.clear();
+		voteReplies.clear();
+		replies.clear();
 	}
 
 	@Override
@@ -77,7 +80,6 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	}
 
 
-
 	@Override
 	public void clearPosts() {
 
@@ -85,12 +87,60 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	@Override
 	public void clearReplys() {
+		replies.clear();
+	}
 
+	@Override
+	public void clearVoteReplys(){
+		voteReplies.clear();
 	}
 
 	@Override
 	public void clearRatings() {
 		ratings.clear();
+	}
+
+	public <E> boolean update(List<E> list, E object){
+		boolean updated = false;
+		int index = list.indexOf(object);
+		if(index >= 0) {
+			list.set(index, object);
+			updated = true;
+		}
+		return updated;
+	}
+
+	public <E> boolean delete(List<E> list, E object){
+		boolean deleted = false;
+		if(object != null && list.contains(object)){
+			deleted = list.remove(object);
+		}
+		return deleted;
+	}
+
+	public <E> boolean validateRR(E object){
+		boolean pass = false;
+		Game game = null;
+		User user = null;
+		String userID = null;
+		Rating rating;
+		Review review;
+		if(object instanceof Rating){
+			rating = (Rating)object;
+			game = getGameByName(rating.getGameName());
+			userID = rating.getUserID();
+			user = getUserByID(userID);
+		}
+		else if(object instanceof Review){
+			review = (Review)object;
+			game = getGameByName(review.getGameName());
+			userID = review.getUserID();
+			user = getUserByID(userID);
+		}
+		if(games.contains(game) && users.contains(user) || userID.equals("Guest")){
+			pass = true;
+		}
+ 		return pass;
 	}
 
 	public boolean insertUser(User newUser) {
@@ -104,39 +154,21 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	}
 
 	public boolean updateUser(User currentUser) {
-		int index;
 		boolean updated = false;
-
 		if(currentUser != null && currentUser.valid()) {
-			index = users.indexOf(currentUser);
-			if (index >= 0) {
-				users.set(index, currentUser);
-				updated = true;
-			}
+			updated = update(users, currentUser);
 		}
-
 		return updated;
 	}
 
 	public boolean deleteUser(User user) {
-		int index;
-		boolean deleted = false;
-
-		if(user != null) {
-			index = users.indexOf(user);
-			if (index >= 0) {
-				users.remove(index);
-				deleted = true;
-			}
-		}
-
-		return deleted;
+		return delete(users, user);
 	}
 
 	//get all the users in database
 	public List<User> getAllUsers() {
 		List<User> usersCopy = new ArrayList<>();
-		User toCopy = null;
+		User toCopy;
 		User copy = null;
 
 		for(int i = 0; i < users.size(); i++){
@@ -235,11 +267,9 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	public boolean insertGame(Game toAdd) {
 		boolean inserted = false;
-		if(toAdd != null) {
-			if (toAdd.valid()) {
-				if(!games.contains(toAdd)){
-					inserted = games.add(toAdd);
-				}
+		if(toAdd != null && toAdd.valid()) {
+			if(!games.contains(toAdd)){
+				inserted = games.add(toAdd);
 			}
 		}
 		return inserted;
@@ -247,37 +277,23 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	public boolean updateGame(Game toUpdate) {
 		boolean updated = false;
-		int index;
-
 		if(toUpdate != null && toUpdate.valid()) {
-			index = games.indexOf(toUpdate);
-			if (index >= 0) {
-				games.set(index, toUpdate);
-				updated = true;
-			}
+			updated = update(games, toUpdate);
 		}
-
 		return updated;
 	}
 
 	public boolean deleteGame(Game toDel) {
 		boolean deleted = false;
-		int index;
-
 		if(toDel != null) {
-			index = games.indexOf(toDel);
-			if (index >= 0) {
-				games.remove(index);
-				deleted = true;
-			}
+			deleted = delete(games,toDel);
 		}
-
 		return deleted;
 	}
 
 	public ArrayList<Game> getAllGames() {
 		ArrayList<Game> gamesCopy = new ArrayList<>();
-		Game toCopy = null;
+		Game toCopy;
 		Game copy = null;
 
 		for(int i = 0; i < games.size(); i++){
@@ -373,12 +389,8 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	public boolean insertReview(Review review){
 		boolean inserted = false;
-		Game reviewGame;
-		User reviewUser;
 		if(review != null && review.valid()) {
-			reviewGame = getGameByName(review.getGameName());
-			reviewUser = getUserByID(review.getUserID());
-			if(games.contains(reviewGame) && (users.contains(reviewUser) || review.getUserID().equals("Guest"))) {
+			if(validateRR(review)){
 				inserted = reviews.add(review);
 			}
 		}
@@ -387,19 +399,9 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	public boolean updateReview(Review review){
 		boolean updated = false;
-		int index;
-		Game reviewGame;
-		User reviewUser;
-
 		if(review != null && review.valid()) {
-			reviewGame = getGameByName(review.getGameName());
-			reviewUser = getUserByID(review.getUserID());
-			if(games.contains(reviewGame) && (users.contains(reviewUser) || review.getUserID().equals("Guest"))) {
-				index = reviews.indexOf(review);
-				if (index >= 0) {
-					reviews.set(index, review);
-					updated = true;
-				}
+			if(validateRR(review)) {
+				updated = update(reviews, review);
 			}
 		}
 		return updated;
@@ -407,22 +409,15 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	public boolean deleteReview(Review review) {
 		boolean deleted = false;
-		int index;
-
 		if(review != null) {
-			index = reviews.indexOf(review);
-			if (index >= 0) {
-				reviews.remove(index);
-				deleted = true;
-			}
+			deleted = delete(reviews, review);
 		}
-
 		return deleted;
 	}
 
 	public List<Review> getAllReviews(){
 		List<Review> reviewsCopy = new ArrayList<>();
-		Review toCopy = null;
+		Review toCopy;
 		Review copy = null;
 
 		for(int i = 0; i < reviews.size(); i++){
@@ -492,12 +487,8 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	public boolean insertRating(Rating rating){
 		boolean inserted = false;
-		Game ratingGame;
-		User ratingUser;
 		if(rating != null && rating.valid()) {
-			ratingGame = getGameByName(rating.getGameName());
-			ratingUser = getUserByID(rating.getUserID());
-			if(games.contains(ratingGame) && (users.contains(ratingUser) || rating.getUserID().equals("Guest"))) {
+			if(validateRR(rating)) {
 				inserted = ratings.add(rating);
 			}
 		}
@@ -506,34 +497,16 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	public boolean updateRating(Rating rating){
 		boolean updated = false;
-		int index;
-		Game ratingGame;
-		User ratingUser;
-
 		if(rating != null && rating.valid()) {
-			index = ratings.indexOf(rating);
-			ratingGame = getGameByName(rating.getGameName());
-			ratingUser = getUserByID(rating.getUserID());
-			if (index >= 0) {
-				if(games.contains(ratingGame) && (users.contains(ratingUser) || rating.getUserID().equals("Guest"))) {
-					ratings.set(index, rating);
-					updated = true;
-				}
-			}
+			updated = update(ratings, rating);
 		}
 		return updated;
 	}
 
 	public boolean deleteRating(Rating rating){
 		boolean deleted = false;
-		int index;
-
 		if(rating != null) {
-			index = ratings.indexOf(rating);
-			if (index >= 0) {
-				ratings.remove(index);
-				deleted = true;
-			}
+			deleted = delete(ratings, rating);
 		}
 
 		return deleted;
@@ -541,7 +514,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	public List<Rating> getAllRatings(){
 		List<Rating> ratingsCopy = new ArrayList<>();
-		Rating toCopy = null;
+		Rating toCopy;
 		Rating copy = null;
 
 		for(int i = 0; i < ratings.size(); i++){
@@ -589,7 +562,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	public Rating getRating(String gameName, String userID){
 		Rating toReturn = null;
-		Rating curr = null;
+		Rating curr;
 		boolean found = false;
 
 		if(gameName != null && userID != null) {
@@ -607,7 +580,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	public List<Request> getAllRequests(){
 		List<Request> requestsCopy = new ArrayList<>();
-		Request toCopy = null;
+		Request toCopy;
 		Request copy = null;
 
 		for(int i = 0; i < requests.size(); i++){
@@ -657,7 +630,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	public Request getRequest(String gameName, String userID){
 		Request toReturn = null;
-		Request curr = null;
+		Request curr;
 		boolean found = false;
 
 		if(gameName != null && userID != null) {
@@ -687,47 +660,92 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	public boolean deleteRequest(Request toDelete){
 		boolean deleted = false;
-		int index;
-
 		if(toDelete != null) {
-			index = requests.indexOf(toDelete);
-			if (index >= 0) {
-				requests.remove(index);
-				deleted = true;
-			}
+			deleted = delete(requests, toDelete);
 		}
-
 		return deleted;
 	}
 
 	public List<String> getGamesOrderByRequestNum(int limit){
-		List<String> gameNames = null;
-		return gameNames;
+		//get list of game names, sort them by request num (if request num <= limit)
+		List<String> gamesRequested = new ArrayList<>();
+		List<String> toReturn = null;
+		String currStr;
+		if(limit >= 1) {
+			toReturn = new ArrayList<>();
+			//populate String list with game names in requests List
+			for(int i = 0; i < requests.size(); i++){
+				gamesRequested.add(requests.get(i).getGameName());
+			}
+
+			//sort by game name frequency
+			Collections.sort(gamesRequested, (o1, o2) -> Collections.frequency(gamesRequested, o2) - Collections.frequency(gamesRequested, o1));
+
+			//add the games with in order of highest frequency without duplicates to toReturn (and with <= limit number of requests)
+			for(int j = 0; j < gamesRequested.size(); j ++){
+				currStr = gamesRequested.get(j);
+				if(!toReturn.contains(currStr) && (Collections.frequency(gamesRequested, currStr) <= limit)){
+					toReturn.add(currStr);
+				}
+			}
+		}
+		return toReturn;
 	}
 
 	@Override
 	public boolean insertVoteReply(VoteReply voteReply) {
-		return false;
+		boolean inserted = false;
+		if(voteReply != null && voteReply.valid()) {
+			inserted = voteReplies.add(voteReply);
+		}
+		return inserted;
 	}
 
 	@Override
 	public boolean updateVoteReply(VoteReply voteReply) {
-		return false;
+		boolean updated = false;
+		if(voteReply != null && voteReply.valid()) {
+			updated = update(voteReplies, voteReply);
+		}
+		return updated;
 	}
 
 	@Override
 	public boolean deleteVoteReply(VoteReply voteReply) {
-		return false;
+		boolean deleted = false;
+		if(voteReply != null) {
+			deleted = delete(voteReplies, voteReply);
+		}
+		return deleted;
 	}
 
 	@Override
 	public List<VoteReply> getVoteReplysByReply(int replyID) {
-		return null;
+		List<VoteReply> repliesByID = new ArrayList<>();
+		VoteReply curr;
+		for(int i = 0; i < voteReplies.size(); i++){
+			curr = voteReplies.get(i);
+			if(curr.getReplyID() == replyID){
+				repliesByID.add(curr);
+			}
+		}
+
+		return repliesByID;
 	}
 
 	@Override
 	public VoteReply getVoteReply(String userID, int replyID) {
-		return null;
+		VoteReply vr = null;
+		VoteReply curr;
+		boolean found = false;
+		for(int i = 0; i < voteReplies.size() && !found; i++){
+			curr = voteReplies.get(i);
+			if(curr.getReplyID() == replyID && curr.getVoteI().getUserID().equals(userID)){
+				vr = curr;
+				found = true;
+			}
+		}
+		return vr;
 	}
 
 	@Override

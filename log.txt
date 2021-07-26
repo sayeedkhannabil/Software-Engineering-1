@@ -173,5 +173,8 @@ July 16: Katharine K created AccessRequests and added necessary methods in datab
 	(expected: 1 hour, actual: 1 hour)
 July 20: Gongyu Liao finished Reply and Feedback object class.
 	(expected: 2 hours, actual: 2 hours)
-
+July 24: Katharine K created AccessRequestsTest and wrote some tests
+    (expected: 2 hours, actual: 2 hours)
+July 25: Katharine K updated methods in DataAccessStub, improved some existing
+    (expected: 2 hours, actual: 3 hoours)
 

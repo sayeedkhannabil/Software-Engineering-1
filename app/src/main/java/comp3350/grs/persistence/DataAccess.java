@@ -8,10 +8,12 @@ import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Guest;
 import comp3350.grs.objects.Rating;
+import comp3350.grs.objects.Reply;
 import comp3350.grs.objects.Request;
 import comp3350.grs.objects.RegisteredUser;
 import comp3350.grs.objects.Review;
 import comp3350.grs.objects.User;
+import comp3350.grs.objects.VoteReply;
 import comp3350.grs.presentation.MainActivity;
 
 //parent of sql database and stub database, mainly used to load default data
@@ -23,6 +25,8 @@ public abstract class DataAccess {
     protected List<Rating> ratings;//list of all ratings
     protected List<Review> reviews;//list of all reviews
     protected List<Request> requests; //list of all game requests
+    protected List<VoteReply> voteReplies;
+    protected List<Reply> replies;
 
     public DataAccess(String dbName){
         this.dbName=dbName;
@@ -38,6 +42,8 @@ public abstract class DataAccess {
         ratings = new ArrayList<>();
         reviews = new ArrayList<>();
         requests=new ArrayList<>();
+        voteReplies = new ArrayList<>();
+        replies = new ArrayList<>();
         List<String> genres;
         Game newGame=null;
         String gameName,gameDev,desc;

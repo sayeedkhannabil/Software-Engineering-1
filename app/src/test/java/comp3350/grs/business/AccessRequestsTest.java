@@ -10,6 +10,8 @@ import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
 import comp3350.grs.exceptions.Duplicate;
 import comp3350.grs.exceptions.IncorrectFormat;
+import comp3350.grs.objects.Guest;
+import comp3350.grs.objects.RegisteredUser;
 import comp3350.grs.objects.Request;
 import comp3350.grs.objects.User;
 import comp3350.grs.persistence.DataAccessStub;
@@ -179,11 +181,146 @@ public class AccessRequestsTest {
 
     @Test
     public void testInvalid(){
+        //the same user cannot request the same game multiple times.
+        try{
+            user = new RegisteredUser("NewUser1", "pass1");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        insert = userAccess.insertUser(user);
+        assertTrue(insert);
+        assertTrue(userAccess.getAllUsers().contains(user));
+        userID = user.getUserID();
+        gameName = "GameThatDoesNotExist2";
+        try{
+            newRequest = new Request(gameName, userID);
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        assertNotNull(newRequest);
+        try {
+            insert = requestsAccess.insertRequest(newRequest);
+        }catch (Duplicate duplicate){
+            duplicate.printStackTrace();
+        }
+        assertTrue(insert);
+        assertTrue(requestsAccess.getAllRequests().contains(newRequest));
 
+        //now try to insert the same request twice (same user requesting same game)
+        try{
+            insert = requestsAccess.insertRequest(newRequest);
+        }catch (Duplicate duplicate){
+            duplicate.printStackTrace();
+        }
+        assertFalse(insert);
+        assertEquals(1, requestsAccess.getRequestsByGame(gameName).size()); //should only be one request made for this game
+
+        //a user who is not registered, and who is not a Guest cannot request a game
+        userID = "UserThatDoesNotExist";
+        try{
+            newRequest2 = new Request(gameName, userID);
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        assertNotNull(newRequest2);
+        assertEquals("UserThatDoesNotExist", newRequest2.getUserID());
+
+        try{
+            insert = requestsAccess.insertRequest(newRequest2);
+        }catch (Duplicate duplicate){
+            duplicate.printStackTrace();
+        }
+        assertFalse(insert);
+        assertFalse(requestsAccess.getAllRequests().contains(newRequest2));
+        //still should only be one request for the game
+        assertEquals(1, requestsAccess.getRequestsByGame(gameName).size());
+
+        //a game that already exists in the system cannot be requested
+        gameName = "Valheim"; //a game in the database
+        userID = user.getUserID();
+        try{
+            newRequest2 = new Request(gameName, userID);
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        try{
+            insert = requestsAccess.insertRequest(newRequest2);
+        }catch (Duplicate duplicate){
+            duplicate.printStackTrace();
+        }
+        assertFalse(insert);
+        assertEquals(0, requestsAccess.getRequestsByGame(gameName).size());
+        assertFalse(requestsAccess.getAllRequests().contains(newRequest2));
+
+        //guests can't request the same game multiple times
+        gameName = "NotInSystem";
+        userID = "Guest";
+        try{
+            newRequest = new Request(gameName,userID);
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        try{
+            insert = requestsAccess.insertRequest(newRequest);
+        }catch (Duplicate duplicate){
+            duplicate.printStackTrace();
+        }
+        assertTrue(insert);
+        assertTrue(requestsAccess.getAllRequests().contains(newRequest));
+        assertEquals(1, requestsAccess.getRequestsByGame(gameName).size());
+
+        //can't insert the same request again (even if from a different guest)
+        try{
+            newRequest2 = new Request(gameName, userID);
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        try{
+            insert = requestsAccess.insertRequest(newRequest2);
+        }catch (Duplicate duplicate){
+            duplicate.printStackTrace();
+        }
+        assertFalse(insert);
+        assertEquals(1, requestsAccess.getRequestsByGame(gameName).size());
     }
 
     @Test
     public void testEmpty(){
+        userID = "Guest";
+        gameName = "game";
+        requestsAccess.clear();
 
+        try{
+            newRequest = new Request(gameName, userID);
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+
+        try{
+            insert = requestsAccess.insertRequest(newRequest);
+        }catch (Duplicate duplicate){
+            duplicate.printStackTrace();
+        }
+        assertTrue(insert);
+        assertEquals(1, requestsAccess.getRequestsByGame(gameName).size());
+
+        delete = requestsAccess.deleteRequest(newRequest);
+        assertTrue(delete);
+        assertTrue(requestsAccess.getRequestsByGame(gameName).isEmpty());
+        assertNull(requestsAccess.getRequest(gameName,userID));
+        assertTrue(requestsAccess.getRequestsByUser(userID).isEmpty());
+        assertTrue(requestsAccess.getAllRequests().isEmpty());
+
+        try{
+            insert = requestsAccess.insertRequest(newRequest);
+        }catch (Duplicate d){
+            d.printStackTrace();
+        }
+        assertTrue(insert);
+        assertEquals(1, requestsAccess.getAllRequests().size());
+
+        requestsAccess.clear();
+        assertTrue(requestsAccess.getAllRequests().isEmpty());
+        assertTrue(requestsAccess.getRequestsByGame(gameName).isEmpty());
     }
 }

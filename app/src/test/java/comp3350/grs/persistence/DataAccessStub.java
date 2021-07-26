@@ -102,7 +102,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		ratings.clear();
 	}
 
-	public <E> boolean update(List<E> list, E object){
+	private <E> boolean update(List<E> list, E object){
 		boolean updated = false;
 		int index = list.indexOf(object);
 		if(index >= 0) {
@@ -112,7 +112,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		return updated;
 	}
 
-	public <E> boolean delete(List<E> list, E object){
+	private <E> boolean delete(List<E> list, E object){
 		boolean deleted = false;
 		if(object != null && list.contains(object)){
 			deleted = list.remove(object);
@@ -120,7 +120,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		return deleted;
 	}
 
-	public <E> boolean validateRR(E object){
+	private <E> boolean validateRR(E object){
 		boolean pass = false;
 		Game game = null;
 		User user = null;
@@ -653,8 +653,10 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		User requestUser;
 		if(toInsert != null && toInsert.valid()) {
 			requestUser = getUserByID(toInsert.getUserID());
-			if (!requests.contains(toInsert) && (users.contains(requestUser) || toInsert.getUserID().equals("Guest"))) {
-				inserted = requests.add(toInsert);
+			if(requestUser != null) {
+				if (!requests.contains(toInsert) && (users.contains(requestUser) || requestUser.getUserID().equals("Guest"))) {
+					inserted = requests.add(toInsert);
+				}
 			}
 		}
 		return inserted;

@@ -2,6 +2,7 @@ package comp3350.grs.persistence;
 
 // the stub database which stores users and games
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -47,6 +48,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		reviews = null;
 		voteReplies = null;
 		replies = null;
+		posts = null;
 	}
 
 	public void clearAllData(){
@@ -57,6 +59,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		requests.clear();
 		voteReplies.clear();
 		replies.clear();
+		posts.clear();
 	}
 
 	@Override
@@ -79,10 +82,9 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 		requests.clear();
 	}
 
-
 	@Override
 	public void clearPosts() {
-
+		posts.clear();
 	}
 
 	@Override
@@ -679,7 +681,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 			}
 
 			//sort by game name frequency
-			Collections.sort(gamesRequested, (o1, o2) -> Collections.frequency(gamesRequested, o2) - Collections.frequency(gamesRequested, o1));
+			Collections.sort(gamesRequested, (o1, o2) -> (Collections.frequency(gamesRequested, o2) - Collections.frequency(gamesRequested, o1)));
 
 			//add the games with in order of highest frequency without duplicates to toReturn (and with <= limit number of requests)
 			for(int j = 0; j < gamesRequested.size(); j ++){
@@ -750,69 +752,200 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 
 	@Override
 	public boolean insertReply(Reply reply) {
-		return false;
+		boolean inserted = false;
+		if(reply != null && reply.valid()){
+			inserted = replies.add(reply);
+		}
+		return inserted;
 	}
 
 	@Override
 	public boolean updateReply(Reply reply) {
-		return false;
+		boolean updated = false;
+		if(reply != null && reply.valid()){
+			updated = update(replies, reply);
+		}
+		return updated;
 	}
 
 	@Override
 	public boolean deleteReply(Reply reply) {
-		return false;
+		boolean deleted = false;
+		if(reply != null){
+			deleted = delete(replies, reply);
+		}
+		return deleted;
 	}
 
 	@Override
 	public List<Reply> getAllReplys() {
-		return null;
+		List<Reply> copyReplys = new ArrayList<>();
+		Reply toCopy;
+		Reply copy = null;
+
+		for(int i = 0; i < replies.size(); i++){
+			toCopy = replies.get(i);
+			if(toCopy.valid()) {
+				if(toCopy.getID() != -1) { //provides an id
+					try {
+						copy = new Reply(toCopy.getID(), toCopy.getContent(), toCopy.getUserID(), toCopy.getPostID());
+					} catch (IncorrectFormat incorrectFormat) {
+						incorrectFormat.printStackTrace();
+					}
+				}
+				else{ //does not provide its own id
+					try{
+						copy = new Reply(toCopy.getContent(), toCopy.getUserID(), toCopy.getPostID());
+					}catch (IncorrectFormat incorrectFormat){
+						incorrectFormat.printStackTrace();
+					}
+				}
+			}
+			copyReplys.add(copy);
+		}
+
+		//we want to return a copy so the original can't be modified through the list returned
+		return copyReplys;
 	}
 
 
 
 	@Override
-	public List<Reply> getReplysByUser(String userId) {
-		return null;
+	public List<Reply> getReplysByUser(String userID) {
+		List<Reply> copy = getAllReplys();
+		List<Reply> replysByUser = new ArrayList<>();
+		Reply curr;
+
+		for(int i = 0; i < copy.size(); i++){
+			curr = copy.get(i);
+			if(curr.getUserID().equals(userID)){
+				replysByUser.add(curr);
+			}
+		}
+
+		return replysByUser;
 	}
 
 	@Override
 	public List<Reply> getReplysByPost(int postID) {
-		return null;
+		List<Reply> copy = getAllReplys();
+		List<Reply> replysByPost = new ArrayList<>();
+		Reply curr;
+
+		for(int i = 0; i < copy.size(); i++){
+			curr = copy.get(i);
+			if(curr.getPostID() == postID){
+				replysByPost.add(curr);
+			}
+		}
+		return replysByPost;
 	}
 
 	@Override
 	public Reply getReplyByID(int replyID) {
-		return null;
+		List<Reply> copy = getAllReplys();
+		Reply toReturn = null;
+		Reply curr;
+		boolean found = false;
+
+		for(int i = 0; i < copy.size() && !found; i++){
+			curr = copy.get(i);
+			if(curr.getID() == replyID){
+				toReturn = curr;
+				found = true;
+			}
+		}
+		return toReturn;
 	}
 
 	@Override
 	public boolean insertPost(Post post) {
-		return false;
+		boolean inserted = false;
+		if(post != null && post.valid()){
+			inserted = posts.add(post);
+		}
+		return inserted;
 	}
 
 	@Override
 	public boolean updatePost(Post post) {
-		return false;
+		boolean updated = false;
+		if(post != null && post.valid()){
+			updated = update(posts, post);
+		}
+		return updated;
 	}
 
 	@Override
 	public boolean deletePost(Post post) {
-		return false;
+		boolean deleted = false;
+		if(post != null){
+			deleted = delete(posts, post);
+		}
+		return deleted;
 	}
 
 	@Override
 	public List<Post> getAllPosts() {
-		return null;
+		List<Post> copyPosts = new ArrayList<>();
+		Post toCopy;
+		Post copy = null;
+
+		for(int i = 0; i < posts.size(); i++){
+			toCopy = posts.get(i);
+			if(toCopy.valid()) {
+				if(toCopy.getID() != -1) { //provides an id
+					try {
+						copy = new Post(toCopy.getID(), toCopy.getTitle(), toCopy.getContent(), toCopy.getUserID());
+					} catch (IncorrectFormat incorrectFormat) {
+						incorrectFormat.printStackTrace();
+					}
+				}
+				else{ //does not provide its own id
+					try{
+						copy = new Post(toCopy.getTitle(), toCopy.getContent(), toCopy.getUserID());
+					}catch (IncorrectFormat incorrectFormat){
+						incorrectFormat.printStackTrace();
+					}
+				}
+			}
+			copyPosts.add(copy);
+		}
+
+		//we want to return a copy so the original can't be modified through the list returned
+		return copyPosts;
 	}
 
 	@Override
-	public List<Post> getPostsByUser(String userId) {
-		return null;
+	public List<Post> getPostsByUser(String userID) {
+		List<Post> copy = getAllPosts();
+		List<Post> postsByUser = new ArrayList<>();
+		Post curr;
+
+		for(int i = 0; i < copy.size(); i++){
+			curr = copy.get(i);
+			if(curr.getUserID().equals(userID)){
+				postsByUser.add(curr);
+			}
+		}
+		return postsByUser;
 	}
 
 	@Override
 	public Post getPostByID(int postID) {
-		return null;
+		List<Post> copy = getAllPosts();
+		Post toReturn = null;
+		boolean found = false;
+		Post curr;
+
+		for(int i = 0; i < copy.size() && !found; i++){
+			curr = copy.get(i);
+			if(curr.getID() == postID){
+				toReturn = curr;
+				found = true;
+			}
+		}
+		return toReturn;
 	}
 
 

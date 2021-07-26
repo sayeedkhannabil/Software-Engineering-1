@@ -181,4 +181,6 @@ July 26: Katharine K finished writing methods in DataAccessStub to match interfa
     (expected: 1 hour, actual: 45 minutes)
 July 26: Katharine K finished writing tests for AccessRequestsTest
     (expected: 1 hour, actual: 2 hours)
+July 26: Katharine K finished writing tests for RequestTest
+    (expected: 1 hour, actual: 1 hour)
 

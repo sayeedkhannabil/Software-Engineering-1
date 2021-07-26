@@ -18,8 +18,8 @@ public class Request {
     }
 
     private void checkGameName(String gameName) throws IncorrectFormat {
-        if (gameName.trim().equals("")){
-            throw new IncorrectFormat("Game name cannot be blank/empty.");
+        if (gameName == null || gameName.trim().equals("")){
+            throw new IncorrectFormat("Game name cannot be blank or null.");
         }
     }
 
@@ -55,6 +55,6 @@ public class Request {
     @Override
     public String toString()
     {
-        return "Game Name:"+this.gameName+",UserID:"+this.userID;
+        return "Game Name: "+this.gameName+",UserID: "+this.userID;
     }
 }

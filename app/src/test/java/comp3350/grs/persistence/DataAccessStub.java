@@ -671,7 +671,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	}
 
 	public List<String> getGamesOrderByRequestNum(int limit){
-		//get list of game names, sort them by request num (if request num <= limit)
+		//get list of game names, sort them by request num
 		List<String> gamesRequested = new ArrayList<>();
 		List<String> toReturn = null;
 		String currStr;
@@ -685,10 +685,10 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 			//sort by game name frequency
 			Collections.sort(gamesRequested, (o1, o2) -> (Collections.frequency(gamesRequested, o2) - Collections.frequency(gamesRequested, o1)));
 
-			//add the games with in order of highest frequency without duplicates to toReturn (and with <= limit number of requests)
-			for(int j = 0; j < gamesRequested.size(); j ++){
+			//add the games with in order of highest frequency without duplicates to toReturn (and with limit number of requests)
+			for(int j = 0;j < gamesRequested.size(); j ++){
 				currStr = gamesRequested.get(j);
-				if(!toReturn.contains(currStr) && (Collections.frequency(gamesRequested, currStr) <= limit)){
+				if (!toReturn.contains(currStr) && (toReturn.size() < limit)) {
 					toReturn.add(currStr);
 				}
 			}
@@ -700,7 +700,9 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	public boolean insertVoteReply(VoteReply voteReply) {
 		boolean inserted = false;
 		if(voteReply != null && voteReply.valid()) {
-			inserted = voteReplies.add(voteReply);
+			if(!voteReplies.contains(getVoteReply(voteReply.getVoteI().getUserID(), voteReply.getReplyID()))) {
+				inserted = voteReplies.add(voteReply);
+			}
 		}
 		return inserted;
 	}

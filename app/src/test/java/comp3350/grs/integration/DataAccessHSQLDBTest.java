@@ -7,7 +7,7 @@ import comp3350.grs.persistence.DataAccessI;
 import comp3350.grs.persistence.DataAccessITest;
 
 public class DataAccessHSQLDBTest extends TestCase{
-    private static String dbName = Main.dbName;
+    private static String dbName = Main.testDbName;
 
     public DataAccessHSQLDBTest(String arg0)
     {

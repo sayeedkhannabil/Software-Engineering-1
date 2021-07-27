@@ -200,5 +200,5 @@ July 26: Katharine K finished writing tests for AccessRequestsTest
     (expected: 1 hour, actual: 2 hours)
 July 26: Katharine K finished writing tests for RequestTest
     (expected: 1 hour, actual: 1 hour)
-
+July 27 Meeting: fix errors in test code, assign additional tasks
 

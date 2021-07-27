@@ -9,57 +9,63 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
 import comp3350.grs.exceptions.IncorrectFormat;
+import comp3350.grs.objects.Downvote;
 import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Guest;
 import comp3350.grs.objects.Rating;
 import comp3350.grs.objects.RegisteredUser;
+import comp3350.grs.objects.Reply;
 import comp3350.grs.objects.Request;
 import comp3350.grs.objects.Review;
+import comp3350.grs.objects.Upvote;
 import comp3350.grs.objects.User;
+import comp3350.grs.objects.Vote;
+import comp3350.grs.objects.VoteReply;
 
 import static org.junit.Assert.*;
 
 
 public class DataAccessITest{
     private static DataAccessI dataAccessI;
-    private User user1,user2,user3;
-    private Game game1,game2,game3;
-    private Review review1,review2,review3;
-    private Rating rating1,rating2,rating3;
-    private Request request1,request2,request3;
+    private User user,user1,user2,user3;
+    private Game game,game1,game2,game3;
+    private Review review, review1,review2,review3;
+    private Rating rating, rating1,rating2,rating3;
+    private Request request, request1,request2,request3;
+    private Reply reply, reply1,reply2,reply3;
+    private VoteReply voteReply,voteReply1,voteReply2,voteReply3;
     private List<User> userList;
     private List<Game> gameList;
     private List<Review> reviewList;
     private List<Rating> ratingList;
     private List<Request> requestList;
+    private List<VoteReply> voteReplyList;
     private String userID,userID2,password,password2,gameName,developer,
             description,reviewContent;
     private int reviewID;
-    private double price,rating;
+    private double price;
     private boolean success;
     private List<String> genreList;
-    private static String dbName="TestDB";
-    private static String dbPath="database/TestDB";
 
 
     @Before
     public void before(){
-//        dataAccessI=new DataAccessObject("TestDB");
-        dataAccessI=new DataAccessStub(dbName);
-        dataAccessI.open(dbPath);
-        dataAccessI.deleteDatabase();
-        dataAccessI.open(dbPath);
+        dataAccessI=new DataAccessStub(Main.testDbName);
+        dataAccessI.open(Main.getDBPathName(Main.testDbName));
         dataAccessI.clearAllData();
+        user=null;
         user1=null;
         user2=null;
         user3=null;
+        game=null;
         game1=null;
         game2=null;
         game3=null;
-        userList=new ArrayList<User>();
-        gameList=new ArrayList<Game>();
+        userList=null;
+        gameList=null;
         userID=null;
         userID2=null;
         password=null;
@@ -69,7 +75,6 @@ public class DataAccessITest{
         description=null;
         price=0.0;
         reviewID=0;
-        rating=0.0;
         review1=null;
         review2=null;
         review3=null;
@@ -79,11 +84,19 @@ public class DataAccessITest{
         request1=null;
         request2=null;
         request3=null;
+        reply1=null;
+        reply2=null;
+        reply3=null;
+        voteReply1=null;
+        voteReply2=null;
+        voteReply3=null;
+        voteReply=null;
         success=false;
-        reviewList=new ArrayList<>();
-        ratingList=new ArrayList<>();
-        genreList=new ArrayList<>();
-        requestList=new ArrayList<>();
+        reviewList=null;
+        ratingList=null;
+        genreList=null;
+        requestList=null;
+        voteReplyList=null;
     }
 
     @AfterClass
@@ -107,7 +120,6 @@ public class DataAccessITest{
         assertEquals(user1,user2);
         user2=dataAccessI.getUserByID("Guest");
         assertEquals("Guest",user2.getUserID());
-
         userID="myUserID";
         password="myPassword";
         try {
@@ -119,12 +131,13 @@ public class DataAccessITest{
         assertTrue (success);
         userList=dataAccessI.getAllUsers();
         assertEquals(2,userList.size());
+        userList= dataAccessI.getUsersByIDImplicit("myUserID");
+        assertEquals(1,userList.size());
         user2=dataAccessI.getUserByID(userID);
         assertEquals(userID,user2.getUserID());
         RegisteredUser registeredUser;
         registeredUser=(RegisteredUser)user2;
         assertEquals(password,registeredUser.getPassword());
-
         password2="anotherPassword";
         try {
             user1=new RegisteredUser(userID,password2);
@@ -138,13 +151,23 @@ public class DataAccessITest{
         assertEquals(userID,user2.getUserID());
         registeredUser=(RegisteredUser)user2;
         assertEquals(password2,registeredUser.getPassword());
-
-
         dataAccessI.deleteUser(user1);
         userList=dataAccessI.getAllUsers();
         assertEquals(1,userList.size());
         user2= dataAccessI.getUserByID(userID);
         assertNull(user2);
+        dataAccessI.clearAllData();
+        try {
+            user1=new Guest();
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        dataAccessI.insertUser(user1);
+        user=dataAccessI.getUserByID("Guest");
+        assertNotNull(user);
+        dataAccessI.clearUsers();
+        user=dataAccessI.getUserByID("Guest");
+        assertNull(user);
 
         try {
             game3=new Game("otherGame1");
@@ -154,7 +177,6 @@ public class DataAccessITest{
         dataAccessI.insertGame(game3);
         gameList=dataAccessI.getAllGames();
         assertEquals(1,gameList.size());
-
         gameName="myGame";
         developer="myDeveloper";
         description="myDescription";
@@ -216,12 +238,22 @@ public class DataAccessITest{
         assertEquals(2,genreList.size());
         assertTrue (genreList.contains("genre1"));
         assertTrue (genreList.contains("genre4"));
-
         dataAccessI.deleteGame(game1);
         gameList=dataAccessI.getAllGames();
         assertEquals(2,gameList.size());
         game2=dataAccessI.getGameByName(gameName);
         assertNull(game2);
+        try {
+            game1=new Game("gameName");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        dataAccessI.insertGame(game1);
+        game= dataAccessI.getGameByName("gameName");
+        assertNotNull(game);
+        dataAccessI.clearGames();
+        game= dataAccessI.getGameByName("gameName");
+        assertNull(game);
 
         dataAccessI.clearAllData();
         userList=dataAccessI.getAllUsers();
@@ -229,15 +261,16 @@ public class DataAccessITest{
         gameList=dataAccessI.getAllGames();
         assertEquals(0,gameList.size());
 
-        genreList.clear();
+
         try {
-            user1=new Guest();
+            user=new Guest();
+            user1=new RegisteredUser("user1","password");
             user2=new RegisteredUser("user2","password");
             user3=new RegisteredUser("user3","password");
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
-
+        genreList.clear();
         try {
             game1=new Game("game1","dev1","desc1",1.0,genreList);
             game2=new Game("game2","dev2","desc2",2.0,genreList);
@@ -246,7 +279,7 @@ public class DataAccessITest{
             incorrectFormat.printStackTrace();
         }
 
-
+        dataAccessI.insertUser(user);
         dataAccessI.insertUser(user1);
         dataAccessI.insertUser(user2);
         dataAccessI.insertUser(user3);
@@ -255,7 +288,8 @@ public class DataAccessITest{
         dataAccessI.insertGame(game3);
 
         userList=dataAccessI.getUsersByIDImplicit("user%");
-        assertEquals(2,userList.size());
+        assertEquals(3,userList.size());
+        assertTrue (userList.contains(user1));
         assertTrue (userList.contains(user2));
         assertTrue (userList.contains(user3));
         userList=dataAccessI.getUsersByIDImplicit("user");
@@ -281,7 +315,6 @@ public class DataAccessITest{
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
-
 
         success= dataAccessI.insertReview(review1);
         assertTrue(success) ;
@@ -312,7 +345,6 @@ public class DataAccessITest{
         reviewList=dataAccessI.getReviewsByUser("user1");
         assertEquals(0,reviewList.size());
 
-        Review review;
         review=dataAccessI.getReviewByID(5);
         assertEquals("content2",review2.getComment());
         assertEquals("Guest",review2.getUserID());
@@ -349,7 +381,6 @@ public class DataAccessITest{
         ratingList=dataAccessI.getRatingsByUser("user1");
         assertEquals(0,ratingList.size());
 
-        Rating rating;
         rating=dataAccessI.getRating("game1","user3");
         assertEquals("user3",rating.getUserID());
         assertEquals("game1",rating.getGameName());
@@ -371,35 +402,7 @@ public class DataAccessITest{
         rating= dataAccessI.getRating("game1","user3");
         assertNull(rating);
 
-        User user;
-        dataAccessI.clearAllData();
-        try {
-            user1=new Guest();
-        } catch (IncorrectFormat incorrectFormat) {
-            incorrectFormat.printStackTrace();
-        }
-        dataAccessI.insertUser(user1);
-        user=dataAccessI.getUserByID("Guest");
-        assertNotNull(user);
-        dataAccessI.clearUsers();
-        user=dataAccessI.getUserByID("Guest");
-        assertNull(user);
 
-        Game game;
-        try {
-            game1=new Game("gameName");
-        } catch (IncorrectFormat incorrectFormat) {
-            incorrectFormat.printStackTrace();
-        }
-        dataAccessI.insertGame(game1);
-        game= dataAccessI.getGameByName("gameName");
-        assertNotNull(game);
-        dataAccessI.clearGames();
-        game= dataAccessI.getGameByName("gameName");
-        assertNull(game);
-
-        dataAccessI.insertUser(user1);
-        dataAccessI.insertGame(game1);
         try {
             review1=new Review(13,"comment","gameName","Guest");
         } catch (IncorrectFormat incorrectFormat) {
@@ -424,27 +427,6 @@ public class DataAccessITest{
         rating= dataAccessI.getRating("gameName","Guest");
         assertNull(rating);
 
-        dataAccessI.clearAllData();
-        try {
-            game1=new Game("game1");
-            game2=new Game("game2");
-            game3=new Game("game3");
-        } catch (IncorrectFormat incorrectFormat) {
-            incorrectFormat.printStackTrace();
-        }
-        try {
-            user1=new RegisteredUser("user1","pass");
-            user2=new RegisteredUser("user2","pass");
-            user3=new RegisteredUser("user3","pass");
-        } catch (IncorrectFormat incorrectFormat) {
-            incorrectFormat.printStackTrace();
-        }
-        dataAccessI.insertUser(user1);
-        dataAccessI.insertUser(user2);
-        dataAccessI.insertUser(user3);
-        dataAccessI.insertGame(game1);
-        dataAccessI.insertGame(game2);
-        dataAccessI.insertGame(game3);
         try {
             request1=new Request("game1","user1");
             request2=new Request("game2","user2");
@@ -493,6 +475,37 @@ public class DataAccessITest{
         gameNameList=dataAccessI.getGamesOrderByRequestNum(2);
         assertEquals(2,gameNameList.size());
 
+        //test vote reply
+        // TODO: 7/25/2021 reply id
+        voteReply1=new VoteReply(new Upvote("user1"),0);
+        success=dataAccessI.insertVoteReply(voteReply1);
+        assertTrue(success);
+        success=dataAccessI.insertVoteReply(voteReply1);
+        assertFalse(success);
+        voteReply2= dataAccessI.getVoteReply("user1",0);
+        assertEquals(voteReply1,voteReply2);
+        assertEquals(Vote.UP_VALUE,voteReply2);
+        voteReply1=new VoteReply(new Downvote("user1"),0);
+        success=dataAccessI.updateVoteReply(voteReply1);
+        assertTrue(success);
+        voteReply2= dataAccessI.getVoteReply("user1",0);
+        assertEquals(voteReply1,voteReply2);
+        assertEquals(Vote.DOWN_VALUE,voteReply2);
+        voteReply2=new VoteReply(new Downvote("user1"),0);
+        voteReply3=new VoteReply(new Downvote("user1"),1);
+        success=dataAccessI.insertVoteReply(voteReply2);
+        assertTrue(success);
+        success=dataAccessI.insertVoteReply(voteReply3);
+        assertTrue(success);
+        voteReplyList=dataAccessI.getVoteReplysByReply(0);
+        assertEquals(2,voteReplyList.size());
+        voteReplyList=dataAccessI.getVoteReplysByReply(1);
+        assertEquals(1,voteReplyList.size());
+        dataAccessI.deleteVoteReply(voteReply1);
+        voteReply= dataAccessI.getVoteReply("user1",0);
+        assertNull(voteReply);
+        voteReplyList=dataAccessI.getVoteReplysByReply(0);
+        assertEquals(1,voteReplyList.size());
         //test reply
         //test post
     }
@@ -590,7 +603,17 @@ public class DataAccessITest{
         userList= dataAccessI.getUsersByIDImplicit("myUserID");
         assertEquals(1,userList.size());
 
+        success=dataAccessI.insertRequest(null);
+        assertFalse(success);
+        success=dataAccessI.deleteRequest(null);
+        assertFalse(success);
 
+        success= dataAccessI.insertVoteReply(null);
+        assertFalse(success);
+        success= dataAccessI.updateVoteReply(null);
+        assertFalse(success);
+        success= dataAccessI.deleteVoteReply(null);
+        assertFalse(success);
     }
 
     @Test
@@ -773,5 +796,24 @@ public class DataAccessITest{
         assertTrue(success);
         success=dataAccessI.insertRequest(request1);
         assertFalse(success);
+
+        //todo reply id
+        voteReply1=new VoteReply(new Upvote("user1"),0);
+        voteReply2=new VoteReply(new Downvote("user1"),0);
+        success=dataAccessI.insertVoteReply(voteReply1);
+        assertTrue(success);
+        success=dataAccessI.insertVoteReply(voteReply2);
+        assertFalse(success);
+        voteReply2=new VoteReply(new Downvote("user2"),0);
+        voteReply= dataAccessI.getVoteReply("user2",0);
+        assertNull(voteReply);
+        success=dataAccessI.updateVoteReply(voteReply2);
+        assertFalse(success);
+        success=dataAccessI.deleteVoteReply(voteReply2);
+        assertFalse(success);
+        success=dataAccessI.deleteVoteReply(voteReply1);
+        assertTrue(success);
+        voteReplyList=dataAccessI.getVoteReplysByReply(0);
+        assertEquals(0,voteReplyList.size());
     }
 }

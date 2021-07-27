@@ -10,15 +10,12 @@ import comp3350.grs.objects.Game;
 import comp3350.grs.objects.VoteI;
 import comp3350.grs.objects.VoteReply;
 import comp3350.grs.persistence.DataAccessI;
-
+//business object of VoteReply
 public class AccessVoteReplys {
     private DataAccessI dataAccessI;
-    private List<VoteReply> voteReplyList;
-    private VoteReply currVoteReply;
 
     public AccessVoteReplys(){
         dataAccessI= Services.getDataAccess(Main.dbName);
-        voteReplyList=null;
     }
 
     public boolean insertVoteReply(VoteReply voteReply){
@@ -33,15 +30,19 @@ public class AccessVoteReplys {
         return dataAccessI.deleteVoteReply(voteReply);
     }
 
+    //clear data of all vote replys
+    public void clear(){
+        dataAccessI.clearVoteReplys();
+    }
+
+    //get a list of voteReply by its reply id
     public List<VoteReply> getVoteReplysByReply(int replyID){
-        voteReplyList=dataAccessI.getVoteReplysByReply(replyID);
-        return voteReplyList;
+        return dataAccessI.getVoteReplysByReply(replyID);
     }
 
+    //get a voteReply by its userID and replyID
     public VoteReply getVoteReply(String userID, int replyID){
-        currVoteReply= dataAccessI.getVoteReply(userID, replyID);
-        return currVoteReply;
+        return dataAccessI.getVoteReply(userID, replyID);
     }
-
 
 }

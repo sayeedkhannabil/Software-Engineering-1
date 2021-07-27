@@ -1446,6 +1446,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 	}
 
 	@Override
+	//get all the replys in database
 	public List<Reply> getAllReplys() {
 		List<Reply> replyList = new ArrayList<Reply>();
 
@@ -1456,6 +1457,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 
 
 	@Override
+	//get all the replys with the userID
 	public List<Reply> getReplysByUser(String userID) {
 		List<Reply> replyList = new ArrayList<>();
 
@@ -1475,10 +1477,9 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 	}
 
 	@Override
+	//get replys by its postID
 	public List<Reply> getReplysByPost(int postID) {
 		List<Reply> replyList = new ArrayList<>();
-
-
 		try{
 			preparedStatement = connection.prepareStatement("select * from " +
 					"replys where postID=?");
@@ -1494,6 +1495,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 	}
 
 	@Override
+	//get a reply by its ID
 	public Reply getReplyByID(int replyID) {
 		Reply replyResult = null;
 		List<Reply> replyList;
@@ -1613,6 +1615,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 		return deleteSuccess;
 	}
 
+	//helper method. get a list of posts by resultset
 	private List<Post> getPostsByResultset(ResultSet resultSet) {
 		List<Post>  postList = new ArrayList<>();
 
@@ -1627,7 +1630,6 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 				postTitle = resultSet.getString(2);
 				postContent = resultSet.getString(3);
 				userID = resultSet.getString(4);
-
 				postList.add(new Post(postID, postTitle, postContent, userID));
 			}
 		} catch (SQLException | IncorrectFormat sqlException) {
@@ -1646,6 +1648,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 	}
 
 	@Override
+	//get a list of posts by its userID
 	public List<Post> getPostsByUser(String userId) {
 		List<Post> postList = new ArrayList<>();
 
@@ -1665,6 +1668,7 @@ public class DataAccessObject extends DataAccess implements DataAccessI {
 	}
 
 	@Override
+	//get a post by its ID
 	public Post getPostByID(int postID) {
 		Post postResult = null;
 		List<Post> postList;

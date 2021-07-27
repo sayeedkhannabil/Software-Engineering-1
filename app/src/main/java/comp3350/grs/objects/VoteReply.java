@@ -1,8 +1,8 @@
 package comp3350.grs.objects;
-
+//combination of vote and reply, refers to a vote on a reply
 public class VoteReply {
     private VoteI voteI;
-    private int replyID;
+    private int replyID;//the reply referred to by the vote
 
     public VoteReply(VoteI voteI,int replyID){
         this.voteI=voteI;

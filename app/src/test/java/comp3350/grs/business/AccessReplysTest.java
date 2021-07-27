@@ -21,7 +21,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class AccessReplyTest {
+public class AccessReplysTest {
     private static AccessUsers userAccess;
     private static AccessReplys replyAccess;
     private boolean insert1, insert2, update, del;
@@ -34,11 +34,14 @@ public class AccessReplyTest {
 
     @BeforeClass
     public static void beforeClass(){
-        Services.closeDataAccess();
-        Services.createDataAccess(new DataAccessStub(Main.dbName));
-
+        Services.createDataAccess(new DataAccessStub(Main.testDbName));
         replyAccess = new AccessReplys();
         userAccess = new AccessUsers();
+    }
+
+    @AfterClass
+    public static void afterClass(){
+        Services.closeDataAccess();
     }
 
     @Before

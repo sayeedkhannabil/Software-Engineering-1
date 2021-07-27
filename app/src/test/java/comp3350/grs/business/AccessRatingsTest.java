@@ -29,11 +29,14 @@ public class AccessRatingsTest {
 
     @BeforeClass
     public static void beforeClass(){
-        Services.closeDataAccess(); //if there was one open
-        Services.createDataAccess(new DataAccessStub(Main.dbName));
-
+        Services.createDataAccess(new DataAccessStub(Main.testDbName));
         userAccess = new AccessUsers();
         ratingAccess = new AccessRatings();
+    }
+
+    @AfterClass
+    public static void afterClass(){
+        Services.closeDataAccess();
     }
 
     @Before
@@ -201,9 +204,6 @@ public class AccessRatingsTest {
         assertNull(ratingAccess.getSequential());
     }
 
-    @AfterClass
-    public static void afterClass(){
-        Services.closeDataAccess();
-    }
+
 }
 

@@ -1,11 +1,11 @@
 package comp3350.grs.objects;
 
 import comp3350.grs.exceptions.IncorrectFormat;
-
+//parent class of post and reply(which are content in discussion forum)
 public class ForumContent {
-    private int ID;
-    private String content;
-    private String userID;
+    private int ID;//id of the object
+    private String content;//content of the object
+    private String userID;//the user who write the content
 
     public ForumContent() {
         this.ID = -1;
@@ -13,9 +13,10 @@ public class ForumContent {
         this.userID = null;
     }
 
+    //does not specify the id, want the database generate for it
     public ForumContent(String content, String userID) throws IncorrectFormat {
         checkContent(content);
-        this.ID = -1 ;
+        this.ID = -1 ;//default value
         this.content = content;
         this.userID = userID;
     }

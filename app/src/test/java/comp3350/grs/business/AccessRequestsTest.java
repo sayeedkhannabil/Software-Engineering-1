@@ -1,5 +1,6 @@
 package comp3350.grs.business;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -27,11 +28,14 @@ public class AccessRequestsTest {
 
     @BeforeClass
     public static void beforeClass(){
-        Services.closeDataAccess(); //if there was one open
-        Services.createDataAccess(new DataAccessStub(Main.dbName));
-
+        Services.createDataAccess(new DataAccessStub(Main.testDbName));
         userAccess = new AccessUsers();
         requestsAccess = new AccessRequests();
+    }
+
+    @AfterClass
+    public static void afterClass(){
+        Services.closeDataAccess();
     }
 
     @Before

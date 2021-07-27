@@ -28,9 +28,13 @@ public class AccessUsersTest {
 
     @BeforeClass
     public static void beforeClass(){
-        Services.closeDataAccess();
-        Services.createDataAccess(new DataAccessStub(Main.dbName));
+        Services.createDataAccess(new DataAccessStub(Main.testDbName));
         accessUsers=new AccessUsers();
+    }
+
+    @AfterClass
+    public static void afterClass(){
+        Services.closeDataAccess();
     }
 
     @Before
@@ -269,8 +273,5 @@ public class AccessUsersTest {
         assertEquals(user1,user);
     }
 
-    @AfterClass
-    public static void afterClass(){
-        Services.closeDataAccess();
-    }
+
 }

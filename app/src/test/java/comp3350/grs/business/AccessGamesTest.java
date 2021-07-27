@@ -13,6 +13,7 @@ import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Rating;
 import comp3350.grs.objects.Review;
+import comp3350.grs.persistence.DataAccessI;
 import comp3350.grs.persistence.DataAccessStub;
 
 import static org.junit.Assert.*;
@@ -31,11 +32,15 @@ public class AccessGamesTest {
 
     @BeforeClass
     public static void beforeClass(){
-        Services.closeDataAccess(); //if there was one open
-        Services.createDataAccess(new DataAccessStub(Main.dbName));
+        Services.createDataAccess(new DataAccessStub(Main.testDbName));
         gameAccess = new AccessGames();
         ratingAccess = new AccessRatings();
         reviewAccess = new AccessReviews();
+    }
+
+    @AfterClass
+    public static void afterClass(){
+        Services.closeDataAccess();
     }
 
     @Before
@@ -272,8 +277,5 @@ public class AccessGamesTest {
         assertNull(sequential);
     }
 
-    @AfterClass
-    public static void afterClass(){
-        Services.closeDataAccess();
-    }
+
 }

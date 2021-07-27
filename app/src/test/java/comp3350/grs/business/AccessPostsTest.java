@@ -1,16 +1,12 @@
 package comp3350.grs.business;
-import android.icu.lang.UScript;
 
 import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Post;
-import comp3350.grs.objects.RegisteredUser;
-import comp3350.grs.objects.Reply;
 import comp3350.grs.objects.User;
+import comp3350.grs.persistence.DataAccessI;
 import comp3350.grs.persistence.DataAccessStub;
-
-import junit.framework.TestCase;
 
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -22,9 +18,9 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 
-public class AccessPostTest {
-    private static AccessUsers userAccess;
-    private static AccessPost postAccess;
+public class AccessPostsTest {
+    private static AccessUsers accessUsers;
+    private static AccessPosts accessPosts;
     private User user;
     private List<Post> pList;
     private boolean insert1, insert2, update, del;
@@ -34,11 +30,14 @@ public class AccessPostTest {
 
     @BeforeClass
     public static void beforeClass(){
-        Services.closeDataAccess();
-        Services.createDataAccess(new DataAccessStub(Main.dbName));
+        Services.createDataAccess(new DataAccessStub(Main.testDbName));
+        accessPosts = new AccessPosts();
+        accessUsers = new AccessUsers();
+    }
 
-        postAccess = new AccessPost();
-        userAccess = new AccessUsers();
+    @AfterClass
+    public static void afterClass(){
+        Services.closeDataAccess();
     }
 
     @Before
@@ -83,17 +82,17 @@ public class AccessPostTest {
 
 
         //test Inserting
-        postAccess = new AccessPost();
-        insert1 = postAccess.insertPost(newPost1);
-        insert2 = postAccess.insertPost(newPost2);
+        accessPosts = new AccessPosts();
+        insert1 = accessPosts.insertPost(newPost1);
+        insert2 = accessPosts.insertPost(newPost2);
 
         assertTrue(insert1);
         assertTrue(insert2);
 
         //number of post should be 1
-        pList = postAccess.getPostsByUser(userID);
+        pList = accessPosts.getPostsByUser(userID);
         assertEquals(pList.size(), 1);
-        pList = postAccess.getPostsByUser(guestID);
+        pList = accessPosts.getPostsByUser(guestID);
         assertEquals(pList.size(), 1);
 
         //multiple posts for the same user
@@ -105,7 +104,7 @@ public class AccessPostTest {
             incorrectFormat.printStackTrace();
         }
         //number of post should be 2
-        pList = postAccess.getPostsByUser(userID);
+        pList = accessPosts.getPostsByUser(userID);
         assertEquals(pList.size(), 2);
 
         //test update
@@ -120,7 +119,7 @@ public class AccessPostTest {
             incorrectFormat.printStackTrace();
         }
 
-        update = postAccess.updatePost(newPost1);
+        update = accessPosts.updatePost(newPost1);
         assertTrue(update);
 
         title2 = "Horizon";
@@ -131,34 +130,34 @@ public class AccessPostTest {
             incorrectFormat.printStackTrace();
         }
 
-        update = postAccess.updatePost(newPost2);
+        update = accessPosts.updatePost(newPost2);
         assertTrue(update);
 
-        pList = postAccess.getPostsByUser(userID);
+        pList = accessPosts.getPostsByUser(userID);
         assertEquals(pList.size(), 3);
 
         //getting all post
-        pList = postAccess.getAllPosts();
+        pList = accessPosts.getAllPosts();
         assertEquals(pList.size(), 3);
         assertTrue(pList.contains(newPost1));
         assertTrue(pList.contains(newPost2));
 
         //get post By ID
         postID1 = newPost1.getID();
-        assertEquals(newPost1, postAccess.getPostById(postID1));
+        assertEquals(newPost1, accessPosts.getPostById(postID1));
 
         //testing delete
-        del = postAccess.deletePost(newPost1);
+        del = accessPosts.deletePost(newPost1);
         assertTrue(del);
         assertEquals(pList.size(), 2);
 
-        del = postAccess.deletePost(newPost2);
+        del = accessPosts.deletePost(newPost2);
         assertTrue(del);
         assertEquals(pList.size(), 1);
 
         //testing clear
-        postAccess.clear();
-        pList = postAccess.getAllPosts();
+        accessPosts.clear();
+        pList = accessPosts.getAllPosts();
         assertEquals(pList.size(), 0);
 
     }

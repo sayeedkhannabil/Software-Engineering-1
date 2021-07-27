@@ -13,6 +13,8 @@ import comp3350.grs.objects.User;
 import comp3350.grs.objects.VoteReply;
 
 public interface DataAccessI {
+	String getDbName();
+
 	void open(String dbPath);
 
 	void close();
@@ -100,7 +102,8 @@ public interface DataAccessI {
 	List<Request> getRequestsByUser(String userID);
 
 	Request getRequest(String gameName, String userID);
-
+	//get a list of game name by the number of user who requested it, order
+	// by the number of user, maxium size of the list is limit
 	List<String> getGamesOrderByRequestNum(int limit);
 
 	boolean insertVoteReply(VoteReply voteReply);
@@ -108,7 +111,7 @@ public interface DataAccessI {
 	boolean updateVoteReply(VoteReply voteReply);
 
 	boolean deleteVoteReply(VoteReply voteReply);
-
+	//get a list of voteReplys by its replyID
 	List<VoteReply> getVoteReplysByReply(int replyID);
 
 	VoteReply getVoteReply(String userID, int replyID);
@@ -120,11 +123,11 @@ public interface DataAccessI {
 	boolean deleteReply(Reply reply);
 
 	List<Reply> getAllReplys();
-
+	//get a list of replys by its userID
 	List<Reply> getReplysByUser(String userID);
-
+	//get a list of replys by its psotID
 	List<Reply> getReplysByPost(int postID);
-
+	//get a reply by its ID
 	Reply getReplyByID(int replyID);
 
 	boolean insertPost(Post post);
@@ -134,7 +137,7 @@ public interface DataAccessI {
 	boolean deletePost(Post post);
 
 	List<Post> getAllPosts();
-
+	//get a list of post by its userID
 	List<Post> getPostsByUser(String userId);
 
 	Post getPostByID(int postID);

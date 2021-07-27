@@ -12,12 +12,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import comp3350.grs.R;
-import comp3350.grs.business.AccessPost;
+import comp3350.grs.business.AccessPosts;
 import comp3350.grs.business.AccessReplys;
 import comp3350.grs.business.AccessUsers;
 import comp3350.grs.business.AccessVoteReplys;
@@ -34,7 +32,7 @@ public class PostPage extends AppCompatActivity {
     private int postID;
     private TextView post_page_post_title;
     private TextView post_page_post_content;
-    private AccessPost accessPost;
+    private AccessPosts accessPosts;
     private AccessReplys accessReplys;
     private TextView post_page_post_user;
     private LinearLayout post_page_reply_wrapper;
@@ -60,8 +58,8 @@ public class PostPage extends AppCompatActivity {
         if (extras != null) {
             postID = extras.getInt("postID");//get the game name
         }
-        accessPost=new AccessPost();
-        post= accessPost.getPostById(postID);
+        accessPosts =new AccessPosts();
+        post= accessPosts.getPostById(postID);
         post_page_post_title=findViewById(R.id.post_page_post_title);
         post_page_post_content=findViewById(R.id.post_page_post_content);
         post_page_post_user=findViewById(R.id.post_page_post_user);

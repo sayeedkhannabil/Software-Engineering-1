@@ -15,6 +15,7 @@ import comp3350.grs.R;
 import comp3350.grs.business.AccessUsers;
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Guest;
+import comp3350.grs.objects.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -101,7 +102,15 @@ public class LoginBackground extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
-                    AccessUsers.setActiveUser(new Guest());//set active user as
+                    User user;
+                    AccessUsers accessUsers;
+                    accessUsers=new AccessUsers();
+                    user= accessUsers.getUserByID("Guest");
+                    if (user==null){
+                        user=new Guest();
+                        accessUsers.insertUser(user);
+                    }
+                    AccessUsers.setActiveUser(user);//set active user as
                 } catch (IncorrectFormat incorrectFormat) {
                     incorrectFormat.printStackTrace();
                 }

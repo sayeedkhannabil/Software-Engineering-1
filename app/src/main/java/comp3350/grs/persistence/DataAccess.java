@@ -2201,5 +2201,9 @@ public abstract class DataAccess {
         users.add(user);
     }
 
+    public String getDbName(){
+        return this.dbName;
+    }
+
 
 }

@@ -171,8 +171,25 @@ July 16: Katharine K wrote document for group retrospective activity.
 	(expected: 30 min, actual: 45 min)
 July 16: Katharine K created AccessRequests and added necessary methods in database stub and interface
 	(expected: 1 hour, actual: 1 hour)
+July 16 Shiqing Guo created request domain object.(expected:1 hour actual:1 hour)
+July 16 Shiqing Guo added methods related to request to    databaseObject.(expected:2hour actual:1.5 hour)
+July 17 Shiqing Guo added UI for choice page.(expected:30mins actual:30mins)
+July 19 Shiqing Guo finished UI for request page.(expected:5 hours actual:5 hours)
+July 20 Shiqing Guo extract post and reply to make ForumContent(expected:30mins actual:1hour)
+July 20 Shiqing Guo created VoteI,VoteReply,Upvote,Downvote,Vote.(expected:3 hours,actual:2.5 hours)
+July 20 Shiqing Guo add methods to sql database relating to vote.(expected:2 hours, actual:1.5 hours)
 July 20: Gongyu Liao finished Reply and Feedback object class.
 	(expected: 2 hours, actual: 2 hours)
+july 20: group meeting: decide to start writing test, as well as developing new
+    user stories, since time is quite tight in this iteration.
+July 21 Shiqing Guo create AccessVoteReplys.(expected:1 hours, actual:30 mins)
+July 21 Shiqing Guo set up the environment and finished template of acceptance test(expected:3hours,actual:3hours)
+July 22 Shiqing Guo finished VoteReplyTest,UpvoteTest,DownvoteTest.(expected:2 hours, actual:1.5 hour)
+July 23 Shiqing Guo Add postID to reply, add List<Reply> getReplysByPost(int postID) to database and business object
+July 23 Shiqing Guo finished forum UI(expected:6 hours, actual : 6hours)
+july 23 group meeting:discussed how to implement the acceptance test, decided to
+ create one class for each user story, distributed the tasks on acceptance test.
+July 24 Shiqing Guo finished forum acceptance test.(expected:3 hours, actual:3.5hours)
 July 24: Katharine K created AccessRequestsTest and wrote some tests
     (expected: 2 hours, actual: 2 hours)
 July 25: Katharine K updated methods in DataAccessStub
@@ -183,4 +200,5 @@ July 26: Katharine K finished writing tests for AccessRequestsTest
     (expected: 1 hour, actual: 2 hours)
 July 26: Katharine K finished writing tests for RequestTest
     (expected: 1 hour, actual: 1 hour)
+
 

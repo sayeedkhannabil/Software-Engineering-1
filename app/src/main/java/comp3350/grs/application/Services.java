@@ -13,7 +13,7 @@ public class Services
 		if (dataAccessService == null)
 		{
 			dataAccessService = new DataAccessObject(dbName);
-			dataAccessService.open(Main.getDBPathName());
+			dataAccessService.open(Main.getDBPathName(dbName));
 		}
 		return dataAccessService;
 	}
@@ -23,12 +23,12 @@ public class Services
 		if (dataAccessService == null)
 		{
 			dataAccessService = alternateDataAccessService;
-			dataAccessService.open(Main.getDBPathName());
+			dataAccessService.open(Main.getDBPathName(alternateDataAccessService.getDbName()));
 		}
 		return dataAccessService;
 	}
 
-	public static DataAccessI getDataAccess(String dbName)
+	public static DataAccessI getDataAccess()
 	{
 		if (dataAccessService == null)
 		{

@@ -7,7 +7,7 @@ import comp3350.grs.application.Services;
 import comp3350.grs.exceptions.Duplicate;
 import comp3350.grs.objects.Request;
 import comp3350.grs.persistence.DataAccessI;
-
+//business object of request
 public class AccessRequests {
     private DataAccessI dataAccessI;
     private List<Request> requestList;

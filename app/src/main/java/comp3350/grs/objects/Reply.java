@@ -1,9 +1,9 @@
 package comp3350.grs.objects;
 
 import comp3350.grs.exceptions.IncorrectFormat;
-
+//domain object of reply(a user reply to a post)
 public class Reply extends ForumContent{
-    private int postID;
+    private int postID;//the post referred to by this reply
 
     public Reply(){
         super();

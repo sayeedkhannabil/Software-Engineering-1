@@ -1,10 +1,10 @@
 package comp3350.grs.objects;
-
+//parent class of upvote and downvote
 public abstract class Vote {
-    private String userID;
-    private int value;
+    private String userID;//user who do the vote
+    private int value;//value of the vote
 
-    public static int UP_VALUE=1;
+    public static int UP_VALUE=1;//value of upvote
     public static int DOWN_VALUE=-1;
 
     public Vote(){
@@ -17,6 +17,7 @@ public abstract class Vote {
         this.value=value;
     }
 
+    //important info is not null
     public boolean valid(){
         return userID!=null;
     }
@@ -33,6 +34,7 @@ public abstract class Vote {
         return "UserID:"+userID+",value:"+value;
     }
 
+    //create a vote object according to userID and vote value
     public static VoteI createVote(String userID,int value){
         VoteI voteI;
         voteI=null;

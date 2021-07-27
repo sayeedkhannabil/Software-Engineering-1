@@ -15,8 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import comp3350.grs.R;
-import comp3350.grs.business.AccessPost;
-import comp3350.grs.business.AccessReplys;
+import comp3350.grs.business.AccessPosts;
 import comp3350.grs.business.AccessUsers;
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Post;
@@ -26,7 +25,7 @@ public class ForumPage extends AppCompatActivity {
     private TextView single_post;
     private LayoutInflater inflater;
     private LinearLayout forum_page_post_wrapper;
-    private AccessPost accessPost;
+    private AccessPosts accessPosts;
     private TextView write_post_button;
     private LinearLayout write_post_wrapper;
     private EditText post_title;
@@ -47,7 +46,7 @@ public class ForumPage extends AppCompatActivity {
 
     private void initiate(){
         forum_page_post_wrapper=findViewById(R.id.forum_page_post_wrapper);
-        accessPost=new AccessPost();
+        accessPosts =new AccessPosts();
         write_post_button=findViewById(R.id.write_post_button);
         write_post_wrapper=findViewById(R.id.write_post_wrapper);
         post_title=findViewById(R.id.post_title);
@@ -77,7 +76,7 @@ public class ForumPage extends AppCompatActivity {
 
     private void generatePosts(){
         ViewGroup viewGroup;
-        List<Post> postList=accessPost.getAllPosts();
+        List<Post> postList= accessPosts.getAllPosts();
         Post currPost;
 
         forum_page_post_wrapper.removeAllViews();
@@ -118,7 +117,7 @@ public class ForumPage extends AppCompatActivity {
                     userID= AccessUsers.getActiveUser().getUserID();
                     try {
                         post=new Post(title,content,userID);
-                        accessPost.insertPost(post);
+                        accessPosts.insertPost(post);
                     } catch (IncorrectFormat incorrectFormat) {
                         AlertDialog alertDialog;
                         alertDialog=Utilities.createAlertDialog(incorrectFormat.getMessage(),

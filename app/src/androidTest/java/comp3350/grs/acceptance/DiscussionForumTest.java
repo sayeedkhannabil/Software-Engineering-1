@@ -7,7 +7,6 @@ import androidx.test.filters.MediumTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -15,12 +14,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.List;
-
 import comp3350.grs.R;
 import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
-import comp3350.grs.business.AccessPost;
+import comp3350.grs.business.AccessPosts;
 import comp3350.grs.business.AccessReplys;
 import comp3350.grs.business.AccessUsers;
 import comp3350.grs.business.AccessVoteReplys;
@@ -31,8 +28,9 @@ import comp3350.grs.objects.Reply;
 import comp3350.grs.objects.Upvote;
 import comp3350.grs.objects.VoteReply;
 import comp3350.grs.persistence.DataAccessI;
+import comp3350.grs.persistence.DataAccessObject;
 import comp3350.grs.presentation.MainActivity;
-import static androidx.test.espresso.Espresso.*;
+
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.*;
 import static androidx.test.espresso.assertion.ViewAssertions.*;
@@ -43,9 +41,9 @@ import static org.hamcrest.Matchers.*;
 @RunWith(AndroidJUnit4.class)
 @MediumTest
 public class DiscussionForumTest {
-    private DataAccessI dataAccessI;
+    private static DataAccessI dataAccessI;
     private AccessReplys accessReplys;
-    private AccessPost accessPost;
+    private AccessPosts accessPosts;
     private AccessVoteReplys accessVoteReplys;
     private AccessUsers accessUsers;
 
@@ -54,14 +52,19 @@ public class DiscussionForumTest {
             new ActivityTestRule<>(MainActivity.class);
 
     @Before
-    public void Before(){
-        dataAccessI= Services.getDataAccess("test");
-        dataAccessI.deleteDatabase();
-        dataAccessI.open("database/test");
+    public void before(){
+        dataAccessI=Services.getDataAccess();
+        dataAccessI.clearAllData();
         accessReplys=new AccessReplys();
-        accessPost=new AccessPost();
+        accessPosts =new AccessPosts();
         accessVoteReplys=new AccessVoteReplys();
         accessUsers=new AccessUsers();
+    }
+
+
+    @AfterClass
+    public static void afterClass(){
+        dataAccessI.close();
     }
 
 
@@ -177,7 +180,7 @@ public class DiscussionForumTest {
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
-        accessPost.insertPost(post);
+        accessPosts.insertPost(post);
 
         onView(withText("LOGIN")).perform(click());
         onView(withHint("userID")).perform(typeText("user1"));
@@ -216,7 +219,7 @@ public class DiscussionForumTest {
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
-        accessPost.insertPost(post);
+        accessPosts.insertPost(post);
 
         onView(withText("SIGNUP")).perform(click());
         onView(withHint("userID")).perform(typeText("user2"));
@@ -262,7 +265,7 @@ public class DiscussionForumTest {
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
-        accessPost.insertPost(post);
+        accessPosts.insertPost(post);
 
         onView(withText("LOGIN")).perform(click());
         onView(withHint("userID")).perform(typeText("user1"));
@@ -302,7 +305,7 @@ public class DiscussionForumTest {
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
-        accessPost.insertPost(post);
+        accessPosts.insertPost(post);
 
         onView(withText("LOGIN")).perform(click());
         onView(withHint("userID")).perform(replaceText("user1"));
@@ -346,7 +349,7 @@ public class DiscussionForumTest {
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
-        accessPost.insertPost(post);
+        accessPosts.insertPost(post);
         try {
             reply=new Reply(10,"I'm correct","user1",10);
         } catch (IncorrectFormat incorrectFormat) {
@@ -401,7 +404,7 @@ public class DiscussionForumTest {
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
-        accessPost.insertPost(post);
+        accessPosts.insertPost(post);
         try {
             reply=new Reply(10,"I'm correct","user1",10);
         } catch (IncorrectFormat incorrectFormat) {

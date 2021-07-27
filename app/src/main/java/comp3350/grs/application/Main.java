@@ -7,7 +7,8 @@ import comp3350.grs.persistence.DataAccessObject;
 public class Main
 {
 	public static final String dbName = "MainDB";
-	private static String dbPathName = "database/MainDB";
+	private static String dbPathName = "database/";
+	public static final String testDbName = "TestDB";
 
 	public static void main(String[] args)
 	{
@@ -28,11 +29,13 @@ public class Main
 		comp3350.grs.application.Services.closeDataAccess();
 	}
 
-	public static String getDBPathName() {
-		if (dbPathName == null)
+	public static String getDBPathName(String dbName) {
+		if (dbPathName == null){
 			return dbName;
-		else
-			return dbPathName;
+		}
+		else{
+			return dbPathName+dbName;
+		}
 	}
 
 	public static void setDBPathName(String pathName) {

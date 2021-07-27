@@ -19,7 +19,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class AccessReviewTest {
+public class AccessReviewsTest {
     private static AccessUsers userAccess;
     private static AccessGames gameAccess;
     private static AccessReviews reviewAccess;
@@ -31,12 +31,15 @@ public class AccessReviewTest {
 
     @BeforeClass
     public static void beforeClass(){
-        Services.closeDataAccess();
-        Services.createDataAccess(new DataAccessStub(Main.dbName));
-
+        Services.createDataAccess(new DataAccessStub(Main.testDbName));
         reviewAccess = new AccessReviews();
         userAccess = new AccessUsers();
         gameAccess = new AccessGames();
+    }
+
+    @AfterClass
+    public static void afterClass(){
+        Services.closeDataAccess();
     }
 
     @Before
@@ -207,10 +210,7 @@ public class AccessReviewTest {
         assertNull(r);
     }
 
-    @AfterClass
-    public static void afterClass(){
-        Services.closeDataAccess();
-    }
+
 
 
 }

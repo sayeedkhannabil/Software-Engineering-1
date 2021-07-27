@@ -1,109 +1,101 @@
 package comp3350.grs.objects;
+
+import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
 import comp3350.grs.exceptions.IncorrectFormat;
 
+import static org.junit.Assert.*;
+
 public class RequestTest {
+    private Request request1,request2,request3;
 
-    @Test
-    public void testTypical(){
-        Request newRequest = null;
-        try{
-            newRequest = new Request("Game", "User");
-        }catch (IncorrectFormat incorrectFormat){
-            incorrectFormat.printStackTrace();
-        }
-        assertNotNull(newRequest);
-        assertEquals("Game", newRequest.getGameName());
-        assertEquals("User", newRequest.getUserID());
-        assertTrue(newRequest.valid());
-        assertEquals("Game Name: "+newRequest.getGameName()+",UserID: "+newRequest.getUserID(), newRequest.toString());
-
-        //request has same game, different user
-        Request newRequest2 = null;
-        try{
-            newRequest2 = new Request("Game", "User2");
-        }catch (IncorrectFormat incorrectFormat){
-            incorrectFormat.printStackTrace();
-        }
-        assertNotNull(newRequest2);
-        assertEquals("User2", newRequest2.getUserID());
-        assertFalse(newRequest.equals(newRequest2));
-        assertFalse(newRequest2.equals(newRequest));
-
-        //request has same user, different game
-        try{
-            newRequest2 = new Request("Game2", "User");
-        }catch (IncorrectFormat incorrectFormat){
-            incorrectFormat.printStackTrace();
-        }
-        assertNotNull(newRequest2);
-        assertEquals("Game2", newRequest2.getGameName());
-        assertEquals("User", newRequest2.getUserID());
-        assertEquals(newRequest.getUserID(), newRequest2.getUserID()); //same userID for both requests
-        assertFalse(newRequest.equals(newRequest2));
-        assertFalse(newRequest2.equals(newRequest));
+    @Before
+    public void Before(){
+        request1=null;
+        request2=null;
+        request3=null;
     }
 
     @Test
-    public void testEdge(){
-        Request edgeRequest = null;
-        try{
-            edgeRequest = new Request("        game", "user");
-        }catch (IncorrectFormat incorrectFormat){
+    public void testTypical(){
+        try {
+            request1=new Request("game1","user1");
+        } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
-        assertNotNull(edgeRequest);
-        assertTrue(edgeRequest.valid());
-        assertEquals("        game", edgeRequest.getGameName());
-        assertEquals("user", edgeRequest.getUserID());
+        assertTrue(request1.valid());
+        assertEquals("game1",request1.getGameName());
+        assertEquals("user1",request1.getUserID());
+        try {
+            request2=new Request("game1","user1");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        assertEquals(request1,request2);
+        try {
+            request2=new Request("game2","user1");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        assertNotEquals(request1,request2);
+        try {
+            request2=new Request("game1","user2");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        assertNotEquals(request1,request2);
 
-        try{
-            edgeRequest = new Request(" .    ", "Guest");
-        }catch (IncorrectFormat incorrectFormat){
-            incorrectFormat.printStackTrace();
-        }
-        assertNotNull(edgeRequest);
-        assertTrue(edgeRequest.valid());
-        assertEquals(" .    ", edgeRequest.getGameName());
-        assertEquals("Guest", edgeRequest.getUserID());
     }
 
     @Test
     public void testNull(){
-        Request nullRequest = new Request();
-        assertNotNull(nullRequest); //object itself not null
-        assertFalse(nullRequest.valid());
-        assertNull(nullRequest.getUserID());
-        assertNull(nullRequest.getGameName());
-
-        try{
-            nullRequest = new Request(null, "User");
-        }catch (IncorrectFormat incorrectFormat){
+        request1=new Request();
+        assertFalse(request1.valid());
+        assertNull(request1.getGameName());
+        assertNull(request1.getUserID());
+        request2=new Request();
+        assertNotEquals(request1,request2);
+        try {
+            request1=new Request(null,"user1");
+        } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
-        assertNotNull(nullRequest);
-        assertFalse(nullRequest.valid());
-        assertNull(nullRequest.getGameName());
-        assertNull(nullRequest.getUserID());
-
-        try{
-            nullRequest = new Request("Game", null);
-        }catch (IncorrectFormat incorrectFormat){
+        assertFalse(request1.valid());
+        try {
+            request1=new Request("game1",null);
+        } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
-        assertNotNull(nullRequest);
-        assertFalse(nullRequest.valid());
-        assertEquals("Game", nullRequest.getGameName());
-        assertNull(nullRequest.getUserID());
-
-        //gameName throws exception, so object is null
-        Request invalidReq = null;
-        try{
-            invalidReq = new Request(" ", "User");
-        }catch (IncorrectFormat incorrectFormat){
-            incorrectFormat.printStackTrace();
-        }
-        assertNull(invalidReq);
+        assertFalse(request1.valid());
     }
+
+    @Test
+    public void testInvalid(){
+        try {
+            request1=new Request(" ",null);
+            fail();
+        } catch (IncorrectFormat incorrectFormat) {
+            assertTrue(true);
+        }
+        try {
+            request1=new Request("",null);
+            fail();
+        } catch (IncorrectFormat incorrectFormat) {
+            assertTrue(true);
+        }
+    }
+
+    @Test
+    public void testEdge(){
+        try {
+            request1=new Request("game1","user1");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        assertNotEquals(null,request1);
+        String object="";
+        assertNotEquals(object,request1);
+    }
+
 }

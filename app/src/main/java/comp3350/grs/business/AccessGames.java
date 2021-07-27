@@ -38,7 +38,6 @@ public class AccessGames
         dataAccessI.clearGames();
     }
 
-
     public List<Game> getAllGames() {
         gameList= dataAccessI.getAllGames();
         return gameList;

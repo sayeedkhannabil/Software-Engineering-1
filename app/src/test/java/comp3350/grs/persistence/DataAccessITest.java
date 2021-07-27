@@ -104,6 +104,12 @@ public class DataAccessITest{
         dataAccessI.close();
     }
 
+    // this code will run the tests on the given DAO
+    public static void dataAccessTest(DataAccessI dataAccess) {
+        DataAccessITest dataAccessTest = new DataAccessITest();
+        dataAccessTest.dataAccessI = dataAccess;
+        dataAccessTest.testTypical();
+    }
 
     @Test
     public void testTypical(){

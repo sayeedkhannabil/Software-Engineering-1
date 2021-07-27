@@ -533,6 +533,8 @@ public class DataAccessITest{
             reply2=new Reply(1001,"reply2","user2",101);
             success=dataAccessI.insertReply(reply2);
             assertTrue(success);
+            success=reply1.equals(reply2);
+            assertFalse(success);
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
@@ -544,6 +546,8 @@ public class DataAccessITest{
             post2=new Post(101,"post2 title","post2 content","user2");
             success=dataAccessI.insertReply(reply2);
             assertTrue(success);
+            success=post1.equals(post2);
+            assertFalse(success);
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }

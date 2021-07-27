@@ -14,8 +14,8 @@ public class BusinessPersistenceSeamTest extends TestCase{
         super(arg0);
     }
 
-    public void before(){
-        System.out.println("\nStarting Integration test of "+className+" to persistence");
+    public void setUp(){
+        System.out.println("\nStarting Integration test");
         Services.closeDataAccess();
         Services.createDataAccess(Main.dbName);
         inserted = false;
@@ -23,7 +23,7 @@ public class BusinessPersistenceSeamTest extends TestCase{
         deleted = false;
     }
 
-    public void after(){
+    public void tearDown(){
         Services.closeDataAccess();
         System.out.println("Finished Integration test of "+className+" to persistence");
     }
@@ -33,7 +33,7 @@ public class BusinessPersistenceSeamTest extends TestCase{
         AccessGames accessGames = new AccessGames();
         Game game;
         String gameName;
-        before();
+
 
         //representative test cases
         game = accessGames.getSequential();
@@ -42,61 +42,54 @@ public class BusinessPersistenceSeamTest extends TestCase{
 
         inserted = accessGames.insertGame(game);
         assertFalse(inserted); //because the game already exists
-        after();
+
     }
 
     public void testAccessPosts(){
         className = "AccessPosts";
         AccessPosts accessPosts = new AccessPosts();
-        before();
+
         //representative test cases
 
-        after();
     }
 
     public void testAccessRatings(){
         className = "AccessRatings";
-        before();
+
         //representative test cases
 
-        after();
     }
 
     public void testAccessReplys(){
         className = "AccessReplys";
-        before();
+
         //representative test cases
 
-        after();
     }
 
     public void testAccessRequests(){
         className = "AccessRequests";
-        before();
+
         //representative test cases
-        after();
+
     }
 
     public void testAccessReviews(){
         className = "AccessReviews";
-        before();
+
         //representative test cases
-        after();
+
     }
 
     public void testAccessUsers(){
         className = "AccessUsers";
-        before();
         //representative test cases
 
-        after();
     }
 
     public void testAccessVoteReplys(){
         className = "AccessVoteReplys";
-        before();
         //representative test cases
 
-        after();
     }
 }

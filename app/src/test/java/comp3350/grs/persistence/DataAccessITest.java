@@ -36,12 +36,15 @@ public class DataAccessITest{
     private Rating rating, rating1,rating2,rating3;
     private Request request, request1,request2,request3;
     private Reply reply, reply1,reply2,reply3;
+    private Post post, post1, post2 ,post3;
     private VoteReply voteReply,voteReply1,voteReply2,voteReply3;
     private List<User> userList;
     private List<Game> gameList;
     private List<Review> reviewList;
     private List<Rating> ratingList;
     private List<Request> requestList;
+    private List<Reply> replyList;
+    private List<Post> postList;
     private List<VoteReply> voteReplyList;
     private String userID,userID2,password,password2,gameName,developer,
             description,reviewContent;
@@ -84,9 +87,14 @@ public class DataAccessITest{
         request1=null;
         request2=null;
         request3=null;
+        reply=null;
         reply1=null;
         reply2=null;
         reply3=null;
+        post=null;
+        post1=null;
+        post2=null;
+        post3=null;
         voteReply1=null;
         voteReply2=null;
         voteReply3=null;
@@ -96,6 +104,8 @@ public class DataAccessITest{
         ratingList=null;
         genreList=null;
         requestList=null;
+        replyList=null;
+        postList=null;
         voteReplyList=null;
     }
 
@@ -483,6 +493,9 @@ public class DataAccessITest{
 
         //test vote reply
         // TODO: 7/25/2021 reply id
+        
+        
+        
         voteReply1=new VoteReply(new Upvote("user1"),0);
         success=dataAccessI.insertVoteReply(voteReply1);
         assertTrue(success);
@@ -513,7 +526,28 @@ public class DataAccessITest{
         voteReplyList=dataAccessI.getVoteReplysByReply(0);
         assertEquals(1,voteReplyList.size());
         //test reply
+        try{
+            reply1=new Reply(1000,"reply1","user1",100);
+            success=dataAccessI.insertReply(reply1);
+            assertTrue(success);
+            reply2=new Reply(1001,"reply2","user2",101);
+            success=dataAccessI.insertReply(reply2);
+            assertTrue(success);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
         //test post
+        try{
+            post1=new Post(100,"post1 title","post1 content","user1");
+            success=dataAccessI.insertReply(post1);
+            assertTrue(success);
+            post2=new Post(101,"post2 title","post2 content","user2");
+            success=dataAccessI.insertReply(reply2);
+            assertTrue(success);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        
     }
 
     @Test
@@ -619,6 +653,20 @@ public class DataAccessITest{
         success= dataAccessI.updateVoteReply(null);
         assertFalse(success);
         success= dataAccessI.deleteVoteReply(null);
+        assertFalse(success);
+        
+        success= dataAccessI.insertReply(null);
+        assertFalse(success);
+        success= dataAccessI.updateReply(null);
+        assertFalse(success);
+        success= dataAccessI.deleteReply(null);
+        assertFalse(success);
+        
+        success= dataAccessI.insertPost(null);
+        assertFalse(success);
+        success= dataAccessI.updatePost(null);
+        assertFalse(success);
+        success= dataAccessI.deletePost(null);
         assertFalse(success);
     }
 

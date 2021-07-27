@@ -9,7 +9,6 @@ import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +27,6 @@ import comp3350.grs.objects.Reply;
 import comp3350.grs.objects.Upvote;
 import comp3350.grs.objects.VoteReply;
 import comp3350.grs.persistence.DataAccessI;
-import comp3350.grs.persistence.DataAccessObject;
 import comp3350.grs.presentation.MainActivity;
 
 import static androidx.test.espresso.Espresso.onView;
@@ -53,7 +51,7 @@ public class DiscussionForumTest {
 
     @Before
     public void before(){
-        dataAccessI=Services.getDataAccess();
+        dataAccessI=Services.getDataAccess(Main.dbName);
         dataAccessI.clearAllData();
         accessReplys=new AccessReplys();
         accessPosts =new AccessPosts();

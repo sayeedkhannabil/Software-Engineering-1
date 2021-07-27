@@ -28,7 +28,7 @@ public class Services
 		return dataAccessService;
 	}
 
-	public static DataAccessI getDataAccess()
+	public static DataAccessI getDataAccess(String dbName)
 	{
 		if (dataAccessService == null)
 		{

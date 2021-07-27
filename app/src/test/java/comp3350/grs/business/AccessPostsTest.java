@@ -5,7 +5,6 @@ import comp3350.grs.application.Services;
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Post;
 import comp3350.grs.objects.User;
-import comp3350.grs.persistence.DataAccessI;
 import comp3350.grs.persistence.DataAccessStub;
 
 import org.junit.AfterClass;
@@ -22,7 +21,7 @@ public class AccessPostsTest {
     private static AccessUsers accessUsers;
     private static AccessPosts accessPosts;
     private User user;
-    private List<Post> pList;
+    private List<Post> postList;
     private boolean insert1, insert2, update, del;
     private Post newPost1, newPost2;
     private int postID1, postID2;
@@ -45,7 +44,7 @@ public class AccessPostsTest {
         newPost1 = null;
         newPost2 = null;
         user = null;
-        pList = null;
+        postList = null;
         insert1 = false;
         insert2 = false;
         update = false;
@@ -90,10 +89,10 @@ public class AccessPostsTest {
         assertTrue(insert2);
 
         //number of post should be 1
-        pList = accessPosts.getPostsByUser(userID);
-        assertEquals(pList.size(), 1);
-        pList = accessPosts.getPostsByUser(guestID);
-        assertEquals(pList.size(), 1);
+        postList = accessPosts.getPostsByUser(userID);
+        assertEquals(postList.size(), 1);
+        postList = accessPosts.getPostsByUser(guestID);
+        assertEquals(postList.size(), 1);
 
         //multiple posts for the same user
         title1 = "GTA5";
@@ -103,9 +102,12 @@ public class AccessPostsTest {
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
+        insert1 = accessPosts.insertPost(newPost1);
+        assertTrue(insert1);
+
         //number of post should be 2
-        pList = accessPosts.getPostsByUser(userID);
-        assertEquals(pList.size(), 2);
+        postList = accessPosts.getPostsByUser(userID);
+        assertEquals(postList.size(), 2);
 
         //test update
         postID1 = newPost1.getID();
@@ -133,14 +135,14 @@ public class AccessPostsTest {
         update = accessPosts.updatePost(newPost2);
         assertTrue(update);
 
-        pList = accessPosts.getPostsByUser(userID);
-        assertEquals(pList.size(), 3);
+        postList = accessPosts.getPostsByUser(userID);
+        assertEquals(postList.size(), 3);
 
         //getting all post
-        pList = accessPosts.getAllPosts();
-        assertEquals(pList.size(), 3);
-        assertTrue(pList.contains(newPost1));
-        assertTrue(pList.contains(newPost2));
+        postList = accessPosts.getAllPosts();
+        assertEquals(postList.size(), 3);
+        assertTrue(postList.contains(newPost1));
+        assertTrue(postList.contains(newPost2));
 
         //get post By ID
         postID1 = newPost1.getID();
@@ -149,22 +151,49 @@ public class AccessPostsTest {
         //testing delete
         del = accessPosts.deletePost(newPost1);
         assertTrue(del);
-        assertEquals(pList.size(), 2);
+        postList = accessPosts.getAllPosts();
+        assertEquals(postList.size(), 2);
 
         del = accessPosts.deletePost(newPost2);
         assertTrue(del);
-        assertEquals(pList.size(), 1);
+        postList = accessPosts.getAllPosts();
+        assertEquals(postList.size(), 1);
 
         //testing clear
         accessPosts.clear();
-        pList = accessPosts.getAllPosts();
-        assertEquals(pList.size(), 0);
+        postList = accessPosts.getAllPosts();
+        assertEquals(postList.size(), 0);
 
     }
 
     @Test
     public void testEdge() {
+        //when no reply
+        accessPosts = new AccessPosts();
+        postList = accessPosts.getAllPosts();
+        assertEquals(postList.size(), 0);
 
+        //invalid input
+        try {
+            newPost1 = new Post("", "", "");
+        } catch (IncorrectFormat incorrectFormat) {
+            assertTrue(true);
+        }
+
+        try {
+            newPost1 = new Post(postID1, "", " ", "");
+        } catch (IncorrectFormat incorrectFormat) {
+            assertTrue(true);
+        }
+
+        //delete when there is nothing
+        del = accessPosts.deletePost(newPost1);
+        assertFalse(del);
+
+        //clear empty list
+        accessPosts.clear();
+        postList = accessPosts.getAllPosts();
+        assertEquals(postList.size(), 0);
     }
 
 }

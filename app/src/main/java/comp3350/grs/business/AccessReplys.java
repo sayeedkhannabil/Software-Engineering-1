@@ -2,7 +2,6 @@ package comp3350.grs.business;
 
 import java.util.List;
 
-import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
 import comp3350.grs.objects.Reply;
 import comp3350.grs.persistence.DataAccessI;
@@ -15,7 +14,7 @@ public class AccessReplys {
     private int currentReplyIndex;
 
     public AccessReplys() {
-        dataAccessI = Services.getDataAccess(Main.dbName);
+        dataAccessI = Services.getDataAccess();
         replyList = null;
         currentReply = null;
         currentReplyIndex = 0;

@@ -1,13 +1,8 @@
 package comp3350.grs.business;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
-import comp3350.grs.objects.Game;
-import comp3350.grs.objects.VoteI;
 import comp3350.grs.objects.VoteReply;
 import comp3350.grs.persistence.DataAccessI;
 //business object of VoteReply
@@ -15,7 +10,7 @@ public class AccessVoteReplys {
     private DataAccessI dataAccessI;
 
     public AccessVoteReplys(){
-        dataAccessI= Services.getDataAccess(Main.dbName);
+        dataAccessI= Services.getDataAccess();
     }
 
     public boolean insertVoteReply(VoteReply voteReply){

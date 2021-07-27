@@ -24,7 +24,7 @@ public class DataAccessHSQLDBTest extends TestCase{
 
         // Use the following two statements to run with the real database
         Services.createDataAccess(dbName);
-        dataAccess = Services.getDataAccess(dbName);
+        dataAccess = Services.getDataAccess();
 
         DataAccessITest.dataAccessTest(dataAccess);
 

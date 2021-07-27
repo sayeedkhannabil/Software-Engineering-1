@@ -17,7 +17,7 @@ public class BusinessPersistenceSeamTest extends TestCase{
     public void setUp(){
         System.out.println("\nStarting Integration test");
         Services.closeDataAccess();
-        Services.createDataAccess(Main.dbName);
+        Services.createDataAccess(Main.testDbName);
         inserted = false;
         updated = false;
         deleted = false;

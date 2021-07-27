@@ -2,7 +2,6 @@ package comp3350.grs.business;
 
 import java.util.List;
 
-import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
 import comp3350.grs.exceptions.Duplicate;
 import comp3350.grs.objects.Request;
@@ -10,15 +9,9 @@ import comp3350.grs.persistence.DataAccessI;
 //business object of request
 public class AccessRequests {
     private DataAccessI dataAccessI;
-    private List<Request> requestList;
-    private Request currentRequest;
-    private int currentRequestIndex;
 
     public AccessRequests(){
-        dataAccessI = Services.getDataAccess(Main.dbName);
-        requestList = null;
-        currentRequest = null;
-        currentRequestIndex = 0;
+        dataAccessI = Services.getDataAccess();
     }
 
     public void clear(){
@@ -27,8 +20,7 @@ public class AccessRequests {
 
     //get a list of all requests
     public List<Request> getAllRequests() {
-        requestList = dataAccessI.getAllRequests();
-        return requestList;
+        return dataAccessI.getAllRequests();
     }
 
     public boolean checkGameExists(Request newRequest) throws Duplicate {

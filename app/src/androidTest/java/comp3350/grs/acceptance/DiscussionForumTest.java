@@ -27,13 +27,21 @@ import comp3350.grs.objects.Reply;
 import comp3350.grs.objects.Upvote;
 import comp3350.grs.objects.VoteReply;
 import comp3350.grs.persistence.DataAccessI;
+import comp3350.grs.persistence.DataAccessObject;
 import comp3350.grs.presentation.MainActivity;
 
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.*;
-import static androidx.test.espresso.assertion.ViewAssertions.*;
-import static androidx.test.espresso.matcher.ViewMatchers.*;
-import static org.hamcrest.Matchers.*;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.hasSibling;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withHint;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -49,9 +57,12 @@ public class DiscussionForumTest {
     public ActivityTestRule<MainActivity> homeActivity =
             new ActivityTestRule<>(MainActivity.class);
 
+
     @Before
     public void before(){
-        dataAccessI=Services.getDataAccess(Main.dbName);
+        dataAccessI=new DataAccessObject(Main.testDbName);
+        Services.closeDataAccess();
+        Services.createDataAccess(dataAccessI);
         dataAccessI.clearAllData();
         accessReplys=new AccessReplys();
         accessPosts =new AccessPosts();

@@ -2,7 +2,6 @@ package comp3350.grs.business;
 
 import java.util.List;
 
-import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
 import comp3350.grs.objects.Post;
 import comp3350.grs.persistence.DataAccessI;
@@ -10,15 +9,9 @@ import comp3350.grs.persistence.DataAccessI;
 public class AccessPosts {
 
     private DataAccessI dataAccessI;
-    private List<Post> postList;
-    private Post currentPost;
-    private int currentPostIndex;
 
     public AccessPosts() {
-        dataAccessI = Services.getDataAccess(Main.dbName);
-        postList = null;
-        currentPost = null;
-        currentPostIndex = 0;
+        dataAccessI = Services.getDataAccess();
     }
 
     public void clear(){
@@ -26,8 +19,7 @@ public class AccessPosts {
     }
 
     public List<Post> getAllPosts() {
-        postList = dataAccessI.getAllPosts();
-        return postList;
+        return dataAccessI.getAllPosts();
     }
 
     public List<Post> getPostsByUser(String userID) {

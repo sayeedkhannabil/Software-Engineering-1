@@ -3,7 +3,6 @@
 package comp3350.grs.business;
 import java.util.List;
 
-import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
 import comp3350.grs.objects.Rating;
 import comp3350.grs.persistence.DataAccessI;
@@ -16,7 +15,7 @@ public class AccessRatings {
     private int currentRatingIndex;//index of the rating in the current position in the list
 
     public AccessRatings() {
-        dataAccessI =  Services.getDataAccess(Main.dbName);
+        dataAccessI =  Services.getDataAccess();
         ratings = null;
         currentRating = null;
         currentRatingIndex = 0;

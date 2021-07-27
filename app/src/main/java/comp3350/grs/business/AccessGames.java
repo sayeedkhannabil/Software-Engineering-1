@@ -10,10 +10,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
-import comp3350.grs.persistence.DataAccessI;
 import comp3350.grs.objects.Game;
+import comp3350.grs.persistence.DataAccessI;
 
 //business objeect of game
 public class AccessGames
@@ -26,7 +25,7 @@ public class AccessGames
     private AccessReviews accessReviews;
 
     public AccessGames() {
-        dataAccessI =  Services.getDataAccess(Main.dbName);
+        dataAccessI =  Services.getDataAccess();
         accessRatings=new AccessRatings();
         accessReviews=new AccessReviews();
         gameList = null; 

@@ -11,11 +11,13 @@ import org.junit.runner.RunWith;
 
 import comp3350.grs.R;
 import comp3350.grs.presentation.MainActivity;
-import static androidx.test.espresso.Espresso.*;
-import static androidx.test.espresso.action.ViewActions.*;
-import static androidx.test.espresso.assertion.ViewAssertions.*;
-import static androidx.test.espresso.matcher.ViewMatchers.*;
-import static org.hamcrest.Matchers.*;
+
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 //user want to see the detailed information of a game
 @RunWith(AndroidJUnit4.class)
@@ -85,7 +87,7 @@ public class GameInfoTest {
 
     @Test
     public void testReadGenre(){
-
+        //todo scroll genre
         onView(withText("CONTINUE AS GUEST")).check(matches(isDisplayed()));
         onView(withText("CONTINUE AS GUEST")).perform(click());
         onView(withText("Enter Game Gallery")).check(matches(isDisplayed()));

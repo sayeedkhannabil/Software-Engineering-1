@@ -2,7 +2,6 @@ package comp3350.grs.business;
 
 import java.util.List;
 
-import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
 import comp3350.grs.objects.Review;
 import comp3350.grs.persistence.DataAccessI;
@@ -14,7 +13,7 @@ public class AccessReviews {
     private int currentReviewIndex;
 
     public AccessReviews() {
-        dataAccessI = Services.getDataAccess(Main.dbName);
+        dataAccessI = Services.getDataAccess();
         reviewList = null;
         currentReview = null;
         currentReviewIndex = 0;

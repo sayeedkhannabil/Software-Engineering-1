@@ -5,10 +5,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import comp3350.grs.business.AccessGamesTest;
+import comp3350.grs.business.AccessPostsTest;
 import comp3350.grs.business.AccessRatingsTest;
+import comp3350.grs.business.AccessReplysTest;
 import comp3350.grs.business.AccessRequestsTest;
 import comp3350.grs.business.AccessReviewsTest;
 import comp3350.grs.business.AccessUsersTest;
+import comp3350.grs.business.AccessVoteReplysTest;
 import comp3350.grs.objects.GameTest;
 import comp3350.grs.objects.GuestTest;
 import comp3350.grs.objects.RatingTest;
@@ -18,10 +21,12 @@ import comp3350.grs.persistence.DataAccessITest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        AccessGamesTest.class, AccessUsersTest.class, AccessReviewsTest.class, AccessRatingsTest.class,
+        AccessGamesTest.class, AccessUsersTest.class, AccessReviewsTest.class
+        , AccessRatingsTest.class,AccessRequestsTest.class,
+        AccessVoteReplysTest.class, AccessPostsTest.class, AccessReplysTest.class,
         GameTest.class,GuestTest.class,RatingTest.class,
         RegisteredUserTest.class,ReviewTest.class,
-        DataAccessITest.class, AccessRequestsTest.class
+        DataAccessITest.class,
 })
 public class RunUnitTests {
 

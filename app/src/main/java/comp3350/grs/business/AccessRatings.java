@@ -84,7 +84,9 @@ public class AccessRatings {
                     numRatings ++;
                 }
             }
-            overallRating = (1.0) * totalPts/numRatings;
+            if (numRatings!=0){
+                overallRating = (1.0) * totalPts/numRatings;
+            }
         }
         return overallRating;
     }

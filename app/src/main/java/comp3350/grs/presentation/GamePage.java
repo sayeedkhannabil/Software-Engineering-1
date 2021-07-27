@@ -51,7 +51,6 @@ public class GamePage extends AppCompatActivity {
     private ConstraintLayout game_page_main;
     private LinearLayout genre_wrapper;
     private String game_name;
-    private boolean userTouch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,9 +88,7 @@ public class GamePage extends AppCompatActivity {
         dev_text.setText("dev: " + game.getDev());
         des_text.setText(game.getDescription());
         price_text.setText("$" + game.getPrice());
-        ratingBar.setRating((float) accessRatings.getOverallRating(game_name));
         showReviews();
-        userTouch=false;
         //when user clicked on the rating bar,update the rating
         setRatingBar();
         setReviewButton();
@@ -99,6 +96,11 @@ public class GamePage extends AppCompatActivity {
     }
 
     private void setRatingBar(){
+        float ratingValue;
+        ratingValue=(float) accessRatings.getOverallRating(game_name);
+        TextView ratingValueText=findViewById(R.id.rating_value_text) ;
+        ratingBar.setRating(ratingValue);
+        ratingValueText.setText(ratingValue+"");
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
@@ -121,7 +123,10 @@ public class GamePage extends AppCompatActivity {
                             incorrectFormat.printStackTrace();
                         }
                     }
+                    float ratingValue=
+                            (float) accessRatings.getOverallRating(game_name);
                     ratingBar.setRating((float) accessRatings.getOverallRating(game.getName()));
+                    ratingValueText.setText(ratingValue+"");
                 }
 
             }

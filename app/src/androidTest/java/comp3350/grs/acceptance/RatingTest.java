@@ -79,6 +79,17 @@ public class RatingTest {
 
     @Test
     public void testEdge(){
+        onView(withText("CONTINUE AS GUEST")).check(matches(isDisplayed()));
+        onView(withText("CONTINUE AS GUEST")).perform(click());
+        onView(withText("Enter Game Gallery")).check(matches(isDisplayed()));
+        onView(withText("Enter Game Gallery")).perform(click());
+        onView(withText("Game Gallery")).check(matches(isDisplayed()));
 
+        onView(withText("7 Days to Die")).check(matches(isDisplayed()));
+        onView(withText("7 Days to Die")).perform(click());
+        onView(withText("7 Days to Die")).check(matches(isDisplayed()));
+
+        onView(withId(R.id.ratingBar)).perform(new SetRating(1));
+        onView(withId(R.id.rating_value_text)).check(matches(withText("1.0")));
     }
 }

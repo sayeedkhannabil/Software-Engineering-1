@@ -29,7 +29,9 @@ import comp3350.grs.business.AccessVoteReplys;
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Rating;
+import comp3350.grs.objects.RegisteredUser;
 import comp3350.grs.objects.Review;
+import comp3350.grs.objects.User;
 import comp3350.grs.persistence.DataAccessI;
 import comp3350.grs.persistence.DataAccessObject;
 import comp3350.grs.presentation.MainActivity;
@@ -45,11 +47,12 @@ import static org.hamcrest.Matchers.*;
 //user want to sort games
 public class SortTest {
     private static DataAccessI dataAccessI;
+    private AccessUsers accessUsers;
     private AccessGames accessGames;
     private AccessRatings accessRatings;
     private AccessReviews accessReviews;
+    User u1, u2;
     Review rev1, rev2, rev3, rev4, rev5;
-    Rating r1, r2, r3, r4, r5;
     List<String> genre;
     private Game game1, game2, game3, game4;
     private Game game5, game6, game7, game8;
@@ -67,16 +70,14 @@ public class SortTest {
         accessGames = new AccessGames();
         accessRatings = new AccessRatings();
         accessReviews = new AccessReviews();
+        accessUsers = new AccessUsers();
         rev1 = null;
         rev2 = null;
         rev3 = null;
         rev4 = null;
         rev5 = null;
-        r1 = null;
-        r2 = null;
-        r3 = null;
-        r4 = null;
-        r5 = null;
+        u1 = null;
+        u2 = null;
         genre = null;
         game1 = null;
         game2 = null;
@@ -406,6 +407,70 @@ public class SortTest {
 
     @Test
     public void testSortByReview() {
+        accessGames.clear();
+        try {
+            u1 = new RegisteredUser("user1", "123");
+        } catch(IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        accessUsers.insertUser(u1);
+
+        try {
+            u2 = new RegisteredUser("user2", "123");
+        } catch(IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        accessUsers.insertUser(u2);
+
+        try{
+            genre = new ArrayList<>();
+            genre.add("Action");
+            game1 = new Game("aa", "dev", "unknown", 2.5, genre);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+
+
+        try{
+            genre = new ArrayList<>();
+            genre.add("Fighting");
+            game2 = new Game("bb", "dev", "unknown", 4, genre);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+
+        try{
+            genre = new ArrayList<>();
+            genre.add("Adventure");
+            game3 = new Game("cc", "dev", "unknown", 9, genre);
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        accessGames.insertGame(game1);
+        accessGames.insertGame(game2);
+        accessGames.insertGame(game3);
+
+        try {
+            rev1 = new Review("comment", game2.getName(), u1.getUserID());
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+
+
+        accessReviews.insertReview(rev1);
+
+        onView(withText("CONTINUE AS GUEST")).check(matches(isDisplayed()));
+        onView(withText("CONTINUE AS GUEST")).perform(click());
+        onView(withText("Enter Game Gallery")).check(matches(isDisplayed()));
+        onView(withText("Enter Game Gallery")).perform(click());
+
+        onView(withId(R.id.sort_icon)).perform(click());
+        onView(withId(R.id.review_sort)).perform(click());
+
+        onView(withId(R.id.sort_icon)).perform(click());
+        onView(withId(R.id.sort_icon)).perform(click());
+        onView(withId(R.id.review_sort)).perform(click());
+        onView(withId(R.id.review_sort)).perform(click());
 
     }
 

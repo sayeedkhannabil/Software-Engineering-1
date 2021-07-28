@@ -100,7 +100,7 @@ public class GamePage extends AppCompatActivity {
         ratingValue=(float) accessRatings.getOverallRating(game_name);
         TextView ratingValueText=findViewById(R.id.rating_value_text) ;
         ratingBar.setRating(ratingValue);
-        ratingValueText.setText(ratingValue+"");
+        ratingValueText.setText(String.format("%.1f",ratingValue));
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
@@ -125,8 +125,8 @@ public class GamePage extends AppCompatActivity {
                     }
                     float ratingValue=
                             (float) accessRatings.getOverallRating(game_name);
-                    ratingBar.setRating((float) accessRatings.getOverallRating(game.getName()));
-                    ratingValueText.setText(ratingValue+"");
+                    ratingBar.setRating(ratingValue);
+                    ratingValueText.setText(String.format("%.1f",ratingValue));
                 }
 
             }

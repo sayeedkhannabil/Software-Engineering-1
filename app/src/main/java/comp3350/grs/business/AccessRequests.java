@@ -23,7 +23,7 @@ public class AccessRequests {
         return dataAccessI.getAllRequests();
     }
 
-    public boolean checkGameExists(Request newRequest) throws Duplicate {
+    private boolean checkGameExists(Request newRequest) throws Duplicate {
         String gameRequested = newRequest.getGameName();
         boolean gameAlreadyExists = dataAccessI.getAllGames().contains(dataAccessI.getGameByName(gameRequested));
         if(gameAlreadyExists){

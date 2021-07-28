@@ -15,23 +15,50 @@ import comp3350.grs.business.AccessGames;
 import comp3350.grs.business.AccessPosts;
 import comp3350.grs.business.AccessRatings;
 import comp3350.grs.business.AccessReplys;
+import comp3350.grs.business.AccessRequests;
 import comp3350.grs.business.AccessReviews;
+import comp3350.grs.business.AccessUsers;
+import comp3350.grs.business.AccessVoteReplys;
+import comp3350.grs.exceptions.Duplicate;
 import comp3350.grs.exceptions.IncorrectFormat;
+import comp3350.grs.objects.Downvote;
 import comp3350.grs.objects.Game;
+import comp3350.grs.objects.Guest;
 import comp3350.grs.objects.Post;
 import comp3350.grs.objects.Rating;
+import comp3350.grs.objects.RegisteredUser;
 import comp3350.grs.objects.Reply;
+import comp3350.grs.objects.Request;
 import comp3350.grs.objects.Review;
+import comp3350.grs.objects.Upvote;
+import comp3350.grs.objects.User;
+import comp3350.grs.objects.VoteReply;
 
 public class BusinessPersistenceSeamTest {
     private String className;
     private boolean inserted, updated, deleted;
+    private AccessGames accessGames;
+    private AccessPosts accessPosts;
+    private AccessRatings accessRatings;
+    private AccessReplys accessReplys;
+    private AccessRequests accessRequests;
+    private AccessReviews accessReviews;
+    private AccessUsers accessUsers;
+    private AccessVoteReplys accessVoteReplys;
 
     @Before
     public void before(){
         System.out.println("\nStarting Integration test");
         Services.closeDataAccess();
         Services.createDataAccess(Main.testDbName);
+        accessGames = null;
+        accessPosts = null;
+        accessRatings = null;
+        accessReplys = null;
+        accessRequests = null;
+        accessReviews = null;
+        accessUsers = null;
+        accessVoteReplys = null;
         inserted = false;
         updated = false;
         deleted = false;
@@ -46,9 +73,9 @@ public class BusinessPersistenceSeamTest {
     @Test
     public void testAccessGames(){
         className = "AccessGames";
-        AccessGames accessGames = new AccessGames();
-        AccessRatings accessRatings = new AccessRatings();
-        AccessReviews accessReviews = new AccessReviews();
+        accessGames = new AccessGames();
+        accessRatings = new AccessRatings();
+        accessReviews = new AccessReviews();
         List<Game> allGames;
         Game game;
         Game game2 = null;
@@ -173,7 +200,7 @@ public class BusinessPersistenceSeamTest {
     @Test
     public void testAccessPosts(){
         className = "AccessPosts";
-        AccessPosts accessPosts = new AccessPosts();
+        accessPosts = new AccessPosts();
         List<Post> allPosts;
         int postID = 1;
         Post post = null;
@@ -230,7 +257,7 @@ public class BusinessPersistenceSeamTest {
     @Test
     public void testAccessRatings(){
         className = "AccessRatings";
-        AccessRatings accessRatings = new AccessRatings();
+        accessRatings = new AccessRatings();
         List<Rating> allRatings;
         Rating rating = null;
 
@@ -293,64 +320,343 @@ public class BusinessPersistenceSeamTest {
     @Test
     public void testAccessReplys(){
         className = "AccessReplys";
-        AccessReplys accessReplys = new AccessReplys();
+        accessReplys = new AccessReplys();
+        accessPosts = new AccessPosts();
         List<Reply> allReplies;
+        Post postToReply = null;
         Reply reply = null;
+
+        //must insert post to reply to
+        try{
+            postToReply = new Post(8, "title", "content", "user3");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        inserted = accessPosts.insertPost(postToReply);
 
         //insert
         try{
-            reply = new Reply(5,"comment", "user1", 6);
+            reply = new Reply(5,"comment", "user1", 8);
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
         inserted = accessReplys.insertReply(reply);
         assertTrue(inserted);
+
         try{
-            reply = new Reply("comment", "user2", 4);
+            reply = new Reply("comment", "user2", 8);
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
         inserted = accessReplys.insertReply(reply);
         assertTrue(inserted);
+
+        //cannot insert reply to nonexistent post (ie. a post with this postID not in the post table)
         try{
-            reply = new Reply(5, "newComment", "user2", 4);
+            reply = new Reply(3, "newComment", "user2", 4);
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
         inserted = accessReplys.insertReply(reply);
         assertFalse(inserted);
 
+        allReplies = accessReplys.getReplyByUser("user2");
+        assertEquals(1, allReplies.size());
+        assertFalse(allReplies.contains(accessReplys.getReplyById(3)));
+
+        allReplies = accessReplys.getReplyByPost(8);
+        assertEquals(2, allReplies.size());
+        assertTrue(allReplies.contains(accessReplys.getReplyById(5)));
+
+        //update
+        try{
+            reply = new Reply(5,"otherComment", "user1", 8);
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        updated = accessReplys.updateReply(reply);
+        assertTrue(updated);
+        allReplies = accessReplys.getAllReplys();
+        assertTrue(allReplies.contains(reply));
+        int indexReply = allReplies.indexOf(reply);
+        reply = allReplies.get(indexReply);
+        assertEquals(5, reply.getID());
+        assertEquals("otherComment", reply.getContent());
+        assertEquals("user1", reply.getUserID());
+        assertEquals(8, reply.getPostID());
+
+        //delete
+        int listSizePreDelete = accessReplys.getAllReplys().size();
+        deleted = accessReplys.deleteReply(reply);
+        assertTrue(deleted);
+        assertFalse(allReplies.contains(accessReplys.getReplyById(5)));
+        allReplies = accessReplys.getReplyByPost(8);
+        assertEquals(listSizePreDelete - 1, allReplies.size());
+
         accessReplys.clear();
         assertTrue(accessReplys.getAllReplys().isEmpty());
+        deleted = accessPosts.deletePost(postToReply);
+        assertTrue(deleted);
     }
 
     @Test
     public void testAccessRequests(){
         className = "AccessRequests";
+        AccessRequests accessRequests = new AccessRequests();
+        List<Request> allRequests;
+        Request request = null;
+        Request request2;
 
-        //representative test cases
+        //insert
+        try{
+            request = new Request("newGameNotInDB", "user1");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        try {
+            inserted = accessRequests.insertRequest(request);
+        }catch (Duplicate duplicate){
+            duplicate.printStackTrace();
+        }
+        assertTrue(inserted);
+        allRequests = accessRequests.getAllRequests();
+        assertTrue(allRequests.size() >= 1);
+        assertTrue(allRequests.contains(request));
 
+        request2 = accessRequests.getRequest("newGameNotInDB", "user1");
+        assertEquals(request, request2);
+
+        allRequests = accessRequests.getRequestsByGame("newGameNotInDB");
+        assertEquals(1, allRequests.size());
+        assertTrue(allRequests.contains(request));
+
+        allRequests = accessRequests.getRequestsByUser("user1");
+        assertTrue(allRequests.size() >= 1);
+        assertTrue(allRequests.contains(request));
+
+        //get the list of requested games, sorted by request number, up to 5 games
+        List<String> gamesByRequestNum = accessRequests.getGamesByRequestNum(5);
+        assertTrue(gamesByRequestNum.contains(request.getGameName()));
+
+        //delete
+        int numReqsBeforeDel = accessRequests.getAllRequests().size();
+        deleted = accessRequests.deleteRequest(request);
+        assertTrue(deleted);
+        allRequests = accessRequests.getAllRequests();
+        assertFalse(allRequests.contains(request));
+        assertEquals(numReqsBeforeDel-1, allRequests.size());
     }
 
     @Test
     public void testAccessReviews(){
         className = "AccessReviews";
+        accessReviews = new AccessReviews();
+        Review review = null;
+        Review review2 = null;
+        List<Review> allReviews;
 
-        //representative test cases
+        //insert
+        try{
+            review = new Review(1, "comment", "game1", "user1");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        inserted = accessReviews.insertReview(review);
+        assertTrue(inserted);
+        allReviews = accessReviews.getAllReviews();
+        assertTrue(allReviews.size() >= 1 );
+        assertTrue(allReviews.contains(review));
 
+        try{
+            review2 = new Review(2, "comment2", "game1", "user2");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        inserted = accessReviews.insertReview(review2);
+        assertTrue(inserted);
+        allReviews = accessReviews.getAllReviews();
+        assertTrue(allReviews.size() >= 2);
+        assertTrue(allReviews.contains(review2));
+
+        int numReviewsGame1 = accessReviews.getReviewNumByGame("game1");
+        assertTrue(numReviewsGame1 >= 2);
+
+        allReviews = accessReviews.getReviewsByGame("game1");
+        assertTrue(allReviews.size() >= 2);
+        assertTrue(allReviews.contains(review));
+        assertTrue(allReviews.contains(review2));
+
+        allReviews = accessReviews.getReviewsByUser("user1");
+        assertTrue(allReviews.size() >= 1);
+        assertTrue(allReviews.contains(review));
+
+        allReviews = accessReviews.getReviewsByUser("user2");
+        assertTrue(allReviews.size() >= 1);
+        assertTrue(allReviews.contains(review2));
+
+        //udpate
+        try{
+            review2 = new Review(2, "differentComment", "game1", "user1");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        updated = accessReviews.updateReview(review2);
+        assertTrue(updated);
+        review2 = accessReviews.getReviewById(2);
+        assertEquals("differentComment", review2.getComment());
+        assertEquals("game1", review2.getGameName());
+        assertEquals("user1", review2.getUserID());
+
+        //delete
+        int numReviewsPreDelete = accessReviews.getAllReviews().size();
+        deleted = accessReviews.deleteReview(review);
+        assertTrue(deleted);
+        allReviews = accessReviews.getAllReviews();
+        assertFalse(allReviews.contains(review));
+        assertEquals(numReviewsPreDelete-1, allReviews.size());
+
+        accessReviews.clear();
+        assertTrue(accessReviews.getAllReviews().isEmpty());
     }
 
     @Test
     public void testAccessUsers(){
         className = "AccessUsers";
-        //representative test cases
+        accessUsers = new AccessUsers();
+        List<User> allUsers;
+        User user = null;
+        User user2 = null;
+        User duplicate = null;
 
+        //insert
+        try{
+            user = new Guest();
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        inserted = accessUsers.insertUser(user);
+        assertTrue(inserted);
+
+        try{
+            user2 = new RegisteredUser("newUser", "newPass");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        inserted = accessUsers.insertUser(user2);
+        assertTrue(inserted);
+
+        //duplicate user
+        try{
+            duplicate = new RegisteredUser("newUser", "anotherPass");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        inserted = accessUsers.insertUser(duplicate);
+        assertFalse(inserted);
+
+        allUsers = accessUsers.getAllUsers();
+        assertTrue(allUsers.size() >= 2);
+        assertTrue(allUsers.contains(user));
+        assertTrue(allUsers.contains(user2));
+
+        User guest = accessUsers.getUserByID("Guest");
+        assertEquals(guest, user);
+
+        accessUsers.setActiveUser(user2);
+        user2 = accessUsers.getActiveUser();
+        assertEquals("newUser", user2.getUserID());
+
+        allUsers = accessUsers.getUsersByIDImplicit("new");
+        assertEquals(1, allUsers.size());
+        assertTrue(allUsers.contains(user2));
+
+        //update
+        try{
+            user2 = new RegisteredUser("newUser", "changedPassword");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        updated = accessUsers.updateUser(user2);
+        assertTrue(updated);
+        duplicate = accessUsers.getUserByID("newUser");
+        assertEquals(user2, duplicate);
+        assertTrue(accessUsers.getAllUsers().contains(user2));
+
+        //delete
+        int numUsersPreDelete = accessUsers.getAllUsers().size();
+        deleted = accessUsers.deleteUser(user);
+        assertTrue(deleted);
+        assertFalse(accessUsers.getAllUsers().contains(user));
+        deleted = accessUsers.deleteUser(user2);
+        assertTrue(deleted);
+        assertFalse(accessUsers.getAllUsers().contains(user2));
+        assertEquals(numUsersPreDelete-2, accessUsers.getAllUsers().size());
     }
 
     @Test
     public void testAccessVoteReplys(){
         className = "AccessVoteReplys";
-        //representative test cases
+        accessVoteReplys = new AccessVoteReplys();
+        accessPosts = new AccessPosts();
+        accessReplys = new AccessReplys();
+        List<VoteReply> allVoteReps;
+        VoteReply voteReply;
+        VoteReply test;
+        Post post = null;
+        Reply reply = null;
 
+        //getvotereplysbyreplyID
+        //getvoteReply
+
+        //must have a post, and a reply to that post to vote on
+        try{
+            post = new Post(2,"title", "content", "user2");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        inserted = accessPosts.insertPost(post);
+        assertTrue(inserted);
+        try{
+            reply = new Reply(5, "content", "user1", 2);
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        inserted = accessReplys.insertReply(reply);
+        assertTrue(inserted);
+
+        //insert
+        voteReply = new VoteReply(new Upvote("user2"), reply.getID());
+        inserted = accessVoteReplys.insertVoteReply(voteReply);
+        assertTrue(inserted);
+        test = accessVoteReplys.getVoteReply("user2", reply.getID());
+        assertEquals(voteReply, test);
+        allVoteReps = accessVoteReplys.getVoteReplysByReply(reply.getID());
+        assertTrue(allVoteReps.size() >= 1);
+        assertTrue(allVoteReps.contains(voteReply));
+
+        //update
+        voteReply = new VoteReply(new Downvote("user2"), reply.getID());
+        updated = accessVoteReplys.updateVoteReply(voteReply);
+        assertTrue(updated);
+        test = accessVoteReplys.getVoteReply("user2", reply.getID());
+        assertEquals(test, voteReply);
+        assertEquals(-1, test.getVoteI().getValue()); //it is now a downvote
+        allVoteReps = accessVoteReplys.getVoteReplysByReply(reply.getID());
+        assertTrue(allVoteReps.size() >= 1);
+        assertTrue(allVoteReps.contains(test));
+
+        //delete
+        deleted = accessVoteReplys.deleteVoteReply(voteReply);
+        assertTrue(deleted);
+        voteReply = accessVoteReplys.getVoteReply("user2", reply.getID());
+        assertNull(voteReply);
+        allVoteReps = accessVoteReplys.getVoteReplysByReply(reply.getID());
+
+        //undo changes
+        deleted = accessReplys.deleteReply(reply);
+        assertTrue(deleted);
+        deleted = accessPosts.deletePost(post);
+        assertTrue(deleted);
+        accessVoteReplys.clear();
     }
 }

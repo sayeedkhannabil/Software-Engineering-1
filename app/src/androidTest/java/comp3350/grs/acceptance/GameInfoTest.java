@@ -14,6 +14,8 @@ import comp3350.grs.presentation.MainActivity;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.action.ViewActions.swipeLeft;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -87,7 +89,7 @@ public class GameInfoTest {
 
     @Test
     public void testReadGenre(){
-        //todo scroll genre
+        //scroll genre
         onView(withText("CONTINUE AS GUEST")).check(matches(isDisplayed()));
         onView(withText("CONTINUE AS GUEST")).perform(click());
         onView(withText("Enter Game Gallery")).check(matches(isDisplayed()));
@@ -98,39 +100,18 @@ public class GameInfoTest {
         onView(withText("ARK: Survival Evolved")).perform(click());
         onView(withText("ARK: Survival Evolved")).check(matches(isDisplayed()));
         onView(withId(R.id.genre_wrapper)).check(matches(isDisplayed()));
+        onView(withId(R.id.scroll_genre_wrapper)).perform(swipeLeft());
+        onView(withText("Sandbox")).perform(scrollTo(),click());
 
         Espresso.pressBack();
         onView(withText("Game Gallery")).check(matches(isDisplayed()));
 
-        onView(withText("Arma 3")).check(matches(isDisplayed()));;
+        onView(withText("Arma 3")).check(matches(isDisplayed()));
         onView(withText("Arma 3")).perform(click());
         onView(withText("Arma 3")).check(matches(isDisplayed()));
         onView(withId(R.id.genre_wrapper)).check(matches(isDisplayed()));
-
-        Espresso.pressBack();
-        onView(withText("Game Gallery")).check(matches(isDisplayed()));
-
-        onView(withText("CONTINUE AS GUEST")).check(matches(isDisplayed()));
-        onView(withText("CONTINUE AS GUEST")).perform(click());
-        onView(withText("Enter Game Gallery")).check(matches(isDisplayed()));
-        onView(withText("Enter Game Gallery")).perform(click());
-        onView(withText("Game Gallery")).check(matches(isDisplayed()));
-
-        onView(withText("ARK: Survival Evolved")).check(matches(isDisplayed()));
-        onView(withText("ARK: Survival Evolved")).perform(click());
-        onView(withText("ARK: Survival Evolved")).check(matches(isDisplayed()));
-        onView(withId(R.id.genre_wrapper)).check(matches(isDisplayed()));
-
-        Espresso.pressBack();
-        onView(withText("Game Gallery")).check(matches(isDisplayed()));
-
-        onView(withText("Arma 3")).check(matches(isDisplayed()));;
-        onView(withText("Arma 3")).perform(click());
-        onView(withText("Arma 3")).check(matches(isDisplayed()));
-        onView(withId(R.id.genre_wrapper)).check(matches(isDisplayed()));
-
-        Espresso.pressBack();
-        onView(withText("Game Gallery")).check(matches(isDisplayed()));
+        onView(withId(R.id.scroll_genre_wrapper)).perform(swipeLeft());
+        onView(withText("Action")).perform(scrollTo(),click());
 
     }
 }

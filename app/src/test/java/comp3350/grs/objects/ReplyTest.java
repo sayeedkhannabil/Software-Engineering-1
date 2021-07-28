@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import comp3350.grs.exceptions.IncorrectFormat;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -24,6 +25,12 @@ public class ReplyTest {
             testReply = new Reply("reply2","user2",200);
             assertTrue(testReply.getPostID() == 200);
         } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        try{
+            testReply=new Reply("reply2","user2",100);
+            assertEquals(-1,testReply);
+        }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
     }
@@ -52,12 +59,7 @@ public class ReplyTest {
     @Test
     public void testNullReply(){
         Reply nullReply=null;
-        try{
-            nullReply=new Reply("reply2","user2",100);
-            assertNull(nullReply.getID());
-        }catch (IncorrectFormat incorrectFormat){
-            incorrectFormat.printStackTrace();
-        }
+
         nullReply=new Reply();
         assertNull(nullReply.getPostID());
         System.out.println("Finished testRating");

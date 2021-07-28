@@ -200,9 +200,12 @@ public class GameGallery extends AppCompatActivity {
         ImageView search_icon=new ImageView(this);
         search_icon.setImageResource(R.drawable.search);
         setIcon(search_icon);
+        search_icon.setId(R.id.search_icon);
         ImageView sort_icon=new ImageView(this);
         sort_icon.setImageResource(R.drawable.sort);
         setIcon(sort_icon);
+        sort_icon.setId(R.id.sort_icon);
+
 
         top_bar_layout.addView(search_icon,2);
         top_bar_layout.addView(sort_icon,2);

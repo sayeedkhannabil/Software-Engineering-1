@@ -14,9 +14,9 @@ import androidx.test.espresso.action.Tap;
 import androidx.test.espresso.matcher.ViewMatchers;
 
 import org.hamcrest.Matcher;
-
+//used to help testing the rating bar
 public final class SetRating implements ViewAction {
-    private float ratingValue;
+    private float ratingValue;//the rating value you want to set
 
     public SetRating(float ratingValue){
         this.ratingValue=ratingValue;
@@ -39,6 +39,8 @@ public final class SetRating implements ViewAction {
                 Tap.SINGLE,
                 new CoordinatesProvider() {
                     @Override
+                    //calculate the coordinations of the correct position to
+                    // click
                     public float[] calculateCoordinates(View view) {
                         int[] locationOnScreen = new int[2];
                         view.getLocationOnScreen(locationOnScreen);

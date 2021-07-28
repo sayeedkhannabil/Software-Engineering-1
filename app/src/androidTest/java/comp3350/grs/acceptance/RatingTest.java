@@ -37,7 +37,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.withHint;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-	@@ -25,12 +43,57 @@
+
+@RunWith(AndroidJUnit4.class)
+@MediumTest
 //user want to rate a game
 public class RatingTest {
 
@@ -95,7 +97,11 @@ public class RatingTest {
 
         onView(withText("CONTINUE AS GUEST")).check(matches(isDisplayed()));
         onView(withText("CONTINUE AS GUEST")).perform(click());
-	@@ -42,16 +105,16 @@ public void testRating() {
+        onView(withText("Enter Game Gallery")).check(matches(isDisplayed()));
+        onView(withText("Enter Game Gallery")).perform(click());
+        onView(withText("Game Gallery")).check(matches(isDisplayed()));
+
+        onView(withText("7 Days to Die")).check(matches(isDisplayed()));
         onView(withText("7 Days to Die")).perform(click());
         onView(withText("7 Days to Die")).check(matches(isDisplayed()));
 
@@ -112,7 +118,8 @@ public class RatingTest {
 
         Espresso.pressBack();
 
-	@@ -60,7 +123,7 @@ public void testRating() {
+        onView(withText("Arma 3")).check(matches(isDisplayed()));
+        onView(withText("Arma 3")).perform(click());
         onView(withText("Arma 3")).check(matches(isDisplayed()));
 
         onView(withId(R.id.ratingBar)).perform(click());
@@ -120,7 +127,9 @@ public class RatingTest {
 
         Espresso.pressBack();
 
-	@@ -70,15 +133,120 @@ public void testRating() {
+        onView(withText("Game Gallery")).check(matches(isDisplayed()));
+        onView(withText("Arma 3")).check(matches(isDisplayed()));
+        onView(withText("Arma 3")).perform(click());
         onView(withText("Arma 3")).check(matches(isDisplayed()));
         onView(withId(R.id.ratingBar)).check(matches(isDisplayed()));
 

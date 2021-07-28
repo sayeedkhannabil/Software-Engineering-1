@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import comp3350.grs.application.Main;
-import comp3350.grs.application.Services;
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Downvote;
 import comp3350.grs.objects.Game;
@@ -28,6 +27,7 @@ import comp3350.grs.objects.VoteReply;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -129,7 +129,9 @@ public class DataAccessITest{
         dataAccessTest.dataAccessI = dataAccess;
         dataAccessTest.before();
         dataAccessTest.testTypical();
+        dataAccessTest.before();
         dataAccessTest.testNull();
+        dataAccessTest.before();
         dataAccessTest.testEdge();
         dataAccessTest.afterClass();
     }
@@ -504,7 +506,10 @@ public class DataAccessITest{
         assertEquals("game1",gameNameList.get(0));
         gameNameList=dataAccessI.getGamesOrderByRequestNum(2);
         assertEquals(2,gameNameList.size());
-
+        success=dataAccessI.deleteRequest(request1);
+        assertTrue(success);
+        request= dataAccessI.getRequest("game1","user2");
+        assertNull(request);
 
 
         //test post
@@ -517,6 +522,20 @@ public class DataAccessITest{
             assertTrue(success);
             success=post1.equals(post2);
             assertFalse(success);
+            post3=new Post("post3","content3","user3");
+            success=dataAccessI.insertPost(post3);
+            assertTrue(success);
+            postList=dataAccessI.getPostsByUser("user3");
+            assertEquals(1,postList.size());
+            post1=new Post(100,"newPost","newContent","user2");
+            success=dataAccessI.updatePost(post1);
+            assertTrue(success);
+            post= dataAccessI.getPostByID(100);
+            assertEquals("newPost",post.getTitle());
+            assertEquals("newContent",post.getContent());
+            assertEquals("user2",post.getUserID());
+            postList=dataAccessI.getAllPosts();
+            assertEquals(3,postList.size());
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
@@ -531,6 +550,25 @@ public class DataAccessITest{
             assertTrue(success);
             success=reply1.equals(reply2);
             assertFalse(success);
+            reply3=new Reply("reply3","user3",100);
+            success=dataAccessI.insertReply(reply3);
+            assertTrue(success);
+            replyList= dataAccessI.getReplysByUser("user3");
+            assertEquals(1,replyList.size());
+            reply=replyList.get(0);
+            assertNotEquals(-1,reply.getID());
+            reply1=new Reply(1000,"newReply","user2",101);
+            dataAccessI.updateReply(reply1);
+            reply= dataAccessI.getReplyByID(1000);
+            assertEquals("newReply",reply.getContent());
+            assertEquals("user2",reply.getUserID());
+            assertEquals(101,reply.getPostID());
+            replyList=dataAccessI.getAllReplys();
+            assertEquals(3,replyList.size());
+            replyList= dataAccessI.getReplysByPost(101);
+            assertEquals(2,replyList.size());
+            replyList= dataAccessI.getReplysByUser("user2");
+            assertEquals(2,replyList.size());
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
@@ -693,7 +731,10 @@ public class DataAccessITest{
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
-        dataAccessI.insertUser(user1);
+        success= dataAccessI.insertUser(user1);
+        assertTrue(success);
+        success= dataAccessI.updateUser(user1);
+        assertTrue(success);
         userList=dataAccessI.getUsersByIDImplicit("");
         assertEquals(0,userList.size());
         user2= dataAccessI.getUserByID("");
@@ -843,12 +884,14 @@ public class DataAccessITest{
             incorrectFormat.printStackTrace();
         }
         try {
+            user=new Guest();
             user1=new RegisteredUser("user1","pass");
             user2=new RegisteredUser("user2","pass");
             user3=new RegisteredUser("user3","pass");
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
+        dataAccessI.insertUser(user);
         dataAccessI.insertUser(user1);
         dataAccessI.insertUser(user2);
         dataAccessI.insertUser(user3);
@@ -901,5 +944,15 @@ public class DataAccessITest{
 
         dataAccessI.deleteReply(reply1);
         dataAccessI.deletePost(post1);
+        user= dataAccessI.getUserByID("Guest");
+        assertNotNull(user);
+        user= dataAccessI.getUserByID("user1");
+        assertNotNull(user);
+        dataAccessI.deleteDatabase();
+        dataAccessI.open(Main.getDBPathName(Main.testDbName));
+        user= dataAccessI.getUserByID("Guest");
+        assertNotNull(user);
+        user= dataAccessI.getUserByID("user1");
+        assertNull(user);
     }
 }

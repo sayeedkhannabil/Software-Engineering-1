@@ -6,7 +6,6 @@ import comp3350.grs.exceptions.IncorrectFormat;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 public class ReplyTest {
@@ -29,7 +28,7 @@ public class ReplyTest {
         }
         try{
             testReply=new Reply("reply2","user2",100);
-            assertEquals(-1,testReply);
+            assertEquals(-1,testReply.getID());
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
@@ -61,8 +60,7 @@ public class ReplyTest {
         Reply nullReply=null;
 
         nullReply=new Reply();
-        assertNull(nullReply.getPostID());
-        System.out.println("Finished testRating");
+        assertEquals(-1,nullReply.getPostID());
     }
 
 }

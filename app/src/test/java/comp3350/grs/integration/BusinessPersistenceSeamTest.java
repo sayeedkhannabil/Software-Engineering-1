@@ -299,7 +299,7 @@ public class BusinessPersistenceSeamTest {
 
         //insert
         try{
-            reply = new Reply(5, "comment", "user1", 6);
+            reply = new Reply(5,"comment", "user1", 6);
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
@@ -310,7 +310,15 @@ public class BusinessPersistenceSeamTest {
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
-        inserted = accessReplys.insertReply(reply)
+        inserted = accessReplys.insertReply(reply);
+        assertTrue(inserted);
+        try{
+            reply = new Reply(5, "newComment", "user2", 4);
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        inserted = accessReplys.insertReply(reply);
+        assertFalse(inserted);
 
         accessReplys.clear();
         assertTrue(accessReplys.getAllReplys().isEmpty());

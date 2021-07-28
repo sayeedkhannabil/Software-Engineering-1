@@ -200,9 +200,13 @@ July 26: Katharine K finished writing tests for AccessRequestsTest
     (expected: 1 hour, actual: 2 hours)
 July 26: Katharine K finished writing tests for RequestTest
     (expected: 1 hour, actual: 1 hour)
+July 26: Gongyu Liao finished test for domain object Reply
+    (expected: 1 hour, actual: 40 minuates)
 July 27 Meeting: fix errors in test code, assign additional tasks
 July 27: Katharine K worked on test seams/integration tests
      (expected: 2 hours, actual: 3.5 hours) -- did not finish as expected
 July 28: Katharine K finished and fixed bugs for integration tests
      (expected: 2 hours, actual: 3 hours)
+July 28: Gongyu Liao finished acceptance test for review function (ReviewTest)
+     (expected: 1.5 hours, actual: 2 hours)
 

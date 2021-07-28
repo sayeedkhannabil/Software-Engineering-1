@@ -102,28 +102,28 @@ public class AccessVoteReplysTest {
         assertFalse(success);
         voteReply2= accessVoteReplys.getVoteReply("user1",0);
         assertEquals(voteReply1,voteReply2);
-        assertEquals(Vote.UP_VALUE,voteReply2);
+        assertEquals(Vote.UP_VALUE,voteReply2.getVoteI().getValue());
         voteReply1=new VoteReply(new Downvote("user1"),0);
         success=accessVoteReplys.updateVoteReply(voteReply1);
         assertTrue(success);
         voteReply2= accessVoteReplys.getVoteReply("user1",0);
         assertEquals(voteReply1,voteReply2);
-        assertEquals(Vote.DOWN_VALUE,voteReply2);
+        assertEquals(Vote.DOWN_VALUE,voteReply2.getVoteI().getValue());
         voteReply2=new VoteReply(new Downvote("user1"),0);
         voteReply3=new VoteReply(new Downvote("user1"),1);
         success=accessVoteReplys.insertVoteReply(voteReply2);
-        assertTrue(success);
+        assertFalse(success);
         success=accessVoteReplys.insertVoteReply(voteReply3);
         assertTrue(success);
         voteReplyList=accessVoteReplys.getVoteReplysByReply(0);
-        assertEquals(2,voteReplyList.size());
+        assertEquals(1,voteReplyList.size());
         voteReplyList=accessVoteReplys.getVoteReplysByReply(1);
         assertEquals(1,voteReplyList.size());
         accessVoteReplys.deleteVoteReply(voteReply1);
         voteReply= accessVoteReplys.getVoteReply("user1",0);
         assertNull(voteReply);
         voteReplyList=accessVoteReplys.getVoteReplysByReply(0);
-        assertEquals(1,voteReplyList.size());
+        assertTrue(voteReplyList.isEmpty());
     }
 
     @Test

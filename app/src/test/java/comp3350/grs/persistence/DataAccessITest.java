@@ -129,6 +129,9 @@ public class DataAccessITest{
         dataAccessTest.dataAccessI = dataAccess;
         dataAccessTest.before();
         dataAccessTest.testTypical();
+        dataAccessTest.testNull();
+        dataAccessTest.testEdge();
+        dataAccessTest.afterClass();
     }
 
     @Test
@@ -645,8 +648,6 @@ public class DataAccessITest{
         rating2= dataAccessI.getRating(null,null);
         assertNull(rating2);
 
-        dataAccessI.close();
-        dataAccessI= Services.createDataAccess(new DataAccessStub());
         dataAccessI.clearAllData();
         try {
             user1=new RegisteredUser("myUserID","myPass");
@@ -870,12 +871,17 @@ public class DataAccessITest{
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
+        dataAccessI.insertPost(post1);
         try {
             reply1=new Reply(10,"content","user1",10);
         } catch (IncorrectFormat incorrectFormat) {
             incorrectFormat.printStackTrace();
         }
+        dataAccessI.insertReply(reply1);
+
         voteReply1=new VoteReply(new Upvote("user1"),10);
+        assertNotNull(voteReply1);
+        assertTrue(voteReply1.valid());
         voteReply2=new VoteReply(new Downvote("user1"),10);
         success=dataAccessI.insertVoteReply(voteReply1);
         assertTrue(success);
@@ -892,5 +898,8 @@ public class DataAccessITest{
         assertTrue(success);
         voteReplyList=dataAccessI.getVoteReplysByReply(10);
         assertEquals(0,voteReplyList.size());
+
+        dataAccessI.deleteReply(reply1);
+        dataAccessI.deletePost(post1);
     }
 }

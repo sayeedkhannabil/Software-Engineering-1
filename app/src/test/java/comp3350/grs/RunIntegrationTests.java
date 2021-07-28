@@ -1,16 +1,14 @@
 package comp3350.grs;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-import comp3350.grs.integration.IntegrationTests;
+import comp3350.grs.integration.BusinessPersistenceSeamTest;
+import comp3350.grs.integration.DataAccessHSQLDBTest;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        DataAccessHSQLDBTest.class, BusinessPersistenceSeamTest.class,
+})
 
 public class RunIntegrationTests {
-    public static TestSuite suite;
-
-    public static Test suite()
-    {
-        suite = new TestSuite("Integration tests");
-        suite.addTest(IntegrationTests.suite());
-        return suite;
-    }
 }

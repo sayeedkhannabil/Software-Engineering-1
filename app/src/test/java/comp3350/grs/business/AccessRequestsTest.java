@@ -69,14 +69,6 @@ public class AccessRequestsTest {
             incorrectFormat.printStackTrace();
         }
 
-        //check if game exists (shouldn't)
-        try {
-            exists = requestsAccess.checkGameExists(newRequest);
-        }
-        catch (Duplicate duplicate){
-            duplicate.printStackTrace();
-        }
-
         assertFalse(exists); // game should not exist in database
 
         try {

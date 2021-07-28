@@ -173,6 +173,7 @@ public class GamePage extends AppCompatActivity {
                         //show a input box used to write review
                         textInputEditText=
                                 new TextInputEditText(GamePage.this);
+                        textInputEditText.setId(R.id.write_review_edittext);
                         textInputEditText.setTextSize(TypedValue.COMPLEX_UNIT_SP,30);
                         textInputLayout.addView(textInputEditText);
                         review_wrapper.addView(textInputLayout);

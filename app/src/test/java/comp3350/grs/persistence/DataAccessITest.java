@@ -129,6 +129,11 @@ public class DataAccessITest{
         dataAccessTest.dataAccessI = dataAccess;
         dataAccessTest.before();
         dataAccessTest.testTypical();
+        dataAccessTest.before();
+        dataAccessTest.testNull();
+        dataAccessTest.before();
+        dataAccessTest.testEdge();
+        dataAccessTest.afterClass();
     }
 
     @Test
@@ -645,8 +650,6 @@ public class DataAccessITest{
         rating2= dataAccessI.getRating(null,null);
         assertNull(rating2);
 
-        dataAccessI.close();
-        dataAccessI= Services.createDataAccess(new DataAccessStub());
         dataAccessI.clearAllData();
         try {
             user1=new RegisteredUser("myUserID","myPass");
@@ -876,6 +879,8 @@ public class DataAccessITest{
             incorrectFormat.printStackTrace();
         }
         voteReply1=new VoteReply(new Upvote("user1"),10);
+        assertNotNull(voteReply1);
+        assertTrue(voteReply1.valid());
         voteReply2=new VoteReply(new Downvote("user1"),10);
         success=dataAccessI.insertVoteReply(voteReply1);
         assertTrue(success);

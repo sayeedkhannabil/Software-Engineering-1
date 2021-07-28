@@ -110,5 +110,27 @@ public class GameInfoTest {
         Espresso.pressBack();
         onView(withText("Game Gallery")).check(matches(isDisplayed()));
 
+        onView(withText("CONTINUE AS GUEST")).check(matches(isDisplayed()));
+        onView(withText("CONTINUE AS GUEST")).perform(click());
+        onView(withText("Enter Game Gallery")).check(matches(isDisplayed()));
+        onView(withText("Enter Game Gallery")).perform(click());
+        onView(withText("Game Gallery")).check(matches(isDisplayed()));
+
+        onView(withText("ARK: Survival Evolved")).check(matches(isDisplayed()));
+        onView(withText("ARK: Survival Evolved")).perform(click());
+        onView(withText("ARK: Survival Evolved")).check(matches(isDisplayed()));
+        onView(withId(R.id.genre_wrapper)).check(matches(isDisplayed()));
+
+        Espresso.pressBack();
+        onView(withText("Game Gallery")).check(matches(isDisplayed()));
+
+        onView(withText("Arma 3")).check(matches(isDisplayed()));;
+        onView(withText("Arma 3")).perform(click());
+        onView(withText("Arma 3")).check(matches(isDisplayed()));
+        onView(withId(R.id.genre_wrapper)).check(matches(isDisplayed()));
+
+        Espresso.pressBack();
+        onView(withText("Game Gallery")).check(matches(isDisplayed()));
+
     }
 }

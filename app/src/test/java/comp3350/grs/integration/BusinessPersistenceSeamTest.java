@@ -660,6 +660,7 @@ public class BusinessPersistenceSeamTest {
         voteReply = accessVoteReplys.getVoteReply(user2.getUserID(), reply.getID());
         assertNull(voteReply);
         allVoteReps = accessVoteReplys.getVoteReplysByReply(reply.getID());
+        assertTrue(allVoteReps.isEmpty());
 
         //undo changes
         deleted = accessReplys.deleteReply(reply);

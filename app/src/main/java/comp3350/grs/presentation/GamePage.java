@@ -66,7 +66,7 @@ public class GamePage extends AppCompatActivity {
         accessGames = new AccessGames();
         accessRatings=new AccessRatings();
         accessReviews=new AccessReviews();
-        game = accessGames.findGame(game_name);
+        game = accessGames.getGameByName(game_name);
         TextView game_text = (TextView) findViewById(R.id.textView5);
         TextView dev_text = (TextView) findViewById(R.id.textView6);
         TextView des_text = (TextView) findViewById(R.id.game_page_description_text);

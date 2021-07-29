@@ -13,7 +13,6 @@ import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Rating;
 import comp3350.grs.objects.Review;
-import comp3350.grs.persistence.DataAccessI;
 import comp3350.grs.persistence.DataAccessStub;
 
 import static org.junit.Assert.*;
@@ -77,8 +76,8 @@ public class AccessGamesTest {
         }
 
         gameAccess.insertGame(typicalGame);
-        assertTrue(gameAccess.findGame("Game1") != null); //game is in db
-        assertEquals(gameAccess.findGame("Game1"), typicalGame);
+        assertTrue(gameAccess.getGameByName("Game1") != null); //game is in db
+        assertEquals(gameAccess.getGameByName("Game1"), typicalGame);
         numGames = gameAccess.getAllGames().size();
         assertTrue(numGames >= 1);
 
@@ -90,8 +89,8 @@ public class AccessGamesTest {
         }
         boolean inserted = gameAccess.insertGame(typicalGameSimple);
         assertTrue(inserted);
-        assertNotNull(gameAccess.findGame("Game2"));
-        assertEquals(gameAccess.findGame("Game2"),typicalGameSimple);
+        assertNotNull(gameAccess.getGameByName("Game2"));
+        assertEquals(gameAccess.getGameByName("Game2"),typicalGameSimple);
         numGames = gameAccess.getAllGames().size();
         assertTrue(numGames >= 2);
 
@@ -106,7 +105,7 @@ public class AccessGamesTest {
         update = gameAccess.updateGame(typicalGameSimple);
         assertTrue(update);
 
-        found = gameAccess.findGame("Game2");
+        found = gameAccess.getGameByName("Game2");
         assertTrue(found != null);
         assertEquals(found,typicalGameSimple);
 
@@ -118,7 +117,7 @@ public class AccessGamesTest {
 
         delete = gameAccess.deleteGame(typicalGame);
         assertTrue(delete);
-        found = gameAccess.findGame("Game1");
+        found = gameAccess.getGameByName("Game1");
         assertTrue(found == null);
         int numGamesAfterDel = gameAccess.getAllGames().size();
         assertTrue(numGames - 1 == numGamesAfterDel);
@@ -243,7 +242,7 @@ public class AccessGamesTest {
         assertFalse(insert);
         assertFalse(insert2);
 
-        found = gameAccess.findGame(null);
+        found = gameAccess.getGameByName(null);
         assertNull(found);
 
         List<Game> implicitGames = gameAccess.getGamesByNameImplicit("");

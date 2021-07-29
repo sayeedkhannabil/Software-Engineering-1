@@ -1,13 +1,11 @@
 package comp3350.grs.integration;
 
 import org.junit.After;
-import org.junit.Test;
 import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
@@ -23,7 +21,6 @@ import comp3350.grs.exceptions.Duplicate;
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Downvote;
 import comp3350.grs.objects.Game;
-import comp3350.grs.objects.Guest;
 import comp3350.grs.objects.Post;
 import comp3350.grs.objects.Rating;
 import comp3350.grs.objects.RegisteredUser;
@@ -33,6 +30,13 @@ import comp3350.grs.objects.Review;
 import comp3350.grs.objects.Upvote;
 import comp3350.grs.objects.User;
 import comp3350.grs.objects.VoteReply;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class BusinessPersistenceSeamTest {
     private String className;
@@ -133,7 +137,7 @@ public class BusinessPersistenceSeamTest {
         }
         updated = accessGames.updateGame(game);
         assertTrue(updated);
-        game = accessGames.findGame("newGame");
+        game = accessGames.getGameByName("newGame");
         assertEquals("newGame", game.getName());
         assertEquals("different", game.getDev());
         assertEquals("different", game.getDescription());
@@ -200,9 +204,21 @@ public class BusinessPersistenceSeamTest {
         allGames = accessGames.getAllGames();
         assertFalse(allGames.contains(game));
         assertEquals(listSize-1, allGames.size());
-        assertNull(accessGames.findGame("newGame"));
+        assertNull(accessGames.getGameByName("newGame"));
         deleted = accessGames.deleteGame(game2);
         assertTrue(deleted);
+
+        try {
+            game=new Game("my game");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        accessGames.insertGame(game);
+        game=accessGames.getGameByName("my game");
+        assertNotNull(game);
+        accessGames.clear();
+        game=accessGames.getGameByName("my game");
+        assertNull(game);
     }
 
     @Test
@@ -453,6 +469,7 @@ public class BusinessPersistenceSeamTest {
         allRequests = accessRequests.getAllRequests();
         assertFalse(allRequests.contains(request));
         assertEquals(numReqsBeforeDel-1, allRequests.size());
+
     }
 
     @Test

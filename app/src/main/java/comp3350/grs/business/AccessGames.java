@@ -162,7 +162,7 @@ public class AccessGames
         return gameList;
    }
 
-    public Game findGame(String name) {
+    public Game getGameByName(String name) {
         return dataAccessI.getGameByName(name);
     }
 

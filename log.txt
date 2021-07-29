@@ -181,6 +181,7 @@ July 20 Shiqing Guo extract post and reply to make ForumContent(expected:30mins 
 July 20 Shiqing Guo created VoteI,VoteReply,Upvote,Downvote,Vote.(expected:3 hours,actual:2.5 hours)
 July 20 Shiqing Guo add methods to sql database relating to vote.(expected:2 hours, actual:1.5 hours)
 July 20: Hasin I updated Post object class.
+	(expected:30 min, actual: 1 hour)
 July 20: Gongyu Liao finished Reply and Feedback object class.
 	(expected: 2 hours, actual: 2 hours)
 july 20: group meeting: decide to start writing test, as well as developing new

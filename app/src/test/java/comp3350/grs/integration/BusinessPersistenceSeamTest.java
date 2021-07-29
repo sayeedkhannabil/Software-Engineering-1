@@ -605,9 +605,6 @@ public class BusinessPersistenceSeamTest {
         Post post = null;
         Reply reply = null;
 
-        //getvotereplysbyreplyID
-        //getvoteReply
-
         //must have a post, and a reply to that post to vote on
         try{
             post = new Post(2,"title", "content", "user2");

@@ -21,12 +21,19 @@ import comp3350.grs.persistence.DataAccessI;
 import comp3350.grs.persistence.DataAccessObject;
 import comp3350.grs.presentation.MainActivity;
 
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.typeText;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
+//import static androidx.test.espresso.Espresso.onView;
+//import static androidx.test.espresso.action.ViewActions.click;
+//import static androidx.test.espresso.action.ViewActions.typeText;
+//import static androidx.test.espresso.assertion.ViewAssertions.matches;
+//import static androidx.test.espresso.matcher.ViewMatchers.withId;
+//import static androidx.test.espresso.matcher.ViewMatchers.withText;
+//import static androidx.test.espresso.matcher.ViewMatchers.*;
+
+import static androidx.test.espresso.Espresso.*;
+import static androidx.test.espresso.action.ViewActions.*;
+import static androidx.test.espresso.assertion.ViewAssertions.*;
+import static androidx.test.espresso.matcher.ViewMatchers.*;
+import static org.hamcrest.Matchers.*;
 
 
 @RunWith(AndroidJUnit4.class)

@@ -120,14 +120,6 @@ public class BusinessPersistenceSeamTest {
         assertNotNull(allGames);
         listSize = allGames.size();
         assertTrue(listSize > 0);
-        //game = accessGames.getSequential();
-        //gameName = game.getName();
-        //assertEquals(game, accessGames.findGame(gameName));
-        //assertTrue(allGames.contains(game));
-
-        //insert
-        //inserted = accessGames.insertGame(game);
-        //assertFalse(inserted); //because the game already exists
 
         //update
         try {
@@ -181,7 +173,7 @@ public class BusinessPersistenceSeamTest {
         assertEquals(game2, allGames.get(0));
 
         allGames = accessGames.ascendingRatingSort();
-        assertNotEquals(game, allGames.get(0));
+        assertNotEquals(game2, allGames.get(0));
 
         //ascending + descending review sort
         allGames = accessGames.descendingReviewSort();

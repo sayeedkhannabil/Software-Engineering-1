@@ -58,12 +58,12 @@ public class BusinessPersistenceSeamTest {
         Services.closeDataAccess();
         Services.createDataAccess(Main.testDbName);
         accessGames = new AccessGames();
-        accessPosts = null;
+        accessUsers = new AccessUsers();
+        accessReviews = new AccessReviews();
         accessRatings = new AccessRatings();
+        accessPosts = null;
         accessReplys = null;
         accessRequests = null;
-        accessReviews = new AccessReviews();
-        accessUsers = new AccessUsers();
         accessVoteReplys = null;
         inserted = false;
         updated = false;
@@ -107,8 +107,6 @@ public class BusinessPersistenceSeamTest {
     @Test
     public void testAccessGames(){
         className = "AccessGames";
-        accessRatings = new AccessRatings();
-        accessReviews = new AccessReviews();
 
         List<Game> allGames;
         Rating rating = null;
@@ -116,10 +114,13 @@ public class BusinessPersistenceSeamTest {
         String gameName;
         int listSize;
 
+        //games are inserted in before()
         allGames = accessGames.getAllGames();
         assertNotNull(allGames);
         listSize = allGames.size();
-        assertTrue(listSize > 0);
+        assertTrue(listSize >= 2); //should be at least the two games we inserted
+        assertTrue(allGames.contains(game));
+        assertTrue(allGames.contains(game2));
 
         //update
         try {
@@ -186,6 +187,7 @@ public class BusinessPersistenceSeamTest {
         allGames = accessGames.getGamesByNameImplicit("new");
         assertTrue(allGames.size() >=2 ); //all games begin with game
 
+        //have to delete these before we can delete game (they depend on the game(s))
         accessRatings.clear();
         accessReviews.clear();
 
@@ -208,9 +210,11 @@ public class BusinessPersistenceSeamTest {
         accessGames.insertGame(game);
         game=accessGames.getGameByName("my game");
         assertNotNull(game);
+
         accessGames.clear();
         game=accessGames.getGameByName("my game");
         assertNull(game);
+        assertTrue(accessGames.getAllGames().isEmpty());
     }
 
     @Test
@@ -330,7 +334,9 @@ public class BusinessPersistenceSeamTest {
         assertTrue(allRatings.isEmpty());
         allRatings = accessRatings.getAllRatings();
         assertTrue(allRatings.isEmpty());
+
         accessRatings.clear();
+        assertTrue(accessRatings.getAllRatings().isEmpty());
     }
 
     @Test
@@ -413,6 +419,9 @@ public class BusinessPersistenceSeamTest {
         assertTrue(accessReplys.getAllReplys().isEmpty());
         deleted = accessPosts.deletePost(postToReply);
         assertTrue(deleted);
+
+        accessReplys.clear();
+        assertTrue(accessReplys.getAllReplys().isEmpty());
     }
 
     @Test
@@ -462,6 +471,8 @@ public class BusinessPersistenceSeamTest {
         assertFalse(allRequests.contains(request));
         assertEquals(numReqsBeforeDel-1, allRequests.size());
 
+        accessRequests.clear();
+        assertTrue(accessRequests.getAllRequests().isEmpty());
     }
 
     @Test
@@ -589,6 +600,9 @@ public class BusinessPersistenceSeamTest {
         assertTrue(deleted);
         assertFalse(accessUsers.getAllUsers().contains(newUser1));
         assertEquals(numUsersPreDelete-1, accessUsers.getAllUsers().size());
+
+        accessUsers.clear();
+        assertTrue(accessUsers.getAllUsers().isEmpty());
     }
 
     @Test
@@ -652,8 +666,11 @@ public class BusinessPersistenceSeamTest {
         assertTrue(deleted);
         deleted = accessPosts.deletePost(post);
         assertTrue(deleted);
+
         accessVoteReplys.clear();
         accessReplys.clear();
         accessPosts.clear();
+        assertTrue(accessReplys.getAllReplys().isEmpty());
+        assertTrue(accessPosts.getAllPosts().isEmpty());
     }
 }

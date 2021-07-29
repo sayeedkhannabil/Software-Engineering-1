@@ -53,7 +53,6 @@ public class DataAccessITest{
     private List<VoteReply> voteReplyList;
     private String userID,userID2,password,password2,gameName,developer,
             description,reviewContent;
-    private int reviewID;
     private double price;
     private boolean success;
     private List<String> genreList;
@@ -86,7 +85,6 @@ public class DataAccessITest{
         developer=null;
         description=null;
         price=0.0;
-        reviewID=0;
         review1=null;
         review2=null;
         review3=null;

@@ -220,7 +220,7 @@ July 27: Hasin I updated the acceptance test for ratingTest
 	(expected 2 hours, actual 3 hours)
 July 27: Hasin I updated the GameInfoTest ( used testDB instead of Maindb)
 	(expected 1 hour, actual: 2 hours)
-July 27: Hasin I updated the GameInfoTest ( added test for scroll bar)
+July 28: Hasin I updated the GameInfoTest ( added test for scroll bar)
 	(expected 2 hour, actual: 2 hours)
 July 28: Katharine K finished and fixed bugs for integration tests
      (expected: 2 hours, actual: 3 hours)

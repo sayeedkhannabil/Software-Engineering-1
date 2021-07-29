@@ -2,22 +2,20 @@ package comp3350.grs.persistence;
 
 // the stub database which stores users and games
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import comp3350.grs.exceptions.IncorrectFormat;
+import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Guest;
 import comp3350.grs.objects.Post;
 import comp3350.grs.objects.Rating;
+import comp3350.grs.objects.RegisteredUser;
 import comp3350.grs.objects.Reply;
 import comp3350.grs.objects.Request;
-import comp3350.grs.objects.RegisteredUser;
-import comp3350.grs.objects.User;
-import comp3350.grs.objects.Game;
 import comp3350.grs.objects.Review;
+import comp3350.grs.objects.User;
 import comp3350.grs.objects.VoteReply;
 
 public class DataAccessStub extends DataAccess implements DataAccessI {
@@ -35,6 +33,7 @@ public class DataAccessStub extends DataAccess implements DataAccessI {
 	public void open(String dbPath) {
 		super.open(dbPath);
 		dbType = "stub";
+		System.out.println("Opened " + dbType + " database " + dbPath);
 	}
 
 	public void close() {

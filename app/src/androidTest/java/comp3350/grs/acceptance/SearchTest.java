@@ -7,6 +7,7 @@ import androidx.test.filters.MediumTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,7 +35,7 @@ import static org.hamcrest.Matchers.allOf;
 @MediumTest
 //user want to search a game
 public class SearchTest {
-    private DataAccessI dataAccessI;
+    private static DataAccessI dataAccessI;
 
     @Rule
     public ActivityTestRule<MainActivity> homeActivity =
@@ -47,6 +48,11 @@ public class SearchTest {
         dataAccessI.open(Main.getDBPathName(Main.testDbName));
         dataAccessI.deleteDatabase();
         Services.createDataAccess(dataAccessI);
+    }
+
+    @AfterClass
+    public static void afterClass(){
+        dataAccessI.close();
     }
 
     @Test

@@ -30,6 +30,7 @@ import comp3350.grs.objects.Review;
 import comp3350.grs.objects.Upvote;
 import comp3350.grs.objects.User;
 import comp3350.grs.objects.VoteReply;
+import comp3350.grs.persistence.DataAccessI;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -49,6 +50,7 @@ public class BusinessPersistenceSeamTest {
     private AccessReviews accessReviews;
     private AccessUsers accessUsers;
     private AccessVoteReplys accessVoteReplys;
+    private DataAccessI dataAccessI;
     Game game, game2;
     User user1, user2;
 
@@ -57,6 +59,8 @@ public class BusinessPersistenceSeamTest {
         System.out.println("\nStarting Integration test");
         Services.closeDataAccess();
         Services.createDataAccess(Main.testDbName);
+        dataAccessI=Services.getDataAccess();
+        dataAccessI.clearAllData();
         accessGames = new AccessGames();
         accessPosts = null;
         accessRatings = new AccessRatings();
@@ -462,6 +466,21 @@ public class BusinessPersistenceSeamTest {
         assertFalse(allRequests.contains(request));
         assertEquals(numReqsBeforeDel-1, allRequests.size());
 
+        try {
+            request=new Request("my game", user1.getUserID());
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        try {
+            accessRequests.insertRequest(request);
+        } catch (Duplicate duplicate) {
+            duplicate.printStackTrace();
+        }
+        request2=accessRequests.getRequest("my game", user1.getUserID());
+        assertNotNull(request2);
+        accessRequests.clear();
+        request2=accessRequests.getRequest("my game", user1.getUserID());
+        assertNull(request2);
     }
 
     @Test
@@ -589,6 +608,18 @@ public class BusinessPersistenceSeamTest {
         assertTrue(deleted);
         assertFalse(accessUsers.getAllUsers().contains(newUser1));
         assertEquals(numUsersPreDelete-1, accessUsers.getAllUsers().size());
+
+        try {
+            user1=new RegisteredUser("myUserId","pass");
+        } catch (IncorrectFormat incorrectFormat) {
+            incorrectFormat.printStackTrace();
+        }
+        accessUsers.insertUser(user1);
+        user2=accessUsers.getUserByID("myUserId");
+        assertNotNull(user2);
+        accessUsers.clear();
+        user2=accessUsers.getUserByID("myUserId");
+        assertNull(user2);
     }
 
     @Test

@@ -1,7 +1,5 @@
 package comp3350.grs.acceptance;
 
-import android.os.IBinder;
-
 import androidx.test.espresso.Espresso;
 import androidx.test.filters.MediumTest;
 import androidx.test.rule.ActivityTestRule;
@@ -20,26 +18,25 @@ import comp3350.grs.R;
 import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
 import comp3350.grs.business.AccessGames;
-import comp3350.grs.business.AccessPosts;
-import comp3350.grs.business.AccessRatings;
-import comp3350.grs.business.AccessReplys;
 import comp3350.grs.business.AccessReviews;
 import comp3350.grs.business.AccessUsers;
-import comp3350.grs.business.AccessVoteReplys;
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Game;
-import comp3350.grs.objects.Rating;
 import comp3350.grs.objects.RegisteredUser;
 import comp3350.grs.objects.Review;
 import comp3350.grs.objects.User;
 import comp3350.grs.persistence.DataAccessI;
 import comp3350.grs.persistence.DataAccessObject;
 import comp3350.grs.presentation.MainActivity;
-import static androidx.test.espresso.Espresso.*;
-import static androidx.test.espresso.action.ViewActions.*;
-import static androidx.test.espresso.assertion.ViewAssertions.*;
-import static androidx.test.espresso.matcher.ViewMatchers.*;
-import static org.hamcrest.Matchers.*;
+
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withHint;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -49,7 +46,6 @@ public class SortTest {
     private static DataAccessI dataAccessI;
     private AccessUsers accessUsers;
     private AccessGames accessGames;
-    private AccessRatings accessRatings;
     private AccessReviews accessReviews;
     User u1, u2;
     Review rev1, rev2, rev3, rev4, rev5;
@@ -68,7 +64,6 @@ public class SortTest {
         Services.createDataAccess(dataAccessI);
         dataAccessI.clearAllData();
         accessGames = new AccessGames();
-        accessRatings = new AccessRatings();
         accessReviews = new AccessReviews();
         accessUsers = new AccessUsers();
         rev1 = null;

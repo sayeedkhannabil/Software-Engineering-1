@@ -18,8 +18,6 @@ import comp3350.grs.R;
 import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
 import comp3350.grs.business.AccessGames;
-import comp3350.grs.business.AccessRatings;
-import comp3350.grs.business.AccessUsers;
 import comp3350.grs.exceptions.IncorrectFormat;
 import comp3350.grs.objects.Game;
 import comp3350.grs.persistence.DataAccessI;
@@ -31,7 +29,6 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.swipeLeft;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -41,7 +38,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 @MediumTest
 public class GameInfoTest {
     private static DataAccessI dataAccessI;
-    private static AccessUsers accessUsers;
     private static AccessGames accessGames;
     private Game game1, game2, game3, game4;
     List<String> genres;

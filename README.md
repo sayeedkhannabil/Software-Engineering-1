@@ -78,7 +78,7 @@ The classes in `Business` package handle the logic of the program. There are 8 c
 
 #### Major Changes:
 
-* Database access for new feature classes: `AccessPost` , `AccessReplys`, `AccessRequests` and `AccessVoteReplys`
+* Database access for new feature classes: `AccessPosts` , `AccessReplys`, `AccessRequests` and `AccessVoteReplys`
 
 
 
@@ -396,7 +396,7 @@ You must rate the game, before you write a review.
 ## Issues
 
 * Because of the time constraint, we did not implement `Game Recommendation` feature and `Try Game` feature.
-* We did not used script for the database. if the marker need to restore the database to original state, just delete it and reinstall.
+* We coded the "create table" and load of default data in "open" method of dataAccessObject. and did not used script for the database.So there is no canonical script, if the marker need to restore the database to original state, just delete it and reinstall.
 
 ## Project Demo
 

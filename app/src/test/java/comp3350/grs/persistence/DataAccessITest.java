@@ -27,7 +27,6 @@ import comp3350.grs.objects.VoteReply;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -66,6 +65,7 @@ public class DataAccessITest{
 
     @Before
     public void before(){
+        //reset the database to be clean
         dataAccessI.clearAllData();
         user=null;
         user1=null;
@@ -136,6 +136,8 @@ public class DataAccessITest{
 
     @Test
     public void testTypical(){
+        String myDbName= dataAccessI.getDbName();
+        assertEquals(Main.testDbName,myDbName);
         try {
             user1=new Guest();
         } catch (IncorrectFormat incorrectFormat) {
@@ -553,8 +555,6 @@ public class DataAccessITest{
             assertTrue(success);
             replyList= dataAccessI.getReplysByUser("user3");
             assertEquals(1,replyList.size());
-            reply=replyList.get(0);
-            assertNotEquals(-1,reply.getID());
             reply1=new Reply(1000,"newReply","user2",101);
             dataAccessI.updateReply(reply1);
             reply= dataAccessI.getReplyByID(1000);

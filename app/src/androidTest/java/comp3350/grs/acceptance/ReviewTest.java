@@ -14,26 +14,19 @@ import org.junit.runner.RunWith;
 import comp3350.grs.R;
 import comp3350.grs.application.Main;
 import comp3350.grs.application.Services;
-import comp3350.grs.business.AccessGames;
-import comp3350.grs.business.AccessReviews;
-import comp3350.grs.business.AccessUsers;
 import comp3350.grs.persistence.DataAccessI;
 import comp3350.grs.persistence.DataAccessObject;
 import comp3350.grs.presentation.MainActivity;
 
-//import static androidx.test.espresso.Espresso.onView;
-//import static androidx.test.espresso.action.ViewActions.click;
-//import static androidx.test.espresso.action.ViewActions.typeText;
-//import static androidx.test.espresso.assertion.ViewAssertions.matches;
-//import static androidx.test.espresso.matcher.ViewMatchers.withId;
-//import static androidx.test.espresso.matcher.ViewMatchers.withText;
-//import static androidx.test.espresso.matcher.ViewMatchers.*;
-
-import static androidx.test.espresso.Espresso.*;
-import static androidx.test.espresso.action.ViewActions.*;
-import static androidx.test.espresso.assertion.ViewAssertions.*;
-import static androidx.test.espresso.matcher.ViewMatchers.*;
-import static org.hamcrest.Matchers.*;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withHint;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -41,9 +34,7 @@ import static org.hamcrest.Matchers.*;
 //user want to write a review to some game
 public class ReviewTest {
     private static DataAccessI dataAccessI;
-    private AccessReviews accessReviews;
-    private AccessGames accessGames;
-    private AccessUsers accessUsers;
+
 
     @Rule
     public ActivityTestRule<MainActivity> homeActivity =
@@ -55,9 +46,7 @@ public class ReviewTest {
         dataAccessI.open(Main.getDBPathName(Main.testDbName));
         dataAccessI.deleteDatabase();
         Services.createDataAccess(dataAccessI);
-        accessReviews=new AccessReviews();
-        accessGames=new AccessGames();
-        accessUsers=new AccessUsers();
+
     }
 
 

@@ -27,14 +27,13 @@ import comp3350.grs.persistence.DataAccessITest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        AccessGamesTest.class, AccessUsersTest.class, AccessReviewsTest.class
-        , AccessRatingsTest.class,AccessRequestsTest.class,
-        AccessVoteReplysTest.class, AccessPostsTest.class, AccessReplysTest.class,
+        AccessGamesTest.class, AccessPostsTest.class,AccessRatingsTest.class,
+        AccessReplysTest.class,AccessRequestsTest.class,
+        AccessReviewsTest.class,AccessUsersTest.class,AccessVoteReplysTest.class,
 
-        GameTest.class,GuestTest.class,RatingTest.class,
-        RegisteredUserTest.class,ReviewTest.class,
-        DownvoteTest.class, PostTest.class, ReplyTest.class,
-        RequestTest.class, UpvoteTest.class, VoteReplyTest.class,
+        DownvoteTest.class,GameTest.class,GuestTest.class,PostTest.class,
+        RatingTest.class, RegisteredUserTest.class,ReplyTest.class,
+        RequestTest.class,ReviewTest.class,UpvoteTest.class,VoteReplyTest.class,
 
         DataAccessITest.class
 })

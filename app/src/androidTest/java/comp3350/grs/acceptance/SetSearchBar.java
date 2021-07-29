@@ -14,7 +14,7 @@ import static org.hamcrest.CoreMatchers.allOf;
 
 //used to help testing the search bar
 public final class SetSearchBar implements ViewAction {
-    private String text;//the rating value you want to set
+    private String text;//the text you want to search
 
     public SetSearchBar(String text){
         this.text=text;
@@ -32,6 +32,7 @@ public final class SetSearchBar implements ViewAction {
 
     @Override
     public void perform(UiController uiController, View view) {
+        //send a query to the search view
         ((SearchView) view).setQuery(this.text,false);
     }
 }

@@ -42,6 +42,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withHint;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.containsString;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -442,6 +443,23 @@ public class DiscussionForumTest {
                 withId(R.id.single_reply_upvote_num))).check(matches(withText("1")));
         onView(allOf(hasSibling(withText("user1")),
                 withId(R.id.single_reply_downvote_num))).check(matches(withText("1")));
+    }
+
+    @Test
+    public void writeLongPost(){
+        String title="";
+        for (int i = 0; i < 50; i++) {
+            title+="t";
+        }
+
+        onView(withText("CONTINUE AS GUEST")).perform(click());
+        onView(withText("Enter Discussion Forum")).perform(click());
+        onView(withText("Write Post")).perform(click());
+        onView(withHint("Title")).perform(replaceText(title));
+        onView(withHint("content")).perform(replaceText("content"));
+        onView(withText("Submit Post")).perform(click());
+        onView(allOf(withText(containsString("ttttttttttttt")) ,
+                isDisplayed()) ).check(matches(isDisplayed()));
     }
 
 }

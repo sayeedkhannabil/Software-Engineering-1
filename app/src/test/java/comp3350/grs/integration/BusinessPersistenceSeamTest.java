@@ -45,27 +45,57 @@ public class BusinessPersistenceSeamTest {
     private AccessReviews accessReviews;
     private AccessUsers accessUsers;
     private AccessVoteReplys accessVoteReplys;
+    Game game, game2;
+    User user1, user2;
 
     @Before
     public void before(){
         System.out.println("\nStarting Integration test");
         Services.closeDataAccess();
         Services.createDataAccess(Main.testDbName);
-        accessGames = null;
+        accessGames = new AccessGames();
         accessPosts = null;
-        accessRatings = null;
+        accessRatings = new AccessRatings();
         accessReplys = null;
         accessRequests = null;
-        accessReviews = null;
-        accessUsers = null;
+        accessReviews = new AccessReviews();
+        accessUsers = new AccessUsers();
         accessVoteReplys = null;
         inserted = false;
         updated = false;
         deleted = false;
+
+        try{
+            game = new Game("newGame", "dev", "desc", 5.00, new ArrayList<>());
+            game2 = new Game("newGame2", "otherDev", "desc", 100, new ArrayList<>());
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        inserted = accessGames.insertGame(game);
+        assertTrue(inserted);
+        inserted = accessGames.insertGame(game2);
+        assertTrue(inserted);
+
+        try{
+            user1 = new RegisteredUser("newUser", "pass");
+            user2 = new RegisteredUser("newUser2", "pass2");
+        }catch (IncorrectFormat incorrectFormat){
+            incorrectFormat.printStackTrace();
+        }
+        inserted = accessUsers.insertUser(user1);
+        assertTrue(inserted);
+        inserted = accessUsers.insertUser(user2);
+        assertTrue(inserted);
     }
 
     @After
     public void after(){
+        accessRatings.clear();
+        accessReviews.clear();
+        accessGames.deleteGame(game);
+        accessGames.deleteGame(game2);
+        accessUsers.deleteUser(user1);
+        accessUsers.deleteUser(user2);
         Services.closeDataAccess();
         System.out.println("Finished Integration test of "+className+" to persistence");
     }
@@ -73,12 +103,10 @@ public class BusinessPersistenceSeamTest {
     @Test
     public void testAccessGames(){
         className = "AccessGames";
-        accessGames = new AccessGames();
         accessRatings = new AccessRatings();
         accessReviews = new AccessReviews();
+
         List<Game> allGames;
-        Game game;
-        Game game2 = null;
         Rating rating = null;
         Review review = null;
         String gameName;
@@ -88,30 +116,14 @@ public class BusinessPersistenceSeamTest {
         assertNotNull(allGames);
         listSize = allGames.size();
         assertTrue(listSize > 0);
-        game = accessGames.getSequential();
-        gameName = game.getName();
-        assertEquals(game, accessGames.findGame(gameName));
-        assertTrue(allGames.contains(game));
+        //game = accessGames.getSequential();
+        //gameName = game.getName();
+        //assertEquals(game, accessGames.findGame(gameName));
+        //assertTrue(allGames.contains(game));
 
         //insert
-        inserted = accessGames.insertGame(game);
-        assertFalse(inserted); //because the game already exists
-
-        try{
-            game = new Game("newGame", "dev", "desc", 5.00, new ArrayList<>());
-        }catch (IncorrectFormat incorrectFormat){
-            incorrectFormat.printStackTrace();
-        }
-        inserted = accessGames.insertGame(game);
-        assertTrue(inserted);
-
-        try{
-            game2 = new Game("otherGame", "otherDev", "desc", 100, new ArrayList<>());
-        }catch (IncorrectFormat incorrectFormat){
-            incorrectFormat.printStackTrace();
-        }
-        inserted = accessGames.insertGame(game2);
-        assertTrue(inserted);
+        //inserted = accessGames.insertGame(game);
+        //assertFalse(inserted); //because the game already exists
 
         //update
         try {
@@ -129,36 +141,23 @@ public class BusinessPersistenceSeamTest {
         assertNotNull(game.getGenres());
         listSize = accessGames.getAllGames().size();
 
-        //delete
-        game = accessGames.findGame("newGame");
-        assertNotNull(game);
-        deleted = accessGames.deleteGame(game);
-        assertTrue(deleted);
-        allGames = accessGames.getAllGames();
-        assertFalse(allGames.contains(game));
-        assertEquals(listSize-1, allGames.size());
-        assertNull(accessGames.findGame("newGame"));
-        game = accessGames.findGame("otherGame");
-        deleted = accessGames.deleteGame(game);
-        assertTrue(deleted);
-
         //add ratings and review to test sort methods (which communicate with persistence)
         try{
-            rating = new Rating(5.0, "game1", "user1");
+            rating = new Rating(5.0, game.getName(), user1.getUserID());
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
         inserted = accessRatings.insertRating(rating);
         assertTrue(inserted);
         try{
-            rating = new Rating(3.0, "game2", "user2");
+            rating = new Rating(3.0, game2.getName(), user2.getUserID());
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
         inserted = accessRatings.insertRating(rating);
         assertTrue(inserted);
         try{
-            rating = new Rating(4.0, "game2", "user1");
+            rating = new Rating(4.0, game2.getName(), user1.getUserID());
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
@@ -166,7 +165,7 @@ public class BusinessPersistenceSeamTest {
         assertTrue(inserted);
 
         try{
-            review = new Review("comment", "game3", "user2");
+            review = new Review("comment", game.getName(), user2.getUserID());
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
@@ -175,26 +174,35 @@ public class BusinessPersistenceSeamTest {
 
         //ascending + descending rating sort
         allGames = accessGames.descendingRatingSort();
-        game = accessGames.findGame("game2");
-        assertEquals(game, allGames.get(0));
+        assertEquals(game2, allGames.get(0));
 
         allGames = accessGames.ascendingRatingSort();
-        game = accessGames.findGame("game3");
-        assertEquals(game, allGames.get(0));
+        assertNotEquals(game, allGames.get(0));
 
         //ascending + descending review sort
         allGames = accessGames.descendingReviewSort();
-        assertEquals(accessGames.findGame("game3"), allGames.get(0));
+        assertEquals(game, allGames.get(0));
 
         allGames = accessGames.ascendingReviewSort();
-        assertNotEquals(accessGames.findGame("game3"), allGames.get(0));
+        assertNotEquals(game, allGames.get(0));
 
         //game by name implicit
-        allGames = accessGames.getGamesByNameImplicit("game");
-        assertEquals(accessGames.getAllGames().size(), allGames.size()); //all games begin with game
+        allGames = accessGames.getGamesByNameImplicit("new");
+        assertTrue(allGames.size() >=2 ); //all games begin with game
 
         accessRatings.clear();
         accessReviews.clear();
+
+        //delete
+        listSize = accessGames.getAllGames().size();
+        deleted = accessGames.deleteGame(game);
+        assertTrue(deleted);
+        allGames = accessGames.getAllGames();
+        assertFalse(allGames.contains(game));
+        assertEquals(listSize-1, allGames.size());
+        assertNull(accessGames.findGame("newGame"));
+        deleted = accessGames.deleteGame(game2);
+        assertTrue(deleted);
     }
 
     @Test
@@ -207,7 +215,7 @@ public class BusinessPersistenceSeamTest {
 
         //insert
         try{
-            post = new Post(postID, "NewPost", "content", "user1");
+            post = new Post(postID, "NewPost", "content", user1.getUserID());
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
@@ -218,7 +226,7 @@ public class BusinessPersistenceSeamTest {
         allPosts = accessPosts.getAllPosts();
         assertEquals(1, allPosts.size());
         assertTrue(allPosts.contains(post));
-        allPosts = accessPosts.getPostsByUser("user1");
+        allPosts = accessPosts.getPostsByUser(user1.getUserID());
         assertEquals(1, allPosts.size());
 
         //can't insert same post multiple times
@@ -227,7 +235,7 @@ public class BusinessPersistenceSeamTest {
 
         //update
         try{
-            post = new Post(postID, "NewTitle", "newContent", "user1");
+            post = new Post(postID, "NewTitle", "newContent", user1.getUserID());
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
@@ -245,7 +253,7 @@ public class BusinessPersistenceSeamTest {
         assertTrue(deleted);
         post = accessPosts.getPostById(postID);
         assertNull(post);
-        allPosts = accessPosts.getPostsByUser("user1");
+        allPosts = accessPosts.getPostsByUser(user1.getUserID());
         assertTrue(allPosts.isEmpty());
         allPosts = accessPosts.getAllPosts();
         assertTrue(allPosts.isEmpty());
@@ -257,13 +265,12 @@ public class BusinessPersistenceSeamTest {
     @Test
     public void testAccessRatings(){
         className = "AccessRatings";
-        accessRatings = new AccessRatings();
         List<Rating> allRatings;
         Rating rating = null;
 
         //insert
         try{
-            rating = new Rating(5.0, "game1","user2");
+            rating = new Rating(5.0, game.getName(),user2.getUserID());
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
@@ -274,15 +281,15 @@ public class BusinessPersistenceSeamTest {
         allRatings = accessRatings.getAllRatings();
         assertTrue(allRatings.size() >= 1);
         assertTrue(allRatings.contains(rating));
-        allRatings = accessRatings.getRatingsByUser("user2");
+        allRatings = accessRatings.getRatingsByUser(user2.getUserID());
         assertEquals(1, allRatings.size());
-        allRatings = accessRatings.getRatingsByGame("game1");
+        allRatings = accessRatings.getRatingsByGame(game.getName());
         assertEquals(1, allRatings.size());
-        Rating rating2 = accessRatings.getRating("game1", "user2");
+        Rating rating2 = accessRatings.getRating(game.getName(), user2.getUserID());
         assertEquals(rating, rating2);
-        int ratingNumByGame = accessRatings.getRatingNumByGame("game1");
+        int ratingNumByGame = accessRatings.getRatingNumByGame(game.getName());
         assertTrue(ratingNumByGame >= 1);
-        int ratingNumByUser = accessRatings.getRatingNumByUser("user2");
+        int ratingNumByUser = accessRatings.getRatingNumByUser(user2.getUserID());
         assertEquals(1, ratingNumByUser);
 
         //can't insert same rating multiple times
@@ -291,7 +298,7 @@ public class BusinessPersistenceSeamTest {
 
         //update
         try{
-            rating2 = new Rating(2.0, "game1", "user2");
+            rating2 = new Rating(2.0, game.getName(), user2.getUserID());
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
@@ -301,7 +308,7 @@ public class BusinessPersistenceSeamTest {
         assertTrue(updated);
         allRatings = accessRatings.getAllRatings();
         assertTrue(allRatings.size() >= 1);
-        rating = accessRatings.getRating("game1", "user2");
+        rating = accessRatings.getRating(game.getName(), user2.getUserID());
         assertTrue(allRatings.contains(rating));
         assertEquals(2.0, rating.getRatingValue(), 0);
 
@@ -309,12 +316,13 @@ public class BusinessPersistenceSeamTest {
         //delete
         deleted = accessRatings.deleteRating(rating);
         assertTrue(deleted);
-        rating2 = accessRatings.getRating("game1", "user2");
+        rating2 = accessRatings.getRating(game.getName(), user2.getUserID());
         assertNull(rating2);
-        allRatings = accessRatings.getRatingsByGame("game1");
+        allRatings = accessRatings.getRatingsByGame(game.getName());
         assertTrue(allRatings.isEmpty());
         allRatings = accessRatings.getAllRatings();
         assertTrue(allRatings.isEmpty());
+        accessRatings.clear();
     }
 
     @Test
@@ -328,7 +336,7 @@ public class BusinessPersistenceSeamTest {
 
         //must insert post to reply to
         try{
-            postToReply = new Post(8, "title", "content", "user3");
+            postToReply = new Post(8, "title", "content", user2.getUserID());
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
@@ -336,7 +344,7 @@ public class BusinessPersistenceSeamTest {
 
         //insert
         try{
-            reply = new Reply(5,"comment", "user1", 8);
+            reply = new Reply(5,"comment", user1.getUserID(), 8);
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
@@ -344,7 +352,7 @@ public class BusinessPersistenceSeamTest {
         assertTrue(inserted);
 
         try{
-            reply = new Reply("comment", "user2", 8);
+            reply = new Reply("comment", user2.getUserID(), 8);
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
@@ -353,14 +361,14 @@ public class BusinessPersistenceSeamTest {
 
         //cannot insert reply to nonexistent post (ie. a post with this postID not in the post table)
         try{
-            reply = new Reply(3, "newComment", "user2", 4);
+            reply = new Reply(3, "newComment", user2.getUserID(), 4);
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
         inserted = accessReplys.insertReply(reply);
         assertFalse(inserted);
 
-        allReplies = accessReplys.getReplyByUser("user2");
+        allReplies = accessReplys.getReplyByUser(user2.getUserID());
         assertEquals(1, allReplies.size());
         assertFalse(allReplies.contains(accessReplys.getReplyById(3)));
 
@@ -370,7 +378,7 @@ public class BusinessPersistenceSeamTest {
 
         //update
         try{
-            reply = new Reply(5,"otherComment", "user1", 8);
+            reply = new Reply(5,"otherComment", user1.getUserID(), 8);
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
@@ -382,7 +390,7 @@ public class BusinessPersistenceSeamTest {
         reply = allReplies.get(indexReply);
         assertEquals(5, reply.getID());
         assertEquals("otherComment", reply.getContent());
-        assertEquals("user1", reply.getUserID());
+        assertEquals(user1.getUserID(), reply.getUserID());
         assertEquals(8, reply.getPostID());
 
         //delete
@@ -409,7 +417,7 @@ public class BusinessPersistenceSeamTest {
 
         //insert
         try{
-            request = new Request("newGameNotInDB", "user1");
+            request = new Request("newGameNotInDB", user1.getUserID());
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
@@ -423,14 +431,14 @@ public class BusinessPersistenceSeamTest {
         assertTrue(allRequests.size() >= 1);
         assertTrue(allRequests.contains(request));
 
-        request2 = accessRequests.getRequest("newGameNotInDB", "user1");
+        request2 = accessRequests.getRequest("newGameNotInDB", user1.getUserID());
         assertEquals(request, request2);
 
         allRequests = accessRequests.getRequestsByGame("newGameNotInDB");
         assertEquals(1, allRequests.size());
         assertTrue(allRequests.contains(request));
 
-        allRequests = accessRequests.getRequestsByUser("user1");
+        allRequests = accessRequests.getRequestsByUser(user1.getUserID());
         assertTrue(allRequests.size() >= 1);
         assertTrue(allRequests.contains(request));
 
@@ -450,14 +458,13 @@ public class BusinessPersistenceSeamTest {
     @Test
     public void testAccessReviews(){
         className = "AccessReviews";
-        accessReviews = new AccessReviews();
         Review review = null;
         Review review2 = null;
         List<Review> allReviews;
 
         //insert
         try{
-            review = new Review(1, "comment", "game1", "user1");
+            review = new Review(1, "comment", game.getName(), user1.getUserID());
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
@@ -468,7 +475,7 @@ public class BusinessPersistenceSeamTest {
         assertTrue(allReviews.contains(review));
 
         try{
-            review2 = new Review(2, "comment2", "game1", "user2");
+            review2 = new Review(2, "comment2", game.getName(), user2.getUserID());
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
@@ -478,25 +485,25 @@ public class BusinessPersistenceSeamTest {
         assertTrue(allReviews.size() >= 2);
         assertTrue(allReviews.contains(review2));
 
-        int numReviewsGame1 = accessReviews.getReviewNumByGame("game1");
+        int numReviewsGame1 = accessReviews.getReviewNumByGame(game.getName());
         assertTrue(numReviewsGame1 >= 2);
 
-        allReviews = accessReviews.getReviewsByGame("game1");
+        allReviews = accessReviews.getReviewsByGame(game.getName());
         assertTrue(allReviews.size() >= 2);
         assertTrue(allReviews.contains(review));
         assertTrue(allReviews.contains(review2));
 
-        allReviews = accessReviews.getReviewsByUser("user1");
+        allReviews = accessReviews.getReviewsByUser(user1.getUserID());
         assertTrue(allReviews.size() >= 1);
         assertTrue(allReviews.contains(review));
 
-        allReviews = accessReviews.getReviewsByUser("user2");
+        allReviews = accessReviews.getReviewsByUser(user2.getUserID());
         assertTrue(allReviews.size() >= 1);
         assertTrue(allReviews.contains(review2));
 
         //udpate
         try{
-            review2 = new Review(2, "differentComment", "game1", "user1");
+            review2 = new Review(2, "differentComment", game.getName(), user1.getUserID());
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
@@ -504,8 +511,8 @@ public class BusinessPersistenceSeamTest {
         assertTrue(updated);
         review2 = accessReviews.getReviewById(2);
         assertEquals("differentComment", review2.getComment());
-        assertEquals("game1", review2.getGameName());
-        assertEquals("user1", review2.getUserID());
+        assertEquals(game.getName(), review2.getGameName());
+        assertEquals(user1.getUserID(), review2.getUserID());
 
         //delete
         int numReviewsPreDelete = accessReviews.getAllReviews().size();
@@ -522,32 +529,21 @@ public class BusinessPersistenceSeamTest {
     @Test
     public void testAccessUsers(){
         className = "AccessUsers";
-        accessUsers = new AccessUsers();
         List<User> allUsers;
-        User user = null;
-        User user2 = null;
+        User newUser1 = null;
         User duplicate = null;
 
-        //insert
         try{
-            user = new Guest();
+            newUser1 = new RegisteredUser("newUserReg", "newPass");
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
-        inserted = accessUsers.insertUser(user);
-        assertTrue(inserted);
-
-        try{
-            user2 = new RegisteredUser("newUser", "newPass");
-        }catch (IncorrectFormat incorrectFormat){
-            incorrectFormat.printStackTrace();
-        }
-        inserted = accessUsers.insertUser(user2);
+        inserted = accessUsers.insertUser(newUser1);
         assertTrue(inserted);
 
         //duplicate user
         try{
-            duplicate = new RegisteredUser("newUser", "anotherPass");
+            duplicate = new RegisteredUser("newUserReg", "anotherPass");
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
@@ -555,42 +551,35 @@ public class BusinessPersistenceSeamTest {
         assertFalse(inserted);
 
         allUsers = accessUsers.getAllUsers();
-        assertTrue(allUsers.size() >= 2);
-        assertTrue(allUsers.contains(user));
-        assertTrue(allUsers.contains(user2));
+        assertTrue(allUsers.size() >= 1);
+        assertTrue(allUsers.contains(newUser1));
 
-        User guest = accessUsers.getUserByID("Guest");
-        assertEquals(guest, user);
-
-        accessUsers.setActiveUser(user2);
-        user2 = accessUsers.getActiveUser();
-        assertEquals("newUser", user2.getUserID());
+        accessUsers.setActiveUser(newUser1);
+        newUser1 = accessUsers.getActiveUser();
+        assertEquals("newUserReg", newUser1.getUserID());
 
         allUsers = accessUsers.getUsersByIDImplicit("new");
-        assertEquals(1, allUsers.size());
-        assertTrue(allUsers.contains(user2));
+        assertTrue(allUsers.size() >= 1);
+        assertTrue(allUsers.contains(newUser1));
 
         //update
         try{
-            user2 = new RegisteredUser("newUser", "changedPassword");
+            newUser1 = new RegisteredUser("newUserReg", "changedPassword");
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
-        updated = accessUsers.updateUser(user2);
+        updated = accessUsers.updateUser(newUser1);
         assertTrue(updated);
-        duplicate = accessUsers.getUserByID("newUser");
-        assertEquals(user2, duplicate);
-        assertTrue(accessUsers.getAllUsers().contains(user2));
+        duplicate = accessUsers.getUserByID("newUserReg");
+        assertEquals(newUser1, duplicate);
+        assertTrue(accessUsers.getAllUsers().contains(newUser1));
 
         //delete
         int numUsersPreDelete = accessUsers.getAllUsers().size();
-        deleted = accessUsers.deleteUser(user);
+        deleted = accessUsers.deleteUser(newUser1);
         assertTrue(deleted);
-        assertFalse(accessUsers.getAllUsers().contains(user));
-        deleted = accessUsers.deleteUser(user2);
-        assertTrue(deleted);
-        assertFalse(accessUsers.getAllUsers().contains(user2));
-        assertEquals(numUsersPreDelete-2, accessUsers.getAllUsers().size());
+        assertFalse(accessUsers.getAllUsers().contains(newUser1));
+        assertEquals(numUsersPreDelete-1, accessUsers.getAllUsers().size());
     }
 
     @Test
@@ -607,14 +596,14 @@ public class BusinessPersistenceSeamTest {
 
         //must have a post, and a reply to that post to vote on
         try{
-            post = new Post(2,"title", "content", "user2");
+            post = new Post(2,"title", "content", user2.getUserID());
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
         inserted = accessPosts.insertPost(post);
         assertTrue(inserted);
         try{
-            reply = new Reply(5, "content", "user1", 2);
+            reply = new Reply(5, "content", user1.getUserID(), 2);
         }catch (IncorrectFormat incorrectFormat){
             incorrectFormat.printStackTrace();
         }
@@ -622,20 +611,20 @@ public class BusinessPersistenceSeamTest {
         assertTrue(inserted);
 
         //insert
-        voteReply = new VoteReply(new Upvote("user2"), reply.getID());
+        voteReply = new VoteReply(new Upvote(user2.getUserID()), reply.getID());
         inserted = accessVoteReplys.insertVoteReply(voteReply);
         assertTrue(inserted);
-        test = accessVoteReplys.getVoteReply("user2", reply.getID());
+        test = accessVoteReplys.getVoteReply(user2.getUserID(), reply.getID());
         assertEquals(voteReply, test);
         allVoteReps = accessVoteReplys.getVoteReplysByReply(reply.getID());
         assertTrue(allVoteReps.size() >= 1);
         assertTrue(allVoteReps.contains(voteReply));
 
         //update
-        voteReply = new VoteReply(new Downvote("user2"), reply.getID());
+        voteReply = new VoteReply(new Downvote(user2.getUserID()), reply.getID());
         updated = accessVoteReplys.updateVoteReply(voteReply);
         assertTrue(updated);
-        test = accessVoteReplys.getVoteReply("user2", reply.getID());
+        test = accessVoteReplys.getVoteReply(user2.getUserID(), reply.getID());
         assertEquals(test, voteReply);
         assertEquals(-1, test.getVoteI().getValue()); //it is now a downvote
         allVoteReps = accessVoteReplys.getVoteReplysByReply(reply.getID());
@@ -645,7 +634,7 @@ public class BusinessPersistenceSeamTest {
         //delete
         deleted = accessVoteReplys.deleteVoteReply(voteReply);
         assertTrue(deleted);
-        voteReply = accessVoteReplys.getVoteReply("user2", reply.getID());
+        voteReply = accessVoteReplys.getVoteReply(user2.getUserID(), reply.getID());
         assertNull(voteReply);
         allVoteReps = accessVoteReplys.getVoteReplysByReply(reply.getID());
 
@@ -655,5 +644,7 @@ public class BusinessPersistenceSeamTest {
         deleted = accessPosts.deletePost(post);
         assertTrue(deleted);
         accessVoteReplys.clear();
+        accessReplys.clear();
+        accessPosts.clear();
     }
 }

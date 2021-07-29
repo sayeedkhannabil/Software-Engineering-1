@@ -245,6 +245,8 @@ July 28: Sayeed updated SortTest(acceptance).
 	(expected: 3 hours, actual: 4 hours).
 July 28: Katharine K finished and fixed bugs for integration tests
      (expected: 2 hours, actual: 3 hours)
+July 28: Katharine K fixed new errors in BusinessPersistenceSeamTest and partially wrote request test acceptance test
+	(expected: 1 hour, actual: 2.5 hours)
 July 28: Gongyu Liao finished acceptance test for review function (ReviewTest)
      (expected: 1.5 hours, actual: 2 hours)
 July 28 Shiqing Guo finished search acceptance test.(expected:2 hours, actual:2

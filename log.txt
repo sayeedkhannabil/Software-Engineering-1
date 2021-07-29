@@ -175,40 +175,85 @@ July 16 Shiqing Guo created request domain object.(expected:1 hour actual:1 hour
 July 16 Shiqing Guo added methods related to request to    databaseObject.(expected:2hour actual:1.5 hour)
 July 17 Shiqing Guo added UI for choice page.(expected:30mins actual:30mins)
 July 19 Shiqing Guo finished UI for request page.(expected:5 hours actual:5 hours)
+July 19: Hasin I finished Post object class.
+	(expected: 2 hours, actual: 1.5 hours)
 July 20 Shiqing Guo extract post and reply to make ForumContent(expected:30mins actual:1hour)
 July 20 Shiqing Guo created VoteI,VoteReply,Upvote,Downvote,Vote.(expected:3 hours,actual:2.5 hours)
 July 20 Shiqing Guo add methods to sql database relating to vote.(expected:2 hours, actual:1.5 hours)
+July 20: Hasin I updated Post object class.
+	(expected:30 min, actual: 1 hour)
 July 20: Gongyu Liao finished Reply and Feedback object class.
 	(expected: 2 hours, actual: 2 hours)
 july 20: group meeting: decide to start writing test, as well as developing new
     user stories, since time is quite tight in this iteration.
+July 20: Sayeed added method signature to the database interface for reply.
+	(expected:30 min, actual:30 min)
 July 21 Shiqing Guo create AccessVoteReplys.(expected:1 hours, actual:30 mins)
 July 21 Shiqing Guo set up the environment and finished template of acceptance test(expected:3hours,actual:3hours)
+July 21: Sayeed updated interface for post and reply.
+	(expected:30 min, actual: 1 hour)
 July 22 Shiqing Guo finished VoteReplyTest,UpvoteTest,DownvoteTest.(expected:2 hours, actual:1.5 hour)
 July 23 Shiqing Guo Add postID to reply, add List<Reply> getReplysByPost(int postID) to database and business object
 July 23 Shiqing Guo finished forum UI(expected:6 hours, actual : 6hours)
+July 22: Hasin I finished Unit testing for Post object.
+	(expected: 2 hours, actual: 2 hours)
+July 23: Hasin I finished Access post class.
+	(expected: 2 hours, actual: 1.5 hours)
 july 23 group meeting:discussed how to implement the acceptance test, decided to
  create one class for each user story, distributed the tasks on acceptance test.
+July 23: Sayeed added reply functionality to the database.
+	(expected: 3 hours, actual: 5 hours)
+July 23: Sayeed updated Post for implementing database.
+	(expected: 15 min, actual: 10 minute)
+July 23: Sayeed implemented Post methods to database.
+	(expected: 3 hours, actual: 2 hours)
+July 23: Sayeed created AccessReply.
+	(expected: 1 hours, actual: 30 min)
 July 24 Shiqing Guo finished forum acceptance test.(expected:3 hours, actual:3.5hours)
 July 24: Katharine K created AccessRequestsTest and wrote some tests
     (expected: 2 hours, actual: 2 hours)
+July 24: Hasin I Updated gamePageUI for assisting acceptance test.
+	(expected 1 hour, actual 1 hour)
 July 25: Katharine K updated methods in DataAccessStub
     (expected: 2 hours, actual: 3 hours)
+July 25: Hasin I finished acceptance test for gameInfoTest.
+	(expected 2 hours, actual 3.5 hours)
 July 26: Katharine K finished writing methods in DataAccessStub to match interface
     (expected: 1 hour, actual: 45 minutes)
 July 26: Katharine K finished writing tests for AccessRequestsTest
     (expected: 1 hour, actual: 2 hours)
 July 26: Katharine K finished writing tests for RequestTest
     (expected: 1 hour, actual: 1 hour)
+July 26: Sayeed added AccessReplyTest and AccessPostTest
+	(expected: 4 hours, actual: 5 hours)
 July 26: Gongyu Liao finished test for domain object Reply
     (expected: 1 hour, actual: 40 minuates)
 July 27 Meeting: fix errors in test code, assign additional tasks
 July 27: Katharine K worked on test seams/integration tests
      (expected: 2 hours, actual: 3.5 hours) -- did not finish as expected
+July 27: Sayeed updated unit test for Post
+	(expected: 30 min, actual: 30 min)
+July 27: Hasin I updated the acceptance test for ratingTest
+	(expected 2 hours, actual 3 hours)
+July 27: Hasin I updated the GameInfoTest ( used testDB instead of Maindb)
+	(expected 1 hour, actual: 2 hours)
+July 28: Hasin I updated the GameInfoTest ( added test for scroll bar)
+	(expected 2 hour, actual: 2 hours)
+July 28: Sayeed updated RatingTest(acceptance).
+	(expected: 1 hour, actual: 1 hour)
+July 28: Sayeed updated SortTest(acceptance).
+	(expected: 3 hours, actual: 4 hours).
 July 28: Katharine K finished and fixed bugs for integration tests
      (expected: 2 hours, actual: 3 hours)
+July 28: Katharine K fixed new errors in BusinessPersistenceSeamTest and partially wrote request test acceptance test
+	(expected: 1 hour, actual: 2.5 hours)
 July 28: Gongyu Liao finished acceptance test for review function (ReviewTest)
      (expected: 1.5 hours, actual: 2 hours)
 July 28 Shiqing Guo finished search acceptance test.(expected:2 hours, actual:2
     hours)
-
+July 28: Hasin I sketched the System Architecture for Iteration 3
+	(expected: 1 hour, actual: 0.5 hour)
+July 28: Hasin I created the Developers tasks card for Iteration 3
+	(expected: 1 hour, actual: 1 hour)
+July 29: Sayeed updated documentation.
+	(expected: 4 hours, actual: 5 hours)

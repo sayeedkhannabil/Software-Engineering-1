@@ -40,7 +40,7 @@ There are no major changes on this part in Iteration 2.
 
 ### Business:
 
-The classes in `Business` package handle the logic of the program. There are 4 classes in this package.
+The classes in `Business` package handle the logic of the program. There are 8 classes in this package.
 
 ##### AccessGames:
 
@@ -58,18 +58,33 @@ The classes in `Business` package handle the logic of the program. There are 4 c
 
 `AccessReviews` class handles the logic behind `review` object storage in HSQL database and used to access and modify reviews of games in the database.
 
+##### AccessPosts:
+
+`AccessPosts` class handles the logic behind accessing and modifying `Post` object in both HSQL database and stub-database.
+
+##### AccessReplys:
+
+`AccessReplys` class handles the logic behind accessing and modifying `Reply` object in both HSQL database and stub-database.
+
+##### AccessRequests:
+
+`AccessRequests` class handles the logic behind accessing and modifying `Request` object in both HSQL database and stub-database.
+
+##### AccessVoteReplys:
+
+`AccessVoteReplys` class handles the logic behind accessing and modifying `Upvote` and `Downvote` objects in both HSQL database and stub-database.
+
 
 
 #### Major Changes:
 
-* Changed the storage from stub-database to HSQL database for all class and added `AccessReviews` and `AccessRatings`
-* Modified `AccessGames` and `AccessUsers` class so that all of the classes can work with HSQLDB.Added 8 sort methods and implicit search to `AccessGames`.Added implicit search to `AccessUsers`.
+* Database access for new feature classes: `AccessPost` , `AccessReplys`, `AccessRequests` and `AccessVoteReplys`
 
 
 
 ### Objects:
 
-The `objects` package have the necessary object class that the project needed. There are 5 classes and 1 abstract class in this package.
+The `objects` package have the necessary object class that the project needed. There are 12 classes, 2 abstract classes and 1 interface in this package.
 
 ##### User:
 
@@ -95,13 +110,47 @@ An user can leave a review of a game. `Review` class handles how those reviews g
 
 `Game` class handles the overall functionality of the game. In the class, game info, price and feedbacks are stored.
 
+##### ForumContent:
+
+`ForumContent` class is a parent class of `Post` and `Reply` which are content of the discussion forum.
+
+##### Post:
+
+An user can create posts in the discussion forum. This class handles the functionality of creating posts in the forum.
+
+##### Reply:
+
+An user can give replies to previously created posts. The class handles the functionality of creating replies in the forum. Using reply multiple users can engage in a discussion in the discussion forum.
+
+##### Request:
+
+An user can requests for a game to be added in the app if they cannot find the information of a game they are looking for. They can see the games they requested and also what are the most requested games other users want. With `Request` class, these need can be handled.
+
+##### VoteI:
+
+This is a interface for `Vote` class
+
+##### Vote:
+
+`Vote` is a abstract class which is the parent class of `Upvote` and `Downvote`. If a user like a post or reply they can upvote it and if they dislike something they can downvote it.
+
+##### Upvote:
+
+`Upvote` is a child class of vote. It handles the functionality to upvoting a post or a reply.
+
+##### Downvote:
+
+`Downvote` is a child class of vote. It handles the functionality to downvoting a post or a reply.
+
+##### VoteReply:
+
+`VoteReply` is a combination of `Vote` and `Reply`. With this class we can include the functionality of voting in the `Reply` class.
+
 
 
 #### Major Changes:
 
-* Removed `Feedback` class which was used to handle `Review` class and `Rating` class in Iteration 1 to reduce code redundancy.
-* Removed all methods relating to `Review` and `Rating` from the `Game` class to satisfy Single Responsibility Principle.
-* Added more format validation and error handling for all of the classes.
+* Created object classes to implmenent `Vote` , `Reply`, `Post` and `Request` functionalities.
 
 
 
@@ -125,19 +174,13 @@ This is the class that handles the HSQL database and the functionality for the d
 
 #### Major Changes:
 
-* Implemented HSQLDB.
-* added interface to handle HSQLDB and stub-database.
-* updated database and added more method to the pervious database.
-* implemented implicit search for user and game.
-*  Changed the open method from read from file to create objects manually
+* added more methods to the interface and updated the DataAccessObject to store data for the new features.
 
-
-
-
+* created database for `Post`, `Reply`, `Request` and `Vote`
 
 ### Presentation:
 
-The `presentation` package is responsible for all of the classes that handles the UI(user interface).  There are 10 classes in this package.
+The `presentation` package is responsible for all of the classes that handles the UI(user interface).  There are 14 classes in this package.
 
 ##### GameGallery:
 
@@ -179,16 +222,91 @@ The `presentation` package is responsible for all of the classes that handles th
 
 `Utilities` is used to implement a bunch of useful features like alert messages, button shrinking when a button is touched by the user, etc.
 
+##### ForumPage:
 
+`ForumPage` is used to implement the main page of forum page where the users able to create a post.
+
+##### GalleryOrForum:
+
+`GalleryOrForum` is used to implement the page where user can select if they want to go to the gallery page or the forum page.
+
+##### PostPage:
+
+`PostPage` is used to implement the page view of posts.
+
+##### RequestPage:
+
+`RequestPage` is used to implement the main page of game request.
 
 ### Major Changes:
 
-* Added `top bar` so new user can easily identify which page they are currently in and go back to previous page.
-* Added UI for user account page where the user_id and user_pass can be viewed by the users.
-* Added more app functionality like a button shrinks for brief period of time when it is touched to give a more interactive experience to the user when using the app.
-* Improved the overall UI of the app.
-* Added UI for search and sort bar to quickly search a game or sort them according to name, price, ratings and reviews.
-* Added genres of the game(genre bar locates above the description of the game, and can slide horizontally)
+* Added selection page for gallery and forum
+* Created forum page for discussion forum feature
+* Created page to view the recent posts and replies
+* Created UI page for request game feature
+
+
+
+## Testing:
+
+We have done `Unit testing` , `Integration testing` and `Acceptence testing` in our project.
+
+#### Unit Test:
+
+We have done `unit test` for all of the classes `business`, `objects` and `persistence` layers. 
+
+###### Test Classes:
+
+* `business`:
+  * AccessGamesTest
+  * AccessPostsTest
+  * AccessRatingsTest
+  * AccessReplysTest
+  * AccessRequestsTest
+  * AccessReviewsTest
+  * AccessUsersTest
+  * AccessVoteReplysTest
+* `objects`:
+  * DownvoteTest
+  * GameTest
+  * GuestTest
+  * PostTest
+  * RatingTest
+  * RegisteredUserTest
+  * ReplyTest
+  * RequestTest
+  * ReviewTestUpvoteTest
+  * VoteReplyTest
+* `persistence`:
+  * DataAccessITest
+  * DataAccessStub
+
+
+
+#### Integration Test:
+
+`Integration testing` is used for `BusinessPersistenceSeamTest` and `DataAccessHSQLDBTest` to test the relationship between respective classes.
+
+###### Test Classes:
+
+* BusinessPersistenceSeamTest
+* DataAccessHSQLDBTest
+
+
+
+#### Acceptance Test:
+
+For testing all of the big user stories implemented in the project, we have used the `Acceptance Test`. 
+
+###### Test Classes:
+
+* DiscussionForumTest
+* GameInfoTest
+* RatingTest
+* RequestTest
+* ReviewTest
+* SearchTest
+* SortTest
 
 
 
@@ -221,6 +339,20 @@ We have kept the log of the meetings and individual work in the log file. The fo
 
 
 ## Major Implemented Features:
+
+### Iteration 3:
+
+The major implemented features in this iteration:
+
+1. Discussion Forum
+2. Game Request
+
+
+
+* `Discussion Forum` is a forum page where users will be able to create post to start a discussion and other users will be able to reply in the post.
+* `Game request` is a feature by which users will be able to request for games that are not in the app. Users will also able to see their requested games and what are the most requested games in the app.
+
+
 
 ### Iteration 2:
 
@@ -263,10 +395,8 @@ You must rate the game, before you write a review.
 
 ## Issues
 
-* We wanted user to be able to search with released_date of the games. However we realized that it is not very common to search games using released date so we removed the feature.
-* We have added `Genre` to the game description. We wanted to implement a sort functionality to sort the games according to the the `Genre`. However we have decided to sort functionality with genre and decided to do it on the next iteration if we have time.
-
-
+* Because of the time constraint, we did not implement `Game Recommendation` feature and `Try Game` feature.
+* We did not used script for the database. if the marker need to restore the database to original state, just delete it and reinstall.
 
 ## Project Demo
 
@@ -297,7 +427,18 @@ You must rate the game, before you write a review.
 ![gif](https://media.giphy.com/media/dtgzcJeVgELrgm9BEi/giphy.gif)
 
 
+#### Game Request:
+![gif](https://media.giphy.com/media/Xo1AIsEfFO38B3AO5O/giphy.gif)
 
+
+#### Post:
+![gif](https://media.giphy.com/media/nwgbeTZWja5B4JFzFJ/giphy.gif)
+
+#### Reply:
+![gif](https://media.giphy.com/media/vRMqfCC6ACqIVJASUd/giphy.gif)
+
+#### Vote:
+![gif](https://media.giphy.com/media/S4pkkXww0vkS0z1zbD/giphy.gif)
 
 
 

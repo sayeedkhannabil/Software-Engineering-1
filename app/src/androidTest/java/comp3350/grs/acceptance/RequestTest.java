@@ -127,10 +127,10 @@ public class RequestTest {
         onView(withHint("Game Name")).perform(typeText("LessRequested"));
         Espresso.closeSoftKeyboard();
         onView(withId(R.id.submit_request_button)).perform(click());
-
-        //these give error -- because there are multiple entries in most_requested_game
-        //onView(withId(R.id.most_requested_game)).check(matches(withText("MostRequested")));
-        //onView(withId(R.id.most_requested_num)).check(matches(withText("2")));
+        onView(allOf(withId(R.id.most_requested_num),hasSibling(withText("MostRequested"))) ).check(matches(withText(
+                "2")));
+        onView(allOf(withId(R.id.most_requested_num),hasSibling(withText("LessRequested"))) ).check(matches(withText(
+                "1")));
     }
 
     @Test
